@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoyUnScript : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool _soyBool;
     void Start()
     {
         
