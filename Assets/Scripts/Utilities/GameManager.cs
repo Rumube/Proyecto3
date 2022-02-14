@@ -6,15 +6,29 @@ public class GameManager : MonoBehaviour
 {
     public enum GAME_STATE_SERVER
     {
-        server = 0,
-        server1 = 1
+        init = 0,
+        previousConfiguration = 1,
+        connection = 2,
+        teamConfiguration = 3,
+        playing = 4,
+        pause = 5,
+        quit = 6,
+        disconnect = 7
+
     }
     public GAME_STATE_SERVER _gameStateServer;
 
     public enum GAME_STATE_CLIENT
     {
-        client = 0,
-        client2 = 1,
+        init = 0,
+        searching = 1,
+        selectStudent = 2,
+        playing = 3,
+        pause = 4,
+        gameOver = 5,
+        ranking = 6,
+        globalRanking = 7,
+
     }
     public GAME_STATE_CLIENT _gameStateClient;
 
