@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameTimeConfiguration : MonoBehaviour
+public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
     [SerializeField]
     private float _maxTime;
@@ -31,6 +31,7 @@ public class GameTimeConfiguration : MonoBehaviour
     {
         do
         {
+            // TODO: Control Pause
             yield return new WaitForSeconds(1f);
             _currentTime--;
             // TODO: Update UI

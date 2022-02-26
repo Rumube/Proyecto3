@@ -7,6 +7,7 @@ public class Installer : MonoBehaviour
     public bool _server;
 
     public Test _test;
+    public GameTimeConfiguration _gameTimeConfiguration;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -18,6 +19,7 @@ public class Installer : MonoBehaviour
         //ServiceLocator.Instance.RegisterService<ITest>(new Test()); //If doesnt have monobehaveour hederitance
         ServiceLocator.Instance.RegisterService<ITest>(_test);
         ServiceLocator.Instance.RegisterService(this);
+        ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
 
         SetDatabase();
         SetInput();
