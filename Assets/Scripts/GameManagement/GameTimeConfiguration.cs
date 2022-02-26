@@ -8,6 +8,13 @@ public class GameTimeConfiguration : MonoBehaviour
     private float _maxTime;
     private float _currentTime;
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            StartGameTime();
+    }
+
     /*
      * @desc Playing time begins
      * **/
@@ -22,10 +29,12 @@ public class GameTimeConfiguration : MonoBehaviour
      * **/
     IEnumerator TimeProgress()
     {
+        EDebug.Log(_currentTime);
         do
         {
             yield return new WaitForSeconds(1f);
             _currentTime--;
+            EDebug.Log(_currentTime);
             // TODO: Update UI
         } while (_currentTime > 0f);
         // TODO: Send notice of game over
