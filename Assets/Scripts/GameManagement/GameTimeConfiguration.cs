@@ -29,12 +29,10 @@ public class GameTimeConfiguration : MonoBehaviour
      * **/
     IEnumerator TimeProgress()
     {
-        EDebug.Log(_currentTime);
         do
         {
             yield return new WaitForSeconds(1f);
             _currentTime--;
-            EDebug.Log(_currentTime);
             // TODO: Update UI
         } while (_currentTime > 0f);
         // TODO: Send notice of game over
