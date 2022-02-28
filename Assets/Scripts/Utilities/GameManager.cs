@@ -32,6 +32,16 @@ public class GameManager : MonoBehaviour
     }
     public GAME_STATE_CLIENT _gameStateClient;
 
+    [Header("Windows")]
+    public GameObject _initialScreen;
+    public GameObject _credits;
+    public GameObject _mainMenu;
+    public GameObject _class;
+    public GameObject _gameConnection;
+    public GameObject _addStudent;
+    public GameObject _gameTime;
+    public GameObject _stadistics;
+    public GameObject _finalScore;
     // Start is called before the first frame update
     void Start()
     {

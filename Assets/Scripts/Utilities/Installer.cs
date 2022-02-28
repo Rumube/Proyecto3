@@ -7,10 +7,14 @@ public class Installer : MonoBehaviour
     public bool _server;
 
     public Test _test;
+    public GameTimeConfiguration _gameTimeConfiguration;
+    public GameManager _gameManager;
+    public MobileUI _canvasMobile;
+    public TabletUI _canvasTablet;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
-
+    private IUI _UIUsed;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,9 +22,20 @@ public class Installer : MonoBehaviour
         //ServiceLocator.Instance.RegisterService<ITest>(new Test()); //If doesnt have monobehaveour hederitance
         ServiceLocator.Instance.RegisterService<ITest>(_test);
         ServiceLocator.Instance.RegisterService(this);
+        ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
+        ServiceLocator.Instance.RegisterService(_gameManager);
+        if (_server)
+        {
+            ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
+        }
+        else
+        {
+            ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
+        }
 
         SetDatabase();
         SetInput();
+        SetUI();
     }
 
     // Update is called once per frame
@@ -48,5 +63,19 @@ public class Installer : MonoBehaviour
 #elif UNITY_ANDROID
         _databaseUsed = new AndroidDatabaseAdapter();
 #endif
+    }
+
+    private void SetUI()
+    {
+        if (_server)
+        {
+            _canvasMobile.gameObject.SetActive(true);
+            _canvasTablet.gameObject.SetActive(false);
+        }
+        else
+        {
+            _canvasMobile.gameObject.SetActive(false);
+            _canvasTablet.gameObject.SetActive(true);
+        }
     }
 }
