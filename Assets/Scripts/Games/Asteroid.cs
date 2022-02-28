@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    [Header("Configuration")]
+    //[Header("Configuration")]
     //Configuration
-    [SerializeField]
-    private float _movementVelocity = 1f;
-    [SerializeField]
-    private float _rotationVelocity = 45f;
-    private int _idGeometry = 0;
-    [SerializeField]
-    private Transform _target;
+    [HideInInspector]
+    public float _movementVelocity {get; set; }
+    [HideInInspector]
+    public float _rotationVelocity { get; set; }
+    [HideInInspector]
+    public int _idGeometry { get; set; }
+
     private Vector3 _targetStartPosition = new Vector3(0, 0, 0);
     [SerializeField]
     private bool _rotating = false;
     [SerializeField]
     private Vector2 _startPostion;
+    [SerializeField]
+    private Transform _target;
 
 
     private void Start()
