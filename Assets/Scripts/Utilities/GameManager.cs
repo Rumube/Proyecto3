@@ -81,18 +81,18 @@ public class GameManager : MonoBehaviour
    */
     public IEnumerator StartCountdown()
     {
-        while(_timeSessionMinutes > 0 && _timeSessionSeconds > 0)
+        while((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))
         {
-            if (_timeSessionSeconds > 0)
+            if (_timeSessionSeconds >= 1)
             {
                 _timeSessionSeconds--;
-                yield return new WaitForSeconds(1f);
             }
-            else
+            if(_timeSessionMinutes > 0 &&_timeSessionSeconds == 0)
             {
                 _timeSessionMinutes--;
                 _timeSessionSeconds = 59;
             }
+            yield return new WaitForSeconds(1f);
         }
         //TODO: End session, send packages end
     }
