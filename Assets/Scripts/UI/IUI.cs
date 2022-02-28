@@ -6,6 +6,6 @@ public interface IUI
 {
     public void QuitGame();
     public void Credits();
-    public abstract void OpenNextWindow();
-    public abstract void OpenPreviousWindow();
+    public void OpenNextWindow();
+    public void OpenPreviousWindow();
 }

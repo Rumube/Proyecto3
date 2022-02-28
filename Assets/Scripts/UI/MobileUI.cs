@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MobileUI : UI
 {
-    
+    public InputField _inputMinutes;
+    public InputField _inputSeconds;
+    public Text _countdown;
     // Start is called before the first frame update
     void Start()
-    {
-        _windowsTree = new List<GameObject>();
+    {    
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._initialScreen);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._mainMenu);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._class);
@@ -23,25 +24,26 @@ public class MobileUI : UI
             if(_windowsTree[i] != null) //Esto sacarlo cuando esten las pantallas asignadas en el GM
             _windowsTree[i].SetActive(false);
         }
-        _uiIndex = 0;
+      
         _windowsTree[_uiIndex].SetActive(true);
     }
+
     /** 
-     * @desc Open the next window deppending on the position of the array and close the previous one
-     */
-    public override void OpenNextWindow()
+  * @desc Set the time for the whole session passing values to the GM
+  */
+    public void SetTimeSession()
     {
-        _uiIndex++;
-        _windowsTree[_uiIndex].SetActive(true);
-        _windowsTree[_uiIndex - 1].SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputMinutes.text, _inputSeconds.text);
+    }
+    private void Update()
+    {
+        ShowCountDown();
     }
     /** 
-      * @desc Open the previous window deppending on the position of the array and close the current one
-      */
-    public override void OpenPreviousWindow()
+    * @desc Show the timer
+    */
+    private void ShowCountDown()
     {
-        _uiIndex--;
-        _windowsTree[_uiIndex].SetActive(true);
-        _windowsTree[_uiIndex + 1].SetActive(false);
+        _countdown.text = ServiceLocator.Instance.GetService<GameManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<GameManager>()._timeSessionSeconds;
     }
 }

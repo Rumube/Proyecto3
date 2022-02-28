@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +43,10 @@ public class GameManager : MonoBehaviour
     public GameObject _gameTime;
     public GameObject _stadistics;
     public GameObject _finalScore;
+
+    [Header("Game Configuration")]
+    public int _timeSessionMinutes;
+    public int _timeSessionSeconds;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,5 +57,43 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+    /** 
+      * @desc Set the time for the whole session
+      * @param int minutes - The session's minutes 
+      * @param int seconds - The session's seconds 
+      */
+    public void SetTimeSession(string minutes, string seconds)
+    {
+        _timeSessionMinutes = int.Parse(minutes);
+        _timeSessionSeconds = int.Parse(seconds);
+        print("t "+ _timeSessionMinutes + " : "+ _timeSessionSeconds);
+    }
+    /** 
+    * @desc Just start the timer when the configuration is done
+    */
+    public void StartGameSession()
+    {
+        StartCoroutine(StartCountdown());
+    }
+    /** 
+   * @desc Countdown
+   */
+    public IEnumerator StartCountdown()
+    {
+        while(_timeSessionMinutes > 0 && _timeSessionSeconds > 0)
+        {
+            if (_timeSessionSeconds > 0)
+            {
+                _timeSessionSeconds--;
+                yield return new WaitForSeconds(1f);
+            }
+            else
+            {
+                _timeSessionMinutes--;
+                _timeSessionSeconds = 59;
+            }
+        }
+        //TODO: End session, send packages end
     }
 }
