@@ -31,11 +31,15 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         do
         {
-            // TODO: Control Pause
-            yield return new WaitForSeconds(1f);
-            _currentTime--;
-            // TODO: Update UI
+            if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+            {
+                yield return new WaitForSeconds(1f);
+                _currentTime--;
+                EDebug.Log(_currentTime);
+                // TODO: Update UI
+            }
+
         } while (_currentTime > 0f);
-        // TODO: Send notice of game over
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
     }
 }
