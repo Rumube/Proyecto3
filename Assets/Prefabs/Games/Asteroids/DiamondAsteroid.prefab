@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8532277125696731413}
   - component: {fileID: 1438809463092129515}
-  - component: {fileID: 4262663361872150433}
+  - component: {fileID: -9197467794689994193}
+  - component: {fileID: 8209359349050395274}
+  - component: {fileID: 4135617595460526222}
   m_Layer: 0
   m_Name: DiamondAsteroid
   m_TagString: Untagged
@@ -48,7 +50,19 @@ MonoBehaviour:
   _rotating: 1
   _startPostion: {x: 0, y: 0}
   _targetPosition: {x: 0, y: 0}
---- !u!60 &4262663361872150433
+--- !u!114 &-9197467794689994193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4529071374091863564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &8209359349050395274
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,10 +87,31 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.000000029802322, y: 1.3616111}
-      - {x: -0.89414245, y: -0.032185584}
-      - {x: 0.00032693148, y: -1.3213507}
-      - {x: 0.90397465, y: -0.027395487}
+    - - {x: 0.014281094, y: 1.3141845}
+      - {x: -0.8867916, y: -0.026589215}
+      - {x: -0.016540587, y: -1.3659805}
+      - {x: 0.9019698, y: -0.01641512}
+--- !u!50 &4135617595460526222
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4529071374091863564}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8042362493411499850
 GameObject:
   m_ObjectHideFlags: 0
