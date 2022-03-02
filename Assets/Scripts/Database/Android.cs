@@ -92,9 +92,12 @@ public class Android : MonoBehaviour
          ;
         try
         {
+            //COMPROBAR
+            /*
             dbcmd = dbconn.CreateCommand(); // create empty command
             dbcmd.CommandText = query; // fill the command
             reader = dbcmd.ExecuteReader(); // execute command which returns a reader
+            */
         }
         catch (Exception e)
         {
@@ -105,9 +108,12 @@ public class Android : MonoBehaviour
         query = "CREATE TABLE Kids (ID INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), Points integer, Tablet integer)";
         try
         {
+            //COMPROBAR
+            /*
             dbcmd = dbconn.CreateCommand(); // create empty command
             dbcmd.CommandText = query; // fill the command
             reader = dbcmd.ExecuteReader(); // execute command which returns a reader
+            */
         }
         catch (Exception e)
         {
