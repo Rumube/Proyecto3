@@ -361,13 +361,10 @@ public class Android : MonoBehaviour
 
     }
     /** 
-
-* @desc Cambia el nombre de un estudiante de la base
-
-* @param string updateId - El id del estudiante que va a ser modificado 
-*        string updateName- El nombre nuevo del estudiante
-
-*/
+    * @desc Cambia el nombre de un estudiante de la base
+    * @param string updateId - El id del estudiante que va a ser modificado 
+    * @param string updateName- El nombre nuevo del estudiante
+    */
     private void UpdateStudent(string updateId, string updateName)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -392,9 +389,8 @@ public class Android : MonoBehaviour
         }
     }
     /** 
-
-* @desc Lee toda la tabla Student de la base
-*/
+    * @desc Lee toda la tabla Student de la base
+    */
     private void ReaderStudent()
     {
         int id_Student_readers, id_Classroom_readers;
@@ -423,12 +419,9 @@ public class Android : MonoBehaviour
         }
     }
     /** 
-
-* @desc Busca a todos los estudiantes de una misma clase
-
-* @param string searchByClass - El id de la clase de los alumnos
-
-*/
+    * @desc Busca a todos los estudiantes de una misma clase
+    * @param string searchByClass - El id de la clase de los alumnos
+    */
     private void SearchStudent(string searchByClass)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -461,9 +454,8 @@ public class Android : MonoBehaviour
     #endregion
     #region Table Session
     /** 
-
-* @desc Añade la fecha y hora actuales a la base
-*/
+    * @desc Añade la fecha y hora actuales a la base
+    */
     public void InsertSession()
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -482,9 +474,8 @@ public class Android : MonoBehaviour
         ReaderDate();
     }
     /** 
-
-* @desc Lee la fecha de la tabla Session de la base
-*/
+    * @desc Lee la fecha de la tabla Session de la base
+    */
     private void ReaderDate()
     {
         string date;
@@ -514,12 +505,10 @@ public class Android : MonoBehaviour
     #endregion
     #region Table LevelConf
     /** 
-
-* @desc Añade una confifuracion de nivel a la base
-
-* @param string param - El json
-*        int idGame- La id del juego
-*/
+    * @desc Añade una confifuracion de nivel a la base
+    * @param string param - El json
+    * @param int idGame- La id del juego
+    */
     private void InsertLevelConf(string param,int idGame)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -538,16 +527,13 @@ public class Android : MonoBehaviour
     #endregion
     #region Table Match
     /** 
-
-* @desc Registra una partida a la base
-
-* @param int idStudent - El id del estudiante
-*        int idGSession- El id de la sesión
-*        int idLevelConf- El id de la configuración de nivel
-*        int team- El equipo del estudiante
-*        int points- Los puntos que ha ganado el estudiante en la partida
-
-*/
+    * @desc Registra una partida a la base
+    * @param int idStudent - El id del estudiante
+    * @param int idGSession- El id de la sesión
+    * @param int idLevelConf- El id de la configuración de nivel
+    * @param int team- El equipo del estudiante
+    * @param int points- Los puntos que ha ganado el estudiante en la partida
+    */
     private void InsertMatch(int idStudent, int idSession, int idLevelConfig, int team, int points)
     {
         using (_dbconn = new SqliteConnection(_conn))
