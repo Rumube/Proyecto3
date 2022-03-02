@@ -35,9 +35,10 @@ public class AsteroidBlaster : MonoBehaviour
      * **/
     void GenerateAsteroids()
     {
-        int geometryID = Random.Range(0, _geometryForms.Length);
+        
         for(int i = 0; i < _numberAsteroids; i++)
         {
+            int geometryID = Random.Range(0, _geometryForms.Length);
             GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
             newAsteroid.GetComponent<Asteroid>().InitAsteroid(geometryID, _movementVelocity, _rotationVelocity, _level);
             _asteroids.Add(newAsteroid);

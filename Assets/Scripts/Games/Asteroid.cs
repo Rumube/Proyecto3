@@ -97,7 +97,7 @@ public class Asteroid : MonoBehaviour
     public void SetRotationVelocity(float rotationVelocity, float levelValuesRange)
     {
         _rotationVelocity = Random.Range(rotationVelocity,
-            rotationVelocity + (45 + levelValuesRange));
+            rotationVelocity + (5 + levelValuesRange));
     }
 
     /*
