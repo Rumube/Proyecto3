@@ -92,12 +92,9 @@ public class Android : MonoBehaviour
          ;
         try
         {
-            //COMPROBAR
-            /*
-            dbcmd = dbconn.CreateCommand(); // create empty command
-            dbcmd.CommandText = query; // fill the command
-            reader = dbcmd.ExecuteReader(); // execute command which returns a reader
-            */
+            _dbcmd = _dbconn.CreateCommand(); // create empty command
+            _dbcmd.CommandText = query; // fill the command
+            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
         }
         catch (Exception e)
         {
@@ -108,12 +105,9 @@ public class Android : MonoBehaviour
         query = "CREATE TABLE Kids (ID INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), Points integer, Tablet integer)";
         try
         {
-            //COMPROBAR
-            /*
-            dbcmd = dbconn.CreateCommand(); // create empty command
-            dbcmd.CommandText = query; // fill the command
-            reader = dbcmd.ExecuteReader(); // execute command which returns a reader
-            */
+            _dbcmd = _dbconn.CreateCommand(); // create empty command
+            _dbcmd.CommandText = query; // fill the command
+            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
         }
         catch (Exception e)
         {
@@ -208,11 +202,9 @@ public class Android : MonoBehaviour
 
     #region Table Classroom
     /** 
-  * @desc inserta una clase en la base de datos
-
-  * @param string name - el nombre de la clase 
-
-*/
+    * @desc inserta una clase en la base de datos
+    * @param string name - el nombre de la clase 
+    */
     private void InsertClass(string name)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -229,12 +221,9 @@ public class Android : MonoBehaviour
         ReaderClass();
     }
     /** 
-
-  * @desc Borra una clase
-
-  * @param string deleteById - El id de la clase que va a ser elimimada 
-
-*/
+    * @desc Borra una clase
+    * @param string deleteById - El id de la clase que va a ser elimimada 
+    */
     private void DeleteClass(string deleteById)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -257,13 +246,10 @@ public class Android : MonoBehaviour
 
     }
     /** 
-
-* @desc Cambia el nombre de una clase de la base
-
-* @param string updateId - El id de la clase que va a ser modificada 
-*        string updateName- El nombre nuevo de la clase
-
-*/
+    * @desc Cambia el nombre de una clase de la base
+    * @param string updateId - El id de la clase que va a ser modificada 
+    * @param string updateName- El nombre nuevo de la clase
+    */
     private void UpdateClass(string updateId, string updateName)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -289,9 +275,8 @@ public class Android : MonoBehaviour
     }
 
     /** 
-
-* @desc Lee toda la tabla Classroom de la base
-*/
+    * @desc Lee toda la tabla Classroom de la base
+    */
     private void ReaderClass()
     {
         int idreaders;
