@@ -21,27 +21,21 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateAsteroids();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(GenerateAsteroids());
     }
 
     /*
      * @desc Generate the asteroids and start the value of the properties
      * **/
-    void GenerateAsteroids()
+    IEnumerator GenerateAsteroids()
     {
-        
         for(int i = 0; i < _numberAsteroids; i++)
         {
             int geometryID = Random.Range(0, _geometryForms.Length);
             GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
-            newAsteroid.GetComponent<Asteroid>().InitAsteroid(geometryID, _movementVelocity, _rotationVelocity, _level);
+            newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level);
             _asteroids.Add(newAsteroid);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

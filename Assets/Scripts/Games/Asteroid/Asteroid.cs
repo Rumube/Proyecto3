@@ -10,8 +10,6 @@ public class Asteroid : MonoBehaviour
     public float _movementVelocity {get; set; }
     [HideInInspector]
     public float _rotationVelocity { get; set; }
-    [HideInInspector]
-    public int _idGeometry { get; set; }
     [SerializeField]
     private bool _rotating = false;
     [SerializeField]
@@ -36,12 +34,11 @@ public class Asteroid : MonoBehaviour
      * @param float rotationVelocity - The speed value
      * @param float levelValuesRange - Randomization parameter
      * **/
-    public void InitAsteroid(int geometryID ,float movementVelocity,float rotationVelocity, float levelValuesRange)
+    public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange)
     {
         SetMovementVelocity(movementVelocity, levelValuesRange);
         SetRotationVelocity(rotationVelocity, levelValuesRange);
         SetInitialPosition();
-        _idGeometry = geometryID;
     }
 
     /*

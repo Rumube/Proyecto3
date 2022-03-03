@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3215253114635666464}
   - component: {fileID: -3140788782109300194}
   - component: {fileID: 6876258819629278229}
-  - component: {fileID: 8715063663782385781}
   - component: {fileID: -8310342036343914744}
+  - component: {fileID: 6159728576547822719}
   m_Layer: 0
   m_Name: PentagonAsteroid
   m_TagString: Untagged
@@ -80,18 +80,6 @@ PolygonCollider2D:
       - {x: -0.4218819, y: -1.0385382}
       - {x: 0.421882, y: -1.0476515}
       - {x: 1.0276271, y: 0.32246646}
---- !u!114 &8715063663782385781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4967734796524238198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &-8310342036343914744
 Rigidbody2D:
   serializedVersion: 4
@@ -113,6 +101,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6159728576547822719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4967734796524238198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 5
 --- !u!1 &8350677976570666351
 GameObject:
   m_ObjectHideFlags: 0

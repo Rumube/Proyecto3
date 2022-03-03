@@ -92,9 +92,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6316450632456390871}
   - component: {fileID: 825298951340783580}
-  - component: {fileID: -6935738422880047404}
   - component: {fileID: 6975727897483282728}
   - component: {fileID: 1266800715137963134}
+  - component: {fileID: -8785056468344198898}
   m_Layer: 0
   m_Name: CicleAsteroid
   m_TagString: Untagged
@@ -132,18 +132,6 @@ MonoBehaviour:
   _rotating: 1
   _startPostion: {x: 0, y: 0}
   _targetPosition: {x: 0, y: 0}
---- !u!114 &-6935738422880047404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7853374780848654809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &6975727897483282728
 Rigidbody2D:
   serializedVersion: 4
@@ -181,3 +169,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.9
+--- !u!114 &-8785056468344198898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853374780848654809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 0

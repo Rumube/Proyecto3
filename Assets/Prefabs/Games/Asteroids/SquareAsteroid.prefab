@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3718568791373341424}
   - component: {fileID: 6101763230433085793}
-  - component: {fileID: -2242561581122099324}
   - component: {fileID: 6943021474930659423}
   - component: {fileID: -3525356371855933694}
+  - component: {fileID: 661201068665676032}
   m_Layer: 0
   m_Name: SquareAsteroid
   m_TagString: Untagged
@@ -50,18 +50,6 @@ MonoBehaviour:
   _rotating: 1
   _startPostion: {x: 0, y: 0}
   _targetPosition: {x: 0, y: 0}
---- !u!114 &-2242561581122099324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479222072489339932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &6943021474930659423
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -109,6 +97,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &661201068665676032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479222072489339932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 1
 --- !u!1 &1761610847685333157
 GameObject:
   m_ObjectHideFlags: 0

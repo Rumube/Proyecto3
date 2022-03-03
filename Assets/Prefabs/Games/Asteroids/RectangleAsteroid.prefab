@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 4108926313012385139}
   - component: {fileID: -604125089550136417}
   - component: {fileID: 6850941756417959554}
-  - component: {fileID: -1410924576177179878}
   - component: {fileID: 5628678123101261047}
+  - component: {fileID: 4328356864546691864}
   m_Layer: 0
   m_Name: RectangleAsteroid
   m_TagString: Untagged
@@ -158,18 +158,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.64, y: 1.32}
   m_EdgeRadius: 0
---- !u!114 &-1410924576177179878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3801549539005385659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5628678123101261047
 Rigidbody2D:
   serializedVersion: 4
@@ -191,3 +179,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4328356864546691864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3801549539005385659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 4

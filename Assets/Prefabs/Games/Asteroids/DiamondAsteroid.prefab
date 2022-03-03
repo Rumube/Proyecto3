@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8532277125696731413}
   - component: {fileID: 1438809463092129515}
-  - component: {fileID: -9197467794689994193}
   - component: {fileID: 8209359349050395274}
   - component: {fileID: 4135617595460526222}
+  - component: {fileID: 1291462526978111761}
   m_Layer: 0
   m_Name: DiamondAsteroid
   m_TagString: Untagged
@@ -50,18 +50,6 @@ MonoBehaviour:
   _rotating: 1
   _startPostion: {x: 0, y: 0}
   _targetPosition: {x: 0, y: 0}
---- !u!114 &-9197467794689994193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4529071374091863564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9933d2c342da55e45b9ea0d3e86c2124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &8209359349050395274
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -112,6 +100,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1291462526978111761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4529071374091863564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 3
 --- !u!1 &8042362493411499850
 GameObject:
   m_ObjectHideFlags: 0
