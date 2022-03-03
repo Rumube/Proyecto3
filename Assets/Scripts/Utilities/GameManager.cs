@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +43,9 @@ public class GameManager : MonoBehaviour
     public GameObject _gameTime;
     public GameObject _stadistics;
     public GameObject _finalScore;
+
+    public InputField _IP;
+    public InputField _port;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,5 +56,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void StartServer()
+    {
+        Server server = new Server();
+        server.createServer();
+    }
+    public void StartClient()
+    {
+        Client client = new Client();
+        client.CreateClient(_IP.text,_port.text);
     }
 }

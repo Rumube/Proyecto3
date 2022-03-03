@@ -56,7 +56,6 @@ public class miServidor_v2 : WebSocketBehavior
         base.OnMessage(e);
         Debug.Log("Mensaje recibido: " + e.Data);
         Sessions.Broadcast(e.Data); // reenviar el mensaje a todos
-
         package = JsonUtility.FromJson<PackageUser>(e.Data);
 
         switch (package.typePackage)
