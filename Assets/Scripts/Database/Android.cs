@@ -40,7 +40,7 @@ public class Android : MonoBehaviour
 
 #elif UNITY_ANDROID
 
-        string filepath = Application.persistentDataPath + "/" + DatabaseName;
+        string filepath = Application.persistentDataPath + "/" + _DatabaseName;
             if (!File.Exists(filepath))
             {
                 // If not found on android will create Tables and database
