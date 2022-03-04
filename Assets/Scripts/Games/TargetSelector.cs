@@ -8,12 +8,6 @@ public class TargetSelector : MonoBehaviour
     public int level;
     public List<Geometry.Geometry_Type> resultado = new List<Geometry.Geometry_Type>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            resultado = generateTargets(prueba, level);
-    }
-
     /*
      * @desc Generates a list with geometry as a target for mini-games
      * @param List<Geomtry.Geometry_Type> geometryOptions - Possible geometry to select
