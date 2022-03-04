@@ -40,7 +40,7 @@ public class Android : MonoBehaviour
 
 #elif UNITY_ANDROID
 
-        string filepath = Application.persistentDataPath + "/" + DatabaseName;
+        string filepath = Application.persistentDataPath + "/" + _DatabaseName;
             if (!File.Exists(filepath))
             {
                 // If not found on android will create Tables and database
@@ -71,30 +71,25 @@ public class Android : MonoBehaviour
         string query;
         query = "create table if not exists Classroom (idClassroom INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100));"+
 
-        " create table if not exists Student(idStudent INTEGER PRIMARY KEY   AUTOINCREMENT,Name varchar(100),idClassroom INTEGER,foreign key(idClassroom) references Classroom(idClassroom));"+
+        " create table if not exists Student(idStudent INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), idClassroom INTEGER, foreign key(idClassroom) references Classroom(idClassroom));"+
 
-        " create table if not exists Session(idSession INTEGER PRIMARY KEY   AUTOINCREMENT,DateSession Date);"+
+        " create table if not exists Session(idSession INTEGER PRIMARY KEY   AUTOINCREMENT, DateSession Date);"+
         
-        "create table if not exists Game(idGame INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100),UNIQUE(Name));"+
-
-        "create table if not exists LevelConf(idLevelConf INTEGER PRIMARY KEY   AUTOINCREMENT,"+
-        "idGame INTEGER,Params varchar(100),foreign key(idGame) references Game(idGame));"+
+        "create table if not exists Game(idGame INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), UNIQUE(Name));"+
 
         "create table if not exists Match("+
-         "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT,"+
-         "idStudent INTEGER,idSession INTEGER, idLevelConf INTEGER,"+
-         "team integer,"+
-         "points integer,"+
-         "time float,"+
-         "foreign key(idStudent) references Student(idStudent),"+
-         "foreign key(idSession) references Session(idSession),"+
-         "foreign key(idLevelConf) references LevelConf(idLevelConf)); "
+         "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
+         "idStudent INTEGER, idSession INTEGER, idLevelConf INTEGER,"+
+         "team integer, "+"matchInfo varchar(200),"+
+         "foreign key(idStudent) references Student(idStudent), "+
+         "foreign key(idSession) references Session(idSession), "+
+         "foreign key(idGame) references Game(idGame)); "
          ;
         try
         {
-            dbcmd = dbconn.CreateCommand(); // create empty command
-            dbcmd.CommandText = query; // fill the command
-            reader = dbcmd.ExecuteReader(); // execute command which returns a reader
+            _dbcmd = _dbconn.CreateCommand(); // create empty command
+            _dbcmd.CommandText = query; // fill the command
+            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
         }
         catch (Exception e)
         {
@@ -105,9 +100,9 @@ public class Android : MonoBehaviour
         query = "CREATE TABLE Kids (ID INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), Points integer, Tablet integer)";
         try
         {
-            dbcmd = dbconn.CreateCommand(); // create empty command
-            dbcmd.CommandText = query; // fill the command
-            reader = dbcmd.ExecuteReader(); // execute command which returns a reader
+            _dbcmd = _dbconn.CreateCommand(); // create empty command
+            _dbcmd.CommandText = query; // fill the command
+            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
         }
         catch (Exception e)
         {
@@ -202,11 +197,11 @@ public class Android : MonoBehaviour
 
     #region Table Classroom
     /** 
-  * @desc inserta una clase en la base de datos
+    * @desc inserta una clase en la base de datos
 
-  * @param string name - el nombre de la clase 
+    * @param string name - el nombre de la clase 
 
-*/
+    */
     private void InsertClass(string name)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -224,11 +219,11 @@ public class Android : MonoBehaviour
     }
     /** 
 
-  * @desc Borra una clase
+    * @desc Borra una clase
 
-  * @param string deleteById - El id de la clase que va a ser elimimada 
+    * @param string deleteById - El id de la clase que va a ser elimimada 
 
-*/
+    */
     private void DeleteClass(string deleteById)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -252,12 +247,11 @@ public class Android : MonoBehaviour
     }
     /** 
 
-* @desc Cambia el nombre de una clase de la base
+    * @desc Cambia el nombre de una clase de la base
 
-* @param string updateId - El id de la clase que va a ser modificada 
-*        string updateName- El nombre nuevo de la clase
-
-*/
+    * @param string updateId - El id de la clase que va a ser modificada 
+    * @param string updateName- El nombre nuevo de la clase
+    */
     private void UpdateClass(string updateId, string updateName)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -284,8 +278,8 @@ public class Android : MonoBehaviour
 
     /** 
 
-* @desc Lee toda la tabla Classroom de la base
-*/
+    * @desc Lee toda la tabla Classroom de la base
+    */
     private void ReaderClass()
     {
         int idreaders;
@@ -371,12 +365,12 @@ public class Android : MonoBehaviour
     }
     /** 
 
-* @desc Cambia el nombre de un estudiante de la base
+    * @desc Cambia el nombre de un estudiante de la base
 
-* @param string updateId - El id del estudiante que va a ser modificado 
-*        string updateName- El nombre nuevo del estudiante
+    * @param string updateId - El id del estudiante que va a ser modificado 
+    * @param string updateName- El nombre nuevo del estudiante
 
-*/
+    */
     private void UpdateStudent(string updateId, string updateName)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -402,8 +396,8 @@ public class Android : MonoBehaviour
     }
     /** 
 
-* @desc Lee toda la tabla Student de la base
-*/
+    * @desc Lee toda la tabla Student de la base
+    */
     private void ReaderStudent()
     {
         int id_Student_readers, id_Classroom_readers;
@@ -433,11 +427,11 @@ public class Android : MonoBehaviour
     }
     /** 
 
-* @desc Busca a todos los estudiantes de una misma clase
+    * @desc Busca a todos los estudiantes de una misma clase
 
-* @param string searchByClass - El id de la clase de los alumnos
+    * @param string searchByClass - El id de la clase de los alumnos
 
-*/
+    */
     private void SearchStudent(string searchByClass)
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -471,8 +465,8 @@ public class Android : MonoBehaviour
     #region Table Session
     /** 
 
-* @desc Añade la fecha y hora actuales a la base
-*/
+    * @desc Añade la fecha y hora actuales a la base
+    */
     public void InsertSession()
     {
         using (_dbconn = new SqliteConnection(_conn))
@@ -492,8 +486,8 @@ public class Android : MonoBehaviour
     }
     /** 
 
-* @desc Lee la fecha de la tabla Session de la base
-*/
+    * @desc Lee la fecha de la tabla Session de la base
+    */
     private void ReaderDate()
     {
         string date;
@@ -521,49 +515,25 @@ public class Android : MonoBehaviour
         }
     }
     #endregion
-    #region Table LevelConf
-    /** 
-
-* @desc Añade una confifuracion de nivel a la base
-
-* @param string param - El json
-*        int idGame- La id del juego
-*/
-    private void InsertLevelConf(string param,int idGame)
-    {
-        using (_dbconn = new SqliteConnection(_conn))
-        {
-            _dbconn.Open(); //Open connection to the database.
-            _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into LevelConf (Params, idGame) values (\"{0}\",\"{1}\")", param, idGame);// table name
-            _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
-            _dbconn.Close();
-        }
-        _infoText.text = "";
-        EDebug.Log("Insert Done  ");
-
-    }
-    #endregion
     #region Table Match
     /** 
 
-* @desc Registra una partida a la base
+    * @desc Registra una partida a la base
 
-* @param int idStudent - El id del estudiante
-*        int idGSession- El id de la sesión
-*        int idLevelConf- El id de la configuración de nivel
-*        int team- El equipo del estudiante
-*        int points- Los puntos que ha ganado el estudiante en la partida
+    * @param int idStudent - El id del estudiante
+    * @param int idGSession- El id de la sesión
+* @param int idGame- El id del juego al que ha jugado
+    * @param int team- El equipo del estudiante
+* @param string matchInfo- Informacion de la partida
 
-*/
-    private void InsertMatch(int idStudent, int idSession, int idLevelConfig, int team, int points)
+    */
+    private void InsertMatch(int idStudent, int idSession, int idGame, int team, string matchInfo)
     {
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
             _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idLevelConf, team, points ) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\")", idStudent, idSession, idLevelConfig, team, points);// table name
+            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idLevelConf, team, matchInfo ) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\")", idStudent, idSession, idGame, team, matchInfo);// table name
             _dbcmd.CommandText = _sqlQuery;
             _dbcmd.ExecuteScalar();
             _dbconn.Close();
