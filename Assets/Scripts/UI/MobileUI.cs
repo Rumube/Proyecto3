@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MobileUI : UI
 {
-    public InputField _inputMinutes;
-    public InputField _inputSeconds;
+    public InputField _inputSessionMinutes;
+    public InputField _inputSessionSeconds;
+    public InputField _inputMinigamesMinutes;
+    public InputField _inputMinigamesSeconds;
     public Text _countdown;
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,14 @@ public class MobileUI : UI
   */
     public void SetTimeSession()
     {
-        ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputMinutes.text, _inputSeconds.text);
+        ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
+    }
+    /** 
+  * @desc Set the time for all minigames passing values to the GM
+  */
+    public void SetTimeMinigames()
+    {
+        ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
     }
     private void Update()
     {

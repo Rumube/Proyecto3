@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Configuration")]
     public int _timeSessionMinutes;
     public int _timeSessionSeconds;
+    public int _timeMinigamesMinutes;
+    public int _timeMinigamesSeconds;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +70,17 @@ public class GameManager : MonoBehaviour
         _timeSessionMinutes = int.Parse(minutes);
         _timeSessionSeconds = int.Parse(seconds);
         print("t "+ _timeSessionMinutes + " : "+ _timeSessionSeconds);
+    }
+    /** 
+     * @desc Set the time for all minigames
+     * @param int minutes - The minigames's minutes 
+     * @param int seconds - The minigames's seconds 
+     */
+    public void SetTimeMinigames(string minutes, string seconds)
+    {
+        _timeMinigamesMinutes = int.Parse(minutes);
+        _timeMinigamesSeconds = int.Parse(seconds);
+        print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
     }
     /** 
     * @desc Just start the timer when the configuration is done
