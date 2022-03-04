@@ -44,18 +44,24 @@ public class GameManager : MonoBehaviour
     public GameObject _stadistics;
     public GameObject _finalScore;
 
-    public InputField _IP;
-    public InputField _port;
+    //Testing 
+    public InputField _IPTest;
+    public InputField _portTest;
 
     [Header("Game Configuration")]
     public int _timeSessionMinutes;
     public int _timeSessionSeconds;
     public int _timeMinigamesMinutes;
     public int _timeMinigamesSeconds;
+
+    [Header("Game Connection")]
+    public string _ip;
+    public string _port;
+    Server server;
     // Start is called before the first frame update
     void Start()
     {
-      
+        _gameStateServer = GAME_STATE_SERVER.init;
     }
 
     // Update is called once per frame
@@ -66,13 +72,32 @@ public class GameManager : MonoBehaviour
 
     public void StartServer()
     {
-        Server server = new Server();
-        server.createServer();
+        string[] connectionData = new string[2];
+
+        server = new Server();
+        connectionData = server.createServer();
+
+        _ip = connectionData[0];
+        _port = connectionData[1];
+
+        _gameStateServer = GAME_STATE_SERVER.connection;
+    }
+    public int GetConnectedTablets()
+    {
+        return Server._connectedTablets;
+    }
+    public bool GetUpdateConnectedTablets()
+    {
+        return Server._updateConnectedTablets;
+    }
+    public void SetUpdateConnectedTablets(bool state)
+    {
+        Server._updateConnectedTablets = state;
     }
     public void StartClient()
     {
         Client client = new Client();
-        client.CreateClient(_IP.text,_port.text);
+        client.CreateClient(_IPTest.text,_portTest.text);
     }
     /** 
       * @desc Set the time for the whole session

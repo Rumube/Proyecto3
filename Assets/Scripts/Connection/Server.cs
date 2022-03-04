@@ -10,7 +10,8 @@ public class Server : WebSocketBehavior
     const int MAX_PLAYERS = 10;
 
     public static Tablet[] _tablets;
-
+    public static int _connectedTablets;
+    public static bool _updateConnectedTablets;
     Package _serverPackage;
     List<Package> _allPackages;
 
@@ -30,8 +31,12 @@ public class Server : WebSocketBehavior
     }
 
     //  servidor websocket
-    public void createServer()
+    public string[] createServer()
     {
+        _connectedTablets = 0;
+        _updateConnectedTablets = false;
+
+        string[] connectionData = new string[2];
         _server = new WebSocketServer(8088);
         _server.Start();
         _server.AddWebSocketService<Server>("/");
@@ -43,6 +48,10 @@ public class Server : WebSocketBehavior
 
         _allPackages = new List<Package>();
 
+        connectionData[0] = GetLocalIPAddress();
+        connectionData[1] = _server.Port.ToString();
+
+        return connectionData;
     }
     public string GetLocalIPAddress()
     {
@@ -61,6 +70,8 @@ public class Server : WebSocketBehavior
     {
         base.OnOpen();
         Debug.Log("++ Alguien se ha conectado. " + Sessions.Count);
+        _connectedTablets = Sessions.Count;
+        _updateConnectedTablets = true;
     }
     protected override void OnClose(CloseEventArgs e)
     {

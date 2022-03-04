@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MobileUI : UI
 {
+    [Header("Game Connection")]
+    public Text _ip;
+    public Text _port;
+    public Text _connectedTablets;
+
     public InputField _inputSessionMinutes;
     public InputField _inputSessionSeconds;
     public InputField _inputMinigamesMinutes;
@@ -29,6 +34,14 @@ public class MobileUI : UI
       
         _windowsTree[_uiIndex].SetActive(true);
     }
+    /** 
+  * @desc Get ip/port from GM
+  */
+    public void GetIpPort()
+    {
+        _ip.text = "IP: "+ ServiceLocator.Instance.GetService<GameManager>()._ip;
+        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<GameManager>()._port;
+    }
 
     /** 
   * @desc Set the time for the whole session passing values to the GM
@@ -46,6 +59,21 @@ public class MobileUI : UI
     }
     private void Update()
     {
+        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        {
+            case GameManager.GAME_STATE_SERVER.connection:
+                if (ServiceLocator.Instance.GetService<GameManager>().GetUpdateConnectedTablets())
+                {
+                    _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
+                    ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
+                }
+                else
+                {
+                    print("No");
+                }
+                break;
+        }
+       
         ShowCountDown();
     }
     /** 

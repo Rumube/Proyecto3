@@ -979,7 +979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &169679814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4251,6 +4251,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1930978592}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: GetIpPort
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &692534135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6597,6 +6621,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501f86329914dc4f8833abe6191698c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ip: {fileID: 924249745}
+  _port: {fileID: 228976639}
+  _connectedTablets: {fileID: 1814588595}
   _inputSessionMinutes: {fileID: 0}
   _inputSessionSeconds: {fileID: 0}
   _inputMinigamesMinutes: {fileID: 0}
@@ -9678,10 +9705,14 @@ MonoBehaviour:
   _gameTime: {fileID: 512837360}
   _stadistics: {fileID: 1955386191}
   _finalScore: {fileID: 0}
+  _IPTest: {fileID: 0}
+  _portTest: {fileID: 0}
   _timeSessionMinutes: 0
   _timeSessionSeconds: 0
   _timeMinigamesMinutes: 0
   _timeMinigamesSeconds: 0
+  _ip: 
+  _port: 
 --- !u!4 &1930978593
 Transform:
   m_ObjectHideFlags: 0
@@ -9714,7 +9745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1955386192
 RectTransform:
   m_ObjectHideFlags: 0
