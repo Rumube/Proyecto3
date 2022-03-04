@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     public GameObject _stadistics;
     public GameObject _finalScore;
 
+    public InputField _IP;
+    public InputField _port;
+
     [Header("Game Configuration")]
     public int _timeSessionMinutes;
     public int _timeSessionSeconds;
@@ -59,6 +62,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void StartServer()
+    {
+        Server server = new Server();
+        server.createServer();
+    }
+    public void StartClient()
+    {
+        Client client = new Client();
+        client.CreateClient(_IP.text,_port.text);
     }
     /** 
       * @desc Set the time for the whole session
