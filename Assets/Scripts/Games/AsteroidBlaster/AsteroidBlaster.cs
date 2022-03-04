@@ -18,9 +18,14 @@ public class AsteroidBlaster : MonoBehaviour
     [SerializeField]
     private int _numberAsteroids;
     private List<GameObject> _asteroids = new List<GameObject>();
+    Dictionary<Geometry.Geometry_Type, GameObject> _asteroidsDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     // Start is called before the first frame update
     void Start()
     {
+        foreach(GameObject asteroid in _asteroids)
+        {
+            _asteroidsDic.Add(asteroid.GetComponent<Geometry>()._geometryType, asteroid);
+        }
         StartCoroutine(GenerateAsteroids());
     }
 

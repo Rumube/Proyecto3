@@ -6,11 +6,12 @@ public class TargetSelector : MonoBehaviour
 {
     public List<Geometry.Geometry_Type> prueba;
     public int level;
+    public List<Geometry.Geometry_Type> resultado = new List<Geometry.Geometry_Type>();
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            generateTargets(prueba, level);
+            resultado = generateTargets(prueba, level);
     }
 
     /*
@@ -21,11 +22,15 @@ public class TargetSelector : MonoBehaviour
      * **/
     public List<Geometry.Geometry_Type> generateTargets(List<Geometry.Geometry_Type> geometryOptions, int level)
     {
+        resultado = null;
         List<Geometry.Geometry_Type> result = new List<Geometry.Geometry_Type>();
         int numOptions = (level / 3) + 1;
+        int maxValue = level;
+        if (level > geometryOptions.Count)
+            maxValue = geometryOptions.Count;
         do
         {
-            Geometry.Geometry_Type aux = (Geometry.Geometry_Type)Random.Range(0, geometryOptions.Count);
+            Geometry.Geometry_Type aux = (Geometry.Geometry_Type)Random.Range(0, maxValue);
             if (!result.Contains(aux))
                 result.Add(aux);
         } while (result.Count != numOptions);
