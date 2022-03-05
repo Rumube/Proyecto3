@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TargetSelector : MonoBehaviour
 {
-    public List<Geometry.Geometry_Type> prueba;
-    public int level;
-    public List<Geometry.Geometry_Type> resultado = new List<Geometry.Geometry_Type>();
 
     /*
      * @desc Generates a list with geometry as a target for mini-games
@@ -16,7 +13,6 @@ public class TargetSelector : MonoBehaviour
      * **/
     public List<Geometry.Geometry_Type> generateTargets(List<Geometry.Geometry_Type> geometryOptions, int level)
     {
-        resultado = null;
         List<Geometry.Geometry_Type> result = new List<Geometry.Geometry_Type>();
         int numOptions = (level / 3) + 1;
         int maxValue = level;

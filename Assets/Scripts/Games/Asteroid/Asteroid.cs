@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    //[Header("Configuration")]
     //Configuration
-    [HideInInspector]
     public float _movementVelocity {get; set; }
-    [HideInInspector]
     public float _rotationVelocity { get; set; }
+    [Header("Configuration")]
     [SerializeField]
     private bool _rotating = false;
     [SerializeField]
@@ -83,7 +81,7 @@ public class Asteroid : MonoBehaviour
     public void SetMovementVelocity(float movementVelocity, float levelValuesRange)
     {
         _movementVelocity = Random.Range(movementVelocity,
-            (1 + levelValuesRange));
+            (1 + levelValuesRange / 2));
     }
 
     /*

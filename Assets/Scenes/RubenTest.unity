@@ -517,17 +517,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _geometryForms:
-  - {fileID: 479222072489339932, guid: 47679c0404eed7344ad43728e94bec41, type: 3}
   - {fileID: 7853374780848654809, guid: 5f87e25cc55110f4f82ab8c8706fbf33, type: 3}
-  - {fileID: 4529071374091863564, guid: 5a9a848b428e7fd4499d19cedefe41a6, type: 3}
-  - {fileID: 2427622894819996788, guid: ce894000ff826a9418e58d6ade52b8f0, type: 3}
-  - {fileID: 4967734796524238198, guid: 31a192ec09aa8314c8b5db167731f03d, type: 3}
-  - {fileID: 3801549539005385659, guid: 501d666e70a7a8e4aba7aef7c43fddf0, type: 3}
   - {fileID: 5217944239521431493, guid: 46c10792884e55e41b91d7ed77619792, type: 3}
+  - {fileID: 479222072489339932, guid: 47679c0404eed7344ad43728e94bec41, type: 3}
+  - {fileID: 4529071374091863564, guid: 5a9a848b428e7fd4499d19cedefe41a6, type: 3}
+  - {fileID: 3801549539005385659, guid: 501d666e70a7a8e4aba7aef7c43fddf0, type: 3}
+  - {fileID: 4967734796524238198, guid: 31a192ec09aa8314c8b5db167731f03d, type: 3}
+  - {fileID: 2427622894819996788, guid: ce894000ff826a9418e58d6ade52b8f0, type: 3}
   _level: 1
-  _movementVelocity: 1
-  _rotationVelocity: 1
-  _numberAsteroids: 5
+  _movementVelocity: 3
+  _rotationVelocity: 10
+  _numberAsteroids: 0
+  _asteroids: []
+  _targetList: 
 --- !u!114 &923033820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +571,8 @@ MonoBehaviour:
   _gameTime: {fileID: 0}
   _stadistics: {fileID: 0}
   _finalScore: {fileID: 0}
+  _IP: {fileID: 0}
+  _port: {fileID: 0}
 --- !u!114 &923033822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,8 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e0691fa7bc084459b2ab39b2217110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prueba: 00000000010000000200000003000000040000000500000006000000
-  level: 1
 --- !u!1001 &1097719228
 PrefabInstance:
   m_ObjectHideFlags: 0
