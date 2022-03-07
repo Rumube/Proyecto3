@@ -4,11 +4,20 @@ using UnityEngine;
 
 public static class EDebug
 {
-#if UNITY_EDITOR
     public static void Log<T>(T msg)
     {
+#if UNITY_EDITOR
+
         Debug.Log(msg);
-    }    
 #endif
+    }
+
+    public static void LogWarning<T>(T msg)
+    {
+#if UNITY_EDITOR
+
+        Debug.LogWarning(msg);
+#endif
+    }
 
 }
