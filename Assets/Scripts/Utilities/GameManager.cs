@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     public string _port;
     Server server;
     Client client;
+    public Text _idText;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
+            _idText.text = Client._tablet._id.ToString();
         }
     }
 
@@ -151,5 +153,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         //TODO: End session, send packages end
+    }
+    private void OnDisable()
+    {
+        Server.OnDisable();
+        Client.OnDisable();
     }
 }

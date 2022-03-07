@@ -7,7 +7,7 @@ public class Client
 {
     public static Tablet _tablet;
 
-    WebSocket _ws;
+    static WebSocket _ws;
     Package _clientPackage;
     public static List<Package> _allPackages;
 
@@ -45,7 +45,7 @@ public class Client
         EDebug.Log(_tablet._id);
         _allPackages.Remove(_allPackages[0]);
     }
-    private void OnDisable()
+    public static void OnDisable()
     {
         if (_ws != null)
             _ws.Close();

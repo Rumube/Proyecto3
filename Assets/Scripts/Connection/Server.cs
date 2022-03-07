@@ -15,7 +15,7 @@ public class Server : WebSocketBehavior
     Package _serverPackage;
     List<Package> _allPackages;
 
-    WebSocketServer _server;
+    static WebSocketServer _server;
 
     public void InitializeData()
     {
@@ -101,7 +101,7 @@ public class Server : WebSocketBehavior
         Sessions.SendTo(packageJson, ID);
         EDebug.Log("Envio paquete");
     }
-    private void OnDisable()
+    public static void OnDisable()
     {
         if (_server != null)
             _server.Stop();
