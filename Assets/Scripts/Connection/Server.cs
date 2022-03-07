@@ -103,7 +103,8 @@ public class Server : WebSocketBehavior
         _serverPackage._info._idTablet = Sessions.Count;
         string packageJson = JsonUtility.ToJson(_serverPackage._info);
         EDebug.Log("Envio paquete antes:"+ Sessions.Count);
-        Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
+        //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
+        Send(packageJson);
         EDebug.Log("Envio paquete");
     }
     public static void OnDisable()
