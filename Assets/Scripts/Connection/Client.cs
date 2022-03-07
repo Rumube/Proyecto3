@@ -9,7 +9,7 @@ public class Client
 
     static WebSocket _ws;
     Package _clientPackage;
-    public static List<Package> _allPackages;
+    public static List<Package.Info> _allPackages;
 
     public void InitializeData()
     {
@@ -26,22 +26,23 @@ public class Client
         _ws.OnMessage += Ws_OnMessage;   // evento para recibir los mensajer
         _ws.Connect();
         EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
-        _allPackages = new List<Package>();
+        _allPackages = new List<Package.Info>();
 
         InitializeData();
 
     }
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        _clientPackage = JsonUtility.FromJson<Package>(e.Data);
-        EDebug.Log("Message received! " + sender.ToString() + " data: " + _clientPackage._sendID._idTablet);
+
+        Package.Info _clientPackage = JsonUtility.FromJson<Package.Info>(e.Data);
+        EDebug.Log("Message received! " + sender.ToString() + " data: " + _clientPackage._idTablet);
 
         _allPackages.Add(_clientPackage);
     }
 
     public static void DoUpdate()
     {
-        _tablet._id = _allPackages[0]._sendID._idTablet;
+        _tablet._id = _allPackages[0]._idTablet;
         EDebug.Log(_tablet._id);
         _allPackages.Remove(_allPackages[0]);
     }

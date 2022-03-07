@@ -95,10 +95,10 @@ public class Server : WebSocketBehavior
     {
         EDebug.Log("SendStarted");
         _serverPackage = new Package();
-        _serverPackage._sendID._idTablet = Sessions.Count;
-        string packageJson = JsonUtility.ToJson(_serverPackage);
-        EDebug.Log("Envio paquete antes");
-        Sessions.SendTo(packageJson, ID);
+        _serverPackage._info._idTablet = Sessions.Count;
+        string packageJson = JsonUtility.ToJson(_serverPackage._info);
+        EDebug.Log("Envio paquete antes:"+ Sessions.Count);
+        Send(packageJson);
         EDebug.Log("Envio paquete");
     }
     public static void OnDisable()
