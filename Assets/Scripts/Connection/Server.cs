@@ -14,7 +14,7 @@ public class Server : WebSocketBehavior
     public static bool _updateConnectedTablets;
     Package _serverPackage;
     List<Package> _allPackages;
-
+    public static List<string> _ids = new List<string>();
     static WebSocketServer _server;
 
     public void InitializeData()
@@ -72,17 +72,22 @@ public class Server : WebSocketBehavior
     {
         base.OnOpen();
         EDebug.Log("++ Alguien se ha conectado. " + Sessions.Count);
+        EDebug.Log("ids OPEN: "+_ids);
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
 
         SendStartedPackage();
+
+        _ids.Add(ID);
     }
     protected override void OnClose(CloseEventArgs e)
     {
         base.OnClose(e);
         Debug.Log("-- Se ha desconectado alguien. " + Sessions.Count);
+        EDebug.Log("ids CLOSE: " + _ids);
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
+        _ids.Remove(ID);
     }
     protected override void OnMessage(MessageEventArgs e)
     {
@@ -98,7 +103,7 @@ public class Server : WebSocketBehavior
         _serverPackage._info._idTablet = Sessions.Count;
         string packageJson = JsonUtility.ToJson(_serverPackage._info);
         EDebug.Log("Envio paquete antes:"+ Sessions.Count);
-        Send(packageJson);
+        Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
         EDebug.Log("Envio paquete");
     }
     public static void OnDisable()
