@@ -7,7 +7,7 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 public class Server : WebSocketBehavior
 {
-    const int MAX_PLAYERS = 10;
+    const int MAX_TABLETS = 10;
 
     public static Tablet[] _tablets;
     public static int _connectedTablets;
@@ -20,9 +20,9 @@ public class Server : WebSocketBehavior
     public void InitializeData()
     {
         _serverPackage = new Package();
-        _tablets = new Tablet[MAX_PLAYERS];
+        _tablets = new Tablet[MAX_TABLETS];
 
-        for (int i = 0; i < MAX_PLAYERS - 1; ++i)
+        for (int i = 0; i < MAX_TABLETS - 1; ++i)
         {
             Tablet nuevo = new Tablet();
             _tablets[i] = nuevo;
@@ -71,7 +71,7 @@ public class Server : WebSocketBehavior
     protected override void OnOpen()
     {
         base.OnOpen();
-        Debug.Log("++ Alguien se ha conectado. " + Sessions.Count);
+        EDebug.Log("++ Alguien se ha conectado. " + Sessions.Count);
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
 
@@ -88,17 +88,18 @@ public class Server : WebSocketBehavior
     {
         base.OnMessage(e);
         Debug.Log("Mensaje recibido: " + e.Data);
+        
     }
     
     private void SendStartedPackage()
     {
-        Debug.Log("SendStarted");
-
-        Package newPackage = new Package();
-        newPackage._sendID._idTablet = Sessions.Count;
-        string packageJson = JsonUtility.ToJson(newPackage);
-        Sessions.SendTo(packageJson, Sessions.Count.ToString());
-        Debug.Log("Envio paquete");
+        EDebug.Log("SendStarted");
+        _serverPackage = new Package();
+        _serverPackage._sendID._idTablet = Sessions.Count;
+        string packageJson = JsonUtility.ToJson(_serverPackage);
+        EDebug.Log("Envio paquete antes");
+        Sessions.SendTo(packageJson, ID);
+        EDebug.Log("Envio paquete");
     }
     private void OnDisable()
     {

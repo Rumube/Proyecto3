@@ -6,6 +6,6 @@ public class DesktopInputAdapter : IInput
 {
     public void Drag()
     {
-       Debug.Log("Desktop input");
+       //EDebug.Log("Desktop input");
     }
 }

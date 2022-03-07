@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public string _ip;
     public string _port;
     Server server;
+    Client client;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +68,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Client._allPackages != null && Client._allPackages.Count > 0)
+        {
+            Client.DoUpdate();
+        }
     }
 
     public void StartServer()
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartClient()
     {
-        Client client = new Client();
+        client = new Client();
         client.CreateClient(_IPTest.text,_portTest.text);
     }
     /** 

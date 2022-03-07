@@ -67,10 +67,7 @@ public class MobileUI : UI
                     _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
                     ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
                 }
-                else
-                {
-                    print("No");
-                }
+
                 break;
         }
        

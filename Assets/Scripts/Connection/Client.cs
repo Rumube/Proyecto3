@@ -5,9 +5,20 @@ using WebSocketSharp;
 
 public class Client
 {
+    public static Tablet _tablet;
+
     WebSocket _ws;
-    Package _package;
-    List<Package> _allPackages;
+    Package _clientPackage;
+    public static List<Package> _allPackages;
+
+    public void InitializeData()
+    {
+        _clientPackage = new Package();
+
+        _tablet = new Tablet();
+        _tablet._id = -1;
+    }
+
     public void CreateClient(string ip, string port)
     {
         string path = "ws://" + ip + ":" + port;
@@ -17,11 +28,22 @@ public class Client
         EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
         _allPackages = new List<Package>();
 
+        InitializeData();
+
     }
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        _package = JsonUtility.FromJson<Package>(e.Data);
-        EDebug.Log("Message received! " + sender.ToString() + " data: " +_package._sendID._idTablet);
+        _clientPackage = JsonUtility.FromJson<Package>(e.Data);
+        EDebug.Log("Message received! " + sender.ToString() + " data: " + _clientPackage._sendID._idTablet);
+
+        _allPackages.Add(_clientPackage);
+    }
+
+    public static void DoUpdate()
+    {
+        _tablet._id = _allPackages[0]._sendID._idTablet;
+        EDebug.Log(_tablet._id);
+        _allPackages.Remove(_allPackages[0]);
     }
     private void OnDisable()
     {

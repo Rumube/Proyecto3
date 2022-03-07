@@ -42,9 +42,6 @@ public class Installer : MonoBehaviour
     void Update()
     {
         _inputUsed.Drag();
-
-        //Just for showing how to use serviceLocator
-        Debug.Log(ServiceLocator.Instance.GetService<ITest>().Hello());
     }
 
     private void SetInput()
