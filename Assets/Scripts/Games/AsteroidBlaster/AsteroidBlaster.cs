@@ -79,12 +79,26 @@ public class AsteroidBlaster : MonoBehaviour
             for (int i = 0; i < _numberAsteroids; i++)
             {
                 int geometryID = Random.Range(0, maxValue);
+                if(geometryID >= 7)
+                {
+                    geometryID = 6;
+                }
                 GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
-                //newAsteroid.SetActive(false);
+                newAsteroid.SetActive(false);
                 newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level);
                 _asteroids.Add(newAsteroid);
             }
         } while (!checkGenerateAteroids());
+        StartCoroutine(LaunchAsteroids());
+    }
+
+    IEnumerator LaunchAsteroids()
+    {
+        foreach(GameObject asteroid in _asteroids)
+        {
+            asteroid.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     /*
@@ -95,7 +109,6 @@ public class AsteroidBlaster : MonoBehaviour
     {
         bool result = true;
         Dictionary<Geometry.Geometry_Type, bool> goodCreation = new Dictionary<Geometry.Geometry_Type, bool>();
-
         foreach(Geometry.Geometry_Type targetGeometry in _targetList)
         {
             goodCreation.Add(targetGeometry, false);
@@ -132,6 +145,7 @@ public class AsteroidBlaster : MonoBehaviour
      * **/
     void deleteAsteroids()
     {
+        StopCoroutine(LaunchAsteroids());
         foreach (GameObject asteroid in _asteroids)
             Destroy(asteroid);
         _asteroids.Clear();
