@@ -31,7 +31,7 @@ public class MobileUI : UI
             if(_windowsTree[i] != null) //Esto sacarlo cuando esten las pantallas asignadas en el GM
             _windowsTree[i].SetActive(false);
         }
-      
+        ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
         _windowsTree[_uiIndex].SetActive(true);
     }
     /** 
