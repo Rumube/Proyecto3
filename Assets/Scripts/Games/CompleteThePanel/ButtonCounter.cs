@@ -35,7 +35,8 @@ public class ButtonCounter : MonoBehaviour
     void Update()
     {
        
-        _mission.text = GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado");
+        _mission.text = GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
+        GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
     }
 
     public string GeometryNumberText(int nGeometry,string geometryName)
@@ -53,19 +54,13 @@ public class ButtonCounter : MonoBehaviour
             return nGeometry+" "+ geometryName+" ";
         }
     }
-    public void CreateCanvas(int nGeometry, GameObject button)
-    {
-        if (nGeometry>0)
-        {
-           GameObject newButton= Instantiate(button, new Vector3(_nButton, 0, 0) * 2, Quaternion.identity);
-            _nButton += 1;
-        }
-    }
+  
     public void Compare()
     {
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nTriangle, _triangleCounter);
+        int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
         if (_goodGeometry==_totalGeometry)
         {
@@ -76,6 +71,8 @@ public class ButtonCounter : MonoBehaviour
             _totalGeometry = 0;
             _goodGeometry = 0;
         }
+
+
     }
 
     public void CheckGeometry(int nGeometry, int counter)
