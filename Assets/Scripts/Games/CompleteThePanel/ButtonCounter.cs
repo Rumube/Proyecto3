@@ -8,11 +8,20 @@ public class ButtonCounter : MonoBehaviour
     public int _nSquare;
     public int _nTriangle;
     public int _nCircle;
+    public int _nDiamond;
+    public int _nRectangle;
+    public int _nPentagon;
+    public int _nHexagon;
 
     public int _squareCounter;
     public int _triangleCounter;
     public int _circleCounter;
+    public int _diamondCounter;
+    public int _rectangleCounter;
+    public int _pentagonCounter;
+    public int _hexagonCounter;
 
+    int _nButton;
     int _totalGeometry;
     int _goodGeometry;
     public Text _mission;
@@ -41,8 +50,15 @@ public class ButtonCounter : MonoBehaviour
         }
         else
         {
-
             return nGeometry+" "+ geometryName+" ";
+        }
+    }
+    public void CreateCanvas(int nGeometry, GameObject button)
+    {
+        if (nGeometry>0)
+        {
+           GameObject newButton= Instantiate(button, new Vector3(_nButton, 0, 0) * 2, Quaternion.identity);
+            _nButton += 1;
         }
     }
     public void Compare()
@@ -85,5 +101,21 @@ public class ButtonCounter : MonoBehaviour
     public void CounterCircle()
     {
         _circleCounter++;
+    }
+    public void CounterDiamond()
+    {
+        _diamondCounter++;
+    }
+    public void CounterRectangle()
+    {
+        _rectangleCounter++;
+    }
+    public void CounterPentagon()
+    {
+        _pentagonCounter++;
+    }
+    public void CounterHexagon()
+    {
+        _hexagonCounter++;
     }
 }
