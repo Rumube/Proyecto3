@@ -12,14 +12,17 @@ public class Server : WebSocketBehavior
     public static Tablet[] _tablets;
     public static int _connectedTablets;
     public static bool _updateConnectedTablets;
+    public static List<string> _ids = new List<string>();
+
     Package _serverPackage;
     List<Package> _allPackages;
-    public static List<string> _ids = new List<string>();
+
     static WebSocketServer _server;
 
+    public delegate void PacketHandler(int fromClient, Package package);
+    public static Dictionary<int, PacketHandler> _packetHandlers;
     public void InitializeData()
     {
-        _serverPackage = new Package();
         _tablets = new Tablet[MAX_TABLETS];
 
         for (int i = 0; i < MAX_TABLETS - 1; ++i)
@@ -28,6 +31,14 @@ public class Server : WebSocketBehavior
             _tablets[i] = nuevo;
             _tablets[i]._id = -1;
         }
+        //When a client package is received, it is related to a method
+        _packetHandlers = new Dictionary<int, PacketHandler>()
+            {
+                { (int)ClientPackets.connect, WelcomeReceived },
+                { (int)ClientPackets.selectedStudentGame, WelcomeReceived },
+                { (int)ClientPackets.matchData, WelcomeReceived }
+            };
+        EDebug.Log("Initialized packets.");
     }
 
     //  servidor websocket
@@ -106,6 +117,10 @@ public class Server : WebSocketBehavior
         //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
         Send(packageJson);
         EDebug.Log("Envio paquete");
+    }
+    public void WelcomeReceived(int fromClient, Package package)
+    {
+
     }
     public static void OnDisable()
     {
