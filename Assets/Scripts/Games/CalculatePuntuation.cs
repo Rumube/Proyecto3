@@ -9,7 +9,10 @@ public class CalculatePuntuation : MonoBehaviour
     {
         
     }
+    public void Puntuation()
+    {
 
+    }
     // Update is called once per frame
     void Update()
     {
