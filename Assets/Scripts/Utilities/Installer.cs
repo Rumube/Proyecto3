@@ -35,16 +35,16 @@ public class Installer : MonoBehaviour
 
         SetDatabase();
         SetInput();
-        SetUI();
+        //SetUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _inputUsed.Drag();
+      //  _inputUsed.Drag();
 
         //Just for showing how to use serviceLocator
-        Debug.Log(ServiceLocator.Instance.GetService<ITest>().Hello());
+        //Debug.Log(ServiceLocator.Instance.GetService<ITest>().Hello());
     }
 
     private void SetInput()
