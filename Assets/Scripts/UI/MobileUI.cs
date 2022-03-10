@@ -16,6 +16,11 @@ public class MobileUI : UI
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
 
+    [Header("Student stadistics")]
+    public GameObject _studentGamePanel;
+    public Text _studentNameText;
+    public Text _gameNameText;
+
     void Start()
     {    
         //Adding root windows in order of appearance
@@ -58,6 +63,23 @@ public class MobileUI : UI
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
     }
+
+    /// <summary>Open the panel that shows who is playing in which game</summary>
+    /// /// <param name="studentName">student's name that is currently playing</param>
+    /// /// <param name="gameName">game's name that played by the student</param>
+    public void OpenInfoTabletStudentGamePanel(string studentName, string gameName)
+    {
+        _studentNameText.text = studentName;
+        _gameNameText.text = gameName;
+        _studentGamePanel.SetActive(true);
+    }
+
+    /// <summary>Closes the panel that shows who is playing in which game</summary>
+    public void CloseInfoTabletStudentGamePanel()
+    {
+        _studentGamePanel.SetActive(false);
+    }
+
     private void Update()
     {
         //Control the instructions deppending on the game state
