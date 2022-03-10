@@ -9,14 +9,16 @@ public class MobileUI : UI
     public Text _port;
     public Text _connectedTablets;
 
+    [Header("Game Timer")]
     public InputField _inputSessionMinutes;
     public InputField _inputSessionSeconds;
     public InputField _inputMinigamesMinutes;
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
-    // Start is called before the first frame update
+
     void Start()
     {    
+        //Adding root windows in order of appearance
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._initialScreen);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._mainMenu);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._class);
@@ -26,59 +28,57 @@ public class MobileUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._stadistics);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._finalScore);
 
+        //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
         {
-            if(_windowsTree[i] != null) //Esto sacarlo cuando esten las pantallas asignadas en el GM
             _windowsTree[i].SetActive(false);
         }
+        //Non root windows
         ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
+
+        //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
     }
-    /** 
-  * @desc Get ip/port from GM
-  */
+
+    /// <summary>Show the IP and port from the device</summary>
     public void GetIpPort()
     {
         _ip.text = "IP: "+ ServiceLocator.Instance.GetService<GameManager>()._ip;
         _port.text = "Puerto: " + ServiceLocator.Instance.GetService<GameManager>()._port;
     }
 
-    /** 
-  * @desc Set the time for the whole session passing values to the GM
-  */
+    /// <summary>Set the time for the whole session passing values to the GM</summary>
     public void SetTimeSession()
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
     }
-    /** 
-  * @desc Set the time for all minigames passing values to the GM
-  */
+
+    /// <summary>Set the time for all minigames passing values to the GM</summary>
     public void SetTimeMinigames()
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
     }
     private void Update()
     {
+        //Control the instructions deppending on the game state
         switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
         {
             case GameManager.GAME_STATE_SERVER.connection:
+                //Update the number of tablets that are connected just when something is new connected
                 if (ServiceLocator.Instance.GetService<GameManager>().GetUpdateConnectedTablets())
                 {
                     _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
                     ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
                 }
-                else
-                {
-                    print("No");
-                }
                 break;
-        }
-       
-        ShowCountDown();
+
+            case GameManager.GAME_STATE_SERVER.playing:
+                ShowCountDown();
+                break;
+        }     
     }
-    /** 
-    * @desc Show the timer
-    */
+
+    /// <summary>Show the timer</summary>
     private void ShowCountDown()
     {
         _countdown.text = ServiceLocator.Instance.GetService<GameManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<GameManager>()._timeSessionSeconds;
