@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6876258819629278229}
   - component: {fileID: -8310342036343914744}
   - component: {fileID: 6159728576547822719}
+  - component: {fileID: -3094135947381050385}
   m_Layer: 0
   m_Name: PentagonAsteroid
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   _rotating: 1
   _startPostion: {x: 0, y: 0}
   _targetPosition: {x: 0, y: 0}
+  state: 0
 --- !u!60 &6876258819629278229
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -114,6 +116,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _geometryType: 5
+--- !u!95 &-3094135947381050385
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4967734796524238198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f6e9317fd42d724ba44cdee5e87f09c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8350677976570666351
 GameObject:
   m_ObjectHideFlags: 0
