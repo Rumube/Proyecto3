@@ -14,11 +14,21 @@ public class Asteroid : MonoBehaviour
     private Vector2 _startPostion;
     [SerializeField]
     private Vector2 _targetPosition;
+    public GameObject _destroyGO;
+    public GameObject _GO;
 
+    public enum Asteroid_State
+    {
+        movement = 0,
+        exploding = 1,
+        destroyed = 2
+    }
+
+    public Asteroid_State state = Asteroid_State.movement;
     // Update is called once per frame
     void Update()
     {
-        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing){
+        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && state == Asteroid_State.movement){
             MoveAsteroid();
             if(_rotating)
                 RotationAsteroid();
@@ -158,4 +168,10 @@ public class Asteroid : MonoBehaviour
         _startPostion = new Vector2(10, yPos);
         _targetPosition = new Vector2(-10, yPosTarget);
     }
+
+    public void AsteroidShot()
+    {
+        state = Asteroid_State.exploding;
+    }
+
 }

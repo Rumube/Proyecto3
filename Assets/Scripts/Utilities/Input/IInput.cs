@@ -6,4 +6,5 @@ public interface IInput
 {
     //We need the same methods for both inputs
     public void Drag();
+    public AndroidInputAdapter.Datos InputTouch();
 }
