@@ -1,14 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MobileUI : UI
 {
-    
-    // Start is called before the first frame update
+    [Header("Game Connection")]
+    public Text _ip;
+    public Text _port;
+    public Text _connectedTablets;
+
+    [Header("Game Timer")]
+    public InputField _inputSessionMinutes;
+    public InputField _inputSessionSeconds;
+    public InputField _inputMinigamesMinutes;
+    public InputField _inputMinigamesSeconds;
+    public Text _countdown;
+
     void Start()
-    {
-        _windowsTree = new List<GameObject>();
+    {    
+        //Adding root windows in order of appearance
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._initialScreen);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._mainMenu);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._class);
@@ -18,30 +28,59 @@ public class MobileUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._stadistics);
         _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._finalScore);
 
+        //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
         {
-            if(_windowsTree[i] != null) //Esto sacarlo cuando esten las pantallas asignadas en el GM
             _windowsTree[i].SetActive(false);
         }
-        _uiIndex = 0;
+        //Non root windows
+        ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
+
+        //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
     }
-    /** 
-     * @desc Open the next window deppending on the position of the array and close the previous one
-     */
-    public override void OpenNextWindow()
+
+    /// <summary>Show the IP and port from the device</summary>
+    public void GetIpPort()
     {
-        _uiIndex++;
-        _windowsTree[_uiIndex].SetActive(true);
-        _windowsTree[_uiIndex - 1].SetActive(false);
+        _ip.text = "IP: "+ ServiceLocator.Instance.GetService<GameManager>()._ip;
+        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<GameManager>()._port;
     }
-    /** 
-      * @desc Open the previous window deppending on the position of the array and close the current one
-      */
-    public override void OpenPreviousWindow()
+
+    /// <summary>Set the time for the whole session passing values to the GM</summary>
+    public void SetTimeSession()
     {
-        _uiIndex--;
-        _windowsTree[_uiIndex].SetActive(true);
-        _windowsTree[_uiIndex + 1].SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
+    }
+
+    /// <summary>Set the time for all minigames passing values to the GM</summary>
+    public void SetTimeMinigames()
+    {
+        ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
+    }
+    private void Update()
+    {
+        //Control the instructions deppending on the game state
+        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        {
+            case GameManager.GAME_STATE_SERVER.connection:
+                //Update the number of tablets that are connected just when something is new connected
+                if (ServiceLocator.Instance.GetService<GameManager>().GetUpdateConnectedTablets())
+                {
+                    _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
+                    ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
+                }
+                break;
+
+            case GameManager.GAME_STATE_SERVER.playing:
+                ShowCountDown();
+                break;
+        }     
+    }
+
+    /// <summary>Show the timer</summary>
+    private void ShowCountDown()
+    {
+        _countdown.text = ServiceLocator.Instance.GetService<GameManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<GameManager>()._timeSessionSeconds;
     }
 }

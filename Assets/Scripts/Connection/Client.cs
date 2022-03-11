@@ -25,7 +25,6 @@ public class Client
     }
     private void OnDisable()
     {
-
         if (_ws != null)
             _ws.Close();
     }
