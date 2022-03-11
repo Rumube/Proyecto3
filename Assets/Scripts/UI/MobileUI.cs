@@ -16,6 +16,11 @@ public class MobileUI : UI
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
 
+    [Header("Delete class popup")]
+    public Text _deletingClassName;
+    public Text _writingClassName;
+    bool _deleteClassCorrect;
+    public Button _deleteClassButton;
     void Start()
     {    
         //Adding root windows in order of appearance
@@ -35,6 +40,10 @@ public class MobileUI : UI
         }
         //Non root windows
         ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(false);
+
+        _deleteClassCorrect = false;
 
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
@@ -58,6 +67,28 @@ public class MobileUI : UI
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
     }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupAddClass()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.activeSelf);
+    }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupDeleteClass(string className = "")
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text = className;
+        EDebug.Log(ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text);
+        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf);
+    }
+
+    public void BeginDeleteClass()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
+        }
+    }
     private void Update()
     {
         //Control the instructions deppending on the game state
@@ -75,12 +106,39 @@ public class MobileUI : UI
             case GameManager.GAME_STATE_SERVER.playing:
                 ShowCountDown();
                 break;
-        }     
+        }
+
+        if (ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf && !_deleteClassCorrect)
+        {
+
+            _deleteClassCorrect = AreEqual(_deletingClassName.text, _writingClassName.text);
+
+        }
+        if (_deleteClassCorrect && !_deleteClassButton.interactable)
+        {
+            _deleteClassButton.interactable = true;
+        }
     }
 
     /// <summary>Show the timer</summary>
     private void ShowCountDown()
     {
         _countdown.text = ServiceLocator.Instance.GetService<GameManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<GameManager>()._timeSessionSeconds;
+    }
+
+    private bool AreEqual(string val1, string val2)
+    {
+        if (val1.Length != val2.Length)
+            return false;
+
+        for (int i = 0; i < val1.Length; i++)
+        {
+            var c1 = val1[i];
+            var c2 = val2[i];
+            if (c1 != c2)
+                return false;
+        }
+
+        return true;
     }
 }

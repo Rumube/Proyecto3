@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public GameObject _initialScreen;
     public GameObject _credits;
     public GameObject _mainMenu;
+    public GameObject _popupAddClass;
+    public GameObject _popupDeleteClass;
     public GameObject _class;
     public GameObject _gameConnection;
     public GameObject _addStudent;
@@ -58,6 +60,12 @@ public class GameManager : MonoBehaviour
     public string _ip;
     public string _port;
     Server server;
+
+    [Header("DatabaseUtilities")]
+    public GameObject _classButton;
+    public GameObject _studentButton;
+    public GameObject _classPanel;
+    public Text _classNameDeleting;
     // Start is called before the first frame update
     void Start()
     {
