@@ -35,13 +35,12 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    /*
-     * @desc Starts execution of asteroid initiation methods
-     * @param int geometryID - The id that assigns the geometry type
-     * @param float movementVelocity - The speed value
-     * @param float rotationVelocity - The speed value
-     * @param float levelValuesRange - Randomization parameter
-     * **/
+    /// <summary>
+    /// Starts execution of asteroid initiation methods.
+    /// </summary>
+    /// <param name="movementVelocity">The id that assigns the geometry type</param>
+    /// <param name="rotationVelocity">The speed value</param>
+    /// <param name="levelValuesRange">Randomization parameter</param>
     public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange)
     {
         SetMovementVelocity(movementVelocity, levelValuesRange);
@@ -49,9 +48,9 @@ public class Asteroid : MonoBehaviour
         SetInitialPosition();
     }
 
-    /*
-     * @desc Move the asteroid in a direction and velocity
-     * **/
+    /// <summary>
+    /// Move the asteroid in a direction and velocity.
+    /// </summary>
     void MoveAsteroid()
     {
         float velocity = _movementVelocity * Time.deltaTime;
@@ -61,18 +60,18 @@ public class Asteroid : MonoBehaviour
 
     }
 
-    /*
-     * @desc Rotate the asteroid in Z axis
-     * **/
+    /// <summary>
+    /// Rotate the asteroid in Z axis.
+    /// </summary>
     void RotationAsteroid()
     {
         float velocity = _rotationVelocity * Time.deltaTime;
         transform.Rotate(transform.rotation.x, transform.rotation.y, velocity);
     }
 
-    /*
-     * @desc Restart the position
-     * **/
+    /// <summary>
+    /// Restart the position.
+    /// </summary>
     void RestartPosition()
     {
         transform.position = _startPostion;
@@ -83,31 +82,35 @@ public class Asteroid : MonoBehaviour
         RestartPosition();
     }
 
-    /*
-     * @desc Generates the speed of movement depending on the difficulty
-     * @param float movementVelocity - The speed value
-     * @param float levelValuesRange - Randomization parameter
-     * **/
+
+    /// <summary>
+    /// Generates the speed of movement 
+    /// depending on the difficulty.
+    /// </summary>
+    /// <param name="movementVelocity">The speed value.</param>
+    /// <param name="levelValuesRange">Randomization parameter,</param>
     public void SetMovementVelocity(float movementVelocity, float levelValuesRange)
     {
         _movementVelocity = Random.Range(movementVelocity,
             (1 + levelValuesRange / 2));
     }
 
-    /*
-     * @desc Generates the speed of rotation depending on the difficulty
-     * @param float rotationVelocity - The speed value
-     * @param float levelValuesRange - Randomization parameter
-     * **/
+    /// <summary>
+    /// Generates the speed of rotation
+    /// depending on the difficulty.
+    /// </summary>
+    /// <param name="rotationVelocity">The speed value.</param>
+    /// <param name="levelValuesRange">Randomization parameter.</param>
     public void SetRotationVelocity(float rotationVelocity, float levelValuesRange)
     {
         _rotationVelocity = Random.Range(rotationVelocity,
             rotationVelocity + (5 + levelValuesRange));
     }
 
-    /*
-     * @desc Generates the initial and the target position
-     * **/
+
+    /// <summary>
+    /// Generates the initial and the target position.
+    /// </summary>
     public void SetInitialPosition()
     {
         int initialPosition = Random.Range(0, 4);
@@ -128,9 +131,10 @@ public class Asteroid : MonoBehaviour
         }
         transform.position = _startPostion;
     }
-    /*
-     * @desc Generates the initial top and the target position
-     * **/
+
+    /// <summary>
+    /// Generates the initial top and the target position.
+    /// </summary>
     void SetTopPosition()
     {
         int xPos = Random.Range(-7, 8);
@@ -138,9 +142,10 @@ public class Asteroid : MonoBehaviour
         _startPostion = new Vector2(xPos, 7);
         _targetPosition = new Vector2(xPosTarget, -7);
     }
-    /*
-     * @desc Generates the initial bottom and the target position
-     * **/
+
+    /// <summary>
+    /// Generates the initial bottom and the target position.
+    /// </summary>
     void SetBottomPosition()
     {
         int xPos = Random.Range(-7, 8);
@@ -148,9 +153,10 @@ public class Asteroid : MonoBehaviour
         _startPostion = new Vector2(xPos, -7);
         _targetPosition = new Vector2(xPosTarget, 7);
     }
-    /*
-     * @desc Generates the initial left and the target position
-     * **/
+
+    /// <summary>
+    /// Generates the initial left and the target position.
+    /// </summary>
     void SetLeftPosition()
     {
         int yPos = Random.Range(-3, 4);
@@ -158,9 +164,10 @@ public class Asteroid : MonoBehaviour
         _startPostion = new Vector2(-10, yPos);
         _targetPosition = new Vector2(10, yPosTarget);
     }
-    /*
-     * @desc Generates the initial right and the target position
-     * **/
+
+    /// <summary>
+    /// Generates the initial right and the target position.
+    /// </summary>
     void SetRightPosition()
     {
         int yPos = Random.Range(-3, 4);
@@ -169,6 +176,9 @@ public class Asteroid : MonoBehaviour
         _targetPosition = new Vector2(-10, yPosTarget);
     }
 
+    /// <summary>
+    /// Change asteroid status to Exploding.
+    /// </summary>
     public void AsteroidShot()
     {
         state = Asteroid_State.exploding;

@@ -17,18 +17,19 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             StartGameTime();
     }
 
-    /*
-     * @desc Playing time begins
-     * **/
+
+    /// <summary>
+    /// Playing time begins.
+    /// </summary>
     public void StartGameTime()
     {
         _currentTime = _maxTime;
         StartCoroutine(TimeProgress());
     }
 
-    /*
-     * @desc Reduce the time of the game until it reaches 0
-     * **/
+    /// <summary>
+    /// Reduce the time of the game until it reaches 0.
+    /// </summary>
     IEnumerator TimeProgress()
     {
         do

@@ -38,9 +38,9 @@ public class AsteroidBlaster : MonoBehaviour
         GenerateAsteroids();
     }
 
-    /*
-     * @desc Set the max number of asteroids
-     * **/
+    /// <summary>
+    /// Set the max number of asteroids
+    /// </summary>
     void setNumberAsteroids()
     {
         _numberAsteroids = 3 + (_level / 2);
@@ -48,10 +48,10 @@ public class AsteroidBlaster : MonoBehaviour
             _numberAsteroids = 8;
     }
 
-    /*
-     * @desc Obtains a dictionary with asteroids and their shapes and
-     * calls the function generateTargets
-     * **/
+    /// <summary>
+    /// Obtains a dictionary with asteroids and their
+    /// shapes and calls the function generateTargets
+    /// </summary>
     void setTarget()
     {
         _asteroidsDic.Clear();
@@ -68,6 +68,10 @@ public class AsteroidBlaster : MonoBehaviour
     /*
      * @desc Generate the asteroids and start the value of the properties
      * **/
+    /// <summary>
+    /// Generate the asteroids and
+    /// start the value of the properties.
+    /// </summary>
     void GenerateAsteroids()
     {
         do
@@ -92,6 +96,9 @@ public class AsteroidBlaster : MonoBehaviour
         StartCoroutine(LaunchAsteroids());
     }
 
+    /// <summary>
+    /// Activates asteroids with a slight delay.
+    /// </summary>
     IEnumerator LaunchAsteroids()
     {
         foreach(GameObject asteroid in _asteroids)
@@ -101,10 +108,10 @@ public class AsteroidBlaster : MonoBehaviour
         }
     }
 
-    /*
-     * @desc Checks if the arteroids generated are correct
-     * @return bool - true if is correct, false if not is correct
-     * **/
+    /// <summary>
+    /// Checks if the asteroids generated are corrects
+    /// </summary>
+    /// <returns>True if is correct, false if not</returns>
     bool checkGenerateAteroids()
     {
         bool result = true;
@@ -130,9 +137,9 @@ public class AsteroidBlaster : MonoBehaviour
         return result;
     }
 
-    /*
-     * @desc Start the procces to restart the game
-     * **/
+    /// <summary>
+    /// Start the procces to restart the game.
+    /// </summary>
     void restartGame()
     {
         setTarget();
@@ -140,9 +147,9 @@ public class AsteroidBlaster : MonoBehaviour
         GenerateAsteroids();
     }
 
-    /*
-     *@desc Destroy all the asteroids 
-     * **/
+    /// <summary>
+    /// Destroy all the asteroids.
+    /// </summary>
     void deleteAsteroids()
     {
         StopCoroutine(LaunchAsteroids());
