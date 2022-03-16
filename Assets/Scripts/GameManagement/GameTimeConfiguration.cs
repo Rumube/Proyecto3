@@ -37,10 +37,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             {
                 yield return new WaitForSeconds(1f);
                 _currentTime--;
-                EDebug.Log(_currentTime);
-                // TODO: Update UI
-                int fieldTime = (int)((_maxTime / 100) * _currentTime);
-                _timeImage.fillAmount = fieldTime;
+                _timeImage.fillAmount = _currentTime / _maxTime;
             }
 
         } while (_currentTime > 0f);

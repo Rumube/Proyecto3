@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5798937, g: 1, b: 0.504717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 923033817}
   - component: {fileID: 923033818}
   - component: {fileID: 923033819}
+  - component: {fileID: 923033820}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -392,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeImage: {fileID: 210355115}
-  _maxTime: 10
+  _maxTime: 20
 --- !u!114 &923033819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameStateServer: 0
-  _gameStateClient: 0
+  _gameStateClient: 3
   _initialScreen: {fileID: 0}
   _credits: {fileID: 0}
   _mainMenu: {fileID: 0}
@@ -424,6 +425,23 @@ MonoBehaviour:
   _timeMinigamesSeconds: 0
   _ip: 
   _port: 
+--- !u!114 &923033820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _server: 0
+  _canvasMobile: {fileID: 0}
+  _canvasTablet: {fileID: 0}
+  _gameTimeConfiguration: {fileID: 923033818}
+  _gameManager: {fileID: 923033819}
 --- !u!1 &1782629756
 GameObject:
   m_ObjectHideFlags: 0
