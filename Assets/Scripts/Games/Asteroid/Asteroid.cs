@@ -88,7 +88,7 @@ public class Asteroid : MonoBehaviour
     /// depending on the difficulty.
     /// </summary>
     /// <param name="movementVelocity">The speed value.</param>
-    /// <param name="levelValuesRange">Randomization parameter,</param>
+    /// <param name="levelValuesRange">Randomization parameter.</param>
     public void SetMovementVelocity(float movementVelocity, float levelValuesRange)
     {
         _movementVelocity = Random.Range(movementVelocity,

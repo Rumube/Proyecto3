@@ -65,9 +65,6 @@ public class AsteroidBlaster : MonoBehaviour
         _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
     }
 
-    /*
-     * @desc Generate the asteroids and start the value of the properties
-     * **/
     /// <summary>
     /// Generate the asteroids and
     /// start the value of the properties.
