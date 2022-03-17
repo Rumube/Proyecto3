@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class AsteroidBlasterInput : MonoBehaviour
 {
     public Text _prueba;
+    public GameObject _gunGo;
+    public Image _gunTarget;
 
     bool _canVibrate = true;
     // Start is called before the first frame update
@@ -26,18 +28,34 @@ public class AsteroidBlasterInput : MonoBehaviour
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
         if (newInput.result)
         {
-            RaycastHit2D hit = Physics2D.Raycast(newInput.pos, -Vector2.up);
+            ShotGun(newInput);
+        }
+    }
 
-            if(hit.collider != null)
-            {
-                _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
-                if (_canVibrate)
-                {
-                    hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
-                    _canVibrate = false;
-                    StartCoroutine(WaitVibration());
-                }
-            }
+    void ShotGun(AndroidInputAdapter.Datos input)
+    {
+        Vector2 inputPos = Camera.main.ScreenToWorldPoint(input.pos);
+
+        RaycastHit2D hit = Physics2D.Raycast(inputPos, -Vector2.up);
+        _gunTarget.transform.position = input.pos;
+        _gunGo.GetComponent<Animator>().SetTrigger("Shot");
+
+        Vector3 dir = new Vector3(inputPos.x, inputPos.y, 0) - _gunGo.transform.position;
+        float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) - 90;
+        _gunGo.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        if (hit.collider != null)
+            AsteroidHit(hit);
+    }
+
+    void AsteroidHit(RaycastHit2D hit)
+    {
+        _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
+        if (_canVibrate)
+        {
+            hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
+            _canVibrate = false;
+            StartCoroutine(WaitVibration());
         }
     }
 
