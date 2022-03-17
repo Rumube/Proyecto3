@@ -25,8 +25,11 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
         if(Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            newDatos.result = true;
-            newDatos.pos = touch.position;
+            if(touch.phase == TouchPhase.Began)
+            {
+                newDatos.result = true;
+                newDatos.pos = touch.position;
+            }
         }
         return newDatos;
     }

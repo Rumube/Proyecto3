@@ -15,7 +15,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private Vector2 _targetPosition;
     public GameObject _destroyGO;
-    public GameObject _GO;
+    public GameObject _asteroidGO;
 
     public enum Asteroid_State
     {
@@ -44,6 +44,8 @@ public class Asteroid : MonoBehaviour
     /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
     public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange)
     {
+        _asteroidGO.SetActive(true);
+        _destroyGO.SetActive(false);
         SetMovementVelocity(movementVelocity, levelValuesRange);
         SetRotationVelocity(rotationVelocity, levelValuesRange);
         SetInitialPosition();
@@ -183,6 +185,19 @@ public class Asteroid : MonoBehaviour
     public void AsteroidShot()
     {
         state = Asteroid_State.exploding;
+        _destroyGO.SetActive(true);
+        _asteroidGO.SetActive(false);
+        _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
+        StartCoroutine(FinishExpliding());
+    }
+
+    /// <summary>
+    /// Waits until animations end and destroy the GameObject
+    /// </summary>
+    IEnumerator FinishExpliding()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 
 }
