@@ -16,6 +16,7 @@ public class Asteroid : MonoBehaviour
     private Vector2 _targetPosition;
     public GameObject _destroyGO;
     public GameObject _asteroidGO;
+    GameObject _gm;
 
     public enum Asteroid_State
     {
@@ -41,14 +42,16 @@ public class Asteroid : MonoBehaviour
     /// <param name="movementVelocity">The id that assigns the geometry type</param>
     /// <param name="rotationVelocity">The speed value</param>
     /// <param name="levelValuesRange">Randomization parameter</param>
+    /// <param name="gameManager">Reference to the GameManager</param>
     /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
-    public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange)
+    public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange, GameObject gameManager)
     {
         _asteroidGO.SetActive(true);
         _destroyGO.SetActive(false);
         SetMovementVelocity(movementVelocity, levelValuesRange);
         SetRotationVelocity(rotationVelocity, levelValuesRange);
         SetInitialPosition();
+        _gm = gameManager;
     }
 
     /// <summary>
@@ -188,6 +191,7 @@ public class Asteroid : MonoBehaviour
         _destroyGO.SetActive(true);
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
+        _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
         StartCoroutine(FinishExpliding());
     }
 

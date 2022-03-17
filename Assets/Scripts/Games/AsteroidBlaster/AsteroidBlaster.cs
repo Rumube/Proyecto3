@@ -87,7 +87,7 @@ public class AsteroidBlaster : MonoBehaviour
                 }
                 GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
                 newAsteroid.SetActive(false);
-                newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level);
+                newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level, gameObject);
                 _asteroids.Add(newAsteroid);
             }
         } while (!checkGenerateAteroids());
@@ -154,5 +154,58 @@ public class AsteroidBlaster : MonoBehaviour
         foreach (GameObject asteroid in _asteroids)
             Destroy(asteroid);
         _asteroids.Clear();
+    }
+
+    /// <summary>
+    /// Checks if the destroyed asteroid is correct.
+    /// </summary>
+    /// <param name="asteroid">Asteroid destroyed.</param>
+    public void CheckIfIsCorrect(GameObject asteroid)
+    {
+        _asteroids.Remove(asteroid);
+        if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
+            _successes++;
+        else
+        {
+            _mistakes++;
+            //TODO: Active error
+        }
+        if (CheckIfIsFinish())
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            //TODO: Finish and generate score
+            EDebug.Log("Terminado");
+        }
+        else
+        {
+            EDebug.Log("No Terminado");
+        }
+
+    }
+
+    /// <summary>
+    /// Check if after this destroyed asteroid the game is over.
+    /// </summary>
+    /// <returns>True if is finished, false if is not.</returns>
+    public bool CheckIfIsFinish()
+    {
+        bool finish = false;
+
+        if(_asteroids.Count == 0)
+            finish = true;
+        else
+        {
+            bool existGeometry = false;
+            foreach (GameObject currentAsteroid in _asteroids)
+            {
+                if (_targetList.Contains(currentAsteroid.GetComponent<Geometry>()._geometryType))
+                {
+                    existGeometry = true;
+                }
+            }
+            if (!existGeometry)
+                finish = true;
+        }
+        return finish;
     }
 }
