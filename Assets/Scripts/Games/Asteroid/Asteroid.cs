@@ -41,6 +41,7 @@ public class Asteroid : MonoBehaviour
     /// <param name="movementVelocity">The id that assigns the geometry type</param>
     /// <param name="rotationVelocity">The speed value</param>
     /// <param name="levelValuesRange">Randomization parameter</param>
+    /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
     public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange)
     {
         SetMovementVelocity(movementVelocity, levelValuesRange);

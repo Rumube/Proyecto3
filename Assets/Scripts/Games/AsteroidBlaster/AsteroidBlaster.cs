@@ -24,6 +24,9 @@ public class AsteroidBlaster : MonoBehaviour
     [SerializeField]
     List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
 
+    public int _successes = 0;
+    public int _mistakes = 0;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -33,9 +36,7 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        setTarget();
-        setNumberAsteroids();
-        GenerateAsteroids();
+        restartGame();
     }
 
     /// <summary>

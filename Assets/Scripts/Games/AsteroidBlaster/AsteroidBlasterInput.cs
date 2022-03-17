@@ -19,10 +19,15 @@ public class AsteroidBlasterInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        InputController();
+        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        {
+            InputController();
+        }
     }
 
+    /// <summary>
+    /// Detects inputs during game play.
+    /// </summary>
     void InputController()
     {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
@@ -32,6 +37,10 @@ public class AsteroidBlasterInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Activates gun animations and actions when fired.
+    /// </summary>
+    /// <param name="input">Input values</param>
     void ShotGun(AndroidInputAdapter.Datos input)
     {
         Vector2 inputPos = Camera.main.ScreenToWorldPoint(input.pos);
@@ -48,6 +57,10 @@ public class AsteroidBlasterInput : MonoBehaviour
             AsteroidHit(hit);
     }
 
+    /// <summary>
+    /// Performs the functions of hitting an asteroid.
+    /// </summary>
+    /// <param name="hit">Hit values, position, collider...</param>
     void AsteroidHit(RaycastHit2D hit)
     {
         _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
@@ -59,6 +72,9 @@ public class AsteroidBlasterInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Vibration control.
+    /// </summary>
     IEnumerator WaitVibration()
     {
         yield return new WaitForSeconds(1f);
