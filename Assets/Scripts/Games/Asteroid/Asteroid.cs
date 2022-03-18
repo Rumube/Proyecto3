@@ -204,4 +204,13 @@ public class Asteroid : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        EDebug.Log("Colisión");
+        if (collision.gameObject.tag == "Asteroid")
+        {
+            EDebug.Log("Asteroide");
+        }
+    }
+
 }
