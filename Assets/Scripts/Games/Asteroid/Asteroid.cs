@@ -14,10 +14,14 @@ public class Asteroid : MonoBehaviour
     private Vector2 _startPostion;
     [SerializeField]
     private Vector2 _targetPosition;
+    private Vector2 _direction;
     public GameObject _destroyGO;
     public GameObject _asteroidGO;
+    //References
     GameObject _gm;
+    Rigidbody2D _rb;
 
+    private int _initialPosValue;
     public enum Asteroid_State
     {
         movement = 0,
@@ -26,12 +30,13 @@ public class Asteroid : MonoBehaviour
     }
 
     public Asteroid_State state = Asteroid_State.movement;
-    // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
-        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && state == Asteroid_State.movement){
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && state == Asteroid_State.movement)
+        {
             MoveAsteroid();
-            if(_rotating)
+            if (_rotating)
                 RotationAsteroid();
         }
     }
@@ -52,6 +57,7 @@ public class Asteroid : MonoBehaviour
         SetRotationVelocity(rotationVelocity, levelValuesRange);
         SetInitialPosition();
         _gm = gameManager;
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -59,11 +65,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void MoveAsteroid()
     {
-        float velocity = _movementVelocity * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, velocity);
-        if ((Vector2)transform.position == _targetPosition)
-            RestartPosition();
-
+        _rb.velocity = _direction;
     }
 
     /// <summary>
@@ -81,13 +83,8 @@ public class Asteroid : MonoBehaviour
     void RestartPosition()
     {
         transform.position = _startPostion;
+        GenerateNewTarget(_initialPosValue);
     }
-
-    private void OnBecameInvisible()
-    {
-        RestartPosition();
-    }
-
 
     /// <summary>
     /// Generates the speed of movement 
@@ -119,8 +116,8 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     public void SetInitialPosition()
     {
-        int initialPosition = Random.Range(0, 4);
-        switch (initialPosition)
+        _initialPosValue = Random.Range(0, 4);
+        switch (_initialPosValue)
         {
             case 0: //Top Y = 6
                 SetTopPosition();
@@ -135,40 +132,34 @@ public class Asteroid : MonoBehaviour
                 SetRightPosition();
                 break;
         }
-        transform.position = _startPostion;
+        RestartPosition();
     }
 
     /// <summary>
-    /// Generates the initial top and the target position.
+    /// Generates the initial top position.
     /// </summary>
     void SetTopPosition()
     {
-        int xPos = Random.Range(-7, 8);
-        int xPosTarget = Random.Range(-7, 8);
+        int xPos = Random.Range(-6, 7);
         _startPostion = new Vector2(xPos, 7);
-        _targetPosition = new Vector2(xPosTarget, -7);
     }
 
     /// <summary>
-    /// Generates the initial bottom and the target position.
+    /// Generates the initial bottom position.
     /// </summary>
     void SetBottomPosition()
     {
-        int xPos = Random.Range(-7, 8);
-        int xPosTarget = Random.Range(-7, 8);
+        int xPos = Random.Range(-6, 7);
         _startPostion = new Vector2(xPos, -7);
-        _targetPosition = new Vector2(xPosTarget, 7);
     }
 
     /// <summary>
-    /// Generates the initial left and the target position.
+    /// Generates the initial left position.
     /// </summary>
     void SetLeftPosition()
     {
-        int yPos = Random.Range(-3, 4);
-        int yPosTarget = Random.Range(-3, 4);
+        int yPos = Random.Range(-2, 3);
         _startPostion = new Vector2(-10, yPos);
-        _targetPosition = new Vector2(10, yPosTarget);
     }
 
     /// <summary>
@@ -176,10 +167,8 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void SetRightPosition()
     {
-        int yPos = Random.Range(-3, 4);
-        int yPosTarget = Random.Range(-3, 4);
+        int yPos = Random.Range(-2, 3);
         _startPostion = new Vector2(10, yPos);
-        _targetPosition = new Vector2(-10, yPosTarget);
     }
 
     /// <summary>
@@ -192,25 +181,53 @@ public class Asteroid : MonoBehaviour
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
         _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
-        StartCoroutine(FinishExpliding());
+        StartCoroutine(FinishExploding());
     }
 
     /// <summary>
     /// Waits until animations end and destroy the GameObject
     /// </summary>
-    IEnumerator FinishExpliding()
+    IEnumerator FinishExploding()
     {
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Set a new target
+    /// </summary>
+    /// <param name="initialPos">0: Top - 1: Bottom - 2: Left - 3: Right - 4:Bouncing</param>
+    private void GenerateNewTarget(int initialPos)
+    {
+        switch (initialPos)
+        {
+            case 0:
+                _direction = new Vector2(Random.Range(-0.5f,0.5f), -1);
+                break;
+            case 1:
+                _direction = new Vector2(Random.Range(-0.5f, 0.5f), 1);
+                break;
+            case 2:
+                _direction = new Vector2(1, Random.Range(-0.5f, 0.5f));
+                break;
+            case 3:
+                _direction = new Vector2(-1, Random.Range(-0.5f, 0.5f));
+                break;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        EDebug.Log("Colisión");
         if (collision.gameObject.tag == "Asteroid")
         {
-            EDebug.Log("Asteroide");
+            _direction = Vector3.Normalize(Vector3.Reflect(collision.relativeVelocity * -1, collision.contacts[0].normal));
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.name == "SpaceGame")
+            RestartPosition();
     }
 
 }

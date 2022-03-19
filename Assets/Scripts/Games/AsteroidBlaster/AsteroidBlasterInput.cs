@@ -8,12 +8,19 @@ public class AsteroidBlasterInput : MonoBehaviour
     public Text _prueba;
     public GameObject _gunGo;
     public Image _gunTarget;
+    Vector2 _lastShotPostion;
+    //Configuration
+    float _shotCooldown = 1f;
+    //Flags
+    public bool _canShot = true;
+    //References
+    LineRenderer _lineRenderer;
 
-    bool _canVibrate = true;
+    public bool _canVibrate = true;
     // Start is called before the first frame update
     void Start()
     {
-        
+        _lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -22,7 +29,18 @@ public class AsteroidBlasterInput : MonoBehaviour
         if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
         {
             InputController();
+            if (!_canShot)
+                LineRendererController();
+            else
+                _lineRenderer.enabled = false;
         }
+    }
+
+    void LineRendererController()
+    {
+        _lineRenderer.enabled = true;
+        _lineRenderer.SetPosition(0, new Vector2(0, -3.701f));
+        _lineRenderer.SetPosition(1, _lastShotPostion);
     }
 
     /// <summary>
@@ -31,7 +49,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     void InputController()
     {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
-        if (newInput.result)
+        if (newInput.result && _canShot)
         {
             ShotGun(newInput);
         }
@@ -43,16 +61,17 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="input">Input values</param>
     void ShotGun(AndroidInputAdapter.Datos input)
     {
-        Vector2 inputPos = Camera.main.ScreenToWorldPoint(input.pos);
+        _canShot = false;
+        _lastShotPostion = Camera.main.ScreenToWorldPoint(input.pos);
 
-        RaycastHit2D hit = Physics2D.Raycast(inputPos, -Vector2.up);
+        RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
         _gunTarget.transform.position = input.pos;
         _gunGo.GetComponent<Animator>().SetTrigger("Shot");
 
-        Vector3 dir = new Vector3(inputPos.x, inputPos.y, 0) - _gunGo.transform.position;
+        Vector3 dir = new Vector3(_lastShotPostion.x, _lastShotPostion.y, 0) - _gunGo.transform.position;
         float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) - 90;
         _gunGo.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
+        StartCoroutine(WaitShot());
         if (hit.collider != null)
             AsteroidHit(hit);
     }
@@ -64,7 +83,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     void AsteroidHit(RaycastHit2D hit)
     {
         _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
-        if (_canVibrate)
+        if (_canVibrate && hit.collider.tag == "Asteroid")
         {
             hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
             _canVibrate = false;
@@ -79,5 +98,11 @@ public class AsteroidBlasterInput : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         _canVibrate = true;
+    }
+
+    IEnumerator WaitShot()
+    {
+        yield return new WaitForSeconds(_shotCooldown);
+        _canShot = true;
     }
 }
