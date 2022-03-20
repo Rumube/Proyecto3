@@ -17,6 +17,7 @@ public class Asteroid : MonoBehaviour
     private Vector2 _direction;
     public GameObject _destroyGO;
     public GameObject _asteroidGO;
+    public GameObject _collisionAsteroid;
     //References
     GameObject _gm;
     Rigidbody2D _rb;
@@ -221,6 +222,7 @@ public class Asteroid : MonoBehaviour
         if (collision.gameObject.tag == "Asteroid")
         {
             _direction = Vector3.Normalize(Vector3.Reflect(collision.relativeVelocity * -1, collision.contacts[0].normal));
+            StartCoroutine(CollisionController(collision));
         }
     }
 
@@ -230,4 +232,12 @@ public class Asteroid : MonoBehaviour
             RestartPosition();
     }
 
+    IEnumerator CollisionController(Collision2D collision)
+    {
+        GameObject newCollision = Instantiate(_collisionAsteroid);
+        newCollision.transform.position = collision.contacts[0].point;
+        newCollision.GetComponent<Animator>().Play("BrokenAsteroids_Animation");
+        yield return new WaitForSeconds(1f);
+        Destroy(newCollision);
+    }
 }
