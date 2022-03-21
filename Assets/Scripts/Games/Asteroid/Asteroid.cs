@@ -182,7 +182,9 @@ public class Asteroid : MonoBehaviour
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
         _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
+        print("AsteroidShot: hola");
         StartCoroutine(FinishExploding());
+        print("AsteroidShot: 2");
     }
 
     /// <summary>
@@ -190,7 +192,9 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     IEnumerator FinishExploding()
     {
+        
         yield return new WaitForSeconds(1f);
+        print("FinishExploding: Dedsaf");
         Destroy(gameObject);
     }
 
@@ -222,7 +226,7 @@ public class Asteroid : MonoBehaviour
         if (collision.gameObject.tag == "Asteroid")
         {
             _direction = Vector3.Normalize(Vector3.Reflect(collision.relativeVelocity * -1, collision.contacts[0].normal));
-            StartCoroutine(CollisionController(collision));
+            CollisionController(collision);
         }
     }
 
@@ -232,13 +236,12 @@ public class Asteroid : MonoBehaviour
             RestartPosition();
     }
 
-    IEnumerator CollisionController(Collision2D collision)
+    void CollisionController(Collision2D collision)
     {
         GameObject newCollision = Instantiate(_collisionAsteroid);
         newCollision.transform.position = collision.contacts[0].point;
         newCollision.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         newCollision.GetComponent<Animator>().Play("BrokenAsteroids_Animation");
-        yield return new WaitForSeconds(1f);
-        Destroy(newCollision);
+        Destroy(newCollision, 1f);
     }
 }

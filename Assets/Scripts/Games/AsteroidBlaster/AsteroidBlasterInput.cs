@@ -9,31 +9,43 @@ public class AsteroidBlasterInput : MonoBehaviour
     public GameObject _gunGo;
     public Image _gunTarget;
     Vector2 _lastShotPostion;
+    float _newAngle;
+    Vector3 _newDir;
+
     //Configuration
     float _shotCooldown = 1f;
     //Flags
     public bool _canShot = true;
     //References
     LineRenderer _lineRenderer;
+    AsteroidBlaster _asteroidManager;
 
     public bool _canVibrate = true;
     // Start is called before the first frame update
     void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+        _newAngle = 0;
+        _asteroidManager = GetComponent<AsteroidBlaster>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing &&
+        if ( _asteroidManager._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
+            _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
             if (!_canShot)
                 LineRendererController();
             else
                 _lineRenderer.enabled = false;
         }
+        else if (GetComponent<AsteroidBlaster>()._gameFinished)
+            print("Terminado RANKING");
+        else
+            print("ALGO PASÓ");
     }
 
     /// <summary>
@@ -71,9 +83,10 @@ public class AsteroidBlasterInput : MonoBehaviour
         _gunTarget.transform.position = input.pos;
         _gunGo.GetComponent<Animator>().SetTrigger("Shot");
 
-        Vector3 dir = new Vector3(_lastShotPostion.x, _lastShotPostion.y, 0) - _gunGo.transform.position;
-        float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) - 90;
-        _gunGo.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        _newDir = (new Vector3(_lastShotPostion.x, _lastShotPostion.y, 0) - _gunGo.transform.position).normalized;
+        _newAngle= Mathf.Atan2(_newDir.y, _newDir.x) * Mathf.Rad2Deg;
+        _newAngle -= 90;
+
         StartCoroutine(WaitShot());
         if (hit.collider != null)
             AsteroidHit(hit);

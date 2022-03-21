@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AsteroidBlaster : MonoBehaviour
 {
@@ -23,15 +24,11 @@ public class AsteroidBlaster : MonoBehaviour
     Dictionary<Geometry.Geometry_Type, GameObject> _asteroidsDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
     List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+    public bool _gameFinished = false;
 
+    public bool _finishCreateAsteroids = false;
     public int _successes = 0;
     public int _mistakes = 0;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            restartGame();
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -99,11 +96,15 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     IEnumerator LaunchAsteroids()
     {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        float time = 1.5f / _asteroids.Count;
         foreach(GameObject asteroid in _asteroids)
         {
             asteroid.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(time);
         }
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        _finishCreateAsteroids = true;
     }
 
     /// <summary>
@@ -140,8 +141,6 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void restartGame()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         setTarget();
         setNumberAsteroids();
         GenerateAsteroids();
@@ -174,15 +173,13 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            _gameFinished = true;
             //TODO: Finish and generate score
-            EDebug.Log("Terminado");
+            StopAllCoroutines();
+            //SceneManager.LoadScene(1);
+            print("Juego terminado");
         }
-        else
-        {
-            EDebug.Log("No Terminado");
-        }
-
     }
 
     /// <summary>
