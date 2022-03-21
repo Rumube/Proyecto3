@@ -51,6 +51,13 @@ public class CreatePanel : MonoBehaviour
         if (_numberEmpty > 8)
             _numberEmpty = 8;
     }
+
+
+  
+
+    /// <summary>
+    /// Creates a panel with geometry.
+    /// </summary>
     void GeneratePanel()
     {
             int maxValue = _level + 1;

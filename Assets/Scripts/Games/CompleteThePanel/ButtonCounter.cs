@@ -39,6 +39,12 @@ public class ButtonCounter : MonoBehaviour
         GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
     }
 
+    /// <summary>Show the geometry name in plural or singular.</summary> 
+
+    /// <param name="nGeometry">The quantity of a geometry</param> 
+    /// <param name="geometryName">The name of the geometry</param>
+
+    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public string GeometryNumberText(int nGeometry,string geometryName)
     {
         if (nGeometry==0)
@@ -54,7 +60,8 @@ public class ButtonCounter : MonoBehaviour
             return nGeometry+" "+ geometryName+" ";
         }
     }
-  
+
+    /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
         CheckGeometry(_nCircle, _circleCounter);
@@ -74,7 +81,11 @@ public class ButtonCounter : MonoBehaviour
 
 
     }
+    /// <summary>Check how much geometry is ok.</summary> 
+    /// <param name="nGeometry">The quantity of a geometry</param> 
+    /// <param name="counter">The geometry of the player</param>
 
+    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public void CheckGeometry(int nGeometry, int counter)
     {
         if (nGeometry > 0)
