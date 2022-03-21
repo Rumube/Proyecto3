@@ -140,6 +140,8 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void restartGame()
     {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         setTarget();
         setNumberAsteroids();
         GenerateAsteroids();

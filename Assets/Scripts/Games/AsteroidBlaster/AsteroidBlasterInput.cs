@@ -36,11 +36,14 @@ public class AsteroidBlasterInput : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Draw the laser
+    /// </summary>
     void LineRendererController()
     {
         _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0, new Vector2(0, -3.701f));
-        _lineRenderer.SetPosition(1, _lastShotPostion);
+        _lineRenderer.SetPosition(0, new Vector3(0, -3.701f, -1f));
+        _lineRenderer.SetPosition(1, new Vector3(_lastShotPostion.x, _lastShotPostion.y, -1f));
     }
 
     /// <summary>
@@ -100,6 +103,9 @@ public class AsteroidBlasterInput : MonoBehaviour
         _canVibrate = true;
     }
 
+    /// <summary>
+    /// Waits to next shot
+    /// </summary>
     IEnumerator WaitShot()
     {
         yield return new WaitForSeconds(_shotCooldown);

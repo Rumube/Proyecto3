@@ -34,7 +34,7 @@ public class Asteroid : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && state == Asteroid_State.movement)
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
         {
             MoveAsteroid();
             if (_rotating)
