@@ -16,6 +16,11 @@ public class MobileUI : UI
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
 
+    [Header("Student stadistics")]
+    public GameObject _studentGamePanel;
+    public Text _studentNameText;
+    public Text _gameNameText;
+
     void Start()
     {    
         //Adding root windows in order of appearance
@@ -47,17 +52,53 @@ public class MobileUI : UI
         _port.text = "Puerto: " + ServiceLocator.Instance.GetService<GameManager>()._port;
     }
 
+    /// <summary>Get the values for the timers if it's not their first time playing. Acts like placeholders</summary>
+    public void GetTimesSaved()
+    {
+        if (PlayerPrefs.HasKey("SessionMinutes") && PlayerPrefs.HasKey("SessionSeconds"))
+        {
+            _inputSessionMinutes.text = PlayerPrefs.GetString("SessionMinutes");
+            _inputSessionSeconds.text = PlayerPrefs.GetString("SessionSeconds");
+        }
+        if (PlayerPrefs.HasKey("MinigamesMinutes") && PlayerPrefs.HasKey("MinigamesSeconds"))
+        {
+            _inputMinigamesMinutes.text = PlayerPrefs.GetString("MinigamesMinutes");
+            _inputMinigamesSeconds.text = PlayerPrefs.GetString("MinigamesSeconds");
+        }
+    }
     /// <summary>Set the time for the whole session passing values to the GM</summary>
     public void SetTimeSession()
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
+        PlayerPrefs.SetString("SessionMinutes", _inputSessionMinutes.text);
+        PlayerPrefs.SetString("SessionSeconds", _inputSessionSeconds.text);
     }
 
     /// <summary>Set the time for all minigames passing values to the GM</summary>
     public void SetTimeMinigames()
     {
         ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
+        PlayerPrefs.SetString("MinigamesMinutes", _inputMinigamesMinutes.text);
+        PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
     }
+
+
+    /// <summary>Open the panel that shows who is playing in which game</summary>
+    /// /// <param name="studentName">student's name that is currently playing</param>
+    /// /// <param name="gameName">game's name that played by the student</param>
+    public void OpenInfoTabletStudentGamePanel(string studentName, string gameName)
+    {
+        _studentNameText.text = studentName;
+        _gameNameText.text = gameName;
+        _studentGamePanel.SetActive(true);
+    }
+
+    /// <summary>Closes the panel that shows who is playing in which game</summary>
+    public void CloseInfoTabletStudentGamePanel()
+    {
+        _studentGamePanel.SetActive(false);
+    }
+
     private void Update()
     {
         //Control the instructions deppending on the game state
