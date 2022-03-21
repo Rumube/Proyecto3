@@ -236,6 +236,7 @@ public class Asteroid : MonoBehaviour
     {
         GameObject newCollision = Instantiate(_collisionAsteroid);
         newCollision.transform.position = collision.contacts[0].point;
+        newCollision.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         newCollision.GetComponent<Animator>().Play("BrokenAsteroids_Animation");
         yield return new WaitForSeconds(1f);
         Destroy(newCollision);
