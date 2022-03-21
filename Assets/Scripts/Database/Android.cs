@@ -14,9 +14,9 @@ public class Android : MonoBehaviour
     public Text _tName;
     public Text _tId;
 
-   [Header("Recibe de la base")]
-    public Text _stateText, _infoText;
-    public int _Class;
+   //[Header("Recibe de la base")]
+   // public Text _stateText, _infoText;
+   // public int _Class;
 
     private string _conn, _sqlQuery;
     IDbConnection _dbconn;
@@ -139,7 +139,7 @@ public class Android : MonoBehaviour
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tId.text);
+        DeleteStudent(_tName.text);
     }
     public void UpdateStudentButton()
     {
@@ -300,13 +300,30 @@ public class Android : MonoBehaviour
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
+
+            Debug.Log("NAme: " + name);
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + ServiceLocator.Instance.GetService<GameManager>()._classNamedb + "\"";
+            EDebug.Log("sql: " + deleteById);
+            dbcmd2.CommandText = deleteById;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+            EDebug.Log("Reader: " + reader2.Read());
+            EDebug.Log("Reader: " + reader2.GetValue(0));
+
+
             _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Student (Name, idClassroom) values (\"{0}\",\"{1}\")", name,_Class );// table name
+            _sqlQuery = string.Format("insert into Student (Name, idClassroom) values (\"{0}\",\"{1}\")", name, reader2.GetValue(0));// table name
             _dbcmd.CommandText = _sqlQuery;
             _dbcmd.ExecuteScalar();
+
+            reader2.Close();
+            reader2 = null;
+            dbcmd2.Dispose();
+            dbcmd2 = null;
+
             _dbconn.Close();
         }
-        _infoText.text = "";
+        //_infoText.text = "";
         EDebug.Log("Insert Done  ");
         
         ReaderStudent();
@@ -318,22 +335,35 @@ public class Android : MonoBehaviour
 * @param string deleteById - El id del estudiante que va a ser elimimado
 
 */
-    private void DeleteStudent(string deleteById)
+    private void DeleteStudent(string name)
     {
         using (_dbconn = new SqliteConnection(_conn))
         {
 
             _dbconn.Open(); //Open connection to the database.
+
+            Debug.Log("NAme: " + name);
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string deleteById = "SELECT idStudent FROM Student where Name = \"" + name + "\"";
+            EDebug.Log("sql: " + deleteById);
+            dbcmd2.CommandText = deleteById;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+            EDebug.Log("Reader: " + reader2.Read());
+            EDebug.Log("Reader: " + reader2.GetValue(0));
+
             IDbCommand dbcmd = _dbconn.CreateCommand();
-            string sqlQuery = "DELETE FROM Student where idStudent = " + deleteById;// table name
+            string sqlQuery = "DELETE FROM Student where idStudent = " + reader2.GetValue(0);// table name
             dbcmd.CommandText = sqlQuery;
             IDataReader reader = dbcmd.ExecuteReader();
 
-
+            reader.Close();
+            reader = null;
+            reader2.Close();
+            reader2 = null;
             dbcmd.Dispose();
             dbcmd = null;
             _dbconn.Close();
-            _stateText.text = deleteById + " Delete  Done ";
+           // _stateText.text = deleteById + " Delete  Done ";
 
         }
         ReaderStudent();
@@ -367,22 +397,40 @@ public class Android : MonoBehaviour
             _dbcmd.ExecuteScalar();
             _dbconn.Close();
             //Search_function(t_id_class.text);
-            ReaderStudent();
+            //ReaderStudent();
         }
     }
     /** 
 
     * @desc Lee toda la tabla Student de la base
     */
-    private void ReaderStudent()
+    public void ReaderStudent()
     {
         int id_Student_readers, id_Classroom_readers;
         string Namereaders;
+        string className = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
+
+            //Destroy all buttons
+            foreach (Transform child in ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            EDebug.Log("NAme: " + name);
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + className + "\"";
+            EDebug.Log("sql: " + deleteById);
+            dbcmd2.CommandText = deleteById;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+            EDebug.Log("Reader: " + reader2.Read());
+            EDebug.Log("Reader: " + reader2.GetValue(0));
+
+
             IDbCommand dbcmd = _dbconn.CreateCommand();
-            string sqlQuery = "SELECT idStudent, Name, idClassroom " + "FROM Student";// table name
+            string sqlQuery = "SELECT idStudent, Name, idClassroom " + "FROM Student WHERE idClassroom = " + reader2.GetValue(0);// table name
             dbcmd.CommandText = sqlQuery;
             IDataReader reader = dbcmd.ExecuteReader();
             while (reader.Read())
@@ -390,13 +438,19 @@ public class Android : MonoBehaviour
                 id_Student_readers = reader.GetInt32(0);
                 Namereaders = reader.GetString(1); ;
                 id_Classroom_readers = reader.GetInt32(2);
-                _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
+              //  _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clasa =" + id_Classroom_readers);
+                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._studentButton, ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform);
+                newButton.GetComponentInChildren<Text>().text = Namereaders;
             }
             reader.Close();
             reader = null;
+            reader2.Close();
+            reader2 = null;
             dbcmd.Dispose();
             dbcmd = null;
+            dbcmd2.Dispose();
+            dbcmd2 = null;
             _dbconn.Close();
 
         }
@@ -423,7 +477,7 @@ public class Android : MonoBehaviour
                 //  string id = reader.GetString(0);
                 Name_readers_Search = reader.GetString(0);
                
-                _stateText.text += Name_readers_Search + " - " +  "\n";
+               // _stateText.text += Name_readers_Search + " - " +  "\n";
 
                 EDebug.Log(" name =" + Name_readers_Search );
 
@@ -455,7 +509,7 @@ public class Android : MonoBehaviour
             _dbcmd.ExecuteScalar();
             _dbconn.Close();
         }
-        _infoText.text = "";
+       // _infoText.text = "";
         EDebug.Log("Insert Done  ");
 
         ReaderDate();
@@ -478,7 +532,7 @@ public class Android : MonoBehaviour
             {
                 date = reader.GetString(0);
 
-                _infoText.text += date + " " + "\n";
+               // _infoText.text += date + " " + "\n";
                 EDebug.Log("Value=" + date + " name =");
             }
             reader.Close();
@@ -514,7 +568,7 @@ public class Android : MonoBehaviour
             _dbcmd.ExecuteScalar();
             _dbconn.Close();
         }
-        _infoText.text = "";
+       // _infoText.text = "";
         EDebug.Log("Insert Done  ");
 
     }

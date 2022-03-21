@@ -23,6 +23,12 @@ public class MobileUI : UI
     bool _deleteClassCorrect;
     public Button _deleteClassButton;
 
+    [Header("Delete student popup")]
+    public Text _deletingStudentName;
+    public Text _writingStudentName;
+    bool _deleteStudentCorrect;
+    public Button _deleteStudentButton;
+
     [Header("Student stadistics")]
     public GameObject _studentGamePanel;
     public Text _studentNameText;
@@ -50,6 +56,8 @@ public class MobileUI : UI
         ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
         ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(false);
         ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.SetActive(false);
+        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.SetActive(false);
 
         _deleteClassCorrect = false;
 
@@ -105,8 +113,20 @@ public class MobileUI : UI
     public void PopupDeleteClass(string className = "")
     {
         ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text = className;
-        EDebug.Log(ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text);
         ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf);
+    }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupAddStudent()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.activeSelf);
+    }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupDeleteStudent(string studentName = "")
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._studentNameDeleting.text = studentName;
+        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.activeSelf);
     }
 
     public void BeginDeleteClass()
@@ -117,7 +137,13 @@ public class MobileUI : UI
         }
     }
 
-
+    public void BeginDeleteStudent()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
+        }
+    }
     /// <summary>Open the panel that shows who is playing in which game</summary>
     /// /// <param name="studentName">student's name that is currently playing</param>
     /// /// <param name="gameName">game's name that played by the student</param>
@@ -154,6 +180,7 @@ public class MobileUI : UI
                 break;
         }
 
+        //Active the okey bytton when the input text is equal to the name of the class
         if (ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf && !_deleteClassCorrect)
         {
 
@@ -163,6 +190,18 @@ public class MobileUI : UI
         if (_deleteClassCorrect && !_deleteClassButton.interactable)
         {
             _deleteClassButton.interactable = true;
+        }
+
+        //Active the okey bytton when the input text is equal to the name of the student
+        if (ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.activeSelf && !_deleteStudentCorrect)
+        {
+
+            _deleteStudentCorrect = AreEqual(_deletingStudentName.text, _writingStudentName.text);
+
+        }
+        if (_deleteStudentCorrect && !_deleteStudentButton.interactable)
+        {
+            _deleteStudentButton.interactable = true;
         }
     }
 
@@ -186,5 +225,18 @@ public class MobileUI : UI
         }
 
         return true;
+    }
+
+    public void QuitHighlightClass()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<Vibration>()._highlighted.enabled = false;
+        }
+    }
+
+    public void ClassNameForStudentsPanel()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
     }
 }

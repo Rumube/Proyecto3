@@ -8,6 +8,7 @@ public class Vibration : MonoBehaviour
     public bool _deleting = false;
     public bool _animating = false;
     public Text _textButton;
+    public Image _highlighted;
     Animator _animator;
     // Start is called before the first frame update
     void Start()
@@ -36,9 +37,28 @@ public class Vibration : MonoBehaviour
         }
     }
 
+    public void SelectClass()
+    {
+        ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightClass();
+        _highlighted.enabled = true;
+        ServiceLocator.Instance.GetService<GameManager>()._classNamedb = _textButton.text;
+    }
+
     /// <summary>Open/close the window credits</summary>
     public void PopupDeleteClass()
     {
-        ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteClass(_textButton.text);
+        if (_deleting)
+        {
+            ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteClass(_textButton.text);
+        }
     }
+
+    public void PopupDeleteStudent()
+    {
+        if (_deleting)
+        {
+            ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteStudent(_textButton.text);
+        }
+    }
+
 }
