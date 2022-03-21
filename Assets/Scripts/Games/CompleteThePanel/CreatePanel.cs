@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CreatePanel : MonoBehaviour
 {
+    [Header("Table Configuration")]
     public int _column;
     public int _row;
     public int _gapX;
@@ -13,14 +14,15 @@ public class CreatePanel : MonoBehaviour
     public int _offsetY;
 
     public GameObject _canvas;
-    public GameObject _geometry;
+    [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList= new List<GameObject>();
+    
     //Game Configuration
     [SerializeField]
     private int _numberEmpty;
-    //[SerializeField]
-    public int _level;
+    [SerializeField]
+    private int _level;
     [SerializeField]
     Dictionary<Geometry.Geometry_Type, GameObject> _geometryDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
