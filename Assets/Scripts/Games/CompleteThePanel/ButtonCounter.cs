@@ -87,32 +87,52 @@ public class ButtonCounter : MonoBehaviour
         }
        
     }
-    public void CounterSquare()
+  
+    public void CounterSquare(GameObject button)
     {
-        _squareCounter ++;
+        Counter(button, _squareCounter);
     }
-    public void CounterTriangle()
+    public void CounterTriangle(GameObject button)
     {
-        _triangleCounter++;
+        _triangleCounter=Counter(button, _triangleCounter);
     }
-    public void CounterCircle()
+    public void CounterCircle(GameObject button)
     {
-        _circleCounter++;
+        _circleCounter= Counter(button, _circleCounter);
     }
-    public void CounterDiamond()
+    public void CounterDiamond(GameObject button)
     {
-        _diamondCounter++;
+        _diamondCounter=Counter(button, _diamondCounter);
     }
-    public void CounterRectangle()
+    public void CounterRectangle(GameObject button)
     {
-        _rectangleCounter++;
+        _rectangleCounter=Counter(button, _rectangleCounter);
     }
-    public void CounterPentagon()
+    public void CounterPentagon(GameObject button)
     {
-        _pentagonCounter++;
+        _pentagonCounter= Counter(button, _pentagonCounter);
     }
-    public void CounterHexagon()
+    public void CounterHexagon(GameObject button)
     {
-        _hexagonCounter++;
+       _hexagonCounter= Counter(button, _hexagonCounter);
+    }
+    public int Counter(GameObject button, int counter)
+    {
+        if (button.GetComponent<ObjectPanel>()._pressed == false)
+        {
+            counter++;
+            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.pressedSprite;
+            button.GetComponent<ObjectPanel>()._pressed = true;
+
+        }
+        else
+        {
+            counter--;
+            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.disabledSprite;
+            button.GetComponent<ObjectPanel>()._pressed = false;
+            
+
+        }
+        return counter;
     }
 }
