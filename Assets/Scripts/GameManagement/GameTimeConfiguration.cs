@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
+    public Image _timeImage;
     [SerializeField]
     private float _maxTime;
     private float _currentTime;
@@ -35,8 +37,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             {
                 yield return new WaitForSeconds(1f);
                 _currentTime--;
-                EDebug.Log(_currentTime);
-                // TODO: Update UI
+                _timeImage.fillAmount = _currentTime / _maxTime;
             }
 
         } while (_currentTime > 0f);
