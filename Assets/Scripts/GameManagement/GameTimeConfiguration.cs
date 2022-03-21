@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
+    public Image _timeImage;
     [SerializeField]
     private float _maxTime;
     private float _currentTime;
@@ -15,27 +17,31 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             StartGameTime();
     }
 
-    /*
-     * @desc Playing time begins
-     * **/
+
+    /// <summary>
+    /// Playing time begins.
+    /// </summary>
     public void StartGameTime()
     {
         _currentTime = _maxTime;
         StartCoroutine(TimeProgress());
     }
 
-    /*
-     * @desc Reduce the time of the game until it reaches 0
-     * **/
+    /// <summary>
+    /// Reduce the time of the game until it reaches 0.
+    /// </summary>
     IEnumerator TimeProgress()
     {
         do
         {
-            // TODO: Control Pause
-            yield return new WaitForSeconds(1f);
-            _currentTime--;
-            // TODO: Update UI
+            if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+            {
+                yield return new WaitForSeconds(1f);
+                _currentTime--;
+                _timeImage.fillAmount = _currentTime / _maxTime;
+            }
+
         } while (_currentTime > 0f);
-        // TODO: Send notice of game over
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
     }
 }

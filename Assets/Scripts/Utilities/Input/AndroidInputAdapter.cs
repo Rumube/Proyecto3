@@ -18,7 +18,6 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
 
     public Datos InputTouch()
     {
-        EDebug.Log("Tocado");
         Datos newDatos;
         newDatos.result = false;
         newDatos.pos = new Vector2();
@@ -26,8 +25,11 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
         if(Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            newDatos.result = true;
-            newDatos.pos = Camera.main.ScreenToWorldPoint(touch.position);
+            if(touch.phase == TouchPhase.Began)
+            {
+                newDatos.result = true;
+                newDatos.pos = touch.position;
+            }
         }
         return newDatos;
     }
