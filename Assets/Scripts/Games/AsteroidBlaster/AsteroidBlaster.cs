@@ -96,7 +96,6 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     IEnumerator LaunchAsteroids()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
         float time = 1.5f / _asteroids.Count;
         foreach(GameObject asteroid in _asteroids)
         {
@@ -173,12 +172,12 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            //GetComponent<GameTimeConfiguration>().StopTimeCoroutine();
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
             _gameFinished = true;
             //TODO: Finish and generate score
             StopAllCoroutines();
             //SceneManager.LoadScene(1);
-            print("Juego terminado");
         }
     }
 

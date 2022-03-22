@@ -32,8 +32,8 @@ public class AsteroidBlasterInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing &&
-        if ( _asteroidManager._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && _asteroidManager._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
@@ -42,10 +42,9 @@ public class AsteroidBlasterInput : MonoBehaviour
             else
                 _lineRenderer.enabled = false;
         }
-        else if (GetComponent<AsteroidBlaster>()._gameFinished)
-            print("Terminado RANKING");
-        else
-            print("ALGO PASÓ");
+
+        if (GetComponent<AsteroidBlaster>()._gameFinished)
+            StopAllCoroutines();
     }
 
     /// <summary>
