@@ -24,6 +24,7 @@ public class ButtonCounter : MonoBehaviour
     int _nButton;
     int _totalGeometry;
     int _goodGeometry;
+    int _badGeometry;
     public Text _mission;
     private bool readText;
     void Start()
@@ -67,22 +68,19 @@ public class ButtonCounter : MonoBehaviour
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nTriangle, _triangleCounter);
-        
+
+        _badGeometry = _totalGeometry - _goodGeometry;
         int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
         if (_goodGeometry==_totalGeometry)
         {
             EDebug.Log("Bien hecho");
         }
-        
-
 
     }
     /// <summary>Check how much geometry is ok.</summary> 
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="counter">The geometry of the player</param>
-
-    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public void CheckGeometry(int nGeometry, int counter)
     {
         if (nGeometry > 0)
@@ -91,7 +89,7 @@ public class ButtonCounter : MonoBehaviour
             if (nGeometry == counter)
             {
                 _goodGeometry += 1;
-            };
+            }
         }
        
     }
