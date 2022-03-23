@@ -34,6 +34,10 @@ public class MobileUI : UI
     public Text _studentNameText;
     public Text _gameNameText;
 
+    [Header("Add student screen")]
+    public GameObject _tabletsPanel;
+    public GameObject _tabletButton;
+    public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
 
     void Start()
     {
@@ -238,5 +242,26 @@ public class MobileUI : UI
     public void ClassNameForStudentsPanel()
     {
         ServiceLocator.Instance.GetService<GameManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
+    }
+
+    public void InstantiateTabletsAddStudent()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets(); ++i)
+        {
+            GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
+            newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<GameManager>().GetTablets(i)._id.ToString();
+            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));
+        }
+    }
+    public void RemoveTabletsAddStudent()
+    {
+        for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
+        {
+            Destroy(_tabletsPanel.transform.GetChild(i));
+        }
+    }
+    public void InstantiateStudentsAddStudent()
+    {
+
     }
 }

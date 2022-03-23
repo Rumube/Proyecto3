@@ -90,15 +90,42 @@ public class Server : WebSocketBehavior
         SendStartedPackage();
 
         _ids.Add(ID);
+
+        //Hay que arreglar lo de darles una id unica porque si le doy la 1 y se desconecta alguien al siguiente se le da 1 tambien
+        for (int i = 0; i < MAX_TABLETS - 1; ++i)
+        {
+            //Assign new tablet on empty slot
+            if (_tablets[i]._id == -1)
+            {
+                _tablets[i]._id = Sessions.Count; //Provisional
+                _tablets[i]._students = new List<Student>();
+                _tablets[i]._currentStudent = -1;
+                _tablets[i]._currentGame = -1;
+                _tablets[i]._score = -1;
+                return;
+            }
+        }    
     }
     protected override void OnClose(CloseEventArgs e)
     {
         base.OnClose(e);
         Debug.Log("-- Se ha desconectado alguien. " + Sessions.Count);
         EDebug.Log("ids CLOSE: " + _ids);
+        for (int i = 0; i < MAX_TABLETS - 1; ++i)
+        {
+            if (_tablets[i]._id == Sessions.Count)
+            {
+                _tablets[i]._id = -1;
+                _tablets[i]._students = new List<Student>();
+                _tablets[i]._currentStudent = -1;
+                _tablets[i]._currentGame = -1;
+                _tablets[i]._score = -1;
+            }
+        }
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
         _ids.Remove(ID);
+
     }
     protected override void OnMessage(MessageEventArgs e)
     {

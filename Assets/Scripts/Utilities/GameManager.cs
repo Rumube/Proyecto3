@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
     public Text _studentNameDeleting;
     public GameObject _studentPanel;   
     public Text _classNameStudents;
-    public GameObject _studentButton;
 
     // Start is called before the first frame update
     void Start()
@@ -116,7 +115,10 @@ public class GameManager : MonoBehaviour
     {
         return Server._connectedTablets;
     }
-
+    public Tablet GetTablets(int i)
+    {
+        return Server._tablets[i];
+    }
     /// <summary>Get if a new tablet is connected</summary>
     public bool GetUpdateConnectedTablets()
     {
@@ -183,6 +185,11 @@ public class GameManager : MonoBehaviour
         //TODO: End session, send packages end
     }
     private void OnDisable()
+    {
+        Server.OnDisable();
+        Client.OnDisable();
+    }
+    public void ResetConnections()
     {
         Server.OnDisable();
         Client.OnDisable();

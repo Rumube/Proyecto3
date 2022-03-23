@@ -24,6 +24,9 @@ public class Android : MonoBehaviour
     private IDataReader _reader;
 
     string _DatabaseName = "Employers.s3db";
+
+    public GameObject _buttonPrefab;
+    public Transform _location;
     // Start is called before the first frame update
     void Start()
     {
@@ -144,6 +147,10 @@ public class Android : MonoBehaviour
     public void UpdateStudentButton()
     {
         UpdateStudent(_tId.text, _tName.text);
+    }
+    public void ReadStudentsData()
+    {
+        ReaderStudent(_buttonPrefab, _location);
     }
 
     #endregion
@@ -325,8 +332,8 @@ public class Android : MonoBehaviour
         }
         //_infoText.text = "";
         EDebug.Log("Insert Done  ");
-        
-        ReaderStudent();
+
+        ReaderStudent(_buttonPrefab, _location);
     }
     /** 
 
@@ -366,7 +373,7 @@ public class Android : MonoBehaviour
            // _stateText.text = deleteById + " Delete  Done ";
 
         }
-        ReaderStudent();
+        ReaderStudent(_buttonPrefab, _location);
 
     }
     /** 
@@ -404,7 +411,7 @@ public class Android : MonoBehaviour
 
     * @desc Lee toda la tabla Student de la base
     */
-    public void ReaderStudent()
+    public void ReaderStudent(GameObject prefab, Transform location)
     {
         int id_Student_readers, id_Classroom_readers;
         string Namereaders;
@@ -414,7 +421,7 @@ public class Android : MonoBehaviour
             _dbconn.Open(); //Open connection to the database.
 
             //Destroy all buttons
-            foreach (Transform child in ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform)
+            foreach (Transform child in location)
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -440,7 +447,7 @@ public class Android : MonoBehaviour
                 id_Classroom_readers = reader.GetInt32(2);
               //  _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clasa =" + id_Classroom_readers);
-                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._studentButton, ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform);
+                GameObject newButton = Instantiate(prefab,location);
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
             }
             reader.Close();
