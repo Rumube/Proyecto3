@@ -63,9 +63,11 @@ public class ButtonCounter : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nTriangle, _triangleCounter);
+        
         int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
         if (_goodGeometry==_totalGeometry)
@@ -129,15 +131,12 @@ public class ButtonCounter : MonoBehaviour
             counter++;
             button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.pressedSprite;
             button.GetComponent<ObjectPanel>()._pressed = true;
-
         }
         else
         {
             counter--;
             button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.disabledSprite;
             button.GetComponent<ObjectPanel>()._pressed = false;
-            
-
         }
         return counter;
     }

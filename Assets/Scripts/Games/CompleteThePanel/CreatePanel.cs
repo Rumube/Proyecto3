@@ -27,11 +27,14 @@ public class CreatePanel : MonoBehaviour
     Dictionary<Geometry.Geometry_Type, GameObject> _geometryDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
     public List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+
+    GameObject[] buttons;
     void Start()
     {
         SetTarget();
         SetNumberEmpty();
         GeneratePanel();
+        buttons = GameObject.FindGameObjectsWithTag("GameButton");
     }
     void SetTarget()
     {
@@ -83,11 +86,25 @@ public class CreatePanel : MonoBehaviour
         {
             _geometryList[i].GetComponent<ObjectPanel>()._placed=false;
         }
-      
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
     // Update is called once per frame
     void Update()
     {
         
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = false;
+            } 
+        }
+        else
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = true;
+            }
+        }
     }
 }
