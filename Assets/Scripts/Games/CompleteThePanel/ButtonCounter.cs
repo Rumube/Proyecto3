@@ -34,7 +34,6 @@ public class ButtonCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         _mission.text = GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
         GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
     }
@@ -73,11 +72,7 @@ public class ButtonCounter : MonoBehaviour
         {
             EDebug.Log("Bien hecho");
         }
-        else
-        {
-            _totalGeometry = 0;
-            _goodGeometry = 0;
-        }
+        
 
 
     }
@@ -101,7 +96,7 @@ public class ButtonCounter : MonoBehaviour
   
     public void CounterSquare(GameObject button)
     {
-        Counter(button, _squareCounter);
+        _squareCounter=Counter(button, _squareCounter);
     }
     public void CounterTriangle(GameObject button)
     {
