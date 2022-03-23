@@ -5,9 +5,10 @@ using UnityEngine;
 public class ObjectPanel : MonoBehaviour
 {
     public bool _placed=true;
+    public bool _pressed = false;
     public ButtonCounter buttonCounter;
     void Start()
-    {
+    {   
         if (_placed == false)
         {
             if (GetComponent<Geometry>().getGeometryString() == "círculo")

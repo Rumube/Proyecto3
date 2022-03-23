@@ -1,45 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
+    public Image _timeImage;
     [SerializeField]
     private float _maxTime;
+    private float _finishTime;
     private float _currentTime;
+    private float _startTime;
 
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            StartGameTime();
+        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+            TimeProgress();
     }
 
-    /*
-     * @desc Playing time begins
-     * **/
+    /// <summary>
+    /// Playing time begins.
+    /// </summary>
     public void StartGameTime()
     {
-        _currentTime = _maxTime;
-        StartCoroutine(TimeProgress());
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        _finishTime = Time.realtimeSinceStartup + _maxTime;
+        _currentTime = Time.realtimeSinceStartup;
+        _startTime = Time.realtimeSinceStartup;
     }
 
-    /*
-     * @desc Reduce the time of the game until it reaches 0
-     * **/
-    IEnumerator TimeProgress()
+    /// <summary>
+    /// Controll the game time and change the UI
+    /// </summary>
+    void TimeProgress()
     {
-        do
-        {
-            if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
-            {
-                yield return new WaitForSeconds(1f);
-                _currentTime--;
-                EDebug.Log(_currentTime);
-                // TODO: Update UI
-            }
-
-        } while (_currentTime > 0f);
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+        _currentTime += Time.deltaTime;
+        _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
+        if (_currentTime >= _finishTime)
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
     }
 }

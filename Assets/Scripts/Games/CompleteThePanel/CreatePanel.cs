@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CreatePanel : MonoBehaviour
 {
+    [Header("Table Configuration")]
     public int _column;
     public int _row;
     public int _gapX;
@@ -13,23 +14,27 @@ public class CreatePanel : MonoBehaviour
     public int _offsetY;
 
     public GameObject _canvas;
-    public GameObject _geometry;
+    [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList= new List<GameObject>();
+    
     //Game Configuration
     [SerializeField]
     private int _numberEmpty;
-    //[SerializeField]
-    public int _level;
+    [SerializeField]
+    private int _level;
     [SerializeField]
     Dictionary<Geometry.Geometry_Type, GameObject> _geometryDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
     public List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+
+    GameObject[] buttons;
     void Start()
     {
         SetTarget();
         SetNumberEmpty();
         GeneratePanel();
+        buttons = GameObject.FindGameObjectsWithTag("GameButton");
     }
     void SetTarget()
     {
@@ -49,6 +54,13 @@ public class CreatePanel : MonoBehaviour
         if (_numberEmpty > 8)
             _numberEmpty = 8;
     }
+
+
+  
+
+    /// <summary>
+    /// Creates a panel with geometry.
+    /// </summary>
     void GeneratePanel()
     {
             int maxValue = _level + 1;
@@ -74,11 +86,25 @@ public class CreatePanel : MonoBehaviour
         {
             _geometryList[i].GetComponent<ObjectPanel>()._placed=false;
         }
-      
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
     // Update is called once per frame
     void Update()
     {
         
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = false;
+            } 
+        }
+        else
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = true;
+            }
+        }
     }
 }

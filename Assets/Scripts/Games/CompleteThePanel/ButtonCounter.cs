@@ -34,11 +34,16 @@ public class ButtonCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
         _mission.text = GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
         GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
     }
 
+    /// <summary>Show the geometry name in plural or singular.</summary> 
+
+    /// <param name="nGeometry">The quantity of a geometry</param> 
+    /// <param name="geometryName">The name of the geometry</param>
+
+    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public string GeometryNumberText(int nGeometry,string geometryName)
     {
         if (nGeometry==0)
@@ -54,27 +59,30 @@ public class ButtonCounter : MonoBehaviour
             return nGeometry+" "+ geometryName+" ";
         }
     }
-  
+
+    /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nTriangle, _triangleCounter);
+        
         int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
         if (_goodGeometry==_totalGeometry)
         {
             EDebug.Log("Bien hecho");
         }
-        else
-        {
-            _totalGeometry = 0;
-            _goodGeometry = 0;
-        }
+        
 
 
     }
+    /// <summary>Check how much geometry is ok.</summary> 
+    /// <param name="nGeometry">The quantity of a geometry</param> 
+    /// <param name="counter">The geometry of the player</param>
 
+    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public void CheckGeometry(int nGeometry, int counter)
     {
         if (nGeometry > 0)
@@ -87,32 +95,49 @@ public class ButtonCounter : MonoBehaviour
         }
        
     }
-    public void CounterSquare()
+  
+    public void CounterSquare(GameObject button)
     {
-        _squareCounter ++;
+        _squareCounter=Counter(button, _squareCounter);
     }
-    public void CounterTriangle()
+    public void CounterTriangle(GameObject button)
     {
-        _triangleCounter++;
+        _triangleCounter=Counter(button, _triangleCounter);
     }
-    public void CounterCircle()
+    public void CounterCircle(GameObject button)
     {
-        _circleCounter++;
+        _circleCounter= Counter(button, _circleCounter);
     }
-    public void CounterDiamond()
+    public void CounterDiamond(GameObject button)
     {
-        _diamondCounter++;
+        _diamondCounter=Counter(button, _diamondCounter);
     }
-    public void CounterRectangle()
+    public void CounterRectangle(GameObject button)
     {
-        _rectangleCounter++;
+        _rectangleCounter=Counter(button, _rectangleCounter);
     }
-    public void CounterPentagon()
+    public void CounterPentagon(GameObject button)
     {
-        _pentagonCounter++;
+        _pentagonCounter= Counter(button, _pentagonCounter);
     }
-    public void CounterHexagon()
+    public void CounterHexagon(GameObject button)
     {
-        _hexagonCounter++;
+       _hexagonCounter= Counter(button, _hexagonCounter);
+    }
+    public int Counter(GameObject button, int counter)
+    {
+        if (button.GetComponent<ObjectPanel>()._pressed == false)
+        {
+            counter++;
+            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.pressedSprite;
+            button.GetComponent<ObjectPanel>()._pressed = true;
+        }
+        else
+        {
+            counter--;
+            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.disabledSprite;
+            button.GetComponent<ObjectPanel>()._pressed = false;
+        }
+        return counter;
     }
 }
