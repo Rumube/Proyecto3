@@ -11,39 +11,33 @@ public abstract class UI : MonoBehaviour,IUI
         _windowsTree = new List<GameObject>();
         _uiIndex = 0;
     }
-    /** 
-  * @desc Quit the game
-  */
+
+    /// <summary>Quit the game</summary>
     public void QuitGame()
     {
         Application.Quit();
     }
 
-    /** 
-    * @desc Open/close the window credits
-    */
+    /// <summary>Open/close the window credits</summary>
     public void Credits()
     {
         ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._credits.activeSelf);
     }
 
-    /** 
-     * @desc Open the next window deppending on the position of the array and close the previous one
-     */
-    public  void OpenNextWindow()
+    /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>
+    public void OpenNextWindow()
     {
         _uiIndex++;
         _windowsTree[_uiIndex].SetActive(true);
         _windowsTree[_uiIndex - 1].SetActive(false);
     }
 
-    /** 
-      * @desc Open the previous window deppending on the position of the array and close the current one
-      */
+    /// <summary>Open the previous window deppending on the position of the array and close the current one</summary>
     public void OpenPreviousWindow()
     {
         _uiIndex--;
         _windowsTree[_uiIndex].SetActive(true);
         _windowsTree[_uiIndex + 1].SetActive(false);
     }
+   
 }

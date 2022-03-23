@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
     public GameObject _initialScreen;
     public GameObject _credits;
     public GameObject _mainMenu;
+    public GameObject _popupAddClass;
+    public GameObject _popupDeleteClass;
+    public GameObject _popupAddStudent;
+    public GameObject _popupDeleteStudent;
     public GameObject _class;
     public GameObject _gameConnection;
     public GameObject _addStudent;
@@ -58,8 +62,25 @@ public class GameManager : MonoBehaviour
     public string _ip;
     public string _port;
     Server server;
+
     Client client;
     public Text _idText;
+
+
+    [Header("DatabaseUtilities")]
+    public string _classNamedb;
+    
+    [Header("DatabaseUtilitiesClass")]
+    public Text _classNameDeleting;
+    public GameObject _classPanel;
+    public GameObject _classButton;
+
+    [Header("DatabaseUtilitiesStudent")]
+    public Text _studentNameDeleting;
+    public GameObject _studentPanel;   
+    public Text _classNameStudents;
+    public GameObject _studentButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +97,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>Starts a new server and provide the ip and port's device</summary>
     public void StartServer()
     {
         string[] connectionData = new string[2];
@@ -88,55 +110,61 @@ public class GameManager : MonoBehaviour
 
         _gameStateServer = GAME_STATE_SERVER.connection;
     }
+
+    /// <summary>Get the number of tablets that are connected</summary>
     public int GetConnectedTablets()
     {
         return Server._connectedTablets;
     }
+
+    /// <summary>Get if a new tablet is connected</summary>
     public bool GetUpdateConnectedTablets()
     {
         return Server._updateConnectedTablets;
     }
+
+    /// <summary>Rewrite the variable</summary>
+    /// <param name="state">The state of the variable</param>
     public void SetUpdateConnectedTablets(bool state)
     {
         Server._updateConnectedTablets = state;
     }
+
+    /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
     public void StartClient()
     {
         client = new Client();
         client.CreateClient(_IPTest.text,_portTest.text);
     }
-    /** 
-      * @desc Set the time for the whole session
-      * @param int minutes - The session's minutes 
-      * @param int seconds - The session's seconds 
-      */
+
+    /// <summary>Set the time for the whole session</summary>
+    /// <param name="minutes">The session's minutes</param>
+    /// <param name="seconds">The session's seconds</param>
     public void SetTimeSession(string minutes, string seconds)
     {
         _timeSessionMinutes = int.Parse(minutes);
         _timeSessionSeconds = int.Parse(seconds);
         print("t "+ _timeSessionMinutes + " : "+ _timeSessionSeconds);
     }
-    /** 
-     * @desc Set the time for all minigames
-     * @param int minutes - The minigames's minutes 
-     * @param int seconds - The minigames's seconds 
-     */
+
+    /// <summary>Set the time for all minigames</summary>
+    /// <param name="minutes">The minigames's minutes </param>
+    /// <param name="seconds">The minigames's seconds </param>
     public void SetTimeMinigames(string minutes, string seconds)
     {
         _timeMinigamesMinutes = int.Parse(minutes);
         _timeMinigamesSeconds = int.Parse(seconds);
         print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
     }
-    /** 
-    * @desc Just start the timer when the configuration is done
-    */
+
+    /// <summary>Just start the timer when the configuration is done</summary>
     public void StartGameSession()
     {
+        _gameStateServer = GAME_STATE_SERVER.playing;
         StartCoroutine(StartCountdown());
     }
-    /** 
-   * @desc Countdown
-   */
+
+    /// <summary>Countdown</summary>
     public IEnumerator StartCountdown()
     {
         while((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))

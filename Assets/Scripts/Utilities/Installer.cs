@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Installer : MonoBehaviour
 {
+    [Tooltip("Set if the build is server or client")]
     public bool _server;
 
-    public Test _test;
-    public GameTimeConfiguration _gameTimeConfiguration;
-    public GameManager _gameManager;
+    [Header("UI")]
     public MobileUI _canvasMobile;
     public TabletUI _canvasTablet;
+
+    [Header("Utilities")]
+    public GameTimeConfiguration _gameTimeConfiguration;
+    public GameManager _gameManager;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -19,16 +22,15 @@ public class Installer : MonoBehaviour
     void Awake()
     {
         //Register services to use globally
-        //ServiceLocator.Instance.RegisterService<ITest>(new Test()); //If doesnt have monobehaveour hederitance
-        ServiceLocator.Instance.RegisterService<ITest>(_test);
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
-        if (_server)
+        if (_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
+            ServiceLocator.Instance.RegisterService(_canvasMobile);
         }
-        else
+        else if(!_server && _canvasTablet != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
         }
@@ -42,8 +44,9 @@ public class Installer : MonoBehaviour
     void Update()
     {
         _inputUsed.Drag();
-    }
 
+    }
+    /// <summary>Set the input method deppending on the platform</summary>
     private void SetInput()
     {
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN	
@@ -53,6 +56,7 @@ public class Installer : MonoBehaviour
 #endif
     }
 
+    /// <summary>Set the database method deppending on the platform</summary>
     private void SetDatabase()
     {
 #if UNITY_EDITOR
@@ -62,14 +66,15 @@ public class Installer : MonoBehaviour
 #endif
     }
 
+    /// <summary>Set the UI deppending if its server or not</summary>
     private void SetUI()
     {
-        if (_server)
+        if (_server && _canvasMobile != null)
         {
             _canvasMobile.gameObject.SetActive(true);
             _canvasTablet.gameObject.SetActive(false);
         }
-        else
+        else if (!_server && _canvasTablet != null)
         {
             _canvasMobile.gameObject.SetActive(false);
             _canvasTablet.gameObject.SetActive(true);
