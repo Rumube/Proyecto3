@@ -12,4 +12,5 @@ public interface IUI
     public void OpenNextWindow();
     /// <summary>Open the previous window deppending on the position of the array and close the current one</summary>
     public void OpenPreviousWindow();
+
 }
