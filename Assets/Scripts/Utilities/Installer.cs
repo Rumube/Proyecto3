@@ -14,6 +14,7 @@ public class Installer : MonoBehaviour
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
+    public AndroidInputAdapter _inputAndroid;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -25,6 +26,8 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
+        ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+
         if (_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
@@ -36,7 +39,7 @@ public class Installer : MonoBehaviour
         }
 
         SetDatabase();
-        SetInput();
+        //SetInput();
         SetUI();
     }
 
