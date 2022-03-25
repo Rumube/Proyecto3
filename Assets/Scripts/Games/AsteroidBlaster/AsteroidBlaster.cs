@@ -172,12 +172,11 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            //GetComponent<GameTimeConfiguration>().StopTimeCoroutine();
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
             _gameFinished = true;
             //TODO: Finish and generate score
             StopAllCoroutines();
-            //SceneManager.LoadScene(1);
+            restartGame();
         }
     }
 
