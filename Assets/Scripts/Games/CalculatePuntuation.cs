@@ -14,6 +14,9 @@ public class CalculatePuntuation : MonoBehaviour
     {
         _gameTimeConfiguration = GetComponent<GameTimeConfiguration>();
     }
+    /// <summary>Calculates the puntuation</summary>
+    /// <param name="success">Number of success</param>
+    /// <param name="fails">Number of fails</param>
     public void Puntuation(int success, int fails)
     {
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
