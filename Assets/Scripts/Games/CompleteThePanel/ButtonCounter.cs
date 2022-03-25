@@ -27,6 +27,9 @@ public class ButtonCounter : MonoBehaviour
     int _badGeometry;
     public Text _mission;
     private bool readText;
+
+    [SerializeField]
+    private CalculatePuntuation _calculatePuntuation;
     void Start()
     {
      
@@ -72,6 +75,7 @@ public class ButtonCounter : MonoBehaviour
         _badGeometry = _totalGeometry - _goodGeometry;
         int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
+        _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
         if (_goodGeometry==_totalGeometry)
         {
             EDebug.Log("Bien hecho");

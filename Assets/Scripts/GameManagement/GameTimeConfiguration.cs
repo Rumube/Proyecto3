@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
     public Image _timeImage;
+    public float _currentTime;
     [SerializeField]
     private float _maxTime;
-    private float _finishTime;
-    private float _currentTime;
+    public float _finishTime;
     private float _startTime;
 
 
