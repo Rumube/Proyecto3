@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4298833412008080147
+--- !u!1 &5379857572072675987
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,36 +8,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6641106280273383874}
-  - component: {fileID: 3506376852211437766}
+  - component: {fileID: 1538188100454170178}
+  - component: {fileID: 9212421592673191691}
   m_Layer: 0
-  m_Name: Planeta1BG
+  m_Name: CircleAsteroid_Sprites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6641106280273383874
+--- !u!4 &1538188100454170178
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298833412008080147}
+  m_GameObject: {fileID: 5379857572072675987}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.68376297, y: 0.18933116, z: 0.6115463}
+  m_LocalPosition: {x: 0.17160858, y: -0.20669731, z: 5.133365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7381296338393924899}
+  m_Father: {fileID: 7554534650754542824}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3506376852211437766
+--- !u!212 &9212421592673191691
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298833412008080147}
+  m_GameObject: {fileID: 5379857572072675987}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -70,19 +70,19 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -8933628640179261449, guid: 2c9f97c1bbf1aac44bfa76656d4a4653, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 9844c152deb0a9e44bc09e5d6e7a8f9f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.18, y: 2.18}
+  m_Size: {x: 2.02, y: 2.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &8887552440692855844
+--- !u!1 &7026399191129021655
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,26 +90,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7381296338393924899}
+  - component: {fileID: 7554534650754542824}
   m_Layer: 0
-  m_Name: Planet1_BG
+  m_Name: BrokenA_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7381296338393924899
+--- !u!4 &7554534650754542824
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8887552440692855844}
+  m_GameObject: {fileID: 7026399191129021655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.17160858, y: 0.20669731, z: -5.133365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6641106280273383874}
+  - {fileID: 1538188100454170178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
