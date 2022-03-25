@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Vibration : MonoBehaviour
+public class StudentClassButton : MonoBehaviour
 {
     public bool _deleting = false;
     public bool _animating = false;
     public Text _textButton;
     public Image _highlighted;
     Animator _animator;
+
+    [Header("Add student")]
+    public bool _addingToTablet = false;
+    public Student _student;
+    bool _add = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +32,7 @@ public class Vibration : MonoBehaviour
                 _animator.SetBool("StartAnim",true);
             }
         }
-        else
+        else if(!_deleting)
         {
             if (_animating)
             {
@@ -35,6 +40,7 @@ public class Vibration : MonoBehaviour
                 _animator.SetBool("StartAnim", false);
             }
         }
+
     }
 
     public void SelectClass()
@@ -59,6 +65,15 @@ public class Vibration : MonoBehaviour
         {
             ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteStudent(_textButton.text);
         }
+    }
+
+    public void AddingToTablet()
+    {        
+        if (_addingToTablet)
+        {
+            ServiceLocator.Instance.GetService<GameManager>().AddRemoveChildrenToTablet(_student,_add);
+        }
+        _add = !_add;
     }
 
 }

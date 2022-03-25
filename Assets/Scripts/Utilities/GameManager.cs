@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
     public GameObject _studentPanel;   
     public Text _classNameStudents;
 
+    [Header("Students to tablets")]
+    public List<Tablet> _studentsToTablets = new List<Tablet>();
+    public int _selectedTablet;
     // Start is called before the first frame update
     void Start()
     {
@@ -184,6 +187,24 @@ public class GameManager : MonoBehaviour
         }
         //TODO: End session, send packages end
     }
+
+    #region AddStudent
+    /// <summary>Add or remove childrens on selected tablet</summary>
+    /// <param name="student">student data</param>
+    /// <param name="add">Add or remove student</param>
+    public void AddRemoveChildrenToTablet(Student student,bool add)
+    {
+        if (add)
+        {
+            _studentsToTablets[_selectedTablet]._students.Add(student);
+        }
+        else
+        {
+            _studentsToTablets[_selectedTablet]._students.Remove(student);
+        }
+
+    }
+    #endregion
     private void OnDisable()
     {
         Server.OnDisable();

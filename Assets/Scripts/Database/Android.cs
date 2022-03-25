@@ -25,6 +25,7 @@ public class Android : MonoBehaviour
 
     string _DatabaseName = "Employers.s3db";
 
+    [Header("ReaderStudent")]
     public GameObject _buttonPrefab;
     public Transform _location;
     // Start is called before the first frame update
@@ -449,6 +450,10 @@ public class Android : MonoBehaviour
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clasa =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(prefab,location);
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
+                newButton.GetComponentInChildren<StudentClassButton>()._student = new Student();
+                newButton.GetComponentInChildren<StudentClassButton>()._student._id = id_Student_readers;
+                newButton.GetComponentInChildren<StudentClassButton>()._student._nombre = Namereaders;
+                newButton.GetComponentInChildren<StudentClassButton>()._student._idClass = id_Classroom_readers;
             }
             reader.Close();
             reader = null;

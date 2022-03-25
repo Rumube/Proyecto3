@@ -137,7 +137,7 @@ public class MobileUI : UI
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
+            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
         }
     }
 
@@ -145,7 +145,7 @@ public class MobileUI : UI
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
+            ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
         }
     }
     /// <summary>Open the panel that shows who is playing in which game</summary>
@@ -235,7 +235,7 @@ public class MobileUI : UI
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<Vibration>()._highlighted.enabled = false;
+            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<StudentClassButton>()._highlighted.enabled = false;
         }
     }
 
@@ -243,14 +243,16 @@ public class MobileUI : UI
     {
         ServiceLocator.Instance.GetService<GameManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
     }
-
+    #region AddStudent
     public void InstantiateTabletsAddStudent()
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
             newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<GameManager>().GetTablets(i)._id.ToString();
-            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));
+            newButton.GetComponentInChildren<StudentClassButton>()._addingToTablet = true;
+            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));// a lo mejor no lo necesito
+            ServiceLocator.Instance.GetService<GameManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));
         }
     }
     public void RemoveTabletsAddStudent()
@@ -259,7 +261,11 @@ public class MobileUI : UI
         {
             Destroy(_tabletsPanel.transform.GetChild(i));
         }
+        _tabletButtonAssociation.Clear();
+        ServiceLocator.Instance.GetService<GameManager>()._studentsToTablets.Clear();
     }
+
+    #endregion
     public void InstantiateStudentsAddStudent()
     {
 
