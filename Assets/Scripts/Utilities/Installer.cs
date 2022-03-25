@@ -14,6 +14,7 @@ public class Installer : MonoBehaviour
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
+    public AndroidInputAdapter _inputAndroid;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -25,17 +26,20 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
-        if (_server)
+        ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+
+        if (_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
+            ServiceLocator.Instance.RegisterService(_canvasMobile);
         }
-        else
+        else if(!_server && _canvasTablet != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
         }
 
         SetDatabase();
-        SetInput();
+        //SetInput();
         SetUI();
     }
 
@@ -68,12 +72,12 @@ public class Installer : MonoBehaviour
     /// <summary>Set the UI deppending if its server or not</summary>
     private void SetUI()
     {
-        if (_server)
+        if (_server && _canvasMobile != null)
         {
             _canvasMobile.gameObject.SetActive(true);
             _canvasTablet.gameObject.SetActive(false);
         }
-        else
+        else if (!_server && _canvasTablet != null)
         {
             _canvasMobile.gameObject.SetActive(false);
             _canvasTablet.gameObject.SetActive(true);
