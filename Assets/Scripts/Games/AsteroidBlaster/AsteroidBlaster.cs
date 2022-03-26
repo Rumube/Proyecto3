@@ -73,6 +73,36 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void GenerateAsteroids()
     {
+        DeleteAsteroids();
+        #region Target Asteroids
+        int index = 0;
+        do
+        {
+            bool created = false;
+            foreach(GameObject prefab in _geometryForms)
+            {
+                if(prefab.GetComponent<Geometry>()._geometryType == _targetList[index] && !created)
+                {
+                    created = true;
+                    GameObject newAsteroid = Instantiate(prefab);
+                    newAsteroid.SetActive(false);
+                    newAsteroid.GetComponent<Asteroid>().InitAsteroid(_currentDataDifficulty.speedMovement, _currentDataDifficulty.speedRotation, gameObject);
+                    _asteroids.Add(newAsteroid);
+                    index++;
+                    if (index >= _targetList.Count)
+                        index = 0;
+                }
+            }
+        } while (_asteroids.Count < _currentDataDifficulty.numTargets);
+
+        #endregion
+        
+        #region Others Asteroids
+
+        #endregion
+
+
+        //GENERATE 
         //do
         //{
         //    deleteAsteroids();
@@ -141,13 +171,13 @@ public class AsteroidBlaster : MonoBehaviour
     {
         _currentDataDifficulty = GetComponent<AsteroidBalsterDifficulty>().GenerateDataDifficulty(_level);
         setTarget();
-        //GenerateAsteroids();
+        GenerateAsteroids();
     }
 
     /// <summary>
     /// Destroy all the asteroids.
     /// </summary>
-    void deleteAsteroids()
+    void DeleteAsteroids()
     {
         StopCoroutine(LaunchAsteroids());
         foreach (GameObject asteroid in _asteroids)
