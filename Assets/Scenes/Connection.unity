@@ -442,6 +442,7 @@ RectTransform:
   - {fileID: 1968562494}
   - {fileID: 941302702}
   - {fileID: 696175887}
+  - {fileID: 1746943869}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -632,6 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 707760200}
   - component: {fileID: 707760201}
+  - component: {fileID: 707760202}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -680,15 +682,10 @@ MonoBehaviour:
   _gameTime: {fileID: 0}
   _stadistics: {fileID: 0}
   _finalScore: {fileID: 0}
-  _IPTest: {fileID: 1719156045}
-  _portTest: {fileID: 233132516}
   _timeSessionMinutes: 0
   _timeSessionSeconds: 0
   _timeMinigamesMinutes: 0
   _timeMinigamesSeconds: 0
-  _ip: 
-  _port: 
-  _idText: {fileID: 696175888}
   _classNamedb: 
   _classNameDeleting: {fileID: 0}
   _classPanel: {fileID: 0}
@@ -698,6 +695,23 @@ MonoBehaviour:
   _classNameStudents: {fileID: 0}
   _studentsToTablets: []
   _selectedTablet: 0
+--- !u!114 &707760202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707760199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40179e7652e8594194e2c8450560f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ip: 
+  _port: 
+  _idText: {fileID: 696175888}
+  _IPTest: {fileID: 1719156045}
+  _portTest: {fileID: 233132516}
 --- !u!1 &941302701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,6 +1318,85 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 315}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1746943868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1746943869}
+  - component: {fileID: 1746943871}
+  - component: {fileID: 1746943870}
+  m_Layer: 5
+  m_Name: Students
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1746943869
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746943868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 245947493}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -759, y: 272}
+  m_SizeDelta: {x: 622.481, y: 51.812}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1746943870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746943868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 67
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 98
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1746943871
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746943868}
+  m_CullTransparentMesh: 1
 --- !u!1 &1968562493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,8 +1480,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 707760201}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 707760202}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
         m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:

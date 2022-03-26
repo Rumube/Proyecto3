@@ -272,7 +272,7 @@ public class Android : MonoBehaviour
             IDataReader reader = dbcmd.ExecuteReader();
 
             //Destroy all buttons
-            foreach (Transform child in ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform)
+            foreach (Transform child in ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -285,7 +285,7 @@ public class Android : MonoBehaviour
 
                // _infoText.text += idreaders + Namereaders + " " + "\n";
                 EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
-                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._classButton, ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform);
+                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
             }
             reader.Close();
@@ -311,7 +311,7 @@ public class Android : MonoBehaviour
 
             Debug.Log("NAme: " + name);
             IDbCommand dbcmd2 = _dbconn.CreateCommand();
-            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + ServiceLocator.Instance.GetService<GameManager>()._classNamedb + "\"";
+            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + ServiceLocator.Instance.GetService<UIManager>()._classNamedb + "\"";
             EDebug.Log("sql: " + deleteById);
             dbcmd2.CommandText = deleteById;
             IDataReader reader2 = dbcmd2.ExecuteReader();
@@ -416,7 +416,7 @@ public class Android : MonoBehaviour
     {
         int id_Student_readers, id_Classroom_readers;
         string Namereaders;
-        string className = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
+        string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
@@ -450,10 +450,10 @@ public class Android : MonoBehaviour
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clasa =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(prefab,location);
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
-                newButton.GetComponentInChildren<StudentClassButton>()._student = new Student();
-                newButton.GetComponentInChildren<StudentClassButton>()._student._id = id_Student_readers;
-                newButton.GetComponentInChildren<StudentClassButton>()._student._nombre = Namereaders;
-                newButton.GetComponentInChildren<StudentClassButton>()._student._idClass = id_Classroom_readers;
+                newButton.GetComponentInChildren<StudentButton>()._student = new Student();
+                newButton.GetComponentInChildren<StudentButton>()._student._id = id_Student_readers;
+                newButton.GetComponentInChildren<StudentButton>()._student._nombre = Namereaders;
+                newButton.GetComponentInChildren<StudentButton>()._student._idClass = id_Classroom_readers;
             }
             reader.Close();
             reader = null;

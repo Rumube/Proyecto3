@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 6481346493763463854}
   - component: {fileID: 6481346493763463857}
   - component: {fileID: 6481346493763463856}
-  - component: {fileID: 962443991143333166}
+  - component: {fileID: 1035796940259708716}
   m_Layer: 5
   m_Name: TabletButton
   m_TagString: Untagged
@@ -277,8 +277,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 962443991143333166}
-        m_TargetAssemblyTypeName: StudentClassButton, Assembly-CSharp
+      - m_Target: {fileID: 1035796940259708716}
+        m_TargetAssemblyTypeName: TabletButton, Assembly-CSharp
         m_MethodName: SelectTablet
         m_Mode: 1
         m_Arguments:
@@ -289,7 +289,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &962443991143333166
+--- !u!114 &1035796940259708716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,17 +298,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6481346493763463858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b495b90f8c086114c8bdd06b4ba2f621, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c73ddf6ad0eabc40b58214a1f8fe912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _deleting: 0
   _animating: 0
   _textButton: {fileID: 6481346493232685451}
   _highlighted: {fileID: 7855510393787392627}
-  _addingToTablet: 0
-  _studentButton: 0
-  _student:
-    _id: 0
-    _nombre: 
-    _gameData: 
-    _idClass: 0

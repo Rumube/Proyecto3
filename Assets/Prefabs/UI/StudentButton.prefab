@@ -1,80 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5936254118526379171
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1687222894639638453}
-  - component: {fileID: 6279845224584681550}
-  - component: {fileID: 7612030633174680649}
-  m_Layer: 5
-  m_Name: Highlighted
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1687222894639638453
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5936254118526379171}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.33057, y: 2.91638, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8738984192073210502}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.6873, y: 0.8942}
-  m_SizeDelta: {x: 317.1988, y: 62.5304}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6279845224584681550
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5936254118526379171}
-  m_CullTransparentMesh: 1
---- !u!114 &7612030633174680649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5936254118526379171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.36862746}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8738984192073210501
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,8 +12,8 @@ GameObject:
   - component: {fileID: 8738984192073210497}
   - component: {fileID: 8738984192073210496}
   - component: {fileID: 8738984192073210503}
-  - component: {fileID: 9203060278156358497}
   - component: {fileID: 5663570217767443125}
+  - component: {fileID: 444287071559981440}
   m_Layer: 5
   m_Name: StudentButton
   m_TagString: Untagged
@@ -108,7 +33,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8738984192227268637}
-  - {fileID: 1687222894639638453}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -199,8 +123,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9203060278156358497}
-        m_TargetAssemblyTypeName: Vibration, Assembly-CSharp
+      - m_Target: {fileID: 444287071559981440}
+        m_TargetAssemblyTypeName: StudentButton, Assembly-CSharp
         m_MethodName: PopupDeleteStudent
         m_Mode: 1
         m_Arguments:
@@ -211,8 +135,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 9203060278156358497}
-        m_TargetAssemblyTypeName: StudentClassButton, Assembly-CSharp
+      - m_Target: {fileID: 444287071559981440}
+        m_TargetAssemblyTypeName: StudentButton, Assembly-CSharp
         m_MethodName: AddingToTablet
         m_Mode: 1
         m_Arguments:
@@ -223,29 +147,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9203060278156358497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8738984192073210501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b495b90f8c086114c8bdd06b4ba2f621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deleting: 0
-  _animating: 0
-  _textButton: {fileID: 8738984192227268638}
-  _highlighted: {fileID: 0}
-  _addingToTablet: 0
-  _studentButton: 1
-  _student:
-    _id: 0
-    _nombre: 
-    _gameData: 
-    _idClass: 0
 --- !u!95 &5663570217767443125
 Animator:
   serializedVersion: 3
@@ -265,6 +166,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &444287071559981440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8738984192073210501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de3de0b24db4d1343bbc23ca936dfbf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deleting: 0
+  _animating: 0
+  _textButton: {fileID: 8738984192227268638}
+  _highlighted: {fileID: 0}
+  _addingToTablet: 0
+  _student:
+    _id: 0
+    _nombre: 
+    _gameData: 
+    _idClass: 0
+  _add: 1
 --- !u!1 &8738984192227268636
 GameObject:
   m_ObjectHideFlags: 0

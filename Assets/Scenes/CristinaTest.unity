@@ -1543,8 +1543,10 @@ MonoBehaviour:
   _server: 1
   _canvasMobile: {fileID: 1207306178}
   _canvasTablet: {fileID: 758638563}
+  _uiManager: {fileID: 282740217}
   _gameTimeConfiguration: {fileID: 0}
   _gameManager: {fileID: 1930978592}
+  _networkManager: {fileID: 380555983}
   _inputAndroid: {fileID: 0}
 --- !u!4 &141990370
 Transform:
@@ -1558,7 +1560,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &164131430
 GameObject:
@@ -3084,6 +3086,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257036543}
   m_CullTransparentMesh: 1
+--- !u!1 &282740216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 282740218}
+  - component: {fileID: 282740217}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &282740217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282740216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40b0980534abfa4e9477f817877db6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialScreen: {fileID: 1466421266}
+  _credits: {fileID: 2086308977}
+  _mainMenu: {fileID: 606066020}
+  _popupAddClass: {fileID: 633496084}
+  _popupDeleteClass: {fileID: 136390857}
+  _popupAddStudent: {fileID: 685646206}
+  _popupDeleteStudent: {fileID: 255595354}
+  _class: {fileID: 169679813}
+  _gameConnection: {fileID: 386049992}
+  _addStudent: {fileID: 961967899}
+  _gameTime: {fileID: 512837360}
+  _stadistics: {fileID: 1955386191}
+  _finalScore: {fileID: 48233083}
+  _classNamedb: 
+  _classNameDeleting: {fileID: 88459392}
+  _classPanel: {fileID: 1001414768}
+  _classButton: {fileID: 8738984192073210501, guid: 9ce25196f67bf014985dc585bee4ceb5, type: 3}
+  _studentNameDeleting: {fileID: 884726199}
+  _studentPanel: {fileID: 756317229}
+  _classNameStudents: {fileID: 2141359887}
+  _studentsToTablets: []
+  _selectedTablet: 0
+  _timeSessionMinutes: 0
+  _timeSessionSeconds: 0
+  _timeMinigamesMinutes: 0
+  _timeMinigamesSeconds: 0
+--- !u!4 &282740218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282740216}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287352638
 GameObject:
   m_ObjectHideFlags: 0
@@ -4212,6 +4283,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376491988}
   m_CullTransparentMesh: 1
+--- !u!1 &380555982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380555984}
+  - component: {fileID: 380555983}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &380555983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380555982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40179e7652e8594194e2c8450560f99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ip: 
+  _port: 
+  _idText: {fileID: 0}
+  _IPTest: {fileID: 0}
+  _portTest: {fileID: 0}
+--- !u!4 &380555984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380555982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &384221427
 GameObject:
   m_ObjectHideFlags: 0
@@ -5137,7 +5256,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &471993102
 GameObject:
@@ -7310,8 +7429,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1930978592}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 380555983}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
         m_MethodName: StartServer
         m_Mode: 1
         m_Arguments:
@@ -10764,8 +10883,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1930978592}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 282740217}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: StartGameSession
         m_Mode: 1
         m_Arguments:
@@ -11244,18 +11363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8501f86329914dc4f8833abe6191698c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ip: {fileID: 924249745}
-  _port: {fileID: 228976639}
-  _connectedTablets: {fileID: 1814588595}
-  _continueGameConnection: {fileID: 551293597}
-  _inputSessionMinutes: {fileID: 743497496}
-  _inputSessionSeconds: {fileID: 306422847}
-  _inputMinigamesMinutes: {fileID: 1384020042}
-  _inputMinigamesSeconds: {fileID: 1887978127}
-  _countdown: {fileID: 1671648749}
+  _continueMainMenu: {fileID: 929299359}
   _deletingClassName: {fileID: 88459392}
   _writingClassName: {fileID: 1720015862}
-  _confirmDeleteClassButton_confirmDeleteClassButton: {fileID: 287352641}
+  _confirmDeleteClassButton: {fileID: 287352641}
   _deleteClass: {fileID: 214146978}
   _cross: {fileID: -4759586731446081813, guid: 51861f54a7281c14f9dc3303aff70e32, type: 3}
   _bin: {fileID: 21300000, guid: 51805545cd7fd6c4b90cdbc8fc915401, type: 3}
@@ -11263,12 +11374,20 @@ MonoBehaviour:
   _writingStudentName: {fileID: 209606783}
   _confirmDeleteStudentButton: {fileID: 1341880372}
   _deleteStudent: {fileID: 1251461433}
+  _ip: {fileID: 924249745}
+  _port: {fileID: 228976639}
+  _connectedTablets: {fileID: 1814588595}
+  _continueGameConnection: {fileID: 551293597}
+  _tabletsPanel: {fileID: 1137758554}
+  _tabletButton: {fileID: 6481346493763463858, guid: d96b730d2858c344cab7f82881a80d7e, type: 3}
+  _inputSessionMinutes: {fileID: 743497496}
+  _inputSessionSeconds: {fileID: 306422847}
+  _inputMinigamesMinutes: {fileID: 1384020042}
+  _inputMinigamesSeconds: {fileID: 1887978127}
+  _countdown: {fileID: 1671648749}
   _studentGamePanel: {fileID: 0}
   _studentNameText: {fileID: 0}
   _gameNameText: {fileID: 0}
-  _tabletsPanel: {fileID: 1137758554}
-  _tabletButton: {fileID: 6481346493763463858, guid: d96b730d2858c344cab7f82881a80d7e, type: 3}
-  _continueMainMenu: {fileID: 929299359}
 --- !u!1 &1208447700
 GameObject:
   m_ObjectHideFlags: 0
@@ -16165,6 +16284,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1930978592}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PreviousConfigurationState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1673151396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17793,6 +17924,7 @@ GameObject:
   - component: {fileID: 1858158398}
   - component: {fileID: 1858158397}
   - component: {fileID: 1858158396}
+  - component: {fileID: 1858158399}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -17865,6 +17997,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858158399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858158395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1880168573
 GameObject:
   m_ObjectHideFlags: 0
@@ -18354,37 +18518,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameStateServer: 0
   _gameStateClient: 0
-  _initialScreen: {fileID: 1466421266}
-  _credits: {fileID: 2086308977}
-  _mainMenu: {fileID: 606066020}
-  _popupAddClass: {fileID: 633496084}
-  _popupDeleteClass: {fileID: 136390857}
-  _popupAddStudent: {fileID: 685646206}
-  _popupDeleteStudent: {fileID: 255595354}
-  _class: {fileID: 169679813}
-  _gameConnection: {fileID: 386049992}
-  _addStudent: {fileID: 961967899}
-  _gameTime: {fileID: 512837360}
-  _stadistics: {fileID: 1955386191}
-  _finalScore: {fileID: 48233083}
-  _IPTest: {fileID: 0}
-  _portTest: {fileID: 0}
-  _timeSessionMinutes: 0
-  _timeSessionSeconds: 0
-  _timeMinigamesMinutes: 0
-  _timeMinigamesSeconds: 0
-  _ip: 
-  _port: 
-  _idText: {fileID: 0}
-  _classNamedb: 
-  _classNameDeleting: {fileID: 88459392}
-  _classPanel: {fileID: 1001414768}
-  _classButton: {fileID: 8738984192073210501, guid: 9ce25196f67bf014985dc585bee4ceb5, type: 3}
-  _studentNameDeleting: {fileID: 884726199}
-  _studentPanel: {fileID: 756317229}
-  _classNameStudents: {fileID: 2141359887}
-  _studentsToTablets: []
-  _selectedTablet: 0
 --- !u!4 &1930978593
 Transform:
   m_ObjectHideFlags: 0
@@ -18397,7 +18530,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947888189
 GameObject:

@@ -10,10 +10,12 @@ public class Installer : MonoBehaviour
     [Header("UI")]
     public MobileUI _canvasMobile;
     public TabletUI _canvasTablet;
+    public UIManager _uiManager;
 
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
+    public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
 
     private IInput _inputUsed;
@@ -26,6 +28,8 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
+        ServiceLocator.Instance.RegisterService(_uiManager);
+        ServiceLocator.Instance.RegisterService(_networkManager);
         //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
         if (_server && _canvasMobile != null)
