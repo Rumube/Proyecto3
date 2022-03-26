@@ -190,9 +190,7 @@ public class Asteroid : MonoBehaviour
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
         _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
-        print("AsteroidShot: hola");
         StartCoroutine(FinishExploding());
-        print("AsteroidShot: 2");
     }
 
     /// <summary>
@@ -202,7 +200,6 @@ public class Asteroid : MonoBehaviour
     {
         
         yield return new WaitForSeconds(1f);
-        print("FinishExploding: Dedsaf");
         Destroy(gameObject);
     }
 

@@ -46,7 +46,7 @@ public class Installer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _inputUsed.Drag();
+        //_inputUsed.Drag();
 
     }
     /// <summary>Set the input method deppending on the platform</summary>

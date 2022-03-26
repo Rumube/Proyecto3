@@ -30,6 +30,8 @@ public class AsteroidBlaster : MonoBehaviour
     public int _successes = 0;
     public int _mistakes = 0;
 
+    AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,15 +54,19 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void setTarget()
     {
+        //_asteroidsDic.Clear();
+        //_targetList.Clear();
+
+        //foreach (GameObject asteroid in _geometryForms)
+        //{
+        //    _asteroidsDic.Add(asteroid.GetComponent<Geometry>()._geometryType, asteroid);
+        //}
+        //List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._asteroidsDic.Keys);
+        //_targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
         _asteroidsDic.Clear();
         _targetList.Clear();
-
-        foreach (GameObject asteroid in _geometryForms)
-        {
-            _asteroidsDic.Add(asteroid.GetComponent<Geometry>()._geometryType, asteroid);
-        }
-        List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._asteroidsDic.Keys);
-        _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
+        
+        
     }
 
     /// <summary>
@@ -140,6 +146,7 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void restartGame()
     {
+        _currentDataDifficulty = GetComponent<AsteroidBalsterDifficulty>().GenerateDataDifficulty(_level);
         setTarget();
         setNumberAsteroids();
         GenerateAsteroids();
@@ -172,7 +179,7 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
             //TODO: Finish and generate score
             StopAllCoroutines();
