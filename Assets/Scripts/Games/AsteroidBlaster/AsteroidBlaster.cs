@@ -96,9 +96,26 @@ public class AsteroidBlaster : MonoBehaviour
         } while (_asteroids.Count < _currentDataDifficulty.numTargets);
 
         #endregion
-        
-        #region Others Asteroids
 
+        #region Others Asteroids
+        do
+        {
+            bool created = false;
+            foreach (GameObject prefab in _geometryForms)
+            {
+                if (!_currentDataDifficulty.targetsGeometry.Contains(prefab.GetComponent<Geometry>()._geometryType) && !created)
+                {
+                    created = true;
+                    GameObject newAsteroid = Instantiate(prefab);
+                    newAsteroid.SetActive(false);
+                    newAsteroid.GetComponent<Asteroid>().InitAsteroid(_currentDataDifficulty.speedMovement, _currentDataDifficulty.speedRotation, gameObject);
+                    _asteroids.Add(newAsteroid);
+                    index++;
+                    if (index >= _currentDataDifficulty.possibleGeometry.Count)
+                        index = 0;
+                }
+            }
+        } while (_asteroids.Count < _currentDataDifficulty.numAsteroids);
         #endregion
 
 
