@@ -8,6 +8,7 @@ public class MobileUI : UI
     public Text _ip;
     public Text _port;
     public Text _connectedTablets;
+    public Button _continueGameConnection;
 
     [Header("Game Timer")]
     public InputField _inputSessionMinutes;
@@ -21,7 +22,7 @@ public class MobileUI : UI
     public Text _deletingClassName;
     public Text _writingClassName;
     bool _deleteClassCorrect;
-    public Button _deleteClassButton;
+    public Button _confirmDeleteClassButton_confirmDeleteClassButton;
     public Button _deleteClass;
     public Sprite _cross;
     public Sprite _bin;
@@ -31,7 +32,8 @@ public class MobileUI : UI
     public Text _deletingStudentName;
     public Text _writingStudentName;
     bool _deleteStudentCorrect;
-    public Button _deleteStudentButton;
+    public Button _confirmDeleteStudentButton;
+    public Button _deleteStudent;
 
     [Header("Student stadistics")]
     public GameObject _studentGamePanel;
@@ -128,9 +130,23 @@ public class MobileUI : UI
 
     public void BeginDeleteStudent()
     {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
+        if (!_isDeleting)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
+            _isDeleting = true;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
+            }
+            _deleteStudent.GetComponent<Image>().sprite = _cross;
+        }
+        else
+        {
+            _isDeleting = false;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = false;
+            }
+            _deleteStudent.GetComponent<Image>().sprite = _bin;
         }
     }
     /// <summary>Open the panel that shows who is playing in which game</summary>
@@ -162,6 +178,17 @@ public class MobileUI : UI
                     _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
                     ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
                 }
+                if (ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets() > 0)
+                {
+                    ActivateContinueGameConnection();
+                }
+                else
+                {
+                    DesctivateContinueGameConnection();
+                }
+                break;
+            case GameManager.GAME_STATE_SERVER.teamConfiguration:
+
                 break;
 
             case GameManager.GAME_STATE_SERVER.playing:
@@ -176,9 +203,9 @@ public class MobileUI : UI
             _deleteClassCorrect = AreEqual(_deletingClassName.text, _writingClassName.text);
 
         }
-        if (_deleteClassCorrect && !_deleteClassButton.interactable)
+        if (_deleteClassCorrect && !_confirmDeleteStudentButton.interactable)
         {
-            _deleteClassButton.interactable = true;
+            _confirmDeleteStudentButton.interactable = true;
         }
 
         //Active the okey bytton when the input text is equal to the name of the student
@@ -188,9 +215,9 @@ public class MobileUI : UI
             _deleteStudentCorrect = AreEqual(_deletingStudentName.text, _writingStudentName.text);
 
         }
-        if (_deleteStudentCorrect && !_deleteStudentButton.interactable)
+        if (_deleteStudentCorrect && !_confirmDeleteStudentButton.interactable)
         {
-            _deleteStudentButton.interactable = true;
+            _confirmDeleteStudentButton.interactable = true;
         }
     }
 
@@ -274,14 +301,31 @@ public class MobileUI : UI
 
     }
     #endregion
+    #region GameConnection
+    public void ActivateContinueGameConnection()
+    {
+        if (!_continueGameConnection.interactable)
+        {
+            _continueGameConnection.interactable = true;
+        }
+    }
+    public void DesctivateContinueGameConnection()
+    {
+        if (_continueGameConnection.interactable)
+        {
+            _continueGameConnection.interactable = false;
+        }        
+    }
+    #endregion
     #region AddStudent
     public void InstantiateTabletsAddStudent()
     {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.teamConfiguration;
+
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
             newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<GameManager>().GetTablets(i)._id.ToString();
-            newButton.GetComponentInChildren<StudentClassButton>()._addingToTablet = true;
             _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));// a lo mejor no lo necesito
             ServiceLocator.Instance.GetService<GameManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<GameManager>().GetTablets(i));
         }
@@ -295,7 +339,13 @@ public class MobileUI : UI
         _tabletButtonAssociation.Clear();
         ServiceLocator.Instance.GetService<GameManager>()._studentsToTablets.Clear();
     }
-
+    public void QuitHighlightTablets()
+    {
+        for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
+        {
+            _tabletsPanel.transform.GetChild(i).GetComponentInChildren<StudentClassButton>()._highlighted.gameObject.SetActive(false);
+        }
+    }
     #endregion
     public void InstantiateStudentsAddStudent()
     {

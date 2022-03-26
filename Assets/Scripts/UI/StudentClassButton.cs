@@ -15,7 +15,7 @@ public class StudentClassButton : MonoBehaviour
     public bool _addingToTablet = false;
     public bool _studentButton;
     public Student _student;
-    bool _add = true;
+    public bool _add = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +55,18 @@ public class StudentClassButton : MonoBehaviour
                 GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
             }
         }
-
+        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        {
+            case GameManager.GAME_STATE_SERVER.teamConfiguration:
+                _addingToTablet = true;
+                //Show the background button when adding student to tablet
+                if (GetComponent<Image>().color.a == 0)
+                {
+                    GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 100);
+                }
+                break;
+        }
+       
     }
 
     public void SelectClass()
@@ -64,6 +75,12 @@ public class StudentClassButton : MonoBehaviour
         ServiceLocator.Instance.GetService<MobileUI>().ActivateContinueMainMenu();
         _highlighted.gameObject.SetActive(true);
         ServiceLocator.Instance.GetService<GameManager>()._classNamedb = _textButton.text;
+    }
+    public void SelectTablet()
+    {
+        ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightTablets();
+        _highlighted.gameObject.SetActive(true);
+        ServiceLocator.Instance.GetService<GameManager>()._selectedTablet = int.Parse(_textButton.text);
     }
 
     /// <summary>Open/close the window credits</summary>
@@ -87,7 +104,7 @@ public class StudentClassButton : MonoBehaviour
     {        
         if (_addingToTablet)
         {
-            ServiceLocator.Instance.GetService<GameManager>().AddRemoveChildrenToTablet(_student,_add);
+            ServiceLocator.Instance.GetService<GameManager>().AddRemoveChildrenToTablet(_student,_add,this);
         }
         _add = !_add;
     }

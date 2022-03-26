@@ -192,15 +192,26 @@ public class GameManager : MonoBehaviour
     /// <summary>Add or remove childrens on selected tablet</summary>
     /// <param name="student">student data</param>
     /// <param name="add">Add or remove student</param>
-    public void AddRemoveChildrenToTablet(Student student,bool add)
+    public void AddRemoveChildrenToTablet(Student student,bool add,StudentClassButton button)
     {
         if (add)
         {
-            _studentsToTablets[_selectedTablet]._students.Add(student);
+            bool selected = false;
+            foreach(Tablet tablet in _studentsToTablets)
+            {
+                if (tablet._students.Contains(student))
+                {
+                    selected = true;
+                }
+            }
+            if (!selected)
+            {
+                _studentsToTablets[_selectedTablet - 1]._students.Add(student);
+            }          
         }
         else
         {
-            _studentsToTablets[_selectedTablet]._students.Remove(student);
+            _studentsToTablets[_selectedTablet-1]._students.Remove(student);
         }
 
     }

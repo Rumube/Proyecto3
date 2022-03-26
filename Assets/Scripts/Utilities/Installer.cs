@@ -41,6 +41,9 @@ public class Installer : MonoBehaviour
         SetDatabase();
         //SetInput();
         SetUI();
+
+        //Screen never turn off
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     // Update is called once per frame
