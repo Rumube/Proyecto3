@@ -26,7 +26,7 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
-        ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
         if (_server && _canvasMobile != null)
         {
@@ -46,7 +46,7 @@ public class Installer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _inputUsed.Drag();
+        //_inputUsed.Drag();
 
     }
     /// <summary>Set the input method deppending on the platform</summary>

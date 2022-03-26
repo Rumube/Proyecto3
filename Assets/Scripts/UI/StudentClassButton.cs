@@ -13,12 +13,18 @@ public class StudentClassButton : MonoBehaviour
 
     [Header("Add student")]
     public bool _addingToTablet = false;
+    public bool _studentButton;
     public Student _student;
     bool _add = true;
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
+        if (_studentButton)
+        {
+            GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
+
+        }
     }
 
     // Update is called once per frame
@@ -31,6 +37,11 @@ public class StudentClassButton : MonoBehaviour
                 _animating = true;
                 _animator.SetBool("StartAnim",true);
             }
+            if (_studentButton)
+            {
+                //Showing a little bit the background just for guiding the thumb
+                GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b,100) ;
+            }
         }
         else if(!_deleting)
         {
@@ -39,6 +50,10 @@ public class StudentClassButton : MonoBehaviour
                 _animating = false;
                 _animator.SetBool("StartAnim", false);
             }
+            if (_studentButton)
+            {
+                GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
+            }
         }
 
     }
@@ -46,7 +61,8 @@ public class StudentClassButton : MonoBehaviour
     public void SelectClass()
     {
         ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightClass();
-        _highlighted.enabled = true;
+        ServiceLocator.Instance.GetService<MobileUI>().ActivateContinueMainMenu();
+        _highlighted.gameObject.SetActive(true);
         ServiceLocator.Instance.GetService<GameManager>()._classNamedb = _textButton.text;
     }
 

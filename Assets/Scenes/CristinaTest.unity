@@ -1094,6 +1094,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: DesctivateContinueMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &122801844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1533,6 +1545,7 @@ MonoBehaviour:
   _canvasTablet: {fileID: 758638563}
   _gameTimeConfiguration: {fileID: 0}
   _gameManager: {fileID: 1930978592}
+  _inputAndroid: {fileID: 0}
 --- !u!4 &141990370
 Transform:
   m_ObjectHideFlags: 0
@@ -1644,7 +1657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &169679814
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6314,7 +6327,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &606066021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7962,7 +7975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &758638563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9380,7 +9393,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 929299360}
   m_OnClick:
     m_PersistentCalls:
@@ -9471,7 +9484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f536ebe08928908498fbf11ca668edc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tName: {fileID: 0}
+  _tName: {fileID: 2141359887}
   _tId: {fileID: 0}
   _buttonPrefab: {fileID: 8738984192073210501, guid: 57d6a0fc5f6c29f43b6527c4312b170f, type: 3}
   _location: {fileID: 756317230}
@@ -11240,6 +11253,9 @@ MonoBehaviour:
   _deletingClassName: {fileID: 88459392}
   _writingClassName: {fileID: 1720015862}
   _deleteClassButton: {fileID: 287352641}
+  _deleteClass: {fileID: 214146978}
+  _cross: {fileID: -4759586731446081813, guid: 51861f54a7281c14f9dc3303aff70e32, type: 3}
+  _bin: {fileID: 21300000, guid: 51805545cd7fd6c4b90cdbc8fc915401, type: 3}
   _deletingStudentName: {fileID: 884726199}
   _writingStudentName: {fileID: 209606783}
   _deleteStudentButton: {fileID: 1341880372}
@@ -11248,6 +11264,7 @@ MonoBehaviour:
   _gameNameText: {fileID: 0}
   _tabletsPanel: {fileID: 1137758554}
   _tabletButton: {fileID: 6481346493763463858, guid: d96b730d2858c344cab7f82881a80d7e, type: 3}
+  _continueMainMenu: {fileID: 929299359}
 --- !u!1 &1208447700
 GameObject:
   m_ObjectHideFlags: 0
@@ -18362,6 +18379,8 @@ MonoBehaviour:
   _studentNameDeleting: {fileID: 884726199}
   _studentPanel: {fileID: 756317229}
   _classNameStudents: {fileID: 2141359887}
+  _studentsToTablets: []
+  _selectedTablet: 0
 --- !u!4 &1930978593
 Transform:
   m_ObjectHideFlags: 0

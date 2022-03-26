@@ -22,6 +22,10 @@ public class MobileUI : UI
     public Text _writingClassName;
     bool _deleteClassCorrect;
     public Button _deleteClassButton;
+    public Button _deleteClass;
+    public Sprite _cross;
+    public Sprite _bin;
+    bool _isDeleting;
 
     [Header("Delete student popup")]
     public Text _deletingStudentName;
@@ -39,6 +43,8 @@ public class MobileUI : UI
     public GameObject _tabletButton;
     public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
 
+    [Header("Main Menu")]
+    public Button _continueMainMenu;
     void Start()
     {
         //Adding root windows in order of appearance
@@ -106,20 +112,6 @@ public class MobileUI : UI
         PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
     }
 
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupAddClass()
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.activeSelf);
-    }
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupDeleteClass(string className = "")
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text = className;
-        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf);
-    }
-
     /// <summary>Open/close the window credits</summary>
     public void PopupAddStudent()
     {
@@ -133,13 +125,6 @@ public class MobileUI : UI
         ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.activeSelf);
     }
 
-    public void BeginDeleteClass()
-    {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
-        {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
-        }
-    }
 
     public void BeginDeleteStudent()
     {
@@ -235,7 +220,7 @@ public class MobileUI : UI
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<StudentClassButton>()._highlighted.enabled = false;
+            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<StudentClassButton>()._highlighted.gameObject.SetActive(false) ;
         }
     }
 
@@ -243,6 +228,52 @@ public class MobileUI : UI
     {
         ServiceLocator.Instance.GetService<GameManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
     }
+    #region Mainmenu
+    public void ActivateContinueMainMenu()
+    {
+        _continueMainMenu.interactable = true;
+    }
+    public void DesctivateContinueMainMenu()
+    {
+        _continueMainMenu.interactable = false;
+    }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupAddClass()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.activeSelf);
+    }
+
+    /// <summary>Open/close the window credits</summary>
+    public void PopupDeleteClass(string className = "")
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text = className;
+        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf);
+    }
+
+    public void BeginDeleteClass()
+    {
+        if (!_isDeleting)
+        {
+            _isDeleting = true;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = true;
+            }
+            _deleteClass.GetComponent<Image>().sprite = _cross;
+        }
+        else
+        {
+            _isDeleting = false;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<StudentClassButton>()._deleting = false;
+            }
+            _deleteClass.GetComponent<Image>().sprite = _bin;
+        }
+
+    }
+    #endregion
     #region AddStudent
     public void InstantiateTabletsAddStudent()
     {
