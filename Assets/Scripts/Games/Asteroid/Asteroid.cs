@@ -44,10 +44,6 @@ public class Asteroid : MonoBehaviour
         {
             _rb.velocity = Vector2.zero;
         }
-        if (_gm.GetComponent<AsteroidBlaster>()._gameFinished)
-        {
-            StopAllCoroutines();
-        }
     }
 
     /// <summary>

@@ -24,18 +24,13 @@ public class AsteroidBlaster : MonoBehaviour
     public int _successes = 0;
     public int _mistakes = 0;
 
+    bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
 
     // Start is called before the first frame update
     void Start()
     {
-        //restartGame();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            restartGame();
+        restartGame();
     }
 
     /// <summary>
@@ -94,7 +89,6 @@ public class AsteroidBlaster : MonoBehaviour
                 }
             }
         } while (_asteroids.Count < _currentDataDifficulty.numTargets);
-
         #endregion
 
         #region Others Asteroids
@@ -117,23 +111,6 @@ public class AsteroidBlaster : MonoBehaviour
             }
         } while (_asteroids.Count < _currentDataDifficulty.numAsteroids);
         #endregion
-
-
-        //GENERATE 
-        //do
-        //{
-        //    deleteAsteroids();
-
-        //    for (int i = 0; i < _currentDataDifficulty.numAsteroids; i++)
-        //    {
-        //        int geometryID = Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
-
-        //        GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
-        //        newAsteroid.SetActive(false);
-        //        newAsteroid.GetComponent<Asteroid>().InitAsteroid(_currentDataDifficulty.speedMovement, _currentDataDifficulty.speedRotation, gameObject);
-        //        _asteroids.Add(newAsteroid);
-        //    }
-        //} while (!checkGenerateAteroids());
         StartCoroutine(LaunchAsteroids());
     }
 
@@ -148,37 +125,13 @@ public class AsteroidBlaster : MonoBehaviour
             asteroid.SetActive(true);
             yield return new WaitForSeconds(time);
         }
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        if (_firstGame)
+        {
+            ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+            _firstGame = false;
+        }
         _finishCreateAsteroids = true;
-    }
-
-    /// <summary>
-    /// Checks if the asteroids generated are corrects
-    /// </summary>
-    /// <returns>True if is correct, false if not</returns>
-    bool checkGenerateAteroids()
-    {
-        bool result = true;
-        Dictionary<Geometry.Geometry_Type, bool> goodCreation = new Dictionary<Geometry.Geometry_Type, bool>();
-        foreach(Geometry.Geometry_Type targetGeometry in _targetList)
-        {
-            goodCreation.Add(targetGeometry, false);
-        }
-
-        foreach(GameObject asteroid in _asteroids)
-        {
-            foreach(Geometry.Geometry_Type geometry in _targetList)
-            {
-                if (asteroid.GetComponent<Geometry>()._geometryType == geometry)
-                    goodCreation[geometry] = true;
-            }
-        }
-        foreach(KeyValuePair<Geometry.Geometry_Type, bool> element in goodCreation)
-        {
-            if (!element.Value)
-                result = false;
-        }
-        return result;
+        _gameFinished = false;
     }
 
     /// <summary>
@@ -233,7 +186,6 @@ public class AsteroidBlaster : MonoBehaviour
     public bool CheckIfIsFinish()
     {
         bool finish = false;
-
         if(_asteroids.Count == 0)
             finish = true;
         else

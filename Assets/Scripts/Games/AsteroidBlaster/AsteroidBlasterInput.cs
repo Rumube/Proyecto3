@@ -42,9 +42,6 @@ public class AsteroidBlasterInput : MonoBehaviour
             else
                 _lineRenderer.enabled = false;
         }
-
-        if (GetComponent<AsteroidBlaster>()._gameFinished)
-            StopAllCoroutines();
     }
 
     /// <summary>
