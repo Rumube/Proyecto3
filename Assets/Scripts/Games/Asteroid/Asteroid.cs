@@ -55,15 +55,14 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     /// <param name="movementVelocity">The id that assigns the geometry type</param>
     /// <param name="rotationVelocity">The speed value</param>
-    /// <param name="levelValuesRange">Randomization parameter</param>
     /// <param name="gameManager">Reference to the GameManager</param>
     /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
-    public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange, GameObject gameManager)
+    public void InitAsteroid(float movementVelocity,float rotationVelocity, GameObject gameManager)
     {
         _asteroidGO.SetActive(true);
         _destroyGO.SetActive(false);
-        SetMovementVelocity(movementVelocity, levelValuesRange);
-        SetRotationVelocity(rotationVelocity, levelValuesRange);
+        _movementVelocity = movementVelocity;
+        _rotationVelocity = rotationVelocity;
         SetInitialPosition();
         _gm = gameManager;
         _rb = GetComponent<Rigidbody2D>();
@@ -94,31 +93,6 @@ public class Asteroid : MonoBehaviour
         transform.position = _startPostion;
         GenerateNewTarget(_initialPosValue);
     }
-
-    /// <summary>
-    /// Generates the speed of movement 
-    /// depending on the difficulty.
-    /// </summary>
-    /// <param name="movementVelocity">The speed value.</param>
-    /// <param name="levelValuesRange">Randomization parameter.</param>
-    public void SetMovementVelocity(float movementVelocity, float levelValuesRange)
-    {
-        _movementVelocity = Random.Range(movementVelocity,
-            (1 + levelValuesRange / 2));
-    }
-
-    /// <summary>
-    /// Generates the speed of rotation
-    /// depending on the difficulty.
-    /// </summary>
-    /// <param name="rotationVelocity">The speed value.</param>
-    /// <param name="levelValuesRange">Randomization parameter.</param>
-    public void SetRotationVelocity(float rotationVelocity, float levelValuesRange)
-    {
-        _rotationVelocity = Random.Range(rotationVelocity,
-            rotationVelocity + (5 + levelValuesRange));
-    }
-
 
     /// <summary>
     /// Generates the initial and the target position.

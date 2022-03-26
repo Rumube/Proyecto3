@@ -13,12 +13,6 @@ public class AsteroidBlaster : MonoBehaviour
     [SerializeField]
     private int _level;
     [SerializeField]
-    private float _movementVelocity;
-    [SerializeField]
-    private float _rotationVelocity;
-    [SerializeField]
-    private int _numberAsteroids;
-    [SerializeField]
     private List<GameObject> _asteroids = new List<GameObject>();
     [SerializeField]
     Dictionary<Geometry.Geometry_Type, GameObject> _asteroidsDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
@@ -35,17 +29,13 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        restartGame();
+        //restartGame();
     }
 
-    /// <summary>
-    /// Set the max number of asteroids
-    /// </summary>
-    void setNumberAsteroids()
+    private void Update()
     {
-        _numberAsteroids = 3 + (_level / 2);
-        if (_numberAsteroids > 8)
-            _numberAsteroids = 8;
+        if (Input.GetKeyDown(KeyCode.Space))
+            restartGame();
     }
 
     /// <summary>
@@ -54,19 +44,27 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void setTarget()
     {
-        //_asteroidsDic.Clear();
-        //_targetList.Clear();
-
-        //foreach (GameObject asteroid in _geometryForms)
-        //{
-        //    _asteroidsDic.Add(asteroid.GetComponent<Geometry>()._geometryType, asteroid);
-        //}
-        //List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._asteroidsDic.Keys);
-        //_targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
         _asteroidsDic.Clear();
         _targetList.Clear();
-        
-        
+
+        for (int i = 0; i < _currentDataDifficulty.numGeometryTargets; i++)
+        {
+            bool goodTarget = true;
+            int index = 0;
+            index = Random.Range(0, _currentDataDifficulty.targetsGeometry.Count);
+            do
+            {
+                goodTarget = true;
+                if (_targetList.Contains(_currentDataDifficulty.targetsGeometry[index]))
+                {
+                    goodTarget = false;
+                    index++;
+                    if (index >= _currentDataDifficulty.targetsGeometry.Count)
+                        index = 0;
+                }
+            } while (!goodTarget);
+            _targetList.Add(_currentDataDifficulty.targetsGeometry[index]);
+        }
     }
 
     /// <summary>
@@ -75,25 +73,20 @@ public class AsteroidBlaster : MonoBehaviour
     /// </summary>
     void GenerateAsteroids()
     {
-        do
-        {
-            deleteAsteroids();
-            int maxValue = _level + 1;
-            if (_level > _geometryForms.Length)
-                maxValue = _geometryForms.Length - 1;
-            for (int i = 0; i < _numberAsteroids; i++)
-            {
-                int geometryID = Random.Range(0, maxValue);
-                if(geometryID >= 7)
-                {
-                    geometryID = 6;
-                }
-                GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
-                newAsteroid.SetActive(false);
-                newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level, gameObject);
-                _asteroids.Add(newAsteroid);
-            }
-        } while (!checkGenerateAteroids());
+        //do
+        //{
+        //    deleteAsteroids();
+
+        //    for (int i = 0; i < _currentDataDifficulty.numAsteroids; i++)
+        //    {
+        //        int geometryID = Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
+
+        //        GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
+        //        newAsteroid.SetActive(false);
+        //        newAsteroid.GetComponent<Asteroid>().InitAsteroid(_currentDataDifficulty.speedMovement, _currentDataDifficulty.speedRotation, gameObject);
+        //        _asteroids.Add(newAsteroid);
+        //    }
+        //} while (!checkGenerateAteroids());
         StartCoroutine(LaunchAsteroids());
     }
 
@@ -148,8 +141,7 @@ public class AsteroidBlaster : MonoBehaviour
     {
         _currentDataDifficulty = GetComponent<AsteroidBalsterDifficulty>().GenerateDataDifficulty(_level);
         setTarget();
-        setNumberAsteroids();
-        GenerateAsteroids();
+        //GenerateAsteroids();
     }
 
     /// <summary>
