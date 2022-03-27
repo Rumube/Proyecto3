@@ -21,6 +21,33 @@ public class Server : WebSocketBehavior
 
     public delegate void PacketHandler(int fromClient, Package package);
     public static Dictionary<int, PacketHandler> _packetHandlers;
+
+    //  servidor websocket
+    public string[] createServer()
+    {
+        _connectedTablets = 0;
+        _updateConnectedTablets = false;
+
+        string[] connectionData = new string[2];
+        _server = new WebSocketServer(8088);
+        _server.Start();
+        _server.AddWebSocketService<Server>("/");
+
+
+        EDebug.Log("IP:" + GetLocalIPAddress() + " Port:" + _server.Port);
+
+        EDebug.Log("Servidor iniciado.");
+
+        _allPackages = new List<Package>();
+
+        connectionData[0] = GetLocalIPAddress();
+        connectionData[1] = _server.Port.ToString();
+
+        InitializeData();
+
+        return connectionData;
+    }
+
     public void InitializeData()
     {
         _tablets = new Tablet[MAX_TABLETS];
@@ -41,31 +68,6 @@ public class Server : WebSocketBehavior
         EDebug.Log("Initialized packets.");
     }
 
-    //  servidor websocket
-    public string[] createServer()
-    {
-        _connectedTablets = 0;
-        _updateConnectedTablets = false;
-
-        string[] connectionData = new string[2];
-        _server = new WebSocketServer(8088);
-        _server.Start();
-        _server.AddWebSocketService<Server>("/");
-
-       
-        EDebug.Log("IP:" + GetLocalIPAddress() + " Port:" + _server.Port);
-
-        EDebug.Log("Servidor iniciado.");
-
-        _allPackages = new List<Package>();
-
-        connectionData[0] = GetLocalIPAddress();
-        connectionData[1] = _server.Port.ToString();
-
-        InitializeData();
-
-        return connectionData;
-    }
     public string GetLocalIPAddress()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -83,13 +85,28 @@ public class Server : WebSocketBehavior
     {
         base.OnOpen();
         EDebug.Log("++ Alguien se ha conectado. " + Sessions.Count);
-        EDebug.Log("ids OPEN: "+_ids);
+
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
 
         SendStartedPackage();
 
-        _ids.Add(ID);
+        _ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
+        EDebug.Log("ids OPEN: " + _ids[Sessions.Count - 1]);
+        //Hay que arreglar lo de darles una id unica porque si le doy la 1 y se desconecta alguien al siguiente se le da 1 tambien
+        for (int i = 0; i < MAX_TABLETS - 1; ++i)
+        {
+            //Assign new tablet on empty slot
+            if (_tablets[i]._id == -1)
+            {
+                _tablets[i]._id = Sessions.Count; //Provisional
+                _tablets[i]._students = new List<Student>();
+                _tablets[i]._currentStudent = -1;
+                _tablets[i]._currentGame = -1;
+                _tablets[i]._score = -1;
+                return;
+            }
+        }
     }
     protected override void OnClose(CloseEventArgs e)
     {
@@ -104,9 +121,9 @@ public class Server : WebSocketBehavior
     {
         base.OnMessage(e);
         Debug.Log("Mensaje recibido: " + e.Data);
-        
+
     }
-    
+
     private void SendStartedPackage()
     {
         EDebug.Log("SendStarted");
