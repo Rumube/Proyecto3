@@ -10,10 +10,13 @@ public class Installer : MonoBehaviour
     [Header("UI")]
     public MobileUI _canvasMobile;
     public TabletUI _canvasTablet;
+    public UIManager _uiManager;
 
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
+    public NetworkManager _networkManager;
+    public AndroidInputAdapter _inputAndroid;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -25,6 +28,10 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
+        ServiceLocator.Instance.RegisterService(_uiManager);
+        ServiceLocator.Instance.RegisterService(_networkManager);
+        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+
         if (_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
@@ -36,14 +43,17 @@ public class Installer : MonoBehaviour
         }
 
         SetDatabase();
-        SetInput();
+        //SetInput();
         SetUI();
+
+        //Screen never turn off
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     // Update is called once per frame
     void Update()
     {
-        _inputUsed.Drag();
+        //_inputUsed.Drag();
 
     }
     /// <summary>Set the input method deppending on the platform</summary>

@@ -4,10 +4,36 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MobileUI : UI
 {
+    [Header("Main Menu")]
+    public Button _continueMainMenu;
+
+    [Header("Delete class popup")]
+    public Text _deletingClassName;
+    public Text _writingClassName;
+    bool _deleteClassCorrect;
+    public Button _confirmDeleteClassButton;
+    public Button _deleteClass;
+    public Sprite _cross;
+    public Sprite _bin;
+    bool _isDeleting;
+
+    [Header("Delete student popup")]
+    public Text _deletingStudentName;
+    public Text _writingStudentName;
+    bool _deleteStudentCorrect;
+    public Button _confirmDeleteStudentButton;
+    public Button _deleteStudent;
+
     [Header("Game Connection")]
     public Text _ip;
     public Text _port;
     public Text _connectedTablets;
+    public Button _continueGameConnection;
+
+    [Header("Add student screen")]
+    public GameObject _tabletsPanel;
+    public GameObject _tabletButton;
+    public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
 
     [Header("Game Timer")]
     public InputField _inputSessionMinutes;
@@ -16,36 +42,22 @@ public class MobileUI : UI
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
 
-
-    [Header("Delete class popup")]
-    public Text _deletingClassName;
-    public Text _writingClassName;
-    bool _deleteClassCorrect;
-    public Button _deleteClassButton;
-
-    [Header("Delete student popup")]
-    public Text _deletingStudentName;
-    public Text _writingStudentName;
-    bool _deleteStudentCorrect;
-    public Button _deleteStudentButton;
-
     [Header("Student stadistics")]
     public GameObject _studentGamePanel;
     public Text _studentNameText;
     public Text _gameNameText;
 
-
     void Start()
     {
         //Adding root windows in order of appearance
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._initialScreen);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._mainMenu);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._class);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._gameConnection);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._addStudent);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._gameTime);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._stadistics);
-        _windowsTree.Add(ServiceLocator.Instance.GetService<GameManager>()._finalScore);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._initialScreen);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._mainMenu);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._class);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameConnection);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._addStudent);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameTime);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._stadistics);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScore);
 
         //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
@@ -53,25 +65,252 @@ public class MobileUI : UI
             _windowsTree[i].SetActive(false);
         }
         //Non root windows
-        ServiceLocator.Instance.GetService<GameManager>()._credits.SetActive(false);
-        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(false);
-        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(false);
-        ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.SetActive(false);
-        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._credits.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.SetActive(false);
 
         _deleteClassCorrect = false;
+        _deleteStudentCorrect = false;
 
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
     }
 
+    private void Update()
+    {
+        //Control the instructions deppending on the game state
+        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        {
+            case GameManager.GAME_STATE_SERVER.connection:
+                //Update the number of tablets that are connected just when something is new connected
+                if (ServiceLocator.Instance.GetService<NetworkManager>().GetUpdateConnectedTablets())
+                {
+                    _connectedTablets.text = ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets().ToString();
+                    ServiceLocator.Instance.GetService<NetworkManager>().SetUpdateConnectedTablets(false);
+                }
+                if (ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() > 0)
+                {
+                    ActivateContinueGameConnection();
+                }
+                else
+                {
+                    DesctivateContinueGameConnection();
+                }
+                break;
+            case GameManager.GAME_STATE_SERVER.teamConfiguration:
+
+                break;
+
+            case GameManager.GAME_STATE_SERVER.playing:
+                ShowCountDown();
+                break;
+        }
+
+        //Active the okey button when the input text of deleting is equal to the name of the class
+        if (ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.activeSelf && !_deleteClassCorrect)
+        {
+            _deleteClassCorrect = AreEqual(_deletingClassName.text, _writingClassName.text);
+        }
+        if (_deleteClassCorrect && !_confirmDeleteStudentButton.interactable)
+        {
+            _confirmDeleteClassButton.interactable = true;
+        }
+
+        //Active the okey button when the input text is equal to the name of the student
+        if (ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.activeSelf && !_deleteStudentCorrect)
+        {
+            _deleteStudentCorrect = AreEqual(_deletingStudentName.text, _writingStudentName.text);
+        }
+        if (_deleteStudentCorrect && !_confirmDeleteStudentButton.interactable)
+        {
+            _confirmDeleteStudentButton.interactable = true;
+        }
+    }
+
+    /// <summary>Cheks if both string are the same</summary>
+    private bool AreEqual(string val1, string val2)
+    {
+        if (val1.Length != val2.Length)
+            return false;
+
+        for (int i = 0; i < val1.Length; i++)
+        {
+            var c1 = val1[i];
+            var c2 = val2[i];
+            if (c1 != c2)
+                return false;
+        }
+
+        return true;
+    }
+
+    #region Mainmenu
+    /// <summary>Activates the continue button of main menu</summary>
+    public void ActivateContinueMainMenu()
+    {
+        _continueMainMenu.interactable = true;
+    }
+
+    /// <summary>Desactivates the continue button of main menu</summary>
+    public void DesctivateContinueMainMenu()
+    {
+        _continueMainMenu.interactable = false;
+    }
+
+    /// <summary>Open/close the popup add class</summary>
+    public void PopupAddClass()
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.activeSelf);
+    }
+
+    /// <summary>Open/close the popup delete class and assing the name of the class we want to delete</summary>
+    /// <param name="className">The name of the class we want to delete</param>
+    public void PopupDeleteClass(string className = "")
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._classNameDeleting.text = className;
+        ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.activeSelf);
+    }
+
+    /// <summary>Change the sprite of the bin and makes the order of starts or stops the buttons animation</summary>
+    public void BeginDeleteClass()
+    {
+        if (!_isDeleting)
+        {
+            _isDeleting = true;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.GetChild(i).GetComponent<ClassButton>()._deleting = true;
+            }
+            _deleteClass.GetComponent<Image>().sprite = _cross;
+        }
+        else
+        {
+            _isDeleting = false;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.GetChild(i).GetComponent<ClassButton>()._deleting = false;
+            }
+            _deleteClass.GetComponent<Image>().sprite = _bin;
+        }
+    }
+    /// <summary>Quit the highlight for every class</summary>
+    public void QuitHighlightClass()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.childCount; ++i)
+        {
+            ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<ClassButton>()._highlighted.gameObject.SetActive(false);
+        }
+    }
+    #endregion
+    #region Class
+    /// <summary>Shows the name of the classroom inside class window</summary>
+    public void ClassNameForStudentsPanel()
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
+    }
+    /// <summary>Open/close the popup add student</summary>
+    public void PopupAddStudent()
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.activeSelf);
+    }
+
+    /// <summary>Open/close the popup delete student and assing the name we want to delete</summary>
+    /// /// <param name="studentName">The name we want to delete, it's for having a doble check if she is sure of deleting that</param>
+    public void PopupDeleteStudent(string studentName = "")
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._studentNameDeleting.text = studentName;
+        ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.activeSelf);
+    }
+
+    /// <summary>Change the sprite of the bin and makes the order of starts or stops the buttons animation</summary>
+    public void BeginDeleteStudent()
+    {
+        if (!_isDeleting)
+        {
+            _isDeleting = true;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<UIManager>()._studentPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<UIManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentButton>()._deleting = true;
+            }
+            _deleteStudent.GetComponent<Image>().sprite = _cross;
+        }
+        else
+        {
+            _isDeleting = false;
+            for (int i = 0; i < ServiceLocator.Instance.GetService<UIManager>()._studentPanel.transform.childCount; ++i)
+            {
+                ServiceLocator.Instance.GetService<UIManager>()._studentPanel.transform.GetChild(i).GetComponent<StudentButton>()._deleting = false;
+            }
+            _deleteStudent.GetComponent<Image>().sprite = _bin;
+        }
+    }
+    #endregion
+    #region GameConnection
     /// <summary>Show the IP and port from the device</summary>
     public void GetIpPort()
     {
-        _ip.text = "IP: "+ ServiceLocator.Instance.GetService<GameManager>()._ip;
-        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<GameManager>()._port;
+        _ip.text = "IP: " + ServiceLocator.Instance.GetService<NetworkManager>()._ip;
+        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<NetworkManager>()._port;
+    }
+    /// <summary>Activates the continue button of Game connection</summary>
+    public void ActivateContinueGameConnection()
+    {
+        if (!_continueGameConnection.interactable)
+        {
+            _continueGameConnection.interactable = true;
+        }
     }
 
+    /// <summary>Desactivates the continue button of Game connection</summary>
+    public void DesctivateContinueGameConnection()
+    {
+        if (_continueGameConnection.interactable)
+        {
+            _continueGameConnection.interactable = false;
+        }        
+    }
+    #endregion
+    #region AddStudent
+    /// <summary>
+    /// Change the gamestate server to TeamConfiguration and create as many tablet buttons as connected. Also shows their id and 
+    /// assing that in the _studentsToTablets list
+    /// </summary>
+    public void InstantiateTabletsAddStudent()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.teamConfiguration;
+
+        for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
+        {
+            GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
+            newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i)._id.ToString();
+            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
+            ServiceLocator.Instance.GetService<UIManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
+        }
+    }
+    /// <summary>If we go back destroy all the tablets and clear the lists of the association between tablets and students
+    /// </summary>
+    public void RemoveTabletsAddStudent()
+    {
+        for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
+        {
+            Destroy(_tabletsPanel.transform.GetChild(i));
+        }
+        _tabletButtonAssociation.Clear();
+        ServiceLocator.Instance.GetService<UIManager>()._studentsToTablets.Clear();
+    }
+
+    /// <summary>Quit the highlight for every tablet</summary>
+    public void QuitHighlightTablets()
+    {
+        for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
+        {
+            _tabletsPanel.transform.GetChild(i).GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);
+        }
+    }
+    #endregion
+    #region GameTime
     /// <summary>Get the values for the timers if it's not their first time playing. Acts like placeholders</summary>
     public void GetTimesSaved()
     {
@@ -89,7 +328,7 @@ public class MobileUI : UI
     /// <summary>Set the time for the whole session passing values to the GM</summary>
     public void SetTimeSession()
     {
-        ServiceLocator.Instance.GetService<GameManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
+        ServiceLocator.Instance.GetService<UIManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
         PlayerPrefs.SetString("SessionMinutes", _inputSessionMinutes.text);
         PlayerPrefs.SetString("SessionSeconds", _inputSessionSeconds.text);
     }
@@ -97,56 +336,20 @@ public class MobileUI : UI
     /// <summary>Set the time for all minigames passing values to the GM</summary>
     public void SetTimeMinigames()
     {
-        ServiceLocator.Instance.GetService<GameManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
+        ServiceLocator.Instance.GetService<UIManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
         PlayerPrefs.SetString("MinigamesMinutes", _inputMinigamesMinutes.text);
         PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
     }
-
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupAddClass()
+    #endregion
+    #region Stadistics
+    /// <summary>Show the timer</summary>
+    private void ShowCountDown()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddClass.activeSelf);
-    }
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupDeleteClass(string className = "")
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._classNameDeleting.text = className;
-        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf);
-    }
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupAddStudent()
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupAddStudent.activeSelf);
-    }
-
-    /// <summary>Open/close the window credits</summary>
-    public void PopupDeleteStudent(string studentName = "")
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._studentNameDeleting.text = studentName;
-        ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.SetActive(!ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.activeSelf);
-    }
-
-    public void BeginDeleteClass()
-    {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
-        {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
-        }
-    }
-
-    public void BeginDeleteStudent()
-    {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.childCount; ++i)
-        {
-            ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform.GetChild(i).GetComponent<Vibration>()._deleting = true;
-        }
+        _countdown.text = ServiceLocator.Instance.GetService<UIManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<UIManager>()._timeSessionSeconds;
     }
     /// <summary>Open the panel that shows who is playing in which game</summary>
-    /// /// <param name="studentName">student's name that is currently playing</param>
-    /// /// <param name="gameName">game's name that played by the student</param>
+    /// <param name="studentName">student's name that is currently playing</param>
+    /// <param name="gameName">game's name that played by the student</param>
     public void OpenInfoTabletStudentGamePanel(string studentName, string gameName)
     {
         _studentNameText.text = studentName;
@@ -159,84 +362,9 @@ public class MobileUI : UI
     {
         _studentGamePanel.SetActive(false);
     }
-
-
-    private void Update()
+    #endregion
+    public void InstantiateStudentsAddStudent()
     {
-        //Control the instructions deppending on the game state
-        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
-        {
-            case GameManager.GAME_STATE_SERVER.connection:
-                //Update the number of tablets that are connected just when something is new connected
-                if (ServiceLocator.Instance.GetService<GameManager>().GetUpdateConnectedTablets())
-                {
-                    _connectedTablets.text = ServiceLocator.Instance.GetService<GameManager>().GetConnectedTablets().ToString();
-                    ServiceLocator.Instance.GetService<GameManager>().SetUpdateConnectedTablets(false);
-                }
-                break;
 
-            case GameManager.GAME_STATE_SERVER.playing:
-                ShowCountDown();
-                break;
-        }
-
-        //Active the okey bytton when the input text is equal to the name of the class
-        if (ServiceLocator.Instance.GetService<GameManager>()._popupDeleteClass.activeSelf && !_deleteClassCorrect)
-        {
-
-            _deleteClassCorrect = AreEqual(_deletingClassName.text, _writingClassName.text);
-
-        }
-        if (_deleteClassCorrect && !_deleteClassButton.interactable)
-        {
-            _deleteClassButton.interactable = true;
-        }
-
-        //Active the okey bytton when the input text is equal to the name of the student
-        if (ServiceLocator.Instance.GetService<GameManager>()._popupDeleteStudent.activeSelf && !_deleteStudentCorrect)
-        {
-
-            _deleteStudentCorrect = AreEqual(_deletingStudentName.text, _writingStudentName.text);
-
-        }
-        if (_deleteStudentCorrect && !_deleteStudentButton.interactable)
-        {
-            _deleteStudentButton.interactable = true;
-        }
-    }
-
-    /// <summary>Show the timer</summary>
-    private void ShowCountDown()
-    {
-        _countdown.text = ServiceLocator.Instance.GetService<GameManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<GameManager>()._timeSessionSeconds;
-    }
-
-    private bool AreEqual(string val1, string val2)
-    {
-        if (val1.Length != val2.Length)
-            return false;
-
-        for (int i = 0; i < val1.Length; i++)
-        {
-            var c1 = val1[i];
-            var c2 = val2[i];
-            if (c1 != c2)
-                return false;
-        }
-
-        return true;
-    }
-
-    public void QuitHighlightClass()
-    {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.childCount; ++i)
-        {
-            ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<Vibration>()._highlighted.enabled = false;
-        }
-    }
-
-    public void ClassNameForStudentsPanel()
-    {
-        ServiceLocator.Instance.GetService<GameManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
     }
 }
