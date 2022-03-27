@@ -41,6 +41,7 @@ public class MobileUI : UI
     public InputField _inputMinigamesMinutes;
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
+    public Button _continueGameTimer;
 
     [Header("Student stadistics")]
     public GameObject _studentGamePanel;
@@ -286,7 +287,7 @@ public class MobileUI : UI
             GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
             newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i)._id.ToString();
             _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
-            ServiceLocator.Instance.GetService<UIManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
+            ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
         }
     }
     /// <summary>If we go back destroy all the tablets and clear the lists of the association between tablets and students
@@ -298,7 +299,7 @@ public class MobileUI : UI
             Destroy(_tabletsPanel.transform.GetChild(i));
         }
         _tabletButtonAssociation.Clear();
-        ServiceLocator.Instance.GetService<UIManager>()._studentsToTablets.Clear();
+        ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Clear();
     }
 
     /// <summary>Quit the highlight for every tablet</summary>

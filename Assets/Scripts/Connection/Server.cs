@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using Newtonsoft.Json;
+using ServerPack;
 public class Server : WebSocketBehavior
 {
     const int MAX_TABLETS = 10;
@@ -14,13 +16,10 @@ public class Server : WebSocketBehavior
     public static bool _updateConnectedTablets;
     public static List<string> _ids = new List<string>();
 
-    Package _serverPackage;
-    List<Package> _allPackages;
+    ServerPackage _serverPackage;
+    public static List<ServerPackage> _allPackages;
 
     static WebSocketServer _server;
-
-    public delegate void PacketHandler(int fromClient, Package package);
-    public static Dictionary<int, PacketHandler> _packetHandlers;
 
     //  servidor websocket
     public string[] createServer()
@@ -38,7 +37,7 @@ public class Server : WebSocketBehavior
 
         EDebug.Log("Servidor iniciado.");
 
-        _allPackages = new List<Package>();
+        _allPackages = new List<ServerPackage>();
 
         connectionData[0] = GetLocalIPAddress();
         connectionData[1] = _server.Port.ToString();
@@ -58,13 +57,9 @@ public class Server : WebSocketBehavior
             _tablets[i] = nuevo;
             _tablets[i]._id = -1;
         }
-        //When a client package is received, it is related to a method
-        _packetHandlers = new Dictionary<int, PacketHandler>()
-            {
-                { (int)ClientPackets.connect, WelcomeReceived },
-                { (int)ClientPackets.selectedStudentGame, WelcomeReceived },
-                { (int)ClientPackets.matchData, WelcomeReceived }
-            };
+
+        
+
         EDebug.Log("Initialized packets.");
     }
 
@@ -89,7 +84,7 @@ public class Server : WebSocketBehavior
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
 
-        SendStartedPackage();
+        StartedPackage();
 
         _ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
         EDebug.Log("ids OPEN: " + _ids[Sessions.Count - 1]);
@@ -133,27 +128,62 @@ public class Server : WebSocketBehavior
     {
         base.OnMessage(e);
         Debug.Log("Mensaje recibido: " + e.Data);
-
+        ServerPackage _serverHandlePackage = JsonConvert.DeserializeObject<ServerPackage>(e.Data);
+        _allPackages.Add(_serverHandlePackage);
     }
 
-    private void SendStartedPackage()
+    public static void DoUpdate()
     {
-        EDebug.Log("SendStarted");
-        _serverPackage = new Package();
-        _serverPackage._info._idTablet = Sessions.Count;
-        string packageJson = JsonUtility.ToJson(_serverPackage._info);
-        EDebug.Log("Envio paquete antes:"+ Sessions.Count);
-        //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
-        Send(packageJson);
-        EDebug.Log("Envio paquete");
-    }
-    public void WelcomeReceived(int fromClient, Package package)
-    {
+        switch (_allPackages[0]._typePackageClient)
+        {
+            case ClientPackets.studentsEndCall:
+                ServerHandle.ContinueGameTime();
+                break;
+            case ClientPackets.selectedStudentGame:
 
+                break;
+            case ClientPackets.matchData:
+
+                break;
+        }
+
+
+        _allPackages.Remove(_allPackages[0]);
     }
+
     public static void OnDisable()
     {
         if (_server != null)
             _server.Stop();
     }
+
+    #region ServerSender
+    public void StartedPackage()
+    {
+        EDebug.Log("SendStarted");
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.IdTablet;
+        _serverPackage._tabletInfo._idTablet = Sessions.Count;
+        //string packageJson = JsonUtility.ToJson(_serverPackage._info);
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        EDebug.Log("Envio paquete antes:" + Sessions.Count);
+        //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
+        Send(packageJson);
+        EDebug.Log("Envio paquete");
+    }
+
+    public void AddingStudents()
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.StudentSelection;
+
+        for (int i = 0; i < _ids.Count; ++i)
+        {
+            Tablet specificTablet = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i];
+            _serverPackage._studentsInfo._studentsToTablets = specificTablet;
+            string packageJson = JsonConvert.SerializeObject(_serverPackage);
+            Sessions.SendTo(packageJson, _ids[i]);
+        }
+    }
+    #endregion
 }

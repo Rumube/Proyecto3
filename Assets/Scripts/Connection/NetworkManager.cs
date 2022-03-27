@@ -9,13 +9,17 @@ public class NetworkManager : MonoBehaviour
     [Header("Game Connection")]
     public string _ip;
     public string _port;
-    Server server;
+    Server server = new Server();
 
     Client client;
     public Text _idText;
     //Testing 
     public InputField _IPTest;
     public InputField _portTest;
+
+    [Header("Students to tablets")]
+    public List<Tablet> _studentsToTablets = new List<Tablet>();
+    public int _selectedTablet;
 
     void Update()
     {
@@ -25,6 +29,11 @@ public class NetworkManager : MonoBehaviour
             Client.DoUpdate();
             _idText.text = Client._tablet._id.ToString();
         }
+
+        if (Server._allPackages != null && Server._allPackages.Count > 0)
+        {
+            Server.DoUpdate();
+        }
     }
 
     /// <summary>Starts a new server and provide the ip and port's device</summary>
@@ -32,7 +41,8 @@ public class NetworkManager : MonoBehaviour
     {
         string[] connectionData = new string[2];
 
-        server = new Server();
+        //server = new Server();
+
         connectionData = server.createServer();
 
         _ip = connectionData[0];
@@ -89,4 +99,40 @@ public class NetworkManager : MonoBehaviour
         Client.OnDisable();
     }
 
+    #region AddStudent
+
+    /// <summary>Add or remove childrens on selected tablet</summary>
+    /// <param name="student">student data</param>
+    /// <param name="add">Add or remove student</param>
+    public void AddRemoveChildrenToTablet(Student student, bool add)
+    {
+        if (add)
+        {
+            bool selected = false;
+            //This causes a bug with buttons, because here is not added if already exists but the button thinks that it is
+            foreach (Tablet tablet in _studentsToTablets)
+            {
+                if (tablet._students.Contains(student))
+                {
+                    selected = true;
+                }
+            }
+            if (!selected)
+            {
+                _studentsToTablets[_selectedTablet - 1]._students.Add(student);
+            }
+        }
+        else
+        {
+            _studentsToTablets[_selectedTablet - 1]._students.Remove(student);
+        }
+
+    }
+
+    public void AddingStudentsToTablets()
+    {
+
+       server.AddingStudents();
+    }
+    #endregion
 }

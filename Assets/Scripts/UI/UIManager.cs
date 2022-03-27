@@ -33,10 +33,6 @@ public class UIManager : MonoBehaviour
     public GameObject _studentPanel;
     public Text _classNameStudents;
 
-    [Header("Students to tablets")]
-    public List<Tablet> _studentsToTablets = new List<Tablet>();
-    public int _selectedTablet;
-
     [Header("Game Configuration")]
     [HideInInspector]
     public int _timeSessionMinutes;
@@ -46,38 +42,6 @@ public class UIManager : MonoBehaviour
     public int _timeMinigamesMinutes;
     [HideInInspector]
     public int _timeMinigamesSeconds;
-
-
-    #region AddStudent
-    /// <summary>Add or remove childrens on selected tablet</summary>
-    /// <param name="student">student data</param>
-    /// <param name="add">Add or remove student</param>
-    public void AddRemoveChildrenToTablet(Student student, bool add)
-    {
-        if (add)
-        {
-            bool selected = false;
-            //This causes a bug with buttons, because here is not added if already exists but the button thinks that it is
-            foreach (Tablet tablet in _studentsToTablets)
-            {
-                if (tablet._students.Contains(student))
-                {
-                    selected = true;
-                }
-            }
-            if (!selected)
-            {
-                _studentsToTablets[_selectedTablet - 1]._students.Add(student);
-            }
-        }
-        else
-        {
-            _studentsToTablets[_selectedTablet - 1]._students.Remove(student);
-        }
-
-    }
-    #endregion
-
 
     #region GameTime
     /// <summary>Set the time for the whole session</summary>

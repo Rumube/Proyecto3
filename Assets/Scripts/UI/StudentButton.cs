@@ -76,7 +76,7 @@ public class StudentButton : MonoBehaviour
         //Check if she is on the correct screen in order to have different behaviours
         if (_addingToTablet)
         {
-            ServiceLocator.Instance.GetService<UIManager>().AddRemoveChildrenToTablet(_student, _add);
+            ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, _add);
         }
         _add = !_add;
     }

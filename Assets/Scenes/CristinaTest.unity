@@ -413,6 +413,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 380555983}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: AddingStudentsToTablets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &77930389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3135,8 +3147,6 @@ MonoBehaviour:
   _studentNameDeleting: {fileID: 884726199}
   _studentPanel: {fileID: 756317229}
   _classNameStudents: {fileID: 2141359887}
-  _studentsToTablets: []
-  _selectedTablet: 0
   _timeSessionMinutes: 0
   _timeSessionSeconds: 0
   _timeMinigamesMinutes: 0
@@ -4317,6 +4327,8 @@ MonoBehaviour:
   _idText: {fileID: 0}
   _IPTest: {fileID: 0}
   _portTest: {fileID: 0}
+  _studentsToTablets: []
+  _selectedTablet: 0
 --- !u!4 &380555984
 Transform:
   m_ObjectHideFlags: 0
@@ -10866,7 +10878,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1095689881}
   m_OnClick:
     m_PersistentCalls:
@@ -11385,6 +11397,7 @@ MonoBehaviour:
   _inputMinigamesMinutes: {fileID: 1384020042}
   _inputMinigamesSeconds: {fileID: 1887978127}
   _countdown: {fileID: 1671648749}
+  _continueGameTimer: {fileID: 1095689880}
   _studentGamePanel: {fileID: 0}
   _studentNameText: {fileID: 0}
   _gameNameText: {fileID: 0}
