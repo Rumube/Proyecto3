@@ -7,6 +7,7 @@ namespace ClientPack
     /// <summary>Sent from server to client.</summary>
     public enum ServerPackets
     {
+        nul = 0,
         IdTablet = 1,
         StudentSelection = 2,
         StartGame = 3,
@@ -20,6 +21,7 @@ namespace ClientPack
     /// <summary>Sent from client to server.</summary>
     public enum ClientPackets
     {
+        nul = 0,
         studentsEndCall = 1,
         selectedStudentGame = 2,
         matchData = 3,
@@ -27,7 +29,7 @@ namespace ClientPack
 
     public class ClientPackage
     {
-        public int _toUser;
+        public string _toUser;
         public ClientPackets _typePackageClient;
         public ServerPackets _typePackageServer;
         public struct TabletInfo

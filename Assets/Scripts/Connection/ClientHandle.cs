@@ -4,8 +4,9 @@ using UnityEngine;
 using ClientPack;
 public class ClientHandle
 {
-    public static void AssignID(ClientPackage.TabletInfo info){
-        Client._tablet._id = info._idTablet;
+    public static void AssignID(ClientPackage package){
+        Client._id = package._toUser;
+        Client._tablet._id = package._tabletInfo._idTablet;
         EDebug.Log(Client._tablet._id);
     }
 }

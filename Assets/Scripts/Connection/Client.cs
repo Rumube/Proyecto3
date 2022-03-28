@@ -7,7 +7,7 @@ using ClientPack;
 public class Client
 {
     public static Tablet _tablet;
-
+    public static string _id;
     public static WebSocket _ws;
     ClientPackage _clientPackage;
     public static List<ClientPackage> _allPackages;
@@ -45,10 +45,13 @@ public class Client
         switch (_allPackages[0]._typePackageServer)
         {
             case ServerPackets.IdTablet:
-                ClientHandle.AssignID(_allPackages[0]._tabletInfo);
+                ClientHandle.AssignID(_allPackages[0]);
                 break;
             case ServerPackets.StudentSelection:
-                EDebug.Log("He llegado");
+                if(_allPackages[0]._toUser == _id)
+                    EDebug.Log("He llegado " + _allPackages[0]._studentsInfo._studentsToTablets._students[0]);
+                else
+                    EDebug.Log("No es mio "+ _allPackages[0]._studentsInfo._studentsToTablets._students[0]);
                 break;
             case ServerPackets.StartGame:
 

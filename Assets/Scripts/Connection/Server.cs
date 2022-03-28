@@ -66,10 +66,13 @@ public class Server : WebSocketBehavior
             EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
             ServiceLocator.Instance.GetService<Prueba>()._connectedTablets = (Sessions.Count - 1);
             ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets = true;
-            StartedPackage();
+            
 
             ServiceLocator.Instance.GetService<Prueba>()._ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
             EDebug.Log("ids OPEN: " + ServiceLocator.Instance.GetService<Prueba>()._ids[Sessions.Count - 2]);
+
+            StartedPackage();
+
             //Hay que arreglar lo de darles una id unica porque si le doy la 1 y se desconecta alguien al siguiente se le da 1 tambien
             for (int i = 0; i < MAX_TABLETS - 1; ++i)
             {
@@ -158,6 +161,7 @@ public class Server : WebSocketBehavior
     {
         EDebug.Log("SendStarted");
         _serverPackage = new ServerPackage();
+        _serverPackage._toUser = ServiceLocator.Instance.GetService<Prueba>()._ids[(Sessions.Count - 2)];
         _serverPackage._typePackageServer = ServerPackets.IdTablet;
         _serverPackage._tabletInfo._idTablet = (Sessions.Count-1);
         string packageJson = JsonConvert.SerializeObject(_serverPackage);
