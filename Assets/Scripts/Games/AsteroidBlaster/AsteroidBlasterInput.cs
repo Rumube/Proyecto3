@@ -37,10 +37,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
-            if (!_canShot)
-                LineRendererController();
-            else
-                _lineRenderer.enabled = false;
+            //if (!_canShot)
         }
     }
 
@@ -52,6 +49,13 @@ public class AsteroidBlasterInput : MonoBehaviour
         _lineRenderer.enabled = true;
         _lineRenderer.SetPosition(0, new Vector3(0, -3.701f, -1f));
         _lineRenderer.SetPosition(1, new Vector3(_lastShotPostion.x, _lastShotPostion.y, -1f));
+        StartCoroutine(StopLaser());
+    }
+
+    IEnumerator StopLaser()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _lineRenderer.enabled = false;
     }
 
     /// <summary>
@@ -82,6 +86,8 @@ public class AsteroidBlasterInput : MonoBehaviour
         _newDir = (new Vector3(_lastShotPostion.x, _lastShotPostion.y, 0) - _gunGo.transform.position).normalized;
         _newAngle= Mathf.Atan2(_newDir.y, _newDir.x) * Mathf.Rad2Deg;
         _newAngle -= 90;
+
+        LineRendererController();
 
         StartCoroutine(WaitShot());
         if (hit.collider != null)
