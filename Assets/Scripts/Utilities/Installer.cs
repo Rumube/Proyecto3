@@ -31,6 +31,7 @@ public class Installer : MonoBehaviour
         if (_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
+            ServiceLocator.Instance.RegisterService(_canvasMobile);
         }
         else if(!_server && _canvasTablet != null)
         {
