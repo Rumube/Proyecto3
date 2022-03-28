@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AsteroidBlaster : MonoBehaviour
 {
@@ -23,24 +24,21 @@ public class AsteroidBlaster : MonoBehaviour
     Dictionary<Geometry.Geometry_Type, GameObject> _asteroidsDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
     List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+    public bool _gameFinished = false;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            restartGame();
-    }
+    public bool _finishCreateAsteroids = false;
+    public int _successes = 0;
+    public int _mistakes = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        setTarget();
-        setNumberAsteroids();
-        GenerateAsteroids();
+        restartGame();
     }
 
-    /*
-     * @desc Set the max number of asteroids
-     * **/
+    /// <summary>
+    /// Set the max number of asteroids
+    /// </summary>
     void setNumberAsteroids()
     {
         _numberAsteroids = 3 + (_level / 2);
@@ -48,10 +46,10 @@ public class AsteroidBlaster : MonoBehaviour
             _numberAsteroids = 8;
     }
 
-    /*
-     * @desc Obtains a dictionary with asteroids and their shapes and
-     * calls the function generateTargets
-     * **/
+    /// <summary>
+    /// Obtains a dictionary with asteroids and their
+    /// shapes and calls the function generateTargets
+    /// </summary>
     void setTarget()
     {
         _asteroidsDic.Clear();
@@ -65,9 +63,10 @@ public class AsteroidBlaster : MonoBehaviour
         _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
     }
 
-    /*
-     * @desc Generate the asteroids and start the value of the properties
-     * **/
+    /// <summary>
+    /// Generate the asteroids and
+    /// start the value of the properties.
+    /// </summary>
     void GenerateAsteroids()
     {
         do
@@ -85,26 +84,32 @@ public class AsteroidBlaster : MonoBehaviour
                 }
                 GameObject newAsteroid = Instantiate(_geometryForms[geometryID]);
                 newAsteroid.SetActive(false);
-                newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level);
+                newAsteroid.GetComponent<Asteroid>().InitAsteroid(_movementVelocity, _rotationVelocity, _level, gameObject);
                 _asteroids.Add(newAsteroid);
             }
         } while (!checkGenerateAteroids());
         StartCoroutine(LaunchAsteroids());
     }
 
+    /// <summary>
+    /// Activates asteroids with a slight delay.
+    /// </summary>
     IEnumerator LaunchAsteroids()
     {
+        float time = 1.5f / _asteroids.Count;
         foreach(GameObject asteroid in _asteroids)
         {
             asteroid.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(time);
         }
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        _finishCreateAsteroids = true;
     }
 
-    /*
-     * @desc Checks if the arteroids generated are correct
-     * @return bool - true if is correct, false if not is correct
-     * **/
+    /// <summary>
+    /// Checks if the asteroids generated are corrects
+    /// </summary>
+    /// <returns>True if is correct, false if not</returns>
     bool checkGenerateAteroids()
     {
         bool result = true;
@@ -130,9 +135,9 @@ public class AsteroidBlaster : MonoBehaviour
         return result;
     }
 
-    /*
-     * @desc Start the procces to restart the game
-     * **/
+    /// <summary>
+    /// Start the procces to restart the game.
+    /// </summary>
     void restartGame()
     {
         setTarget();
@@ -140,14 +145,65 @@ public class AsteroidBlaster : MonoBehaviour
         GenerateAsteroids();
     }
 
-    /*
-     *@desc Destroy all the asteroids 
-     * **/
+    /// <summary>
+    /// Destroy all the asteroids.
+    /// </summary>
     void deleteAsteroids()
     {
         StopCoroutine(LaunchAsteroids());
         foreach (GameObject asteroid in _asteroids)
             Destroy(asteroid);
         _asteroids.Clear();
+    }
+
+    /// <summary>
+    /// Checks if the destroyed asteroid is correct.
+    /// </summary>
+    /// <param name="asteroid">Asteroid destroyed.</param>
+    public void CheckIfIsCorrect(GameObject asteroid)
+    {
+        _asteroids.Remove(asteroid);
+        if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
+            _successes++;
+        else
+        {
+            _mistakes++;
+            //TODO: Active error
+        }
+        if (CheckIfIsFinish())
+        {
+            //GetComponent<GameTimeConfiguration>().StopTimeCoroutine();
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            _gameFinished = true;
+            //TODO: Finish and generate score
+            StopAllCoroutines();
+            //SceneManager.LoadScene(1);
+        }
+    }
+
+    /// <summary>
+    /// Check if after this destroyed asteroid the game is over.
+    /// </summary>
+    /// <returns>True if is finished, false if is not.</returns>
+    public bool CheckIfIsFinish()
+    {
+        bool finish = false;
+
+        if(_asteroids.Count == 0)
+            finish = true;
+        else
+        {
+            bool existGeometry = false;
+            foreach (GameObject currentAsteroid in _asteroids)
+            {
+                if (_targetList.Contains(currentAsteroid.GetComponent<Geometry>()._geometryType))
+                {
+                    existGeometry = true;
+                }
+            }
+            if (!existGeometry)
+                finish = true;
+        }
+        return finish;
     }
 }
