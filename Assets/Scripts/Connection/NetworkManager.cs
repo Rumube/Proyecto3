@@ -9,9 +9,9 @@ public class NetworkManager : MonoBehaviour
     [Header("Game Connection")]
     public string _ip;
     public string _port;
-    Server server = new Server();
+    public static Server server = new Server();
 
-    Client client;
+    Client client = new Client();
     public Text _idText;
     //Testing 
     public InputField _IPTest;
@@ -23,6 +23,7 @@ public class NetworkManager : MonoBehaviour
 
     void Update()
     {
+
         //Not finished
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
@@ -30,10 +31,14 @@ public class NetworkManager : MonoBehaviour
             _idText.text = Client._tablet._id.ToString();
         }
 
-        if (Server._allPackages != null && Server._allPackages.Count > 0)
-        {
-            Server.DoUpdate();
-        }
+        //if (Server._allPackages != null && Server._allPackages.Count > 0)
+        //{
+        //    server.DoUpdate();
+        //}
+
+            //server.DoUpdate();
+        
+        EDebug.Log(2 + " " + server.State);
     }
 
     /// <summary>Starts a new server and provide the ip and port's device</summary>
@@ -42,8 +47,9 @@ public class NetworkManager : MonoBehaviour
         string[] connectionData = new string[2];
 
         //server = new Server();
-
-        connectionData = server.createServer();
+        EDebug.Log(1 + " " + server.State);
+        connectionData = ServiceLocator.Instance.GetService<Prueba>().createServer();
+        EDebug.Log(3 + " " + server.State);
 
         _ip = connectionData[0];
         _port = connectionData[1];
@@ -54,33 +60,33 @@ public class NetworkManager : MonoBehaviour
     /// <summary>Get the number of tablets that are connected</summary>
     public int GetConnectedTablets()
     {
-        return Server._connectedTablets;
+        return ServiceLocator.Instance.GetService<Prueba>()._connectedTablets;
     }
 
     /// <summary>Get a specific Tablet</summary>
     /// <param name="i">Tablet index</param>
     public Tablet GetTablets(int i)
     {
-        return Server._tablets[i];
+        return ServiceLocator.Instance.GetService<Prueba>()._tablets[i];
     }
 
     /// <summary>Get if a new tablet is connected</summary>
     public bool GetUpdateConnectedTablets()
     {
-        return Server._updateConnectedTablets;
+        return ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets;
     }
 
     /// <summary>Rewrite the variable</summary>
     /// <param name="state">The state of the variable</param>
     public void SetUpdateConnectedTablets(bool state)
     {
-        Server._updateConnectedTablets = state;
+        ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets = state;
     }
 
     /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
     public void StartClient()
     {
-        client = new Client();
+        //client = new Client();
         client.CreateClient(_IPTest.text, _portTest.text);
     }
 
@@ -88,14 +94,12 @@ public class NetworkManager : MonoBehaviour
     /// <summary>Desactivate connections when the app is closed</summary>
     private void OnDisable()
     {
-        Server.OnDisable();
         Client.OnDisable();
     }
 
     /// <summary>Desactivate connections if she goes back before game connection</summary>
     public void ResetConnections()
     {
-        Server.OnDisable();
         Client.OnDisable();
     }
 
@@ -131,8 +135,15 @@ public class NetworkManager : MonoBehaviour
 
     public void AddingStudentsToTablets()
     {
+        // EDebug.Log(server.Context);
+        //server.AddingStudents();
+        // EDebug.Log(server.Context);
+        //Server._sendAddStudents = true;
+    }
 
-       server.AddingStudents();
+    public void EnviarHola()
+    {
+        client.Hola();
     }
     #endregion
 }

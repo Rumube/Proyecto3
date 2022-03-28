@@ -27,6 +27,7 @@ namespace ClientPack
 
     public class ClientPackage
     {
+        public int _toUser;
         public ClientPackets _typePackageClient;
         public ServerPackets _typePackageServer;
         public struct TabletInfo

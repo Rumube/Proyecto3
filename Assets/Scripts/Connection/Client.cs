@@ -8,7 +8,7 @@ public class Client
 {
     public static Tablet _tablet;
 
-    static WebSocket _ws;
+    public static WebSocket _ws;
     ClientPackage _clientPackage;
     public static List<ClientPackage> _allPackages;
 
@@ -34,16 +34,14 @@ public class Client
     }
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-
-        //Package.Info _clientPackage = JsonUtility.FromJson<Package.Info>(e.Data);
+        Debug.Log("OnMessageClient " +e.Data);
         ClientPackage _clientPackage = JsonConvert.DeserializeObject<ClientPackage>(e.Data);
-        EDebug.Log("Message received! " + sender.ToString() + " data: " + _clientPackage._typePackageServer);
-
         _allPackages.Add(_clientPackage);
     }
 
     public static void DoUpdate()
     {
+        EDebug.Log(_ws.IsAlive);
         switch (_allPackages[0]._typePackageServer)
         {
             case ServerPackets.IdTablet:
@@ -72,6 +70,11 @@ public class Client
                 break;
         }
         _allPackages.Remove(_allPackages[0]);
+    }
+
+    public void Hola()
+    {
+        _ws.Send("Hola");
     }
     public static void OnDisable()
     {

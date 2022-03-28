@@ -17,6 +17,7 @@ public class Installer : MonoBehaviour
     public GameManager _gameManager;
     public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
+    public Prueba _myServer;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -30,6 +31,7 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_gameManager);
         ServiceLocator.Instance.RegisterService(_uiManager);
         ServiceLocator.Instance.RegisterService(_networkManager);
+        ServiceLocator.Instance.RegisterService(_myServer);
         //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
         if (_server && _canvasMobile != null)
