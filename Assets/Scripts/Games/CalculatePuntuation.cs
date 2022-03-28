@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,22 +6,26 @@ using UnityEngine;
 public class CalculatePuntuation : MonoBehaviour
 {
     public float _points;
+    public float _success;
+    public float _fails;
     public int _attempt=0;
     public List<float> _timeList = new List<float>();
     //Lista con el tiempo que tarda por cada intento
     public List<float> _timeAttemptList = new List<float>();
     private int _total;
-    private int _success;
-    private int _fails;
+    
 
     GameTimeConfiguration _gameTimeConfiguration;
-
+    [Header("Average")]
+   // public List<Average> _averages;
+    public Average _average;
+    [Serializable]
     public struct Average
     {
-        public int averagePoints;
+        public float averagePoints;
         public float averageTime;
-        public int averageSuccess;
-        public int averageFails;
+        public float averageSuccess;
+        public float averageFails;
     }
     void Start()
     {
@@ -60,17 +65,18 @@ public class CalculatePuntuation : MonoBehaviour
         }
         _attempt++;
 
-
+        CalculateAverage();
         //EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / _gameTimeConfiguration._finishTime))));
         EDebug.Log("Intento "+_attempt+"puntos "+_points);
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
         
     }
-  
-
+    /// <summary>Calculates the average of the points , time, success fails</summary>
     public void CalculateAverage()
     {
-
+        _average.averagePoints = _points / _attempt;
+        _average.averageTime = _gameTimeConfiguration._maxTime / _attempt;
+        _average.averageSuccess = _success / (_success + _fails);
+        _average.averageFails = _fails / (_success + _fails);
     }
-    
 }
