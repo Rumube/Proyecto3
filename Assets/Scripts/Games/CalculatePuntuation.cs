@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CalculatePuntuation : MonoBehaviour
 {
-    public int _success;
-    public int _total;
+ 
+    
     public float _points;
-    public int _attempt;
-    List<float> _timeList= new List<float>();
-    float[] times;
+    public int _attempt=0;
+    public List<float> _timeList = new List<float>();
+    //Lista con el tiempo que tarda por cada intento
+    public List<float> _timeAttemptList = new List<float>();
+    private int _total;
     GameTimeConfiguration _gameTimeConfiguration;
 
     void Start()
@@ -25,23 +27,30 @@ public class CalculatePuntuation : MonoBehaviour
        
         if (_attempt>0)
         {
-            times[_attempt] = times[_attempt-1]-( _gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime);
+            EDebug.Log("operacion: time anterior "+ _timeList[_attempt - 1] +"Finisg"+_gameTimeConfiguration._finishTime +"- Current"+ _gameTimeConfiguration._currentTime);
+            _timeAttemptList.Add( _timeList[_attempt - 1] - (_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime));
+            _timeList.Add(_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime);
         }
         else
         {
-            times[_attempt] = _gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime;
+            _timeList.Add(_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime);
         }
-        _attempt++;
+        
         _total = success + fails;
 
         EDebug.Log("tiempo" + (_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime) +"porcentaje "+ Mathf.Round(50 * ((_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime) / _gameTimeConfiguration._finishTime)));
         
         if (success >0)
         {
-            _points = Mathf.Round((50 * (success / _total)) + (50 * (times[_attempt] / _gameTimeConfiguration._finishTime))+ _points);
-            
+            _points = Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / _gameTimeConfiguration._finishTime))+ _points);
+            _attempt++;
+
         }
-       // _timeList.Add(3);
+        else
+        {
+            _points = 0;
+        }
+       
         
         EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * ((_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime) / _gameTimeConfiguration._finishTime))));
         EDebug.Log("Intento "+_attempt+"puntos "+_points);
