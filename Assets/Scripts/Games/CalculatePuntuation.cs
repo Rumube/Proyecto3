@@ -12,6 +12,7 @@ public class CalculatePuntuation : MonoBehaviour
     //Lista con el tiempo que tarda por cada intento
     public List<float> _timeAttemptList = new List<float>();
     private int _total;
+   
     GameTimeConfiguration _gameTimeConfiguration;
 
     void Start()
@@ -23,6 +24,7 @@ public class CalculatePuntuation : MonoBehaviour
     /// <param name="fails">Number of fails</param>
     public void Puntuation(int success, int fails)
     {
+        
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
        
         if (_attempt>0)
@@ -43,16 +45,14 @@ public class CalculatePuntuation : MonoBehaviour
         if (success >0)
         {
             _points = Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / _gameTimeConfiguration._finishTime))+ _points);
+            EDebug.Log("puntos por Intento " + Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / _gameTimeConfiguration._finishTime))));
             _attempt++;
 
         }
-        else
-        {
-            _points = 0;
-        }
+       
        
         
-        EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * ((_gameTimeConfiguration._finishTime - _gameTimeConfiguration._currentTime) / _gameTimeConfiguration._finishTime))));
+        //EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / _gameTimeConfiguration._finishTime))));
         EDebug.Log("Intento "+_attempt+"puntos "+_points);
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
     }
