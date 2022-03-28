@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
     public GameObject _initialScreen;
     public GameObject _credits;
     public GameObject _mainMenu;
+    public GameObject _popupAddClass;
+    public GameObject _popupDeleteClass;
+    public GameObject _popupAddStudent;
+    public GameObject _popupDeleteStudent;
     public GameObject _class;
     public GameObject _gameConnection;
     public GameObject _addStudent;
@@ -58,6 +62,25 @@ public class GameManager : MonoBehaviour
     public string _ip;
     public string _port;
     Server server;
+
+    Client client;
+    public Text _idText;
+
+
+    [Header("DatabaseUtilities")]
+    public string _classNamedb;
+    
+    [Header("DatabaseUtilitiesClass")]
+    public Text _classNameDeleting;
+    public GameObject _classPanel;
+    public GameObject _classButton;
+
+    [Header("DatabaseUtilitiesStudent")]
+    public Text _studentNameDeleting;
+    public GameObject _studentPanel;   
+    public Text _classNameStudents;
+    public GameObject _studentButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +90,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Client._allPackages != null && Client._allPackages.Count > 0)
+        {
+            Client.DoUpdate();
+            _idText.text = Client._tablet._id.ToString();
+        }
     }
 
     /// <summary>Starts a new server and provide the ip and port's device</summary>
@@ -106,7 +133,7 @@ public class GameManager : MonoBehaviour
     /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
     public void StartClient()
     {
-        Client client = new Client();
+        client = new Client();
         client.CreateClient(_IPTest.text,_portTest.text);
     }
 
@@ -154,5 +181,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         //TODO: End session, send packages end
+    }
+    private void OnDisable()
+    {
+        Server.OnDisable();
+        Client.OnDisable();
     }
 }

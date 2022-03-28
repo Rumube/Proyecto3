@@ -7,27 +7,38 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 public class Server : WebSocketBehavior
 {
-    const int MAX_PLAYERS = 10;
+    const int MAX_TABLETS = 10;
 
     public static Tablet[] _tablets;
     public static int _connectedTablets;
     public static bool _updateConnectedTablets;
+    public static List<string> _ids = new List<string>();
+
     Package _serverPackage;
     List<Package> _allPackages;
 
-    WebSocketServer _server;
+    static WebSocketServer _server;
 
+    public delegate void PacketHandler(int fromClient, Package package);
+    public static Dictionary<int, PacketHandler> _packetHandlers;
     public void InitializeData()
     {
-        _serverPackage = new Package();
-        _tablets = new Tablet[MAX_PLAYERS];
+        _tablets = new Tablet[MAX_TABLETS];
 
-        for (int i = 0; i < MAX_PLAYERS - 1; ++i)
+        for (int i = 0; i < MAX_TABLETS - 1; ++i)
         {
             Tablet nuevo = new Tablet();
             _tablets[i] = nuevo;
             _tablets[i]._id = -1;
         }
+        //When a client package is received, it is related to a method
+        _packetHandlers = new Dictionary<int, PacketHandler>()
+            {
+                { (int)ClientPackets.connect, WelcomeReceived },
+                { (int)ClientPackets.selectedStudentGame, WelcomeReceived },
+                { (int)ClientPackets.matchData, WelcomeReceived }
+            };
+        EDebug.Log("Initialized packets.");
     }
 
     //  servidor websocket
@@ -71,36 +82,47 @@ public class Server : WebSocketBehavior
     protected override void OnOpen()
     {
         base.OnOpen();
-        Debug.Log("++ Alguien se ha conectado. " + Sessions.Count);
+        EDebug.Log("++ Alguien se ha conectado. " + Sessions.Count);
+        EDebug.Log("ids OPEN: "+_ids);
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
 
         SendStartedPackage();
+
+        _ids.Add(ID);
     }
     protected override void OnClose(CloseEventArgs e)
     {
         base.OnClose(e);
         Debug.Log("-- Se ha desconectado alguien. " + Sessions.Count);
+        EDebug.Log("ids CLOSE: " + _ids);
         _connectedTablets = Sessions.Count;
         _updateConnectedTablets = true;
+        _ids.Remove(ID);
     }
     protected override void OnMessage(MessageEventArgs e)
     {
         base.OnMessage(e);
         Debug.Log("Mensaje recibido: " + e.Data);
+        
     }
     
     private void SendStartedPackage()
     {
-        Debug.Log("SendStarted");
-
-        Package newPackage = new Package();
-        newPackage._sendID._idTablet = Sessions.Count;
-        string packageJson = JsonUtility.ToJson(newPackage);
-        Sessions.SendTo(packageJson, Sessions.Count.ToString());
-        Debug.Log("Envio paquete");
+        EDebug.Log("SendStarted");
+        _serverPackage = new Package();
+        _serverPackage._info._idTablet = Sessions.Count;
+        string packageJson = JsonUtility.ToJson(_serverPackage._info);
+        EDebug.Log("Envio paquete antes:"+ Sessions.Count);
+        //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
+        Send(packageJson);
+        EDebug.Log("Envio paquete");
     }
-    private void OnDisable()
+    public void WelcomeReceived(int fromClient, Package package)
+    {
+
+    }
+    public static void OnDisable()
     {
         if (_server != null)
             _server.Stop();
