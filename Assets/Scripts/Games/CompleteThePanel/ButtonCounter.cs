@@ -79,7 +79,7 @@ public class ButtonCounter : MonoBehaviour
         _badGeometry = _totalGeometry - _goodGeometry;
         //int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
-        //_calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
+        _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
         _goodGeometry = 0;
         _totalGeometry = 0;
         _nSquare=0;
@@ -89,6 +89,13 @@ public class ButtonCounter : MonoBehaviour
         _nRectangle = 0;
          _nPentagon = 0;
          _nHexagon = 0;
+         _squareCounter = 0;
+        _triangleCounter = 0;
+         _circleCounter = 0;
+        _diamondCounter = 0;
+        _rectangleCounter = 0;
+        _pentagonCounter = 0;
+        _hexagonCounter = 0;
 
     _createPanel.Restart();
       
