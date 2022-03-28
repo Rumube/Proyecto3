@@ -107,4 +107,23 @@ public class CreatePanel : MonoBehaviour
             }
         }
     }
+
+     public void Restart()
+    {
+        foreach (GameObject geometry in _geometryList)
+        {
+            Destroy(geometry);
+            //_geometryList.Remove(geometry);
+        }
+        //for (int i = 0; i < _geometryList.Count; i++)
+        //{
+        //    Destroy(_geometryList[i]);
+        //    //_geometryList.RemoveAt(i);
+        //}
+        _geometryList.Clear();
+
+        SetTarget();
+        SetNumberEmpty();
+        GeneratePanel();
+    }
 }

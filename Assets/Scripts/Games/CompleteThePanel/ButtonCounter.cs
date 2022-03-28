@@ -28,6 +28,7 @@ public class ButtonCounter : MonoBehaviour
     public Text _mission;
     private bool readText;
 
+    public CreatePanel _createPanel;
     [SerializeField]
     private CalculatePuntuation _calculatePuntuation;
     void Start()
@@ -70,16 +71,27 @@ public class ButtonCounter : MonoBehaviour
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
-        CheckGeometry(_nTriangle, _triangleCounter);
+        CheckGeometry(_nDiamond, _diamondCounter);
+        CheckGeometry(_nRectangle, _rectangleCounter);
+        CheckGeometry(_nPentagon, _pentagonCounter);
+        CheckGeometry(_nHexagon, _hexagonCounter);
 
         _badGeometry = _totalGeometry - _goodGeometry;
-        int porcentaje = _goodGeometry / _totalGeometry;
+        //int porcentaje = _goodGeometry / _totalGeometry;
         EDebug.Log(_goodGeometry+"/"+_totalGeometry);
-        _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
-        if (_goodGeometry==_totalGeometry)
-        {
-            EDebug.Log("Bien hecho");
-        }
+        //_calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
+        _goodGeometry = 0;
+        _totalGeometry = 0;
+        _nSquare=0;
+         _nTriangle = 0;
+         _nCircle = 0;
+        _nDiamond = 0;
+        _nRectangle = 0;
+         _nPentagon = 0;
+         _nHexagon = 0;
+
+    _createPanel.Restart();
+      
 
     }
     /// <summary>Check how much geometry is ok.</summary> 
