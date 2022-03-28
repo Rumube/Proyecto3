@@ -498,7 +498,7 @@ MonoBehaviour:
   _hexagonCounter: 0
   _mission: {fileID: 1553885256}
   _createPanel: {fileID: 880524495}
-  _calculatePuntuation: {fileID: 0}
+  _calculatePuntuation: {fileID: 880524494}
 --- !u!4 &437051035
 Transform:
   m_ObjectHideFlags: 0
@@ -1189,6 +1189,7 @@ GameObject:
   - component: {fileID: 880524495}
   - component: {fileID: 880524497}
   - component: {fileID: 880524496}
+  - component: {fileID: 880524494}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1254,6 +1255,22 @@ MonoBehaviour:
   _studentPanel: {fileID: 0}
   _classNameStudents: {fileID: 0}
   _studentButton: {fileID: 0}
+--- !u!114 &880524494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880524491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b547af850217e49983858fe1968f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points: 0
+  _attempt: 0
+  _timeList: []
+  _timeAttemptList: []
 --- !u!114 &880524495
 MonoBehaviour:
   m_ObjectHideFlags: 0

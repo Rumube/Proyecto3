@@ -8,7 +8,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     public Image _timeImage;
     public float _currentTime;
     [SerializeField]
-    private float _maxTime;
+    public float _maxTime;
     public float _finishTime;
     private float _startTime;
 
