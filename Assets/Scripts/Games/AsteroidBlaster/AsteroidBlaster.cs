@@ -132,6 +132,10 @@ public class AsteroidBlaster : MonoBehaviour
         }
         _finishCreateAsteroids = true;
         _gameFinished = false;
+        foreach (GameObject asteroid in _asteroids)
+        {
+            asteroid.GetComponent<Asteroid>().GenerateNewTarget();
+        }
     }
 
     /// <summary>

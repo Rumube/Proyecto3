@@ -23,6 +23,8 @@ public class AsteroidBalsterDifficulty : MonoBehaviour
         public int numGeometryTargets;
         [Tooltip("Speed at which asteroids travel")]
         public float speedMovement;
+        [Tooltip("Set asteroids rotation")]
+        public bool asteroidsCanRotate;
         [Tooltip("Speed at which asteroids rotate")]
         public float speedRotation;
     }

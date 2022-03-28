@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeImage: {fileID: 1698509374}
-  _maxTime: 10
+  _maxTime: 1000
 --- !u!114 &923033819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1217,7 +1217,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: -3.74, z: 0}
-  - {x: 0, y: 4, z: 0}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1342,14 +1342,16 @@ MonoBehaviour:
     numTargets: 2
     numGeometryTargets: 1
     speedMovement: 5
-    speedRotation: 3
+    asteroidsCanRotate: 1
+    speedRotation: 5
   - possibleGeometry: 00000000010000000200000003000000
     targetsGeometry: 000000000100000002000000
     numAsteroids: 5
     numTargets: 2
     numGeometryTargets: 2
     speedMovement: 5
-    speedRotation: 3
+    asteroidsCanRotate: 1
+    speedRotation: 5
 --- !u!1 &1034679988
 GameObject:
   m_ObjectHideFlags: 0
