@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 343276148}
   m_Layer: 5
   m_Name: Rana
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 739909714}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -896,7 +896,7 @@ GameObject:
   - component: {fileID: 798780243}
   m_Layer: 5
   m_Name: Image (2)
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 884426344}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1051,9 +1051,11 @@ GameObject:
   - component: {fileID: 923033825}
   - component: {fileID: 923033822}
   - component: {fileID: 923033826}
+  - component: {fileID: 923033827}
+  - component: {fileID: 923033828}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1128,9 +1130,11 @@ MonoBehaviour:
   _server: 0
   _canvasMobile: {fileID: 0}
   _canvasTablet: {fileID: 0}
+  _canvasGUI: {fileID: 389753963}
   _gameTimeConfiguration: {fileID: 923033818}
   _gameManager: {fileID: 923033821}
   _inputAndroid: {fileID: 923033824}
+  _error: {fileID: 923033827}
 --- !u!114 &923033821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1352,6 +1356,43 @@ MonoBehaviour:
     speedMovement: 5
     asteroidsCanRotate: 1
     speedRotation: 5
+--- !u!114 &923033827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43d6351198f1dd4394a3edc0c056fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GUIMats:
+  - {fileID: 2100000, guid: 5ca11cfddf51d874bbe2888e675656b8, type: 2}
+  - {fileID: 2100000, guid: 467f94dd526520847b4df6e47603907b, type: 2}
+  - {fileID: 2100000, guid: 4bd1c15565aef0042b9d56299c1a5d54, type: 2}
+  - {fileID: 2100000, guid: cd0f360ece9646e448053aff35fc73ee, type: 2}
+  - {fileID: 2100000, guid: 43f2203b146ea6a4ba62af0ca77e34e0, type: 2}
+  - {fileID: 2100000, guid: 614d62e752b60de478fcbe5d2cb1b1bc, type: 2}
+  - {fileID: 2100000, guid: bb4f7c7f30ded0444b0e45e84910635a, type: 2}
+  - {fileID: 2100000, guid: 371ae0af2dcb904439ba290ba406adcb, type: 2}
+  _worngColor: {r: 1, g: 0.15566039, b: 0.15566039, a: 0}
+  _correctColor: {r: 0.14563107, g: 1, b: 0, a: 0}
+  _failDuration: 0.3
+--- !u!114 &923033828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006de6eedb06ec04f95cd8f2486e4d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shakeAmount: 0.1
 --- !u!1 &1034679988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1406,7 @@ GameObject:
   - component: {fileID: 1034679990}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1740,6 +1781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609429925}
+  - component: {fileID: 1609429926}
   m_Layer: 5
   m_Name: Ranking
   m_TagString: Untagged
@@ -1769,6 +1811,14 @@ RectTransform:
   m_AnchoredPosition: {x: 102, y: 305}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!222 &1609429926
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609429924}
+  m_CullTransparentMesh: 1
 --- !u!1 &1630121028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1832,7 @@ GameObject:
   - component: {fileID: 1630121030}
   m_Layer: 5
   m_Name: Caja
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1857,7 +1907,7 @@ GameObject:
   - component: {fileID: 1633611460}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1932,7 +1982,7 @@ GameObject:
   - component: {fileID: 1634413714}
   m_Layer: 5
   m_Name: gunTarget
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2192,7 +2242,7 @@ GameObject:
   - component: {fileID: 1751413098}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2426,7 +2476,7 @@ GameObject:
   - component: {fileID: 1987721914}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2582,7 +2632,7 @@ GameObject:
   - component: {fileID: 2094197427}
   m_Layer: 5
   m_Name: Image (1)
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -172,6 +172,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             _mistakes++;
             //TODO: Active error
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
         {
