@@ -21,6 +21,7 @@ public class Asteroid : MonoBehaviour
     //References
     GameObject _gm;
     Rigidbody2D _rb;
+    Collider2D _collider;
 
     private int _initialPosValue;
     public enum Asteroid_State
@@ -36,17 +37,15 @@ public class Asteroid : MonoBehaviour
     {
         if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
         {
+            _collider.enabled = true;
             MoveAsteroid();
             if (_rotating)
                 RotationAsteroid();
         }
         else
         {
+            _collider.enabled = false;
             _rb.velocity = Vector2.zero;
-        }
-        if (_gm.GetComponent<AsteroidBlaster>()._gameFinished)
-        {
-            StopAllCoroutines();
         }
     }
 
@@ -55,18 +54,18 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     /// <param name="movementVelocity">The id that assigns the geometry type</param>
     /// <param name="rotationVelocity">The speed value</param>
-    /// <param name="levelValuesRange">Randomization parameter</param>
     /// <param name="gameManager">Reference to the GameManager</param>
     /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
-    public void InitAsteroid(float movementVelocity,float rotationVelocity, float levelValuesRange, GameObject gameManager)
+    public void InitAsteroid(float movementVelocity,float rotationVelocity, GameObject gameManager)
     {
         _asteroidGO.SetActive(true);
         _destroyGO.SetActive(false);
-        SetMovementVelocity(movementVelocity, levelValuesRange);
-        SetRotationVelocity(rotationVelocity, levelValuesRange);
+        _movementVelocity = movementVelocity;
+        _rotationVelocity = rotationVelocity;
         SetInitialPosition();
         _gm = gameManager;
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
     }
 
     /// <summary>
@@ -92,33 +91,8 @@ public class Asteroid : MonoBehaviour
     void RestartPosition()
     {
         transform.position = _startPostion;
-        GenerateNewTarget(_initialPosValue);
+        GenerateNewTarget();
     }
-
-    /// <summary>
-    /// Generates the speed of movement 
-    /// depending on the difficulty.
-    /// </summary>
-    /// <param name="movementVelocity">The speed value.</param>
-    /// <param name="levelValuesRange">Randomization parameter.</param>
-    public void SetMovementVelocity(float movementVelocity, float levelValuesRange)
-    {
-        _movementVelocity = Random.Range(movementVelocity,
-            (1 + levelValuesRange / 2));
-    }
-
-    /// <summary>
-    /// Generates the speed of rotation
-    /// depending on the difficulty.
-    /// </summary>
-    /// <param name="rotationVelocity">The speed value.</param>
-    /// <param name="levelValuesRange">Randomization parameter.</param>
-    public void SetRotationVelocity(float rotationVelocity, float levelValuesRange)
-    {
-        _rotationVelocity = Random.Range(rotationVelocity,
-            rotationVelocity + (5 + levelValuesRange));
-    }
-
 
     /// <summary>
     /// Generates the initial and the target position.
@@ -190,9 +164,7 @@ public class Asteroid : MonoBehaviour
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
         _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
-        print("AsteroidShot: hola");
         StartCoroutine(FinishExploding());
-        print("AsteroidShot: 2");
     }
 
     /// <summary>
@@ -202,39 +174,37 @@ public class Asteroid : MonoBehaviour
     {
         
         yield return new WaitForSeconds(1f);
-        print("FinishExploding: Dedsaf");
         Destroy(gameObject);
     }
 
     /// <summary>
     /// Set a new target
     /// </summary>
-    /// <param name="initialPos">0: Top - 1: Bottom - 2: Left - 3: Right - 4:Bouncing</param>
-    private void GenerateNewTarget(int initialPos)
+    public void GenerateNewTarget()
     {
-        switch (initialPos)
+        int isNegative = Random.Range(0, 2);
+        switch (_initialPosValue)
         {
             case 0:
-                _direction = new Vector2(Random.Range(-0.5f,0.5f), -1);
-                break;
+                _direction = new Vector2(Random.Range(0.4f, 0.8f), -1);
+                if (isNegative == 0)
+                    _direction.x *= -1;
+                 break;
             case 1:
-                _direction = new Vector2(Random.Range(-0.5f, 0.5f), 1);
+                _direction = new Vector2(Random.Range(0.4f, 0.8f), 1);
+                if (isNegative == 0)
+                    _direction.x *= -1;
                 break;
             case 2:
-                _direction = new Vector2(1, Random.Range(-0.5f, 0.5f));
+                _direction = new Vector2(1, Random.Range(0.4f, 0.8f));
+                if (isNegative == 0)
+                    _direction.y *= -1;
                 break;
             case 3:
-                _direction = new Vector2(-1, Random.Range(-0.5f, 0.5f));
+                _direction = new Vector2(-1, Random.Range(0.4f, 0.8f));
+                if (isNegative == 0)
+                    _direction.y *= -1;
                 break;
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Asteroid")
-        {
-            _direction = Vector3.Normalize(Vector3.Reflect(collision.relativeVelocity * -1, collision.contacts[0].normal));
-            CollisionController(collision);
         }
     }
 
@@ -251,5 +221,16 @@ public class Asteroid : MonoBehaviour
         newCollision.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         newCollision.GetComponent<Animator>().Play("BrokenAsteroids_Animation");
         Destroy(newCollision, 1f);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Asteroid")
+        {
+            _direction = Vector3.Normalize(Vector3.Reflect(collision.relativeVelocity * -1, collision.contacts[0].normal));
+            if ((_direction.x < 0.1f && _direction.x > -0.1f) || (_direction.y < 0.1f && _direction.y > -0.1f))
+                GenerateNewTarget();
+            _rb.AddForce(_direction * 1.5f, ForceMode2D.Impulse);
+            CollisionController(collision);
+        }
     }
 }

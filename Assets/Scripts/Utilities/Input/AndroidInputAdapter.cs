@@ -30,6 +30,11 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
                 newDatos.result = true;
                 newDatos.pos = touch.position;
             }
+            else
+            {
+                newDatos.result = false;
+                newDatos.pos = touch.position;
+            }
         }
         return newDatos;
     }
