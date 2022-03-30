@@ -10,15 +10,18 @@ public class Installer : MonoBehaviour
     [Header("UI")]
     public MobileUI _canvasMobile;
     public TabletUI _canvasTablet;
+    public Canvas _canvasGUI;
 
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
     public AndroidInputAdapter _inputAndroid;
+    public Error _error;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
     private IUI _UIUsed;
+    private IError _IError;
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,6 +30,8 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService(_gameManager);
         ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+        ServiceLocator.Instance.RegisterService<IError>(_error);
+        ServiceLocator.Instance.RegisterService(_canvasGUI);
 
         if (_server && _canvasMobile != null)
         {
@@ -46,7 +51,7 @@ public class Installer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _inputUsed.Drag();
+        //_inputUsed.Drag();
 
     }
     /// <summary>Set the input method deppending on the platform</summary>

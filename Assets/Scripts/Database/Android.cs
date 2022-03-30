@@ -69,9 +69,9 @@ public class Android : MonoBehaviour
 #if UNITY_ANDROID
 
         string query;
-        query = "create table if not exists Classroom (idClassroom INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100));"+
+        query = "create table if not exists Classroom (idClassroom INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), UNIQUE(Name));"+
 
-        " create table if not exists Student(idStudent INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), idClassroom INTEGER, foreign key(idClassroom) references Classroom(idClassroom));"+
+        " create table if not exists Student(idStudent INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), idClassroom INTEGER, UNIQUE(Name), foreign key(idClassroom) references Classroom(idClassroom));"+
 
         " create table if not exists Session(idSession INTEGER PRIMARY KEY   AUTOINCREMENT, DateSession Date);"+
         
@@ -97,25 +97,13 @@ public class Android : MonoBehaviour
             EDebug.Log(e);
 
         }
-        query = "CREATE TABLE Kids (ID INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), Points integer, Tablet integer)";
-        try
-        {
-            _dbcmd = _dbconn.CreateCommand(); // create empty command
-            _dbcmd.CommandText = query; // fill the command
-            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
-        }
-        catch (Exception e)
-        {
-
-            EDebug.Log(e);
-
-        }
+       
 
 #endif
-  
+
     }
     #region Buttons
-    
+
 
     public void InsertClassButton()
     {
