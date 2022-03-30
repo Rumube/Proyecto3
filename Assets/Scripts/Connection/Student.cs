@@ -6,7 +6,7 @@ using UnityEngine;
 public class Student
 {
     public int _id;
-    public string _nombre;
+    public string _name;
     public string _gameData;
     public int _idClass;
 }

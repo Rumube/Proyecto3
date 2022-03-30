@@ -440,7 +440,7 @@ public class Android : MonoBehaviour
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
                 newButton.GetComponentInChildren<StudentButton>()._student = new Student();
                 newButton.GetComponentInChildren<StudentButton>()._student._id = id_Student_readers;
-                newButton.GetComponentInChildren<StudentButton>()._student._nombre = Namereaders;
+                newButton.GetComponentInChildren<StudentButton>()._student._name = Namereaders;
                 newButton.GetComponentInChildren<StudentButton>()._student._idClass = id_Classroom_readers;
             }
             reader.Close();

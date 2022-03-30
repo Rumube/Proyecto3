@@ -17,7 +17,7 @@ public class Installer : MonoBehaviour
     public GameManager _gameManager;
     public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
-    public Prueba _myServer;
+    public ServerUtility _myServer;
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
@@ -42,6 +42,7 @@ public class Installer : MonoBehaviour
         else if(!_server && _canvasTablet != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
+            ServiceLocator.Instance.RegisterService(_canvasTablet);
         }
 
         SetDatabase();
@@ -83,12 +84,18 @@ public class Installer : MonoBehaviour
     {
         if (_server && _canvasMobile != null)
         {
+            if (_canvasTablet != null)
+            {
+                _canvasTablet.gameObject.SetActive(false);
+            }
             _canvasMobile.gameObject.SetActive(true);
-            _canvasTablet.gameObject.SetActive(false);
         }
         else if (!_server && _canvasTablet != null)
         {
-            _canvasMobile.gameObject.SetActive(false);
+            if (_canvasMobile != null)
+            {
+                _canvasMobile.gameObject.SetActive(false);
+            }
             _canvasTablet.gameObject.SetActive(true);
         }
     }

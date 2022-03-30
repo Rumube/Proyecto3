@@ -41,6 +41,7 @@ public class MobileUI : UI
     public InputField _inputMinigamesMinutes;
     public InputField _inputMinigamesSeconds;
     public Text _countdown;
+    public Text _adviceStudents;
     public Button _continueGameTimer;
 
     [Header("Student stadistics")]

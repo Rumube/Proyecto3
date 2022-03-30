@@ -42,6 +42,23 @@ namespace ServerPack
             public Tablet _studentsToTablets;
         }
         public StudentsInfo _studentsInfo;
+        public struct CallingDone
+        {
+            public bool _isDone;
+        }
+        public CallingDone _callingDone;
+        public struct MinigameTime
+        {
+            public int _minutes;
+            public int _seconds;
+        }
+        public MinigameTime _minigameTime;
+        public struct SelectStudentGame
+        {
+            public string _studentName;
+            public string _gameName;
+        }
+        public SelectStudentGame _selectStudentGame;
         public struct Info
         {
             public int _idTablet;

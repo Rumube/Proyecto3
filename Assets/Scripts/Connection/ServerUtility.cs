@@ -7,7 +7,7 @@ using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
-public class Prueba : MonoBehaviour
+public class ServerUtility : MonoBehaviour
 {
     const int MAX_TABLETS = 10;
 
@@ -29,6 +29,7 @@ public class Prueba : MonoBehaviour
 
     public bool fistTime = true;
 
+    public int _numberTabletsEndCall = 0;
     //  servidor websocket
     public string[] createServer()
     {
@@ -90,7 +91,7 @@ public class Prueba : MonoBehaviour
         _allPackages.Add(_serverHandlePackage);
     }
 
-    public static void OnDisable()
+    private void OnDisable()
     {
         if (_server != null)
             _server.Stop();
@@ -110,16 +111,20 @@ public class Prueba : MonoBehaviour
             switch (_allPackages[0]._typePackageClient)
             {
                 case ClientPackets.studentsEndCall:
-                    ServerHandle.ContinueGameTime();
+                    _numberTabletsEndCall++;
+                    if(_numberTabletsEndCall == _connectedTablets)
+                    {
+                        ServerHandle.ContinueGameTime();
+                    }                    
                     break;
                 case ClientPackets.selectedStudentGame:
-
+                    ServerHandle.FindDificulty(_allPackages[0]);
                     break;
                 case ClientPackets.matchData:
 
                     break;
             }
-            _allPackages.Remove(ServiceLocator.Instance.GetService<Prueba>()._allPackages[0]);
+            _allPackages.Remove(_allPackages[0]);
         }
     }
 # region ServerSender
@@ -140,6 +145,15 @@ public class Prueba : MonoBehaviour
             _ws.Send(packageJson);
             EDebug.Log("Enviados");
         }
+    }
+    public void MinigameTime()
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.StartGame;
+        _serverPackage._minigameTime._minutes = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesMinutes;
+        _serverPackage._minigameTime._seconds = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesSeconds;
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        _ws.Send(packageJson);
     }
     #endregion
 }

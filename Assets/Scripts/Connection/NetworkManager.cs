@@ -21,6 +21,13 @@ public class NetworkManager : MonoBehaviour
     public List<Tablet> _studentsToTablets = new List<Tablet>();
     public int _selectedTablet;
 
+    [Header("Minigame timer client")]
+    public int _minigameMinutes;
+    public int _minigameSeconds;
+
+    [Header("Minigame difficulty server")]
+    string _minigameData;
+
     void Update()
     {
 
@@ -48,7 +55,7 @@ public class NetworkManager : MonoBehaviour
 
         //server = new Server();
         EDebug.Log(1 + " " + server.State);
-        connectionData = ServiceLocator.Instance.GetService<Prueba>().createServer();
+        connectionData = ServiceLocator.Instance.GetService<ServerUtility>().createServer();
         EDebug.Log(3 + " " + server.State);
 
         _ip = connectionData[0];
@@ -60,27 +67,27 @@ public class NetworkManager : MonoBehaviour
     /// <summary>Get the number of tablets that are connected</summary>
     public int GetConnectedTablets()
     {
-        return ServiceLocator.Instance.GetService<Prueba>()._connectedTablets;
+        return ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets;
     }
 
     /// <summary>Get a specific Tablet</summary>
     /// <param name="i">Tablet index</param>
     public Tablet GetTablets(int i)
     {
-        return ServiceLocator.Instance.GetService<Prueba>()._tablets[i];
+        return ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i];
     }
 
     /// <summary>Get if a new tablet is connected</summary>
     public bool GetUpdateConnectedTablets()
     {
-        return ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets;
+        return ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets;
     }
 
     /// <summary>Rewrite the variable</summary>
     /// <param name="state">The state of the variable</param>
     public void SetUpdateConnectedTablets(bool state)
     {
-        ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets = state;
+        ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = state;
     }
 
     /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
@@ -141,9 +148,15 @@ public class NetworkManager : MonoBehaviour
         //Server._sendAddStudents = true;
     }
 
-    public void EnviarHola()
+    public void SendEndCalling()
     {
-        client.Hola();
+        client.EndCallingStudents();
     }
+
+    public void SendStudentGame()
+    {
+        client.StudentGameSelection(ServiceLocator.Instance.GetService<GameManager>()._currentstudentName, ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
+    }
+
     #endregion
 }

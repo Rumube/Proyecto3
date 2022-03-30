@@ -61,15 +61,15 @@ public class Server : WebSocketBehavior
     {
         base.OnOpen();
              
-        if (!ServiceLocator.Instance.GetService<Prueba>().fistTime)
+        if (!ServiceLocator.Instance.GetService<ServerUtility>().fistTime)
         {
             EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
-            ServiceLocator.Instance.GetService<Prueba>()._connectedTablets = (Sessions.Count - 1);
-            ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets = true;
+            ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets = (Sessions.Count - 1);
+            ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = true;
             
 
-            ServiceLocator.Instance.GetService<Prueba>()._ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
-            EDebug.Log("ids OPEN: " + ServiceLocator.Instance.GetService<Prueba>()._ids[Sessions.Count - 2]);
+            ServiceLocator.Instance.GetService<ServerUtility>()._ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
+            EDebug.Log("ids OPEN: " + ServiceLocator.Instance.GetService<ServerUtility>()._ids[Sessions.Count - 2]);
 
             StartedPackage();
 
@@ -77,13 +77,13 @@ public class Server : WebSocketBehavior
             for (int i = 0; i < MAX_TABLETS - 1; ++i)
             {
                 //Assign new tablet on empty slot
-                if (ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._id == -1)
+                if (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id == -1)
                 {
-                    ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._id = Sessions.Count-1; //Provisional
-                    ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._students = new List<Student>();
-                    ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._currentStudent = -1;
-                    ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._currentGame = -1;
-                    ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._score = -1;
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = Sessions.Count-1; //Provisional
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
                     return;
                 }
             }
@@ -91,7 +91,7 @@ public class Server : WebSocketBehavior
         else
         {
             Debug.Log("First time");
-            ServiceLocator.Instance.GetService<Prueba>().fistTime = false;
+            ServiceLocator.Instance.GetService<ServerUtility>().fistTime = false;
         }
       
     }
@@ -99,21 +99,21 @@ public class Server : WebSocketBehavior
     {
         base.OnClose(e);
         Debug.Log("-- Se ha desconectado alguien. " + (Sessions.Count-1));
-        EDebug.Log("ids CLOSE: " + ServiceLocator.Instance.GetService<Prueba>()._ids);
+        EDebug.Log("ids CLOSE: " + ServiceLocator.Instance.GetService<ServerUtility>()._ids);
         for (int i = 0; i < MAX_TABLETS - 1; ++i)
         {
-            if (ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._id == (Sessions.Count-1))
+            if (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id == (Sessions.Count-1))
             {
-                ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._id = -1;
-                ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._students = new List<Student>();
-                ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._currentStudent = -1;
-                ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._currentGame = -1;
-                ServiceLocator.Instance.GetService<Prueba>()._tablets[i]._score = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
             }
         }
-        ServiceLocator.Instance.GetService<Prueba>()._connectedTablets = (Sessions.Count-1);
-        ServiceLocator.Instance.GetService<Prueba>()._updateConnectedTablets = true;
-        ServiceLocator.Instance.GetService<Prueba>()._ids.Remove(ID);
+        ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets = (Sessions.Count-1);
+        ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = true;
+        ServiceLocator.Instance.GetService<ServerUtility>()._ids.Remove(ID);
 
     }
     protected override void OnMessage(MessageEventArgs e)
@@ -161,7 +161,7 @@ public class Server : WebSocketBehavior
     {
         EDebug.Log("SendStarted");
         _serverPackage = new ServerPackage();
-        _serverPackage._toUser = ServiceLocator.Instance.GetService<Prueba>()._ids[(Sessions.Count - 2)];
+        _serverPackage._toUser = ServiceLocator.Instance.GetService<ServerUtility>()._ids[(Sessions.Count - 2)];
         _serverPackage._typePackageServer = ServerPackets.IdTablet;
         _serverPackage._tabletInfo._idTablet = (Sessions.Count-1);
         string packageJson = JsonConvert.SerializeObject(_serverPackage);

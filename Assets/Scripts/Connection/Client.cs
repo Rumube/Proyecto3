@@ -34,27 +34,27 @@ public class Client
     }
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log("OnMessageClient " +e.Data);
         ClientPackage _clientPackage = JsonConvert.DeserializeObject<ClientPackage>(e.Data);
         _allPackages.Add(_clientPackage);
     }
 
     public static void DoUpdate()
     {
-        EDebug.Log(_ws.IsAlive);
         switch (_allPackages[0]._typePackageServer)
         {
             case ServerPackets.IdTablet:
                 ClientHandle.AssignID(_allPackages[0]);
                 break;
             case ServerPackets.StudentSelection:
-                if(_allPackages[0]._toUser == _id)
-                    EDebug.Log("He llegado " + _allPackages[0]._studentsInfo._studentsToTablets._students[0]);
-                else
-                    EDebug.Log("No es mio "+ _allPackages[0]._studentsInfo._studentsToTablets._students[0]);
+                if (_allPackages[0]._toUser == _id)
+                {
+                    ClientHandle.AssignStudents(_allPackages[0]);
+                }
                 break;
             case ServerPackets.StartGame:
-
+                ClientHandle.StartGame(_allPackages[0]);
+                ServiceLocator.Instance.GetService<GameManager>().RandomizeStudentsList();
+                ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
                 break;
             case ServerPackets.GameDifficulty:
 
@@ -79,6 +79,26 @@ public class Client
     {
         _ws.Send("Hola");
     }
+    #region Client sender
+    public void EndCallingStudents()
+    {
+        ClientPackage package = new ClientPackage();
+        package._typePackageClient = ClientPackets.studentsEndCall;
+        package._callingDone._isDone = true;
+        string packageJson = JsonConvert.SerializeObject(package);
+        _ws.Send(packageJson);
+    }
+
+    public void StudentGameSelection(string studentName, string gameName)
+    {
+        ClientPackage package = new ClientPackage();
+        package._typePackageClient = ClientPackets.selectedStudentGame;
+        package._selectStudentGame._studentName = studentName;
+        package._selectStudentGame._gameName = gameName;
+        string packageJson = JsonConvert.SerializeObject(package);
+        _ws.Send(packageJson);
+    }
+    #endregion
     public static void OnDisable()
     {
         if (_ws != null)
