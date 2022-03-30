@@ -10,9 +10,9 @@ public class CameraShake : MonoBehaviour
 	// How long the object should shake for.
 	private float _finishShake;
 
-	// Amplitude of the shake. A larger value shakes the camera harder.
-	public float _shakeAmount = 0.7f;
+	private float _shakeAmount;
 
+	// Amplitude of the shake. A larger value shakes the camera harder.
 	Vector3 originalPos;
 
 	void Awake()
@@ -37,8 +37,10 @@ public class CameraShake : MonoBehaviour
 		}
 	}
 
-	public void StartShake(float shakeDuration)
+	public void StartShake(float shakeDuration, float shakeIntensity)
     {
 		_finishShake = Time.realtimeSinceStartup + shakeDuration;
-    }
+		_shakeAmount = shakeIntensity;
+
+	}
 }

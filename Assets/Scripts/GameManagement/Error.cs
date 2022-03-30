@@ -8,10 +8,12 @@ public class Error : MonoBehaviour, IError
     public Color _worngColor;
     public Color _correctColor;
     public float _failDuration;
+    public float _shakeAmount = 0.7f;
+
 
     public void GenerateError()
     {
-        GetComponent<CameraShake>().StartShake(_failDuration);
+        GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
         //TODO: MIN MESSSAGE
         //TODO: AUDIO
         foreach (Material currentGUI in _GUIMats)
