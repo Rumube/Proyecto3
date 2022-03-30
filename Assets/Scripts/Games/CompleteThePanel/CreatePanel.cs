@@ -17,43 +17,53 @@ public class CreatePanel : MonoBehaviour
     [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList= new List<GameObject>();
-    
+    public List<GameObject> _targetList = new List<GameObject>();
+
     //Game Configuration
     [SerializeField]
     private int _numberEmpty;
     [SerializeField]
     private int _level;
+    int targetPlaced;
     [SerializeField]
     Dictionary<Geometry.Geometry_Type, GameObject> _geometryDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
-    public List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+    //public List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+    CompleteThePanelDifficulty completeThePanel;
+    CompleteThePanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
     GameObject[] buttons;
     void Start()
     {
-        SetTarget();
-        SetNumberEmpty();
+        completeThePanel = GetComponent<CompleteThePanelDifficulty>();
+        _currentDataDifficulty = completeThePanel.GenerateDataDifficulty(_level);
+        //SetTarget();
+        //SetNumberEmpty();
         GeneratePanel();
         buttons = GameObject.FindGameObjectsWithTag("GameButton");
     }
-    void SetTarget()
-    {
-        _geometryDic.Clear();
-        _targetList.Clear();
+    //void SetTarget()
+    //{
+    //    _geometryDic.Clear();
+    //    _targetList.Clear();
 
-        foreach (GameObject geometry in _geometryForms)
-        {
-            _geometryDic.Add(geometry.GetComponent<Geometry>()._geometryType, geometry);
-        }
-        List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._geometryDic.Keys);
-        _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
-    }
-    void SetNumberEmpty()
-    {
-        _numberEmpty = 3 + (_level / 2);
-        if (_numberEmpty > 8)
-            _numberEmpty = 8;
-    }
+    //    //foreach (GameObject geometry in _geometryForms)
+    //    //{
+    //    //    _geometryDic.Add(geometry.GetComponent<Geometry>()._geometryType, geometry);
+    //    //}
+    //    foreach (GameObject geometry in _geometryForms)
+    //    {
+    //        _geometryDic.Add(geometry.GetComponent<Geometry>()._geometryType, geometry);
+    //    }
+    //    List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._geometryDic.Keys);
+    //    _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
+    //}
+    //void SetNumberEmpty()
+    //{
+    //    _numberEmpty = 3 + (_level / 2);
+    //    if (_numberEmpty > 8)
+    //        _numberEmpty = 8;
+    //}
 
 
   
@@ -63,29 +73,83 @@ public class CreatePanel : MonoBehaviour
     /// </summary>
     void GeneratePanel()
     {
-            int maxValue = _level + 1;
-            if (_level > _geometryForms.Length)
+      int maxValue = _level + 1;
+      if (_level > _geometryForms.Length)
                 maxValue = _geometryForms.Length - 1;
 
-            for (int x = 0; x < _column; x++)
-            {
-                for (int y = 0; y < _row; y++)
-                {
-                    int geometryID = Random.Range(0, maxValue);
-                    if (geometryID >= 7)
-                    {
-                        geometryID = 6;
-                    }
-                    GameObject newGeometry = Instantiate(_geometryForms[geometryID], new Vector3((x+_offsetX)*_gapX, (y+_offsetY)*_gapY, 0) , Quaternion.identity);
-                  newGeometry.transform.SetParent(_canvas.transform, false);
-                _geometryList.Add(newGeometry);
-                    //newGeometry.GetComponent<Geometry>();
-                }
-            }
-        for (int i = 0; i < _numberEmpty; i++)
+        for (int x = 0; x < _column; x++)
         {
-            _geometryList[i].GetComponent<ObjectPanel>()._placed=false;
+            for (int y = 0; y < _row; y++)
+            {
+                    int geometryID = Random.Range(0, _currentDataDifficulty.allGeometry.Count);
+                if (geometryID >= 7)
+                {
+                        geometryID = 6;
+                }
+
+
+                GameObject newGeometry;
+                //GameObject newGeometry = Instantiate(_geometryForms[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                if (_currentDataDifficulty.numTargets>targetPlaced)
+                {
+                    
+                    if (_currentDataDifficulty.numTargets -targetPlaced==_currentDataDifficulty.numGeometryTargets- 1 )
+                    {
+                        for (int i = 0; i < _currentDataDifficulty.targetGeometry.Count; i++)
+                        {
+                            if (!_targetList.Contains(_currentDataDifficulty.targetGeometry[i]))
+                            {
+                                newGeometry = Instantiate(_currentDataDifficulty.targetGeometry[i], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                                newGeometry.GetComponent<ObjectPanel>()._placed = false;
+                                _targetList.Add(newGeometry);
+                                
+                                targetPlaced++;
+                               // EDebug.Log("Targetnumber" + targetPlaced+"x"+ _currentDataDifficulty.numTargets - targetPlaced);
+                                newGeometry.transform.SetParent(_canvas.transform, false);
+                                //newGeometry.GetComponent<Geometry>()._geometryType = _currentDataDifficulty.possibleGeometry[Random.Range(0, _currentDataDifficulty.possibleGeometry.Count)];
+                                _geometryList.Add(newGeometry);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newGeometry = Instantiate(_currentDataDifficulty.targetGeometry[Random.Range(0, _currentDataDifficulty.targetGeometry.Count)], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                        newGeometry.GetComponent<ObjectPanel>()._placed = false;
+                        _targetList.Add(newGeometry);
+                        targetPlaced++;
+                        newGeometry.transform.SetParent(_canvas.transform, false);
+                        //newGeometry.GetComponent<Geometry>()._geometryType = _currentDataDifficulty.possibleGeometry[Random.Range(0, _currentDataDifficulty.possibleGeometry.Count)];
+                        _geometryList.Add(newGeometry);
+                    }
+                   
+                  
+                }
+                else
+                {
+                     newGeometry = Instantiate(_currentDataDifficulty.allGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                    newGeometry.transform.SetParent(_canvas.transform, false);
+                    //newGeometry.GetComponent<Geometry>()._geometryType = _currentDataDifficulty.possibleGeometry[Random.Range(0, _currentDataDifficulty.possibleGeometry.Count)];
+                    _geometryList.Add(newGeometry);
+                }
+                
+               
+               
+                 
+                    //newGeometry.GetComponent<Geometry>();
+                
+            }
         }
+        //for (int i = 0; i < _numberEmpty; i++)
+        //{
+        //    _geometryList[i].GetComponent<ObjectPanel>()._placed=false;
+        //}
+        //for (int i = 0; i < _currentDataDifficulty.numTargets; i++)
+        //{
+        //    _geometryList[i].GetComponent<ObjectPanel>()._placed = false;
+
+        //    _geometryList[i].GetComponent<Geometry>()._geometryType = _currentDataDifficulty.targetsGeometry[Random.Range(0, _currentDataDifficulty.targetsGeometry.Count)];
+        //}
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
     // Update is called once per frame
@@ -109,7 +173,7 @@ public class CreatePanel : MonoBehaviour
     }
 
      public void Restart()
-    {
+     {
         foreach (GameObject geometry in _geometryList)
         {
             Destroy(geometry);
@@ -122,8 +186,11 @@ public class CreatePanel : MonoBehaviour
         //}
         _geometryList.Clear();
 
-        SetTarget();
-        SetNumberEmpty();
+        //SetTarget();
+        //SetNumberEmpty();
         GeneratePanel();
-    }
+     }
 }
+
+
+
