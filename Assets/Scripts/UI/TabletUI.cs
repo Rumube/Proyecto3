@@ -10,9 +10,12 @@ public class TabletUI : UI
 
     [Header("Calling students")]
     public Text _studentsText;
+    public Text _currentStudentName;
     public Button _continueCallingButton;
     private bool _callingStudents;
     private bool _continuecallingStudent;
+    public Animator _astrounautAnimator;
+    public Animator _rocketAnimator;
 
     [Header("Student selection")]
     public Text _studentName;
@@ -67,7 +70,8 @@ public class TabletUI : UI
     {
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
-            _studentsText.text += Client._tablet._students[i]._name;
+            _currentStudentName.text = Client._tablet._students[i]._name;
+            
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
@@ -75,11 +79,13 @@ public class TabletUI : UI
             yield return AstronautAnimation();
         }
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
+        _rocketAnimator.Play("NaveDespegue");
     }
     IEnumerator AstronautAnimation()
     {
-        print("Aqui va la animacion del astronauta");
-        yield return new WaitForSeconds(2.0f);
+        _astrounautAnimator.Play("Astronaut");
+        yield return new WaitForSeconds(8.0f);
+        _studentsText.text += _currentStudentName.text + "\n";
     }
     public void ButtonContinueCallingStudent()
     {
