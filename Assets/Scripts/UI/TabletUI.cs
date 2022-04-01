@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Crosstales.RTVoice;
 public class TabletUI : UI
 {
     public InputField _ipServer;
@@ -16,6 +16,7 @@ public class TabletUI : UI
     private bool _continuecallingStudent;
     public Animator _astrounautAnimator;
     public Animator _rocketAnimator;
+    public AudioSource _audioSource;
 
     [Header("Student selection")]
     public Text _studentName;
@@ -71,7 +72,7 @@ public class TabletUI : UI
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
             _currentStudentName.text = Client._tablet._students[i]._name;
-            
+            Speaker.Instance.Speak(_currentStudentName.text + " a la nave", _audioSource);
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
