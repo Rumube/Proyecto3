@@ -9,6 +9,9 @@ public class SpaceTimeCabin : MonoBehaviour
     public int _level;
     SpaceTimeCabinDifficulty.dataDiffilcuty _dataDifficulty;
 
+    [Header("Game Data")]
+    List<GameObject> _asteroids = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,14 @@ public class SpaceTimeCabin : MonoBehaviour
     void RestartGame()
     {
 
+    }
+
+    void GenerateAsteroids()
+    {
+        for (int i = 0; i < _dataDifficulty.numberAsteroid; i++)
+        {
+
+        }
     }
 
 }
