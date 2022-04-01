@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AsteroidBlasterInput : MonoBehaviour
 {
-    public Text _prueba;
+    [Header("References")]
     public GameObject _gunGo;
     public Image _gunTarget;
     Vector2 _lastShotPostion;
@@ -15,25 +15,23 @@ public class AsteroidBlasterInput : MonoBehaviour
     //Configuration
     float _shotCooldown = 1f;
     //Flags
-    public bool _canShot = true;
+    bool _canShot = true;
     //References
     LineRenderer _lineRenderer;
-    AsteroidBlaster _asteroidManager;
 
-    public bool _canVibrate = true;
+    bool _canVibrate = true;
     // Start is called before the first frame update
     void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _newAngle = 0;
-        _asteroidManager = GetComponent<AsteroidBlaster>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && _asteroidManager._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
@@ -100,7 +98,6 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="hit">Hit values, position, collider...</param>
     void AsteroidHit(RaycastHit2D hit)
     {
-        _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
         if (_canVibrate && hit.collider.tag == "Asteroid")
         {
             hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();

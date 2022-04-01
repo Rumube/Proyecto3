@@ -52,7 +52,7 @@ public class Installer : MonoBehaviour
 
     void SetTextToSpeechConf()
     {
-        Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
+        //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
     }
 
     // Update is called once per frame
