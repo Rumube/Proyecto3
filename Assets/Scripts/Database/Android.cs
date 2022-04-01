@@ -24,9 +24,12 @@ public class Android : MonoBehaviour
     private IDataReader _reader;
 
     string _DatabaseName = "Employers.s3db";
+    int level;
     // Start is called before the first frame update
     void Start()
     {
+        
+        
     #if UNITY_EDITOR
 
         string filepath = Application.dataPath + "/Plugins/" + _DatabaseName;
@@ -79,7 +82,7 @@ public class Android : MonoBehaviour
 
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
-         "idStudent INTEGER, idSession INTEGER, idLevelConf INTEGER,"+
+         "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
          "team integer, "+"matchInfo varchar(200),"+
          "foreign key(idStudent) references Student(idStudent), "+
          "foreign key(idSession) references Session(idSession), "+
@@ -100,7 +103,8 @@ public class Android : MonoBehaviour
        
 
 #endif
-
+        //EDebug.Log (SearchMatchInfo("Lara", "JUEGO1"));
+       
     }
     #region Buttons
 
@@ -108,6 +112,10 @@ public class Android : MonoBehaviour
     public void InsertClassButton()
     {
         InsertClass(_tName.text);
+    }
+    public void prueba()
+    {
+        Debug.Log(GetDifficulty("La", "JGO1"));
     }
     public void DeleteClassButton()
     {
@@ -427,7 +435,7 @@ public class Android : MonoBehaviour
                 Namereaders = reader.GetString(1); ;
                 id_Classroom_readers = reader.GetInt32(2);
               //  _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
-                EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clasa =" + id_Classroom_readers);
+                EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._studentButton, ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform);
                 newButton.GetComponentInChildren<Text>().text = Namereaders;
             }
@@ -533,7 +541,66 @@ public class Android : MonoBehaviour
         }
     }
     #endregion
+
+
     #region Table Match
+    /// <summary>Search and returns the difficulty</summary>
+    /// <param name="nameStudent">Name of the student</param>
+    /// <param name="nameGame">Name of the game</param>
+    ///<returns>The number of difficulty, if there is not record returns 0.</returns>
+    public int GetDifficulty(string nameStudent, string nameGame)
+    {
+        
+        using (_dbconn = new SqliteConnection(_conn))
+        {
+            _dbconn.Open(); //Open connection to the database.
+            _dbcmd = _dbconn.CreateCommand();
+            
+            string idGame = "SELECT idGame FROM Game where Name = \"" + nameGame + "\"";
+            _dbcmd.CommandText = idGame;
+            IDataReader reader = _dbcmd.ExecuteReader();
+            
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string idStudent = "SELECT idStudent FROM Student where Name = \"" + nameStudent + "\"";
+            dbcmd2.CommandText = idStudent;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+            EDebug.Log("Reader: GAME " + reader.GetValue(0));
+            EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
+            IDbCommand dbcmd3 = _dbconn.CreateCommand();
+            string difficulty = "SELECT level FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
+            dbcmd3.CommandText = difficulty;
+            IDataReader reader3 = dbcmd3.ExecuteReader();
+            //string json= reader3.GetString(0);
+            //int level = reader3.GetInt32(0);
+            //EDebug.Log("Reader: Level" + reader3.GetValue(0));
+            while (reader3.Read())
+            {
+                level = reader3.GetInt32(0);
+                EDebug.Log("Reader: Level int" + level);
+            }
+                
+           
+            reader.Close();
+            reader = null;
+            reader2.Close();
+            reader2 = null;
+            reader3.Close();
+            reader3 = null;
+            _dbcmd.Dispose();
+            _dbcmd = null;
+            dbcmd2.Dispose();
+            dbcmd2 = null;
+            dbcmd3.Dispose();
+            dbcmd3 = null;
+
+            _dbconn.Close();
+            return level;
+            //return json;
+        }
+        // _infoText.text = "";
+       
+
+    }
     /** 
 
     * @desc Registra una partida a la base
