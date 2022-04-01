@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Crosstales.RTVoice;
 
 public class Installer : MonoBehaviour
 {
@@ -63,9 +64,16 @@ public class Installer : MonoBehaviour
         SetDatabase();
         //SetInput();
         SetUI();
-
+        SetTextToSpeechConf();
         //Screen never turn off
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+
+    void SetTextToSpeechConf()
+    {
+        Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
+
+       
     }
 
     // Update is called once per frame
