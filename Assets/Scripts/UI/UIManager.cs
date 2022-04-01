@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("TabletWindows")]
+    [Header("MovileWindows")]
     public GameObject _initialScreen;
     public GameObject _credits;
     public GameObject _mainMenu;
@@ -19,6 +19,10 @@ public class UIManager : MonoBehaviour
     public GameObject _gameTime;
     public GameObject _stadistics;
     public GameObject _finalScore;
+
+    [Header("TabletWindows")]
+    public GameObject _initialScreenTablet;
+    public GameObject _connection;
 
     [Header("DatabaseUtilities")]
     public string _classNamedb;

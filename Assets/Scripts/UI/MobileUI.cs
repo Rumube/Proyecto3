@@ -330,6 +330,7 @@ public class MobileUI : UI
     /// <summary>Set the time for the whole session passing values to the GM</summary>
     public void SetTimeSession()
     {
+
         ServiceLocator.Instance.GetService<UIManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
         PlayerPrefs.SetString("SessionMinutes", _inputSessionMinutes.text);
         PlayerPrefs.SetString("SessionSeconds", _inputSessionSeconds.text);

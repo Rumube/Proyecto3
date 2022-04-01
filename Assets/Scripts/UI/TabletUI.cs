@@ -26,7 +26,18 @@ public class TabletUI : UI
         {
             _ipServer.text = PlayerPrefs.GetString("IPServer");
             _portServer.text = PlayerPrefs.GetString("PortServer");
-        }       
+        }
+        //Adding root windows in order of appearance
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._initialScreenTablet);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._connection);
+
+        //Desactive all windows
+        for (int i = 0; i < _windowsTree.Count; ++i)
+        {
+            _windowsTree[i].SetActive(false);
+        }
+        //Active just the first one
+        _windowsTree[_uiIndex].SetActive(true);
     }
     /// <summary>
     /// Save the values places in the input in order to have direct access to the connection if
