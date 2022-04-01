@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Crosstales.RTVoice;
 
 public class Installer : MonoBehaviour
 {
@@ -46,6 +47,12 @@ public class Installer : MonoBehaviour
         SetDatabase();
         //SetInput();
         SetUI();
+        SetTextToSpeechConf();
+    }
+
+    void SetTextToSpeechConf()
+    {
+        Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
     }
 
     // Update is called once per frame
