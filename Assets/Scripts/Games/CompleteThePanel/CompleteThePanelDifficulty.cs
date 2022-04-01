@@ -11,16 +11,10 @@ public class CompleteThePanelDifficulty : MonoBehaviour
     [Serializable]
     public struct dataDiffilcuty
     {
-        [Tooltip("Possible geometry that can be produced at this level")]
-        public List<Geometry.Geometry_Type> possibleGeometry;
         [Tooltip("Possible geometry that can be target at this level")]
-        public List<Geometry.Geometry_Type> targetsGeometry;
-        [Tooltip("Possible geometry that can be target at this level")]
-        public List<GameObject> allGeometry;
+        public List<GameObject> possibleGeometry;
         [Tooltip("Possible geometry that can be target at this level")]
         public List<GameObject> targetGeometry;
-        [Tooltip("Total number of geometry at this level")]
-        public int numGeometry;
         [Tooltip("Total number of targets at this level")]
         public int numTargets;
         [Tooltip("Total number of different geometry targets at this level")]

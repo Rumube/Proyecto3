@@ -81,7 +81,7 @@ public class CreatePanel : MonoBehaviour
         {
             for (int y = 0; y < _row; y++)
             {
-                    int geometryID = Random.Range(0, _currentDataDifficulty.allGeometry.Count);
+                    int geometryID = Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
                 if (geometryID >= 7)
                 {
                         geometryID = 6;
@@ -92,7 +92,7 @@ public class CreatePanel : MonoBehaviour
                 //GameObject newGeometry = Instantiate(_geometryForms[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
                 if (_currentDataDifficulty.numTargets>targetPlaced)
                 {
-                    
+                  //Debug.Log("currentDataDifficulty.numTargets - targetPlaced+" "+ _currentDataDifficulty.numGeometryTargets - 1)
                     if (_currentDataDifficulty.numTargets -targetPlaced==_currentDataDifficulty.numGeometryTargets- 1 )
                     {
                         for (int i = 0; i < _currentDataDifficulty.targetGeometry.Count; i++)
@@ -108,7 +108,13 @@ public class CreatePanel : MonoBehaviour
                                 newGeometry.transform.SetParent(_canvas.transform, false);
                                 //newGeometry.GetComponent<Geometry>()._geometryType = _currentDataDifficulty.possibleGeometry[Random.Range(0, _currentDataDifficulty.possibleGeometry.Count)];
                                 _geometryList.Add(newGeometry);
+                                Debug.Log(" no contiene");
                                 break;
+                            }
+                            else
+                            {
+                                Debug.Log("contiene");
+                              
                             }
                         }
                     }
@@ -127,7 +133,7 @@ public class CreatePanel : MonoBehaviour
                 }
                 else
                 {
-                     newGeometry = Instantiate(_currentDataDifficulty.allGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                     newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
                     newGeometry.transform.SetParent(_canvas.transform, false);
                     //newGeometry.GetComponent<Geometry>()._geometryType = _currentDataDifficulty.possibleGeometry[Random.Range(0, _currentDataDifficulty.possibleGeometry.Count)];
                     _geometryList.Add(newGeometry);
@@ -184,7 +190,9 @@ public class CreatePanel : MonoBehaviour
         //    Destroy(_geometryList[i]);
         //    //_geometryList.RemoveAt(i);
         //}
+        targetPlaced = 0;
         _geometryList.Clear();
+        _targetList.Clear();
 
         //SetTarget();
         //SetNumberEmpty();
