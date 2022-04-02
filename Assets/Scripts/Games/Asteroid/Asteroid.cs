@@ -18,7 +18,7 @@ public class Asteroid : MonoBehaviour
     public GameObject _destroyGO;
     public GameObject _asteroidGO;
     public GameObject _collisionAsteroid;
-    //References
+    [Header("References")]
     GameObject _gm;
     Rigidbody2D _rb;
     Collider2D _collider;
@@ -51,6 +51,7 @@ public class Asteroid : MonoBehaviour
 
     /// <summary>
     /// Starts execution of asteroid initiation methods.
+    /// Game: Geometri Cabin
     /// </summary>
     /// <param name="movementVelocity">The id that assigns the geometry type</param>
     /// <param name="rotationVelocity">The speed value</param>
@@ -63,9 +64,29 @@ public class Asteroid : MonoBehaviour
         _movementVelocity = movementVelocity;
         _rotationVelocity = rotationVelocity;
         SetInitialPosition();
+        RestartPosition();
         _gm = gameManager;
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+    }
+    /// <summary>
+    /// Starts execution of asteroid initiation methods.
+    /// Game: Geometri Cabin
+    /// </summary>
+    /// <param name="movementVelocity"></param>
+    /// <param name="center"></param>
+    /// <param name="gameManager"></param>
+    public void InitAsteroid(float movementVelocity, Vector2 center, GameObject gameManager)
+    {
+        _asteroidGO.SetActive(true);
+        _destroyGO.SetActive(false);
+        _movementVelocity = movementVelocity;
+        _gm = gameManager;
+        _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
+        SetInitialPosition();
+        transform.position = _startPostion;
+        SetCenterPoint(center);
     }
 
     /// <summary>
@@ -73,7 +94,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void MoveAsteroid()
     {
-        _rb.velocity = _direction;
+        _rb.velocity = _direction * (_movementVelocity * 100) * Time.deltaTime;
     }
 
     /// <summary>
@@ -83,6 +104,15 @@ public class Asteroid : MonoBehaviour
     {
         float velocity = _rotationVelocity * Time.deltaTime;
         transform.Rotate(transform.rotation.x, transform.rotation.y, velocity);
+    }
+
+    /// <summary>
+    /// Generate a normalized vector2 to <see cref="_direction"/>
+    /// </summary>
+    /// <param name="center">Point where the asteroid has to pass through </param>
+    void SetCenterPoint(Vector2 center)
+    {
+        _direction = (center - _startPostion).normalized;
     }
 
     /// <summary>
@@ -115,7 +145,6 @@ public class Asteroid : MonoBehaviour
                 SetRightPosition();
                 break;
         }
-        RestartPosition();
     }
 
     /// <summary>
@@ -163,7 +192,10 @@ public class Asteroid : MonoBehaviour
         _destroyGO.SetActive(true);
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
-        _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
+        if (_gm.GetComponent<AsteroidBlaster>())
+            _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
+        if(_gm.GetComponent<SpaceTimeCabin>())
+            _gm.GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(gameObject);
         StartCoroutine(FinishExploding());
     }
 
