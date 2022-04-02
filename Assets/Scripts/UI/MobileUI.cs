@@ -9,13 +9,16 @@ public class MobileUI : UI
 
     [Header("Delete class popup")]
     public Text _deletingClassName;
-    public Text _writingClassName;
+    public InputField _writingClassName;
     bool _deleteClassCorrect;
     public Button _confirmDeleteClassButton;
     public Button _deleteClass;
     public Sprite _cross;
     public Sprite _bin;
     bool _isDeleting;
+
+    [Header("Add class popup")]
+    public InputField _introducedNameClass;
 
     [Header("Delete student popup")]
     public Text _deletingStudentName;
@@ -149,6 +152,13 @@ public class MobileUI : UI
     }
 
     #region Mainmenu
+    public void OkeyDeleteClass()
+    {
+        DesactivateOkeyDeleteClassButton();
+        DeselectClass();
+        PopupDeleteClass();
+        BeginDeleteClass();
+    }
     /// <summary>Activates the continue button of main menu</summary>
     public void ActivateContinueMainMenu()
     {
@@ -160,10 +170,21 @@ public class MobileUI : UI
     {
         _continueMainMenu.interactable = false;
     }
-
+    public void DesactivateOkeyDeleteClassButton()
+    {
+        print("Desactivo");
+        _confirmDeleteClassButton.interactable = false;
+    }
+    public void DeselectClass()
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._classNameStudents.text = "";
+        ServiceLocator.Instance.GetService<UIManager>()._classNamedb = "";
+        DesctivateContinueMainMenu();
+    }
     /// <summary>Open/close the popup add class</summary>
     public void PopupAddClass()
-    {
+    {      
+        _introducedNameClass.text = "";
         ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.activeSelf);
     }
 
@@ -171,6 +192,9 @@ public class MobileUI : UI
     /// <param name="className">The name of the class we want to delete</param>
     public void PopupDeleteClass(string className = "")
     {
+        DesactivateOkeyDeleteClassButton();
+        _deleteClassCorrect = false;
+        _writingClassName.text = "";
         ServiceLocator.Instance.GetService<UIManager>()._classNameDeleting.text = className;
         ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.activeSelf);
     }
@@ -212,6 +236,7 @@ public class MobileUI : UI
     {
         ServiceLocator.Instance.GetService<UIManager>()._classNameStudents.text = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
     }
+
     /// <summary>Open/close the popup add student</summary>
     public void PopupAddStudent()
     {

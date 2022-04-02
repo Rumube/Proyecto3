@@ -12,6 +12,7 @@ public class Android : MonoBehaviour
 {
     [Header("Envia a la base")]
     public Text _tName;
+    public InputField _tInputName;
     public Text _tId;
 
    //[Header("Recibe de la base")]
@@ -138,11 +139,11 @@ public class Android : MonoBehaviour
     }
     public void InsertStudentButton()
     {
-        InsertStudent(_tName.text);
+        InsertStudent(_tInputName.text);
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tName.text);
+        DeleteStudent(_tInputName.text);
     }
     public void UpdateStudentButton()
     {

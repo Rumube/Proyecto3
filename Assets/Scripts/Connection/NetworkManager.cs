@@ -45,7 +45,6 @@ public class NetworkManager : MonoBehaviour
 
             //server.DoUpdate();
         
-        EDebug.Log(2 + " " + server.State);
     }
 
     /// <summary>Starts a new server and provide the ip and port's device</summary>
