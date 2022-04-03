@@ -19,13 +19,20 @@ public class MobileUI : UI
 
     [Header("Add class popup")]
     public InputField _introducedNameClass;
+    public Text _numCharactersClass;
 
     [Header("Delete student popup")]
     public Text _deletingStudentName;
-    public Text _writingStudentName;
+    public InputField _writingStudentName;
     bool _deleteStudentCorrect;
     public Button _confirmDeleteStudentButton;
     public Button _deleteStudent;
+    public Text _studentNameWritingDelete;
+
+    [Header("Add student popup")]
+    public InputField _introducedNameStudent;
+    public Text _numCharactersStudent;
+    public Text _studentNameWritingAdd;
 
     [Header("Game Connection")]
     public Text _ip;
@@ -118,7 +125,7 @@ public class MobileUI : UI
         {
             _deleteClassCorrect = AreEqual(_deletingClassName.text, _writingClassName.text);
         }
-        if (_deleteClassCorrect && !_confirmDeleteStudentButton.interactable)
+        if (_deleteClassCorrect && !_confirmDeleteClassButton.interactable)
         {
             _confirmDeleteClassButton.interactable = true;
         }
@@ -172,7 +179,6 @@ public class MobileUI : UI
     }
     public void DesactivateOkeyDeleteClassButton()
     {
-        print("Desactivo");
         _confirmDeleteClassButton.interactable = false;
     }
     public void DeselectClass()
@@ -187,7 +193,18 @@ public class MobileUI : UI
         _introducedNameClass.text = "";
         ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.activeSelf);
     }
-
+    public void UpdateCharactersShownAddClass()
+    {
+        if (_introducedNameClass.text.Length > 6)
+        {
+            _numCharactersClass.color = Color.red;
+        }
+        else
+        {
+            _numCharactersClass.color = Color.black;
+        }
+        _numCharactersClass.text = _introducedNameClass.text.Length + "/9";
+    }
     /// <summary>Open/close the popup delete class and assing the name of the class we want to delete</summary>
     /// <param name="className">The name of the class we want to delete</param>
     public void PopupDeleteClass(string className = "")
@@ -240,13 +257,43 @@ public class MobileUI : UI
     /// <summary>Open/close the popup add student</summary>
     public void PopupAddStudent()
     {
+        _introducedNameStudent.text = "";
         ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.activeSelf);
     }
-
+    public void UpdateCharactersShownAddStudent()
+    {
+        if (_introducedNameStudent.text.Length > 30)
+        {
+            _numCharactersStudent.color = Color.red;
+        }
+        else
+        {
+            _numCharactersStudent.color = Color.black;
+        }
+        _numCharactersStudent.text = _introducedNameStudent.text.Length + "/40";
+        _studentNameWritingAdd.text = _introducedNameStudent.text;
+    }
+    public void UpdateNameShownDeleteStudent()
+    {
+        _studentNameWritingDelete.text = _writingStudentName.text;
+    }
+    public void DesactivateOkeyDeleteStudentutton()
+    {
+        _confirmDeleteStudentButton.interactable = false;
+    }
+    public void OkeyDeleteStudent()
+    {
+        DesactivateOkeyDeleteStudentutton();
+        PopupDeleteStudent();
+        BeginDeleteStudent();
+    }
     /// <summary>Open/close the popup delete student and assing the name we want to delete</summary>
     /// /// <param name="studentName">The name we want to delete, it's for having a doble check if she is sure of deleting that</param>
     public void PopupDeleteStudent(string studentName = "")
     {
+        DesactivateOkeyDeleteStudentutton();
+        _writingStudentName.text = "";
+        _deleteStudentCorrect = false;
         ServiceLocator.Instance.GetService<UIManager>()._studentNameDeleting.text = studentName;
         ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.activeSelf);
     }
