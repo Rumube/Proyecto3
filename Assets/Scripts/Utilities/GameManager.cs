@@ -48,12 +48,14 @@ public class GameManager : MonoBehaviour
     {
         _gameStateServer = GAME_STATE_SERVER.previousConfiguration;
     }
+    public void ConnectionState()
+    {
+        _gameStateServer = GAME_STATE_SERVER.connection;
+    }
 
     public void RandomizeStudentsList()
     {
-        Debug.Log("Antes "+ Client._tablet._students[0]);
         Shuffle(Client._tablet._students);
-        Debug.Log("Despues " + Client._tablet._students[0]);
     }
 
     public void Shuffle<T>(IList<T> list)

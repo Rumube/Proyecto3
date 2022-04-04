@@ -6757,6 +6757,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: UpdateNumberMininautas
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &551293598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14053,6 +14065,7 @@ MonoBehaviour:
   _connectedTablets: {fileID: 1814588595}
   _continueGameConnection: {fileID: 551293597}
   _tabletsPanel: {fileID: 1137758554}
+  _studentsPanel: {fileID: 1276511342}
   _tabletButton: {fileID: 6481346493763463858, guid: d96b730d2858c344cab7f82881a80d7e, type: 3}
   _numMininautas: {fileID: 88507119}
   _inputSessionMinutes: {fileID: 743497496}
@@ -18990,6 +19003,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1930978592}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ConnectionState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1588082287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21534,8 +21559,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1930978592}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 380555983}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
         m_MethodName: ResetConnections
         m_Mode: 1
         m_Arguments:

@@ -107,6 +107,7 @@ public class NetworkManager : MonoBehaviour
     public void ResetConnections()
     {
         Client.OnDisable();
+        ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
     }
 
     #region AddStudent
