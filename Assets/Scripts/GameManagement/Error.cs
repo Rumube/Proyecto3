@@ -16,19 +16,11 @@ public class Error : MonoBehaviour, IError
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
         //TODO: MIN MESSSAGE
         //TODO: AUDIO
-        foreach (Material currentGUI in _GUIMats)
-        {
-            currentGUI.SetColor("_Color", _worngColor);
-        }
         StartCoroutine(SetCorrectGUIColor());
     }
 
     IEnumerator SetCorrectGUIColor()
     {
         yield return new WaitForSeconds(_failDuration);
-        foreach (Material currentGUI in _GUIMats)
-        {
-            currentGUI.SetColor("_Color", _correctColor);
-        }
     }
 }

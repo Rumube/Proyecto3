@@ -34,7 +34,6 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         //AUDIO
         _audio.clip = null;
         Speaker.Instance.Speak(message, _audio);
-        _audio.Play();
         text.text = "";
         string currentMessage = "";
         char[] textSplit = message.ToCharArray();

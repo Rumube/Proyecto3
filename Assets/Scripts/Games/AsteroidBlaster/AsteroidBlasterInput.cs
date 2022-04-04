@@ -100,7 +100,6 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="hit">Hit values, position, collider...</param>
     void AsteroidHit(RaycastHit2D hit)
     {
-        _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
         if (_canVibrate && hit.collider.tag == "Asteroid")
         {
             hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
