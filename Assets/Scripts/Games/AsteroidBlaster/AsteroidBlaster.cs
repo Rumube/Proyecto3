@@ -32,9 +32,7 @@ public class AsteroidBlaster : MonoBehaviour
     void Start()
     {
         restartGame();
-        //_audioSource = GetComponent<AudioSource>();
         _textMessage = GameObject.FindGameObjectWithTag("Order").GetComponent<Text>();
-        //Speaker.Instance.VoiceForCulture("es-ES");
     }
 
     /// <summary>
@@ -140,7 +138,26 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Destruye los asteroides con forma de círculo", 1.5f, _textMessage);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), 1.5f, _textMessage);
+    }
+
+    /// <summary>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// </summary>
+    /// <returns>The message</returns>
+    private string GenerateTextMessage()
+    {
+        string msg = "Destruye los asteroides con forma de ";
+
+        for (int i = 0; i < _targetList.Count; i++)
+        {
+            if (i == _targetList.Count - 1)
+                msg += "y de " + _targetList[i];
+            else
+                msg += _targetList[i] + " ";
+        }
+
+        return msg;
     }
 
     /// <summary>

@@ -123,6 +123,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &175705810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7518683565596706479, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+  m_PrefabInstance: {fileID: 820901423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &175705812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175705810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 0
 --- !u!1 &225623407
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +478,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7518683565596706478, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1288
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683565596706478, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -14
+      objectReference: {fileID: 0}
     - target: {fileID: 7518683566658128699, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -547,6 +574,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7518683566869296844, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_Text
+      value: Ordenes
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
 --- !u!1 &923033816
@@ -628,7 +699,7 @@ MonoBehaviour:
   - {fileID: 3801549539005385659, guid: 501d666e70a7a8e4aba7aef7c43fddf0, type: 3}
   - {fileID: 4967734796524238198, guid: 31a192ec09aa8314c8b5db167731f03d, type: 3}
   - {fileID: 2427622894819996788, guid: ce894000ff826a9418e58d6ade52b8f0, type: 3}
-  _level: 1
+  _level: 2
   _asteroids: []
   _targetList: 
   _gameFinished: 0
@@ -695,7 +766,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 96e7ddd60700675488cf9df5f58fbf3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -717,7 +788,7 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -3.74, z: 0}
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
@@ -728,20 +799,20 @@ LineRenderer:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0.44494385
-        outSlope: 0.44494385
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.18939394
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.34269664
-        inSlope: 0.43490753
-        outSlope: 0.43490753
+        value: 0.2777778
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33585858
+        inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -778,7 +849,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
@@ -819,7 +890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d755adfa91cc945913d1c15f6368fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prueba: {fileID: 0}
   _gunGo: {fileID: 326122570}
   _gunTarget: {fileID: 1507236653}
   _canShot: 1
@@ -842,6 +912,14 @@ MonoBehaviour:
     numAsteroids: 5
     numTargets: 2
     numGeometryTargets: 1
+    speedMovement: 10
+    asteroidsCanRotate: 0
+    speedRotation: 0
+  - possibleGeometry: 00000000010000000200000003000000
+    targetsGeometry: 000000000100000002000000
+    numAsteroids: 5
+    numTargets: 2
+    numGeometryTargets: 3
     speedMovement: 10
     asteroidsCanRotate: 0
     speedRotation: 0
@@ -874,7 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7abcd7991fd05418037142de36e059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audio: {fileID: 923033829}
 --- !u!82 &923033829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -885,11 +962,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bb1d2d51c2d35a7449e676ab58ea0b9e, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
