@@ -10,7 +10,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     // Start is called before the first frame update
     void Start()
     {
-        //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
+        _audio = GetComponent<AudioSource>();
+        Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
+        //Speaker.Instance.VoiceForCulture("ES-es");
     }
 
     // Update is called once per frame

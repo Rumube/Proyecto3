@@ -37,9 +37,6 @@ public class AsteroidBlaster : MonoBehaviour
         //_audioSource = GetComponent<AudioSource>();
         _textMessage = GameObject.FindGameObjectWithTag("Order").GetComponent<Text>();
         //Speaker.Instance.VoiceForCulture("es-ES");
-        Speaker.Instance.Speak("hello world", _audioSource);
-        //Speaker.Instance.SpeakNative("Destruye los asteroides con forma de círculo", _audioSource);
-        //ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Destruye los asteroides con forma de círculo", 1.5f, _textMessage);
     }
 
     /// <summary>
@@ -145,6 +142,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Destruye los asteroides con forma de círculo", 1.5f, _textMessage);
     }
 
     /// <summary>
@@ -178,15 +176,13 @@ public class AsteroidBlaster : MonoBehaviour
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
             //"es-es-x-eea-local"
-            Speaker.Instance.Speak("¡Correcto!", _audioSource);
-            //ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!", 1.5f, _textMessage);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!", 1.5f, _textMessage);
             _successes++;
         }
         else
         {
             _mistakes++;
-            Speaker.Instance.Speak("¡Te has equivocado!", _audioSource);
-            //ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Te has equivocado!", 1.5f, _textMessage);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Te has equivocado!", 1.5f, _textMessage);
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
