@@ -27,12 +27,10 @@ public class AsteroidBlaster : MonoBehaviour
 
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
-    Text _textMessage;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
-        _textMessage = GameObject.FindGameObjectWithTag("Order").GetComponent<Text>();
     }
 
     /// <summary>
