@@ -569,8 +569,8 @@ GameObject:
   - component: {fileID: 923033828}
   - component: {fileID: 923033827}
   - component: {fileID: 923033826}
-  - component: {fileID: 923033829}
   - component: {fileID: 923033830}
+  - component: {fileID: 923033829}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1a657077d71664ebd1430845dde055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeImage: {fileID: 0}
+  _timeImage: {fileID: 2072229234}
   _currentTime: 0
   _maxTime: 50
   _finishTime: 0
@@ -635,7 +635,6 @@ MonoBehaviour:
   _finishCreateAsteroids: 0
   _successes: 0
   _mistakes: 0
-  _audioSource: {fileID: 923033829}
 --- !u!114 &923033820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -728,13 +727,22 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.22377586
-        inSlope: 0
-        outSlope: 0
+        value: 0
+        inSlope: 0.44494385
+        outSlope: 0.44494385
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.18939394
+      - serializedVersion: 3
+        time: 1
+        value: 0.34269664
+        inSlope: 0.43490753
+        outSlope: 0.43490753
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33585858
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -877,11 +885,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: bb1d2d51c2d35a7449e676ab58ea0b9e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1497,6 +1505,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2072229234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7518683566423643497, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+  m_PrefabInstance: {fileID: 820901423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2137163926
 GameObject:
   m_ObjectHideFlags: 0

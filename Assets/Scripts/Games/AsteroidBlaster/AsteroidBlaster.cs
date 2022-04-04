@@ -27,8 +27,6 @@ public class AsteroidBlaster : MonoBehaviour
 
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
-
-    public AudioSource _audioSource;
     Text _textMessage;
     // Start is called before the first frame update
     void Start()

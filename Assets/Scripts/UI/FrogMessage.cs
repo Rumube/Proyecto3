@@ -11,8 +11,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     void Start()
     {
         _audio = GetComponent<AudioSource>();
-        Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
-        //Speaker.Instance.VoiceForCulture("ES-es");
+        //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
+        Speaker.Instance.VoiceForCulture("es-Es");
+        _audio.pitch = 1.2f;
     }
 
     // Update is called once per frame
@@ -32,8 +33,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         //MOSTRAR UI
 
         //AUDIO
-        _audio.clip = null;
-        Speaker.Instance.Speak(message, _audio);
+        Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         text.text = "";
         string currentMessage = "";
         char[] textSplit = message.ToCharArray();
