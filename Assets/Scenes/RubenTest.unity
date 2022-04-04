@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 466424219}
   m_Layer: 5
   m_Name: Ordenes
-  m_TagString: Untagged
+  m_TagString: Order
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "ESTO SON \xD3RDENES! TRABAJO PUTO NI\xD1O"
+  m_Text: Orden
 --- !u!222 &466424220
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1044,6 +1044,7 @@ GameObject:
   - component: {fileID: 923033817}
   - component: {fileID: 923033818}
   - component: {fileID: 923033819}
+  - component: {fileID: 923033830}
   - component: {fileID: 923033820}
   - component: {fileID: 923033821}
   - component: {fileID: 923033823}
@@ -1118,6 +1119,7 @@ MonoBehaviour:
   _finishCreateAsteroids: 0
   _successes: 0
   _mistakes: 0
+  _audioSource: {fileID: 923033829}
 --- !u!114 &923033820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1140,7 @@ MonoBehaviour:
   _gameManager: {fileID: 923033821}
   _inputAndroid: {fileID: 923033824}
   _error: {fileID: 923033827}
+  _frogMessage: {fileID: 923033830}
 --- !u!114 &923033821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,9 +1410,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1492,6 +1495,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &923033830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7abcd7991fd05418037142de36e059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audio: {fileID: 923033829}
 --- !u!1 &1034679988
 GameObject:
   m_ObjectHideFlags: 0
