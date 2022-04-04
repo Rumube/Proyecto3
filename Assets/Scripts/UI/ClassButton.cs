@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Vibration : MonoBehaviour
+public class ClassButton : MonoBehaviour
 {
-    public bool _deleting = false;
-    public bool _animating = false;
     public Text _textButton;
     public Image _highlighted;
+    [HideInInspector]
+    public bool _deleting = false;
+    [HideInInspector]
+    public bool _animating = false;
     Animator _animator;
-    // Start is called before the first frame update
+
     void Start()
     {
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    /// <summary>Make an animation of shaking while the user is trying to delete</summary>
     void Update()
     {
         if (_deleting)
@@ -27,7 +29,7 @@ public class Vibration : MonoBehaviour
                 _animator.SetBool("StartAnim",true);
             }
         }
-        else
+        else if(!_deleting)
         {
             if (_animating)
             {
@@ -36,28 +38,22 @@ public class Vibration : MonoBehaviour
             }
         }
     }
-
+    /// <summary>Select the class with highlight and save the name on UIManager</summary>
     public void SelectClass()
     {
         ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightClass();
-        _highlighted.enabled = true;
-        ServiceLocator.Instance.GetService<GameManager>()._classNamedb = _textButton.text;
+        ServiceLocator.Instance.GetService<MobileUI>().ActivateContinueMainMenu();
+        _highlighted.gameObject.SetActive(true);
+        ServiceLocator.Instance.GetService<UIManager>()._classNamedb = _textButton.text;
     }
 
-    /// <summary>Open/close the window credits</summary>
+    /// <summary>Send class name for checking twice in delete</summary>
     public void PopupDeleteClass()
     {
+        //On MobileUI decides if this variable is true or not
         if (_deleting)
         {
             ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteClass(_textButton.text);
-        }
-    }
-
-    public void PopupDeleteStudent()
-    {
-        if (_deleting)
-        {
-            ServiceLocator.Instance.GetService<MobileUI>().PopupDeleteStudent(_textButton.text);
         }
     }
 
