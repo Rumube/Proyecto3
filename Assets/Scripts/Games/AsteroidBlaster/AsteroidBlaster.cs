@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Crosstales.RTVoice;
+using UnityEngine.UI;
+
 public class AsteroidBlaster : MonoBehaviour
 {
     //Geometry Forms
@@ -26,12 +28,15 @@ public class AsteroidBlaster : MonoBehaviour
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
 
-    AudioSource _audioSource;
+    public AudioSource _audioSource;
+    Text _textMessage;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
-        _audioSource = GetComponent<AudioSource>();
+        //_audioSource = GetComponent<AudioSource>();
+        _textMessage = GameObject.FindGameObjectWithTag("Order").GetComponent<Text>();
+        //Speaker.Instance.VoiceForCulture("es-ES");
     }
 
     /// <summary>
@@ -137,6 +142,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Destruye los asteroides con forma de círculo", 1.5f, _textMessage);
     }
 
     /// <summary>
@@ -170,14 +176,13 @@ public class AsteroidBlaster : MonoBehaviour
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
             //"es-es-x-eea-local"
-            Speaker.Instance.Speak("¡Correcto!", _audioSource);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!", 1.5f, _textMessage);
             _successes++;
         }
         else
         {
             _mistakes++;
-            Speaker.Instance.Speak("¡Te has equivocado!", _audioSource);
-            //TODO: Active error
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Te has equivocado!", 1.5f, _textMessage);
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
