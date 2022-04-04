@@ -17,6 +17,8 @@ public class StudentButton : MonoBehaviour
     public Student _student;
     bool _addingToTablet = false;
     bool _add = true;
+    int _selectedTablet = -1;
+    public Image _highlighted;
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -55,6 +57,13 @@ public class StudentButton : MonoBehaviour
                 {
                     GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 100);
                 }
+                if(ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet && !_highlighted.gameObject.activeInHierarchy)
+                {
+                    _highlighted.gameObject.SetActive(true);
+                }else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != _selectedTablet && _highlighted.gameObject.activeInHierarchy)
+                {
+                    _highlighted.gameObject.SetActive(false);
+                }
                 break;
         }
 
@@ -77,7 +86,18 @@ public class StudentButton : MonoBehaviour
         if (_addingToTablet)
         {
             ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, _add);
+            if (_add)
+            {
+                _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;
+                _highlighted.gameObject.SetActive(true);
+            }
+            else
+            {
+                _selectedTablet = -1;
+                _highlighted.gameObject.SetActive(true);
+            }
         }
+        
         _add = !_add;
     }
 
