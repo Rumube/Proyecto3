@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
+using Crosstales.RTVoice;
 public class AsteroidBlaster : MonoBehaviour
 {
     //Geometry Forms
@@ -27,10 +26,12 @@ public class AsteroidBlaster : MonoBehaviour
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
 
+    AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -167,11 +168,17 @@ public class AsteroidBlaster : MonoBehaviour
     {
         _asteroids.Remove(asteroid);
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
+        {
+            //"es-es-x-eea-local"
+            Speaker.Instance.Speak("¡Correcto!", _audioSource);
             _successes++;
+        }
         else
         {
             _mistakes++;
+            Speaker.Instance.Speak("¡Te has equivocado!", _audioSource);
             //TODO: Active error
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
         {

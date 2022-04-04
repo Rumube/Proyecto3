@@ -1,53 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreatePanel : MonoBehaviour
 {
+    [Header("Table Configuration")]
     public int _column;
     public int _row;
-    public int _gap;
- 
-    public GameObject _geometry;
+    public int _gapX;
+    public int _gapY;
+    public int _offsetX;
+    public int _offsetY;
+
+    public GameObject _canvas;
+    [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList= new List<GameObject>();
+    
     //Game Configuration
     [SerializeField]
-    private int _numberAsteroids;
-    //[SerializeField]
-    public int _level;
+    private int _numberEmpty;
     [SerializeField]
-    Dictionary<Geometry.Geometry_Type, GameObject> _asteroidsDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
+    private int _level;
+    [SerializeField]
+    Dictionary<Geometry.Geometry_Type, GameObject> _geometryDic = new Dictionary<Geometry.Geometry_Type, GameObject>();
     [SerializeField]
     public List<Geometry.Geometry_Type> _targetList = new List<Geometry.Geometry_Type>();
+
+    GameObject[] buttons;
     void Start()
     {
-        setTarget();
-        setNumberAsteroids();
-        GenerateAsteroids();
+        SetTarget();
+        SetNumberEmpty();
+        GeneratePanel();
+        buttons = GameObject.FindGameObjectsWithTag("GameButton");
     }
-    void setTarget()
+    void SetTarget()
     {
-        _asteroidsDic.Clear();
+        _geometryDic.Clear();
         _targetList.Clear();
 
-        foreach (GameObject asteroid in _geometryForms)
+        foreach (GameObject geometry in _geometryForms)
         {
-            _asteroidsDic.Add(asteroid.GetComponent<Geometry>()._geometryType, asteroid);
+            _geometryDic.Add(geometry.GetComponent<Geometry>()._geometryType, geometry);
         }
-        List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._asteroidsDic.Keys);
+        List<Geometry.Geometry_Type> keyList = new List<Geometry.Geometry_Type>(this._geometryDic.Keys);
         _targetList = GetComponent<TargetSelector>().generateTargets(keyList, _level);
     }
-    void setNumberAsteroids()
+    void SetNumberEmpty()
     {
-        _numberAsteroids = 3 + (_level / 2);
-        if (_numberAsteroids > 8)
-            _numberAsteroids = 8;
+        _numberEmpty = 3 + (_level / 2);
+        if (_numberEmpty > 8)
+            _numberEmpty = 8;
     }
-    void GenerateAsteroids()
+
+
+  
+
+    /// <summary>
+    /// Creates a panel with geometry.
+    /// </summary>
+    void GeneratePanel()
     {
-        
-            //deleteAsteroids();
             int maxValue = _level + 1;
             if (_level > _geometryForms.Length)
                 maxValue = _geometryForms.Length - 1;
@@ -61,20 +76,54 @@ public class CreatePanel : MonoBehaviour
                     {
                         geometryID = 6;
                     }
-                    GameObject newGeometry = Instantiate(_geometryForms[geometryID], new Vector3(x, y, 0) * _gap, Quaternion.identity);
-                    _geometryList.Add(newGeometry);
+                    GameObject newGeometry = Instantiate(_geometryForms[geometryID], new Vector3((x+_offsetX)*_gapX, (y+_offsetY)*_gapY, 0) , Quaternion.identity);
+                  newGeometry.transform.SetParent(_canvas.transform, false);
+                _geometryList.Add(newGeometry);
                     //newGeometry.GetComponent<Geometry>();
                 }
             }
-        for (int i = 0; i < _numberAsteroids; i++)
+        for (int i = 0; i < _numberEmpty; i++)
         {
             _geometryList[i].GetComponent<ObjectPanel>()._placed=false;
         }
-      
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
     // Update is called once per frame
     void Update()
     {
         
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = false;
+            } 
+        }
+        else
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].GetComponent<Button>().interactable = true;
+            }
+        }
+    }
+
+     public void Restart()
+    {
+        foreach (GameObject geometry in _geometryList)
+        {
+            Destroy(geometry);
+            //_geometryList.Remove(geometry);
+        }
+        //for (int i = 0; i < _geometryList.Count; i++)
+        //{
+        //    Destroy(_geometryList[i]);
+        //    //_geometryList.RemoveAt(i);
+        //}
+        _geometryList.Clear();
+
+        SetTarget();
+        SetNumberEmpty();
+        GeneratePanel();
     }
 }
