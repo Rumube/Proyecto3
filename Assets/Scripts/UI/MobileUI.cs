@@ -44,6 +44,7 @@ public class MobileUI : UI
     public GameObject _tabletsPanel;
     public GameObject _tabletButton;
     public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
+    public Text _numMininautas;
 
     [Header("Game Timer")]
     public InputField _inputSessionMinutes;
@@ -382,6 +383,11 @@ public class MobileUI : UI
         {
             _tabletsPanel.transform.GetChild(i).GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);
         }
+    }
+
+    public void UpdateNumberMininautas()
+    {
+        _numMininautas.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count.ToString();
     }
     #endregion
     #region GameTime

@@ -19,6 +19,9 @@ public class StudentButton : MonoBehaviour
     bool _add = true;
     int _selectedTablet = -1;
     public Image _highlighted;
+    bool _selected = false;
+    public Sprite _backgroundButton;
+    public Sprite _backgroundButtonSelected;
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -64,6 +67,14 @@ public class StudentButton : MonoBehaviour
                 {
                     _highlighted.gameObject.SetActive(false);
                 }
+                if (_selected)
+                {
+                    GetComponent<Image>().sprite = _backgroundButtonSelected;
+                }
+                else
+                {
+                    GetComponent<Image>().sprite = _backgroundButton;
+                }
                 break;
         }
 
@@ -83,22 +94,26 @@ public class StudentButton : MonoBehaviour
     public void AddingToTablet()
     {
         //Check if she is on the correct screen in order to have different behaviours
-        if (_addingToTablet)
+        if (_addingToTablet && ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != -10 &&(ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet || _selectedTablet == -1))
         {
             ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, _add);
             if (_add)
             {
                 _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;
                 _highlighted.gameObject.SetActive(true);
+                _selected = true;
             }
             else
             {
                 _selectedTablet = -1;
-                _highlighted.gameObject.SetActive(true);
+                _highlighted.gameObject.SetActive(false);
+                _selected = false;
             }
+            ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
+            _add = !_add;
         }
         
-        _add = !_add;
+       
     }
 
 }

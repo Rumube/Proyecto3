@@ -19,7 +19,7 @@ public class NetworkManager : MonoBehaviour
 
     [Header("Students to tablets")]
     public List<Tablet> _studentsToTablets = new List<Tablet>();
-    public int _selectedTablet;
+    public int _selectedTablet = -10;
 
     [Header("Minigame timer client")]
     public int _minigameMinutes;
