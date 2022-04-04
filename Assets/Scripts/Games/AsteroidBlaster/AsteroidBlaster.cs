@@ -138,7 +138,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), 1.5f, _textMessage);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
     }
 
     /// <summary>
@@ -191,13 +191,12 @@ public class AsteroidBlaster : MonoBehaviour
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
             //"es-es-x-eea-local"
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!", 1.5f, _textMessage);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
         }
         else
         {
             _mistakes++;
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Te has equivocado!", 1.5f, _textMessage);
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())

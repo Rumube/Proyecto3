@@ -123,25 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &175705810 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7518683565596706479, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-  m_PrefabInstance: {fileID: 820901423}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &175705812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175705810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
 --- !u!1 &225623407
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,14 +459,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7518683565596706478, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1288
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683565596706478, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -14
-      objectReference: {fileID: 0}
     - target: {fileID: 7518683566658128699, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -573,50 +546,6 @@ PrefabInstance:
     - target: {fileID: 7518683566658128703, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_Name
       value: Canvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683566869296844, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_Text
-      value: Ordenes
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_Pivot.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683566869296845, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7518683567370097122, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
@@ -935,9 +864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43d6351198f1dd4394a3edc0c056fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _GUIMats: []
-  _worngColor: {r: 0, g: 0, b: 0, a: 0}
-  _correctColor: {r: 0, g: 0, b: 0, a: 0}
   _failDuration: 0.2
   _shakeAmount: 0.7
 --- !u!114 &923033828
@@ -952,6 +878,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7abcd7991fd05418037142de36e059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeWriting: 0.5
+  _messageDuration: 2
 --- !u!82 &923033829
 AudioSource:
   m_ObjectHideFlags: 0

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Error : MonoBehaviour, IError
 {
-    public List<Material> _GUIMats;
-    public Color _worngColor;
-    public Color _correctColor;
     public float _failDuration;
     public float _shakeAmount = 0.7f;
 
@@ -15,6 +12,7 @@ public class Error : MonoBehaviour, IError
     {
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
         //TODO: MIN MESSSAGE
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Te has equivocado");
         //TODO: AUDIO
         StartCoroutine(SetCorrectGUIColor());
     }
