@@ -146,13 +146,13 @@ public class AsteroidBlaster : MonoBehaviour
     private string GenerateTextMessage()
     {
         string msg = "Destruye los asteroides con forma de ";
-
+        Geometry newGeometry = new Geometry();
         for (int i = 0; i < _targetList.Count; i++)
         {
             if (i == _targetList.Count - 1 && _targetList.Count != 1)
-                msg += "y de " + _targetList[i];
+                msg += "y de " + newGeometry.getGeometryString(_targetList[i]);
             else
-                msg += _targetList[i] + " ";
+                msg += newGeometry.getGeometryString(_targetList[i]) + " ";
         }
 
         return msg;
