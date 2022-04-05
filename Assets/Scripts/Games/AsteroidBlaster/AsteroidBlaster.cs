@@ -149,7 +149,7 @@ public class AsteroidBlaster : MonoBehaviour
 
         for (int i = 0; i < _targetList.Count; i++)
         {
-            if (i == _targetList.Count - 1)
+            if (i == _targetList.Count - 1 && _targetList.Count != 1)
                 msg += "y de " + _targetList[i];
             else
                 msg += _targetList[i] + " ";
