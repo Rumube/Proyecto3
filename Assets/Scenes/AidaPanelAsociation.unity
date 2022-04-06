@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 30599333}
   m_Layer: 5
   m_Name: Circulo
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 33541299}
   m_Layer: 5
   m_Name: Star
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 781645549}
   m_Layer: 5
   m_Name: Cuadrado
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 808244536}
   m_Layer: 5
   m_Name: Rectangulo
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1336,11 +1336,13 @@ MonoBehaviour:
   - possibleGeometry:
     - {fileID: 30599328}
     - {fileID: 1557274001}
+    - {fileID: 781645544}
     targetGeometry:
     - {fileID: 30599328}
     - {fileID: 1557274001}
-    numTargets: 2
-    numGeometryTargets: 2
+    - {fileID: 781645544}
+    numTargets: 3
+    numGeometryTargets: 3
 --- !u!114 &880524499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1523,7 +1525,7 @@ GameObject:
   - component: {fileID: 1512212272}
   m_Layer: 5
   m_Name: Pentagono
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1764,7 +1766,7 @@ GameObject:
   - component: {fileID: 1557274006}
   m_Layer: 5
   m_Name: "Tri\xE1ngulo"
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1926,7 +1928,7 @@ GameObject:
   - component: {fileID: 1949193999}
   m_Layer: 5
   m_Name: Diamante
-  m_TagString: Untagged
+  m_TagString: GameButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
