@@ -282,7 +282,7 @@ public class MobileUI : UI
         {
             _numCharactersStudent.color = Color.black;
         }
-        _numCharactersStudent.text = _introducedNameStudent.text.Length + "/40";
+        _numCharactersStudent.text = _introducedNameStudent.text.Length + "/36";
         _studentNameWritingAdd.text = _introducedNameStudent.text;
     }
     public void UpdateNameShownDeleteStudent()
