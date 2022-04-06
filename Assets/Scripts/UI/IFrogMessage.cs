@@ -5,5 +5,5 @@ using UnityEngine.UI;
 
 public interface IFrogMessage
 {
-    public void NewFrogMessage(string message, float time, Text text);
+    public void NewFrogMessage(string message);
 }

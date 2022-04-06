@@ -27,12 +27,10 @@ public class AsteroidBlaster : MonoBehaviour
 
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
-    Text _textMessage;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
-        _textMessage = GameObject.FindGameObjectWithTag("Order").GetComponent<Text>();
     }
 
     /// <summary>
@@ -138,7 +136,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), 1.5f, _textMessage);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
     }
 
     /// <summary>
@@ -148,13 +146,13 @@ public class AsteroidBlaster : MonoBehaviour
     private string GenerateTextMessage()
     {
         string msg = "Destruye los asteroides con forma de ";
-
+        Geometry newGeometry = new Geometry();
         for (int i = 0; i < _targetList.Count; i++)
         {
-            if (i == _targetList.Count - 1)
-                msg += "y de " + _targetList[i];
+            if (i == _targetList.Count - 1 && _targetList.Count != 1)
+                msg += "y de " + newGeometry.getGeometryString(_targetList[i]);
             else
-                msg += _targetList[i] + " ";
+                msg += newGeometry.getGeometryString(_targetList[i]) + " ";
         }
 
         return msg;
@@ -191,13 +189,12 @@ public class AsteroidBlaster : MonoBehaviour
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
             //"es-es-x-eea-local"
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!", 1.5f, _textMessage);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
         }
         else
         {
             _mistakes++;
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Te has equivocado!", 1.5f, _textMessage);
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())

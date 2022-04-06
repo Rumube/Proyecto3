@@ -7,11 +7,16 @@ using Crosstales.RTVoice;
 public class FrogMessage : MonoBehaviour, IFrogMessage
 {
     AudioSource _audio;
+    Text _textMessage;
+    Image _imageMassage;
+
+    public float _timeWriting;
+    public float _messageDuration;
+
     // Start is called before the first frame update
     void Start()
     {
         _audio = GetComponent<AudioSource>();
-        //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
         Speaker.Instance.VoiceForCulture("es-Es");
         _audio.pitch = 1.2f;
     }
@@ -22,36 +27,49 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         
     }
 
-    public void NewFrogMessage(string message, float time, Text text)
+    /// <summary>
+    /// Start the messages process
+    /// </summary>
+    /// <param name="message">The message text</param>
+    public void NewFrogMessage(string message)
     {
         StopAllCoroutines();
-        StartCoroutine(FrogCoroutine(message, time, text));
+        _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<Text>();
+        _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
+        StartCoroutine(FrogCoroutine(message));
     }
 
-    private IEnumerator FrogCoroutine(string message, float time, Text text)
+    /// <summary>
+    /// Makes the message and opens the panel
+    /// </summary>
+    /// <param name="message">The message text</param>
+    private IEnumerator FrogCoroutine(string message)
     {
-        //MOSTRAR UI
-
-        //AUDIO
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
-        text.text = "";
+        _textMessage.text = "";
+        _imageMassage.color = new Color(0, 0, 0, 1);
+
         string currentMessage = "";
         char[] textSplit = message.ToCharArray();
-        float waitTime = time / textSplit.Length;
+        float waitTime = _timeWriting / textSplit.Length;
 
         for (int i = 0; i < textSplit.Length; i++)
         {
             currentMessage += textSplit[i];
-            text.text = currentMessage;
+            _textMessage.text = currentMessage;
 
             yield return new WaitForSeconds(waitTime);
         }
-        StartCoroutine(CloseMessage(time, text));
+        StartCoroutine(CloseMessage());
     }
 
-
-    IEnumerator CloseMessage(float time, Text text)
+    /// <summary>
+    /// Close the message panel
+    /// </summary>
+    IEnumerator CloseMessage()
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(_messageDuration);
+        _textMessage.text = "";
+        _imageMassage.color = new Color(0, 0, 0, 0);
     }
 }
