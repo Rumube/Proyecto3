@@ -74,30 +74,45 @@ public class CreatePanel : MonoBehaviour
     /// </summary>
     void GeneratePanel()
     {
-        for (int x = 0; x < _column; x++)
-        {
-            for (int y = 0; y < _row; y++)
-            {
-                if (_targetList.Count >= _currentDataDifficulty.numTargets)
-                    GenerateNoTargetGeometry(x, y);
-                else
-                    GenerateTargets(x, y);
-            }
-        }
+        _geometryList.Clear();
+
+        GenerateTargets(0, 0);
+        GenerateNoTargetGeometry(0, 0);
+
+        //COLOCAR BOTONES EN POSICIÓN
+
+        //for (int x = 0; x < _column; x++)
+        //{
+        //    for (int y = 0; y < _row; y++)
+        //    {
+        //        if((_geometryList.Count + _targetList.Count) < (_column * _row))
+        //        {
+        //            if (_targetList.Count >= _currentDataDifficulty.numTargets)
+        //            else
+                        
+        //        }
+
+        //    }
+        //}
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
 
 
     private void GenerateNoTargetGeometry(int x, int y)
     {
-        int geometryID = Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
-        if (geometryID >= 7)
-            geometryID = 6;
+        for (int i = 0; i < (_row*_column) - _currentDataDifficulty.numTargets; i++)
+        {
+            int geometryID = Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
+            if (geometryID >= 7)
+                geometryID = 6;
 
-        GameObject newGeometry;
-        newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
-        newGeometry.transform.SetParent(_canvas.transform, false);
-        _geometryList.Add(newGeometry);
+            GameObject newGeometry;
+            print("Hola: " + x + " - " + y);
+            newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+            newGeometry.transform.SetParent(_canvas.transform, false);
+            _geometryList.Add(newGeometry);
+        }
+
     }
 
     private void GenerateTargets(int x, int y)
@@ -189,6 +204,7 @@ public class CreatePanel : MonoBehaviour
             Destroy(geometry);
             //_geometryList.Remove(geometry);
         }
+        _geometryList.Clear();
         //for (int i = 0; i < _geometryList.Count; i++)
         //{
         //    Destroy(_geometryList[i]);
