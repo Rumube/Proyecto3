@@ -24,6 +24,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     /// </summary>
     public void StartGameTime()
     {
+        _timeImage = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Image>();
         ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
         _finishTime = Time.realtimeSinceStartup + _maxTime;
         _currentTime = Time.realtimeSinceStartup;
