@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class AsteroidBlasterInput : MonoBehaviour
 {
-    public Text _prueba;
     public GameObject _gunGo;
     public Image _gunTarget;
     Vector2 _lastShotPostion;
