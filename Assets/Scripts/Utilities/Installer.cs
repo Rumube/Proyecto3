@@ -26,12 +26,15 @@ public class Installer : MonoBehaviour
     public ServerUtility _myServer;
 
     public Error _error;
+    public FrogMessage _frogMessage;
 
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
     private IUI _UIUsed;
     private IError _IError;
+    private IFrogMessage _IFrogMessage;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,6 +51,7 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
         ServiceLocator.Instance.RegisterService<IError>(_error);
         ServiceLocator.Instance.RegisterService(_canvasGUI);
+        ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
 
 
         if (_server && _canvasMobile != null)
@@ -73,7 +77,6 @@ public class Installer : MonoBehaviour
     {
         //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
 
-       
     }
 
     // Update is called once per frame
