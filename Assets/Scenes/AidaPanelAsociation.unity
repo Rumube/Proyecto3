@@ -457,6 +457,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5643932686889701572, guid: a61395c4dfc4e544e8e935c69ad66515, type: 3}
   m_PrefabInstance: {fileID: 8407829669300361229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &280117043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7518683566423643497, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+  m_PrefabInstance: {fileID: 1297821194}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &437051033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1285,7 @@ MonoBehaviour:
   _targetList: []
   _allList: []
   _level: 3
-  completeThePanel: {fileID: 880524498}
+  _completeThePanel: {fileID: 0}
 --- !u!114 &880524496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,7 +1298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1a657077d71664ebd1430845dde055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeImage: {fileID: 1218914244}
+  _timeImage: {fileID: 280117043}
   _currentTime: 0
   _maxTime: 30
   _finishTime: 0
@@ -1330,9 +1341,8 @@ MonoBehaviour:
     - {fileID: 30599328}
     - {fileID: 1557274001}
     - {fileID: 781645544}
-    - {fileID: 1949193997}
-    numTargets: 5
-    numGeometryTargets: 4
+    numTargets: 12
+    numGeometryTargets: 3
 --- !u!114 &880524499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1379,7 +1389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1218914243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1531,6 +1541,34 @@ PrefabInstance:
     - target: {fileID: 7518683566658128703, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_Name
       value: CanvasGUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 437051034}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Compare
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonCounter, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
@@ -2215,7 +2253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1956895435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2355,6 +2393,10 @@ PrefabInstance:
     - target: {fileID: 2894145515017573870, guid: f14ac2a0beb219141899be658fa34512, type: 3}
       propertyPath: m_Name
       value: UnderGrid_Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2894145515017573870, guid: f14ac2a0beb219141899be658fa34512, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4327056007698083337, guid: f14ac2a0beb219141899be658fa34512, type: 3}
       propertyPath: m_IsActive
@@ -2541,6 +2583,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigButtton_Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 7283509522855787657, guid: bb1c66f4bdec20742a75df56bfe951b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb1c66f4bdec20742a75df56bfe951b6, type: 3}
 --- !u!1001 &8407829669300361229
@@ -2556,7 +2602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2353167093703611469, guid: a61395c4dfc4e544e8e935c69ad66515, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5643932686889701572, guid: a61395c4dfc4e544e8e935c69ad66515, type: 3}
       propertyPath: m_Pivot.x
