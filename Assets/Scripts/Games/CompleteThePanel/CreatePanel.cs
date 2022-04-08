@@ -46,8 +46,8 @@ public class CreatePanel : MonoBehaviour
         _geometryList.Clear();
         _targetList.Clear();
         _allList.Clear();
-        GenerateTargets(0, 0);
-        GenerateNoTargetGeometry(0, 0);
+        GenerateTargets();
+        GenerateNoTargetGeometry();
 
         //COLOCAR BOTONES EN POSICIÓN
         
@@ -65,7 +65,7 @@ public class CreatePanel : MonoBehaviour
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
-    private void GenerateNoTargetGeometry(int x, int y)
+    private void GenerateNoTargetGeometry()
     {
         for (int i = 0; i < (_row*_column) - _currentDataDifficulty.numTargets; i++)
         {
@@ -74,7 +74,7 @@ public class CreatePanel : MonoBehaviour
                 geometryID = 6;
 
             GameObject newGeometry;
-            newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+            newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
             newGeometry.transform.SetParent(_canvas.transform, false);
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
@@ -84,7 +84,7 @@ public class CreatePanel : MonoBehaviour
     /// <summary>
     /// Generates the target geometry.
     /// </summary>
-    private void GenerateTargets(int x, int y)
+    private void GenerateTargets()
     {
         GenerateTypeTargetGeometry();
         do
@@ -98,7 +98,7 @@ public class CreatePanel : MonoBehaviour
             for (int i = 0; i < _currentDataDifficulty.numTargets; i++)
             {
                 int idGeometry = Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
-                GameObject newGeometry = Instantiate(_currentDataDifficulty.targetGeometry[idGeometry], new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0), Quaternion.identity);
+                GameObject newGeometry = Instantiate(_currentDataDifficulty.targetGeometry[idGeometry], new Vector3(0, 0 , 0), Quaternion.identity);
                 newGeometry.GetComponent<ObjectPanel>()._placed = false;
                 _targetList.Add(newGeometry);
                 _allList.Add(newGeometry);
@@ -106,7 +106,9 @@ public class CreatePanel : MonoBehaviour
             }
         } while (!CheckTargets());
     }
-
+    /// <summary>
+    /// Generates the geometry type of the target.
+    /// </summary>
     private void GenerateTypeTargetGeometry()
     {
          _typeTargetGeometry.Clear();
@@ -135,6 +137,9 @@ public class CreatePanel : MonoBehaviour
          }
 
     }
+    /// <summary>
+    /// Checks if the list of targets contains geometry repeated.
+    /// </summary>
     private bool CheckTargets()
     {
         bool result = true;
@@ -175,7 +180,10 @@ public class CreatePanel : MonoBehaviour
        
     }
 
-     public void Restart()
+    /// <summary>
+    /// Restarts the minigame.
+    /// </summary>
+    public void Restart()
      {
         foreach (GameObject geometry in _allList)
         {
