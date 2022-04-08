@@ -98,7 +98,13 @@ public class ServerUtility : MonoBehaviour
         if (_ws != null)
             _ws.Close();
     }
-
+    public void ResetConnections()
+    {
+        if (_server != null)
+            _server.Stop();
+        if (_ws != null)
+            _ws.Close();
+    }
     public void EnviarAdios()
     {
         _ws.Send("Adios");

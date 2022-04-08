@@ -42,8 +42,10 @@ public class MobileUI : UI
 
     [Header("Add student screen")]
     public GameObject _tabletsPanel;
+    public GameObject _studentsPanel;
     public GameObject _tabletButton;
     public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
+    public Text _numMininautas;
 
     [Header("Game Timer")]
     public InputField _inputSessionMinutes;
@@ -112,7 +114,17 @@ public class MobileUI : UI
                 }
                 break;
             case GameManager.GAME_STATE_SERVER.teamConfiguration:
-
+                if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == true)
+                {
+                    StudentButtonDisableInteractuable();
+                }else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == false)
+                {
+                    StudentButtonAbleInteractuable();
+                }
+                if (ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets > _tabletsPanel.transform.childCount)
+                {
+                    UpdateTabletsAddStudent();
+                }
                 break;
 
             case GameManager.GAME_STATE_SERVER.playing:
@@ -270,7 +282,7 @@ public class MobileUI : UI
         {
             _numCharactersStudent.color = Color.black;
         }
-        _numCharactersStudent.text = _introducedNameStudent.text.Length + "/40";
+        _numCharactersStudent.text = _introducedNameStudent.text.Length + "/36";
         _studentNameWritingAdd.text = _introducedNameStudent.text;
     }
     public void UpdateNameShownDeleteStudent()
@@ -363,14 +375,30 @@ public class MobileUI : UI
             ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
         }
     }
+    public void UpdateTabletsAddStudent()
+    {
+        GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
+        newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() - 1)._id.ToString();
+        _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets()));// a lo mejor no lo necesito
+        ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() - 1));
+    }
     /// <summary>If we go back destroy all the tablets and clear the lists of the association between tablets and students
     /// </summary>
     public void RemoveTabletsAddStudent()
     {
-        for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
+        int numTablets = _tabletsPanel.transform.childCount;
+        for (int i = 0; i < numTablets; ++i)
         {
-            Destroy(_tabletsPanel.transform.GetChild(i));
+            Destroy(_tabletsPanel.transform.GetChild(i).gameObject);
+            ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i]._students.Clear();
         }
+
+        int numStudents = _studentsPanel.transform.childCount;
+        for (int i = 0; i < numStudents; ++i)
+        {
+            Destroy(_studentsPanel.transform.GetChild(i).gameObject);
+        }
+
         _tabletButtonAssociation.Clear();
         ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Clear();
     }
@@ -381,6 +409,34 @@ public class MobileUI : UI
         for (int i = 0; i < _tabletsPanel.transform.childCount; ++i)
         {
             _tabletsPanel.transform.GetChild(i).GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);
+        }
+    }
+
+    public void UpdateNumberMininautas()
+    {
+        if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet > 0)
+        {
+            _numMininautas.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count.ToString();
+
+        }
+        else
+        {
+            _numMininautas.text = "0";
+        }
+    }
+
+    public void StudentButtonDisableInteractuable()
+    {
+        for (int i = 0; i < _studentsPanel.transform.childCount; ++i)
+        {
+            _studentsPanel.transform.GetChild(i).GetComponentInChildren<Button>().interactable = false;
+        }
+    }
+    public void StudentButtonAbleInteractuable()
+    {
+        for (int i = 0; i < _studentsPanel.transform.childCount; ++i)
+        {
+            _studentsPanel.transform.GetChild(i).GetComponentInChildren<Button>().interactable = true;
         }
     }
     #endregion
