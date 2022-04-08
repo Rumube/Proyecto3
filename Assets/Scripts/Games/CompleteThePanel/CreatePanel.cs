@@ -28,13 +28,13 @@ public class CreatePanel : MonoBehaviour
     private int _level;
 
     [SerializeField]
-    CompleteThePanelDifficulty completeThePanel;
+    CompleteThePanelDifficulty _completeThePanel;
     CompleteThePanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
     void Start()
     {
-        completeThePanel = GetComponent<CompleteThePanelDifficulty>();
-        _currentDataDifficulty = completeThePanel.GenerateDataDifficulty(_level);
+        _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
+        _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         GeneratePanel();
     }
 

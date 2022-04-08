@@ -109,7 +109,7 @@ public class ButtonCounter : MonoBehaviour
         }
        
     }
-  
+    #region Button Counters
     public void CounterSquare(GameObject button)
     {
         _squareCounter=Counter(button, _squareCounter);
@@ -154,4 +154,5 @@ public class ButtonCounter : MonoBehaviour
         }
         return counter;
     }
+    #endregion
 }
