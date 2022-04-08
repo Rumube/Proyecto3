@@ -1281,8 +1281,8 @@ MonoBehaviour:
   _row: 3
   _gapX: 250
   _gapY: 250
-  _offsetX: -2
-  _offsetY: -1
+  _offsetX: 2
+  _offsetY: 1
   _canvas: {fileID: 817524838}
   _geometryForms:
   - {fileID: 30599328}
@@ -1294,8 +1294,9 @@ MonoBehaviour:
   - {fileID: 33541297}
   _geometryList: []
   _targetList: []
-  _numberEmpty: 0
-  _level: 2
+  _allList: []
+  _count: 0
+  _level: 3
   completeThePanel: {fileID: 880524498}
 --- !u!114 &880524496
 MonoBehaviour:
@@ -1343,6 +1344,18 @@ MonoBehaviour:
     - {fileID: 781645544}
     numTargets: 3
     numGeometryTargets: 3
+  - possibleGeometry:
+    - {fileID: 30599328}
+    - {fileID: 1557274001}
+    - {fileID: 781645544}
+    - {fileID: 1949193997}
+    targetGeometry:
+    - {fileID: 30599328}
+    - {fileID: 1557274001}
+    - {fileID: 781645544}
+    - {fileID: 1949193997}
+    numTargets: 5
+    numGeometryTargets: 4
 --- !u!114 &880524499
 MonoBehaviour:
   m_ObjectHideFlags: 0
