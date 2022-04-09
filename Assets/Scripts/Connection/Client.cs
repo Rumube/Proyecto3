@@ -54,19 +54,20 @@ public class Client
             case ServerPackets.StartGame:
                 ClientHandle.StartGame(_allPackages[0]);
                 ServiceLocator.Instance.GetService<GameManager>().RandomizeStudentsList();
+                ServiceLocator.Instance.GetService<TabletUI>().OpenNextWindow();
                 ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
                 break;
             case ServerPackets.GameDifficulty:
-
+                ClientHandle.SpecificGameDifficulty(_allPackages[0]);
                 break;
             case ServerPackets.UpdateTeamPoints:
 
                 break;
             case ServerPackets.PauseGame:
-
+                ClientHandle.PauseGame(_allPackages[0]);
                 break;
             case ServerPackets.Quit:
-
+                ClientHandle.QuitGame();
                 break;
             case ServerPackets.Disconnect:
 

@@ -23,6 +23,8 @@ public class UIManager : MonoBehaviour
     [Header("TabletWindows")]
     public GameObject _initialScreenTablet;
     public GameObject _connection;
+    public GameObject _studentSelection;
+    public GameObject _gameSelection;
 
     [Header("DatabaseUtilities")]
     public string _classNamedb;
@@ -82,6 +84,7 @@ public class UIManager : MonoBehaviour
     {
         while ((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))
         {
+            yield return new WaitUntil(() => ServiceLocator.Instance.GetService<GameManager>()._pause == false);
             if (_timeSessionSeconds >= 1)
             {
                 _timeSessionSeconds--;
@@ -90,10 +93,10 @@ public class UIManager : MonoBehaviour
             {
                 _timeSessionMinutes--;
                 _timeSessionSeconds = 59;
-            }
+            }         
             yield return new WaitForSeconds(1f);
         }
-        //TODO: End session, send packages end
+        ServiceLocator.Instance.GetService<MobileUI>().ShownFinalScoreScreen();
     }
     #endregion
 

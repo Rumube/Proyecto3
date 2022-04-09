@@ -20,4 +20,19 @@ public class ClientHandle
         ServiceLocator.Instance.GetService<NetworkManager>()._minigameSeconds = package._minigameTime._seconds;
 
     }
+
+    public static void SpecificGameDifficulty(ClientPackage package)
+    {
+        //TODO: saber que recibo y tratar la dificultad
+    }
+
+    public static void PauseGame(ClientPackage package)
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._pause = package._pauseGame._pause;
+        Debug.Log("Pausando? " + ServiceLocator.Instance.GetService<GameManager>()._pause);
+    }
+    public static void QuitGame()
+    {
+        Debug.Log("Quitando el juego");
+    }
 }

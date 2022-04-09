@@ -59,6 +59,11 @@ namespace ClientPack
             public string _gameName;
         }
         public SelectStudentGame _selectStudentGame;
+        public struct PauseGame
+        {
+            public bool _pause;
+        }
+        public PauseGame _pauseGame;
         public struct Info
         {
             public int _idTablet;

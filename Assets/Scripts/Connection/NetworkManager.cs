@@ -35,7 +35,7 @@ public class NetworkManager : MonoBehaviour
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-            _idText.text = Client._tablet._id.ToString();
+            _idText.text = ((TabletUI.TEAMCOLOR)Client._tablet._id).ToString();
         }
 
         //if (Server._allPackages != null && Server._allPackages.Count > 0)

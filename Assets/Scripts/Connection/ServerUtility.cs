@@ -105,10 +105,7 @@ public class ServerUtility : MonoBehaviour
         if (_ws != null)
             _ws.Close();
     }
-    public void EnviarAdios()
-    {
-        _ws.Send("Adios");
-    }
+
     private void Update()
     {
         if (_allPackages != null &&_allPackages.Count > 0)
@@ -136,7 +133,6 @@ public class ServerUtility : MonoBehaviour
 # region ServerSender
     public void AddingStudents()
     {
-        //EDebug.Log("Listening: " + _server.IsListening);
         _serverPackage = new ServerPackage();
         _serverPackage._typePackageServer = ServerPackets.StudentSelection;
 
@@ -158,6 +154,23 @@ public class ServerUtility : MonoBehaviour
         _serverPackage._typePackageServer = ServerPackets.StartGame;
         _serverPackage._minigameTime._minutes = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesMinutes;
         _serverPackage._minigameTime._seconds = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesSeconds;
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        _ws.Send(packageJson);
+    }
+
+    public void FinishSession()
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.Quit;
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        _ws.Send(packageJson);
+    }
+
+    public void PauseSession(bool pause)
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.PauseGame;
+        _serverPackage._pauseGame._pause = pause;
         string packageJson = JsonConvert.SerializeObject(_serverPackage);
         _ws.Send(packageJson);
     }

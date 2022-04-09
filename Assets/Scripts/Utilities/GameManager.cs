@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public string _currentstudentName;
     public string _currentgameName;
     int _studentCounter = 0;
+    public bool _pause = false;
     public enum GAME_STATE_SERVER
     {
         init = 0,

@@ -5,10 +5,18 @@ using UnityEngine.UI;
 using Crosstales.RTVoice;
 public class TabletUI : UI
 {
+    public enum TEAMCOLOR
+    {
+        AMARILLO = 1,
+        ROJO = 2,
+        AZUL = 3,
+        VERDE = 4
+    }
+    public TEAMCOLOR _teamColor;
     public InputField _ipServer;
     public InputField _portServer;
 
-    [Header("Calling students")]
+    [Header("Connection")]
     public Text _studentsText;
     public Text _currentStudentName;
     public Button _continueCallingButton;
@@ -20,8 +28,13 @@ public class TabletUI : UI
 
     [Header("Student selection")]
     public Text _studentName;
-    public Text _gameName;
-    public Text _gameInfo;
+    public Text _teamColorText;
+    //public Text _gameName;
+    //public Text _gameInfo;
+
+    [Header("Game selection")]
+    public GameObject _blackTransition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +47,8 @@ public class TabletUI : UI
         //Adding root windows in order of appearance
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._initialScreenTablet);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._connection);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._studentSelection);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameSelection);
 
         //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
@@ -78,9 +93,10 @@ public class TabletUI : UI
             yield return new WaitUntil(() => _continuecallingStudent == true);
             _continueCallingButton.gameObject.SetActive(false);
             yield return AstronautAnimation();
-        }
-        ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
+        }     
         _rocketAnimator.Play("NaveDespegue");
+        yield return new WaitForSeconds(3.0f);
+        ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
     IEnumerator AstronautAnimation()
     {
@@ -95,14 +111,31 @@ public class TabletUI : UI
 
     public void NewStudentGame()
     {
-        ShowStudentGame();
+        SelectStudentGame();
+        ShowStudentSelectGame();
     }
-    void ShowStudentGame()
+    void SelectStudentGame()
     {
         ServiceLocator.Instance.GetService<GameManager>().SelectStudentAndGame();
         ServiceLocator.Instance.GetService<NetworkManager>().SendStudentGame();
+    }
+    void ShowStudentSelectGame()
+    {      
         _studentName.text = ServiceLocator.Instance.GetService<GameManager>()._currentstudentName;
-        _gameName.text = ServiceLocator.Instance.GetService<GameManager>()._currentgameName;
+        _teamColor = (TEAMCOLOR)(int)Client._tablet._id;
+        _teamColorText.text = "EQUIPO " + _teamColor;
+        //_gameName.text = ServiceLocator.Instance.GetService<GameManager>()._currentgameName;
+    }
+    public void ShowCommonScenario()
+    {
+        OpenNextWindow();
+        StartCoroutine(ShowGameSelected());
+    }
+    IEnumerator ShowGameSelected()
+    {
+        //Esperar hasta recibir la dificultad del servidor
+        yield return new WaitForSeconds(3.0f);
+        _blackTransition.SetActive(true);
     }
 
 }

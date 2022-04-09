@@ -60,7 +60,11 @@ public class MobileUI : UI
     public GameObject _studentGamePanel;
     public Text _studentNameText;
     public Text _gameNameText;
-
+    public Button _pauseButton;
+    public Sprite _playSprite;
+    public Sprite _playPressedSprite;
+    public Sprite _pauseSprite;
+    public Sprite _pausePressedSprite;
     void Start()
     {
         //Adding root windows in order of appearance
@@ -492,6 +496,26 @@ public class MobileUI : UI
     public void CloseInfoTabletStudentGamePanel()
     {
         _studentGamePanel.SetActive(false);
+    }
+
+    public void ShownFinalScoreScreen()
+    {
+        ServiceLocator.Instance.GetService<ServerUtility>().FinishSession();
+        OpenNextWindow();
+    }
+
+    public void PauseGame()
+    {
+        ServiceLocator.Instance.GetService<GameManager>()._pause = !ServiceLocator.Instance.GetService<GameManager>()._pause;
+        ServiceLocator.Instance.GetService<ServerUtility>().PauseSession(ServiceLocator.Instance.GetService<GameManager>()._pause);
+        if (ServiceLocator.Instance.GetService<GameManager>()._pause)
+        {
+            _pauseButton.gameObject.GetComponent<Image>().sprite = _playSprite;
+        }
+        else
+        {
+            _pauseButton.gameObject.GetComponent<Image>().sprite = _pauseSprite;
+        }
     }
     #endregion
     public void InstantiateStudentsAddStudent()
