@@ -24,11 +24,13 @@ public class TabletUI : UI
     private bool _continuecallingStudent;
     public Animator _astrounautAnimator;
     public Animator _rocketAnimator;
+    public Animator _doorsClosed;
     public AudioSource _audioSource;
 
     [Header("Student selection")]
     public Text _studentName;
     public Text _teamColorText;
+    public GameObject _panelInfo;
     //public Text _gameName;
     //public Text _gameInfo;
 
@@ -95,7 +97,9 @@ public class TabletUI : UI
             yield return AstronautAnimation();
         }     
         _rocketAnimator.Play("NaveDespegue");
-        yield return new WaitForSeconds(3.0f);
+        _doorsClosed.gameObject.SetActive(true);
+        _doorsClosed.Play("PuertasTransicionCerrar");
+        yield return new WaitForSeconds(2.5f);
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
     IEnumerator AstronautAnimation()
@@ -116,6 +120,7 @@ public class TabletUI : UI
     }
     void SelectStudentGame()
     {
+        ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = -1;
         ServiceLocator.Instance.GetService<GameManager>().SelectStudentAndGame();
         ServiceLocator.Instance.GetService<NetworkManager>().SendStudentGame();
     }
@@ -129,12 +134,13 @@ public class TabletUI : UI
     public void ShowCommonScenario()
     {
         OpenNextWindow();
+        //_panelInfo.SetActive(false);
+        _doorsClosed.Play("PuertasTransicionAbrir"); //No funciona bien
         StartCoroutine(ShowGameSelected());
     }
     IEnumerator ShowGameSelected()
     {
-        //Esperar hasta recibir la dificultad del servidor
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
         _blackTransition.SetActive(true);
     }
 

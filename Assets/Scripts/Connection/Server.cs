@@ -37,8 +37,8 @@ public class Server : WebSocketBehavior
                 {
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = Sessions.Count-1; //Provisional
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
-                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
-                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = "";
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = "";
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
                     return;
                 }
@@ -62,8 +62,8 @@ public class Server : WebSocketBehavior
             {
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = -1;
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
-                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
-                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = "";
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = "";
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
             }
         }

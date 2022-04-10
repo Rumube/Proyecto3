@@ -30,6 +30,7 @@ namespace ServerPack
     public class ServerPackage
     {
         public string _toUser;
+        public string _fromUser;
         public ClientPackets _typePackageClient;
         public ServerPackets _typePackageServer;
         public struct TabletInfo
@@ -65,6 +66,11 @@ namespace ServerPack
             public bool _pause;
         }
         public PauseGame _pauseGame;
+        public struct GameDifficulty
+        {
+            public int _level;
+        }
+        public GameDifficulty _gameDifficulty;
         public struct Info
         {
             public int _idTablet;

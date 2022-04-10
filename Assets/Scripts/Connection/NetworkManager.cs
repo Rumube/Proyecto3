@@ -26,7 +26,7 @@ public class NetworkManager : MonoBehaviour
     public int _minigameSeconds;
 
     [Header("Minigame difficulty server")]
-    string _minigameData;
+    public int _minigameLevel = -1;
 
     void Update()
     {

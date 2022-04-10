@@ -157,7 +157,15 @@ public class ServerUtility : MonoBehaviour
         string packageJson = JsonConvert.SerializeObject(_serverPackage);
         _ws.Send(packageJson);
     }
-
+    public void MinigameDifficulty(string toUser, int level)
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
+        _serverPackage._toUser = toUser;
+        _serverPackage._gameDifficulty._level = level;
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        _ws.Send(packageJson);
+    }
     public void FinishSession()
     {
         _serverPackage = new ServerPackage();

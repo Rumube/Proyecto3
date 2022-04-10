@@ -58,7 +58,10 @@ public class Client
                 ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
                 break;
             case ServerPackets.GameDifficulty:
-                ClientHandle.SpecificGameDifficulty(_allPackages[0]);
+                if (_allPackages[0]._toUser == _id)
+                {
+                    ClientHandle.SpecificGameDifficulty(_allPackages[0]);
+                }
                 break;
             case ServerPackets.UpdateTeamPoints:
 
@@ -76,10 +79,6 @@ public class Client
         _allPackages.Remove(_allPackages[0]);
     }
 
-    public void Hola()
-    {
-        _ws.Send("Hola");
-    }
     #region Client sender
     public void EndCallingStudents()
     {
@@ -94,6 +93,7 @@ public class Client
     {
         ClientPackage package = new ClientPackage();
         package._typePackageClient = ClientPackets.selectedStudentGame;
+        package._fromUser = _id;
         package._selectStudentGame._studentName = studentName;
         package._selectStudentGame._gameName = gameName;
         string packageJson = JsonConvert.SerializeObject(package);

@@ -70,11 +70,16 @@ public class UIManager : MonoBehaviour
         print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
     }
 
-    /// <summary>Just start the timer when the configuration is done</summary>
+    /// <summary>Just start the timer when the configuration is done and show the number of tablets that are connected</summary>
     public void StartGameSession()
     {
         ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.playing;
         StartCoroutine(StartCountdown());
+        for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
+        {
+            GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<MobileUI>()._tabletButtonPrefabStadistics.gameObject, ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.gameObject.transform);
+            newButton.GetComponentInChildren<TabletButton>()._textButton.text = (i+1).ToString();
+        }      
     }
     #endregion
 

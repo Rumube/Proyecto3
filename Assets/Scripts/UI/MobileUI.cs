@@ -57,6 +57,8 @@ public class MobileUI : UI
     public Button _continueGameTimer;
 
     [Header("Student stadistics")]
+    public GameObject _tabletsPanelStadistics;
+    public Button _tabletButtonPrefabStadistics;
     public GameObject _studentGamePanel;
     public Text _studentNameText;
     public Text _gameNameText;
@@ -482,13 +484,20 @@ public class MobileUI : UI
     {
         _countdown.text = ServiceLocator.Instance.GetService<UIManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<UIManager>()._timeSessionSeconds;
     }
+    public void QuitHighlightTabletsStadistics()
+    {
+        for (int i = 0; i < _tabletsPanelStadistics.transform.childCount; ++i)
+        {
+            _tabletsPanelStadistics.transform.GetChild(i).GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);
+        }
+    }
     /// <summary>Open the panel that shows who is playing in which game</summary>
     /// <param name="studentName">student's name that is currently playing</param>
     /// <param name="gameName">game's name that played by the student</param>
-    public void OpenInfoTabletStudentGamePanel(string studentName, string gameName)
+    public void OpenInfoTabletStudentGamePanel(int index)
     {
-        _studentNameText.text = studentName;
-        _gameNameText.text = gameName;
+        _studentNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index-1]._currentStudent;
+        _gameNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index-1]._currentGame;
         _studentGamePanel.SetActive(true);
     }
 
