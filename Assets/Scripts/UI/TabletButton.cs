@@ -23,5 +23,10 @@ public class TabletButton : MonoBehaviour
         _highlighted.gameObject.SetActive(true);
         ServiceLocator.Instance.GetService<MobileUI>().OpenInfoTabletStudentGamePanel(int.Parse(_textButton.text));
     }
-
+    public void SelectAllTabletsStadistics()
+    {
+        ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightTabletsStadistics();
+        _highlighted.gameObject.SetActive(true);
+        ServiceLocator.Instance.GetService<MobileUI>().CloseInfoTabletStudentGamePanel();
+    }
 }

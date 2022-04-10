@@ -59,6 +59,7 @@ public class MobileUI : UI
     [Header("Student stadistics")]
     public GameObject _tabletsPanelStadistics;
     public Button _tabletButtonPrefabStadistics;
+    public Button _allTabletsButtonStadistics;
     public GameObject _studentGamePanel;
     public Text _studentNameText;
     public Text _gameNameText;
@@ -486,6 +487,7 @@ public class MobileUI : UI
     }
     public void QuitHighlightTabletsStadistics()
     {
+        _allTabletsButtonStadistics.GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);
         for (int i = 0; i < _tabletsPanelStadistics.transform.childCount; ++i)
         {
             _tabletsPanelStadistics.transform.GetChild(i).GetComponentInChildren<TabletButton>()._highlighted.gameObject.SetActive(false);

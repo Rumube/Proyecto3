@@ -30,13 +30,13 @@ public class TabletUI : UI
     [Header("Student selection")]
     public Text _studentName;
     public Text _teamColorText;
-    public GameObject _panelInfo;
+    public GameObject _panelInfo;   
     //public Text _gameName;
     //public Text _gameInfo;
 
     [Header("Game selection")]
     public GameObject _blackTransition;
-
+    public Animator _doorsOpen;
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +99,7 @@ public class TabletUI : UI
         _rocketAnimator.Play("NaveDespegue");
         _doorsClosed.gameObject.SetActive(true);
         _doorsClosed.Play("PuertasTransicionCerrar");
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4.0f);
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
     IEnumerator AstronautAnimation()
@@ -135,13 +135,29 @@ public class TabletUI : UI
     {
         OpenNextWindow();
         //_panelInfo.SetActive(false);
-        _doorsClosed.Play("PuertasTransicionAbrir"); //No funciona bien
+        _doorsOpen.Play("PuertasTransicionAbrir"); //No funciona bien
         StartCoroutine(ShowGameSelected());
     }
     IEnumerator ShowGameSelected()
     {
-        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
+        //yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1); // esperar a que funcione bien la bbdd
+        yield return new WaitForSeconds(3.0f);
         _blackTransition.SetActive(true);
+        //No funciona bien porque a veces aunque toque un juego enfoca a otro. La transicion va muy rapido y no te enteras de que enfoca
+        switch (ServiceLocator.Instance.GetService<GameManager>()._currentstudentName)
+        {
+            case "CabinGeometry":
+                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
+                break;
+            case "TelescopeGeometry":
+                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
+                break;
+            case "PanelButtonAssociation":
+                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
+                break;
+
+        }
+        yield return null;
     }
 
 }
