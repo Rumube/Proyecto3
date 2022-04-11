@@ -39,6 +39,7 @@ public class ClientHandle
 
     public static void TurnOff()
     {
-        QuitGame();
+        Debug.Log("Apagando");
+        ServiceLocator.Instance.GetService<TabletUI>().QuitGame();
     }
 }
