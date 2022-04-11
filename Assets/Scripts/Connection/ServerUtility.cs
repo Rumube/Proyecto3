@@ -182,5 +182,13 @@ public class ServerUtility : MonoBehaviour
         string packageJson = JsonConvert.SerializeObject(_serverPackage);
         _ws.Send(packageJson);
     }
+
+    public void TurnOff()
+    {
+        _serverPackage = new ServerPackage();
+        _serverPackage._typePackageServer = ServerPackets.Disconnect;
+        string packageJson = JsonConvert.SerializeObject(_serverPackage);
+        _ws.Send(packageJson);
+    }
     #endregion
 }

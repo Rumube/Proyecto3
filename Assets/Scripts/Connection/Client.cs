@@ -73,7 +73,7 @@ public class Client
                 ClientHandle.QuitGame();
                 break;
             case ServerPackets.Disconnect:
-
+                ClientHandle.TurnOff();
                 break;
         }
         _allPackages.Remove(_allPackages[0]);

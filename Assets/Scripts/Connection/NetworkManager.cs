@@ -35,7 +35,7 @@ public class NetworkManager : MonoBehaviour
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-            _idText.text = ((TabletUI.TEAMCOLOR)Client._tablet._id).ToString();
+            //_idText.text = ((TabletUI.TEAMCOLOR)Client._tablet._id).ToString();
         }
 
         //if (Server._allPackages != null && Server._allPackages.Count > 0)
@@ -139,7 +139,18 @@ public class NetworkManager : MonoBehaviour
         }
 
     }
-
+    public bool CheckIfTabletsHasStudents()
+    {
+        bool atLeastOneStudent = true;
+        foreach (Tablet tablet in _studentsToTablets)
+        {
+            if (tablet._students.Count == 0)
+            {
+                atLeastOneStudent = false;
+            }
+        }
+        return atLeastOneStudent;
+    }
     public void AddingStudentsToTablets()
     {
         // EDebug.Log(server.Context);

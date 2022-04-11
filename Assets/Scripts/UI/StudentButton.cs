@@ -97,6 +97,7 @@ public class StudentButton : MonoBehaviour
         if (_addingToTablet && (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet || _selectedTablet == -1))
         {
             ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, _add);
+            ServiceLocator.Instance.GetService<MobileUI>().ContinueButtonAddStudent(ServiceLocator.Instance.GetService<NetworkManager>().CheckIfTabletsHasStudents());
             if (_add)
             {
                 _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;

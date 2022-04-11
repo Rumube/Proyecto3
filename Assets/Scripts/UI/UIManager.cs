@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
 
     [Header("TabletWindows")]
     public GameObject _initialScreenTablet;
+    public GameObject _creditsTablet;
     public GameObject _connection;
     public GameObject _studentSelection;
     public GameObject _gameSelection;

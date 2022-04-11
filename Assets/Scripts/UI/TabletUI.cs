@@ -4,20 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using Crosstales.RTVoice;
 public class TabletUI : UI
-{
+{   
     public enum TEAMCOLOR
     {
-        AMARILLO = 1,
-        ROJO = 2,
-        AZUL = 3,
-        VERDE = 4
+        ROSA = 1,
+        AMARILLO = 2,
+        NARANJA = 3,
+        AZUL = 4,
+        MORADO = 5,
+        VERDE = 6
     }
+    [Header("Color team")]
     public TEAMCOLOR _teamColor;
+    public Sprite[] _rocketColors = new Sprite[6];
+
+    [Header("Initial screen")]
     public InputField _ipServer;
     public InputField _portServer;
 
     [Header("Connection")]
     public Text _studentsText;
+    public Text _idText;
     public Text _currentStudentName;
     public Button _continueCallingButton;
     private bool _callingStudents;
@@ -26,6 +33,8 @@ public class TabletUI : UI
     public Animator _rocketAnimator;
     public Animator _doorsClosed;
     public AudioSource _audioSource;
+    public Text _toTheRocket;
+    public Image _rocket;
 
     [Header("Student selection")]
     public Text _studentName;
@@ -51,6 +60,8 @@ public class TabletUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._connection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._studentSelection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameSelection);
+        //Non root windows
+        ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(false);
 
         //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
@@ -84,8 +95,16 @@ public class TabletUI : UI
             StartCoroutine(CallingStudents());
         }
     }
+
+    public void AssingTeamColor()
+    {
+        _idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
+        _rocket.sprite = _rocketColors[Client._tablet._id - 1];
+    }
+
     public IEnumerator CallingStudents()
     {
+        _toTheRocket.gameObject.SetActive(true);
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
             _currentStudentName.text = Client._tablet._students[i]._name;

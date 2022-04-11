@@ -46,6 +46,7 @@ public class MobileUI : UI
     public GameObject _tabletButton;
     public Dictionary<GameObject, Tablet> _tabletButtonAssociation = new Dictionary<GameObject, Tablet>();
     public Text _numMininautas;
+    public Button _continueButtonAddStudent;
 
     [Header("Game Timer")]
     public InputField _inputSessionMinutes;
@@ -124,7 +125,7 @@ public class MobileUI : UI
                 if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == true)
                 {
                     StudentButtonDisableInteractuable();
-                }else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == false)
+                } else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == false)
                 {
                     StudentButtonAbleInteractuable();
                 }
@@ -208,7 +209,7 @@ public class MobileUI : UI
     }
     /// <summary>Open/close the popup add class</summary>
     public void PopupAddClass()
-    {      
+    {
         _introducedNameClass.text = "";
         ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.activeSelf);
     }
@@ -362,7 +363,7 @@ public class MobileUI : UI
         if (_continueGameConnection.interactable)
         {
             _continueGameConnection.interactable = false;
-        }        
+        }
     }
     #endregion
     #region AddStudent
@@ -376,7 +377,7 @@ public class MobileUI : UI
 
         for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
         {
-            GameObject newButton = Instantiate(_tabletButton,_tabletsPanel.transform);
+            GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
             newButton.GetComponentInChildren<Text>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i)._id.ToString();
             _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
             ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
@@ -446,6 +447,10 @@ public class MobileUI : UI
             _studentsPanel.transform.GetChild(i).GetComponentInChildren<Button>().interactable = true;
         }
     }
+    public void ContinueButtonAddStudent(bool interactuable)
+    {
+        _continueButtonAddStudent.interactable = interactuable;
+    }
     #endregion
     #region GameTime
     /// <summary>Get the values for the timers if it's not their first time playing. Acts like placeholders</summary>
@@ -498,8 +503,8 @@ public class MobileUI : UI
     /// <param name="gameName">game's name that played by the student</param>
     public void OpenInfoTabletStudentGamePanel(int index)
     {
-        _studentNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index-1]._currentStudent;
-        _gameNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index-1]._currentGame;
+        _studentNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index - 1]._currentStudent;
+        _gameNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index - 1]._currentGame;
         _studentGamePanel.SetActive(true);
     }
 
@@ -529,8 +534,11 @@ public class MobileUI : UI
         }
     }
     #endregion
-    public void InstantiateStudentsAddStudent()
+    #region FinalScore
+    public void TurnOffAll()
     {
-
+        ServiceLocator.Instance.GetService<ServerUtility>().TurnOff();
+        QuitGame();
     }
+    #endregion
 }
