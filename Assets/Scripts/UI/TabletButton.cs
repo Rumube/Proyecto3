@@ -17,12 +17,15 @@ public class TabletButton : MonoBehaviour
         ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
     }
 
+    /// <summary>Select the tablet with highlight and open the game info panel on stadistics</summary>
     public void SelectTabletStadistics()
     {
         ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightTabletsStadistics();
         _highlighted.gameObject.SetActive(true);
         ServiceLocator.Instance.GetService<MobileUI>().OpenInfoTabletStudentGamePanel(int.Parse(_textButton.text));
     }
+
+    /// <summary>Select the tablet with highlight and close the game info panel on stadistics</summary>
     public void SelectAllTabletsStadistics()
     {
         ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightTabletsStadistics();

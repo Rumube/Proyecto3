@@ -15,13 +15,14 @@ public class StudentButton : MonoBehaviour
 
     [Header("Add student")]   
     public Student _student;
+    public Sprite _backgroundButton;
+    public Sprite _backgroundButtonSelected;
+    public Image _highlighted;
     bool _addingToTablet = false;
     bool _add = true;
     int _selectedTablet = -1;
-    public Image _highlighted;
     bool _selected = false;
-    public Sprite _backgroundButton;
-    public Sprite _backgroundButtonSelected;
+    
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -112,9 +113,7 @@ public class StudentButton : MonoBehaviour
             }
             ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
             _add = !_add;
-        }
-        
-       
+        }  
     }
 
 }

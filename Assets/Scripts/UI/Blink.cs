@@ -10,10 +10,10 @@ public class Blink : MonoBehaviour
     void Start()
     {
         _text = GetComponent<Text>();
-        StartCoroutine(Blinking());
-       
+        StartCoroutine(Blinking());     
     }
 
+    /// <summary>Hide/unhide the text smoothly</summary>
     IEnumerator Blinking()
     {
         while (gameObject.activeInHierarchy)
