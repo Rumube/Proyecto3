@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour
 {
-
     [Header("Game Connection")]
     public string _ip;
     public string _port;
@@ -13,9 +12,8 @@ public class NetworkManager : MonoBehaviour
 
     Client client = new Client();
     public Text _idText;
-    //Testing 
-    public InputField _IPTest;
-    public InputField _portTest;
+    public InputField _IPText;
+    public InputField _portText;
 
     [Header("Students to tablets")]
     public List<Tablet> _studentsToTablets = new List<Tablet>();
@@ -28,34 +26,21 @@ public class NetworkManager : MonoBehaviour
     [Header("Minigame difficulty server")]
     public int _minigameLevel = -1;
 
+    /// <summary>Forces an update when the client receives a package</summary>
     void Update()
     {
-
-        //Not finished
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-            //_idText.text = ((TabletUI.TEAMCOLOR)Client._tablet._id).ToString();
-        }
-
-        //if (Server._allPackages != null && Server._allPackages.Count > 0)
-        //{
-        //    server.DoUpdate();
-        //}
-
-            //server.DoUpdate();
-        
+        }      
     }
 
-    /// <summary>Starts a new server and provide the ip and port's device</summary>
+    /// <summary>Starts a new server and saves the ip and port</summary>
     public void StartServer()
     {
         string[] connectionData = new string[2];
 
-        //server = new Server();
-        EDebug.Log(1 + " " + server.State);
         connectionData = ServiceLocator.Instance.GetService<ServerUtility>().createServer();
-        EDebug.Log(3 + " " + server.State);
 
         _ip = connectionData[0];
         _port = connectionData[1];
@@ -92,10 +77,8 @@ public class NetworkManager : MonoBehaviour
     /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
     public void StartClient()
     {
-        //client = new Client();
-        client.CreateClient(_IPTest.text, _portTest.text);
+        client.CreateClient(_IPText.text, _portText.text);
     }
-
 
     /// <summary>Desactivate connections when the app is closed</summary>
     private void OnDisable()
@@ -139,6 +122,7 @@ public class NetworkManager : MonoBehaviour
         }
 
     }
+    /// <summary>Check if every tablet has at least one student added</summary>
     public bool CheckIfTabletsHasStudents()
     {
         bool atLeastOneStudent = true;
@@ -151,23 +135,20 @@ public class NetworkManager : MonoBehaviour
         }
         return atLeastOneStudent;
     }
-    public void AddingStudentsToTablets()
-    {
-        // EDebug.Log(server.Context);
-        //server.AddingStudents();
-        // EDebug.Log(server.Context);
-        //Server._sendAddStudents = true;
-    }
+    #endregion
 
+    #region CallingStudents
+
+    /// <summary>It's called when every student has been called to the rocket</summary>
     public void SendEndCalling()
     {
         client.EndCallingStudents();
     }
-
+    /// <summary>It's called when a student and game has been selected to play</summary>
     public void SendStudentGame()
     {
         client.StudentGameSelection(ServiceLocator.Instance.GetService<GameManager>()._currentstudentName, ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
     }
-
     #endregion
+
 }

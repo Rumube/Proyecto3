@@ -71,35 +71,9 @@ namespace ServerPack
             public int _level;
         }
         public GameDifficulty _gameDifficulty;
-        public struct Info
-        {
-            public int _idTablet;
-            public int _idStudent;
-            public string _nameStudent;
-        }
-        public Info _info;
-
-        public struct Data
-        {
-            public int _idPackage;
-            public int _idSender;
-            public string _jsonData;
-        }
-        public Data _data;
+       
         /// <summary>Creates a new empty packet (without an ID).</summary>
         public ServerPackage()
-        {
-
-        }
-        /// <summary>Creates a new packet with a given ID. Used for sending.</summary>
-        /// <param name="_id">The packet ID.</param>
-        public ServerPackage(int idTypePackage)
-        {
-
-        }
-        /// <summary>Creates a packet from which data can be read. Used for receiving.</summary>
-        /// <param name="_data">The bytes to add to the packet.</param>
-        public ServerPackage(string data)
         {
 
         }

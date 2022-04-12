@@ -6,38 +6,43 @@ using Newtonsoft.Json;
 using ClientPack;
 public class Client
 {
-    public static Tablet _tablet;
     public static string _id;
+    public static Tablet _tablet;
+    
     public static WebSocket _ws;
-    ClientPackage _clientPackage;
     public static List<ClientPackage> _allPackages;
 
+    /// <summary>Create a new client with web socket, connect to a specific server and initialize the list of packages</summary>
+    /// <param name="ip">Server IP</param>
+    /// <param name="port">Server port</param>
+    public void CreateClient(string ip, string port)
+    {
+        _ws = new WebSocket("ws://" + ip + ":" + port);
+        _ws.OnMessage += Ws_OnMessage;
+        _ws.Connect();
+
+        EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+
+        _allPackages = new List<ClientPackage>();
+
+        InitializeData();
+    }
+
+    /// <summary>Initialize a tablet and assing -1 for tablet id</summary>
     public void InitializeData()
     {
-        _clientPackage = new ClientPackage();
-
         _tablet = new Tablet();
         _tablet._id = -1;
     }
 
-    public void CreateClient(string ip, string port)
-    {
-        string path = "ws://" + ip + ":" + port;
-        _ws = new WebSocket(path);
-        _ws.OnMessage += Ws_OnMessage;   // evento para recibir los mensajer
-        _ws.Connect();
-        EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
-        _allPackages = new List<ClientPackage>();
-
-        InitializeData();
-
-    }
+    /// <summary>Receives a package from server</summary>
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
         ClientPackage _clientPackage = JsonConvert.DeserializeObject<ClientPackage>(e.Data);
         _allPackages.Add(_clientPackage);
     }
 
+    /// <summary>It's called when the list of packages has at least one package. Process it deppending on the type of package and finally its removed</summary>
     public static void DoUpdate()
     {
         switch (_allPackages[0]._typePackageServer)
@@ -52,18 +57,15 @@ public class Client
                 }
                 break;
             case ServerPackets.StartGame:
-                ClientHandle.StartGame(_allPackages[0]);
-                ServiceLocator.Instance.GetService<GameManager>().RandomizeStudentsList();
-                ServiceLocator.Instance.GetService<TabletUI>().OpenNextWindow();
-                ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
+                ClientHandle.StartGame(_allPackages[0]); 
                 break;
-            case ServerPackets.GameDifficulty:
+            case ServerPackets.GameDifficulty: //TO FINISH
                 if (_allPackages[0]._toUser == _id)
                 {
                     ClientHandle.SpecificGameDifficulty(_allPackages[0]);
                 }
                 break;
-            case ServerPackets.UpdateTeamPoints:
+            case ServerPackets.UpdateTeamPoints: //TODO
 
                 break;
             case ServerPackets.PauseGame:
@@ -80,26 +82,32 @@ public class Client
     }
 
     #region Client sender
+    /// <summary>Send a package when all students has been called in connection screen</summary>
     public void EndCallingStudents()
     {
         ClientPackage package = new ClientPackage();
+
         package._typePackageClient = ClientPackets.studentsEndCall;
         package._callingDone._isDone = true;
-        string packageJson = JsonConvert.SerializeObject(package);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(package));
     }
 
+    /// <summary>Send a package when a student and game has been selected</summary>
     public void StudentGameSelection(string studentName, string gameName)
     {
         ClientPackage package = new ClientPackage();
+
         package._typePackageClient = ClientPackets.selectedStudentGame;
         package._fromUser = _id;
         package._selectStudentGame._studentName = studentName;
         package._selectStudentGame._gameName = gameName;
-        string packageJson = JsonConvert.SerializeObject(package);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(package));
     }
     #endregion
+
+    /// <summary>Close the web socket</summary>
     public static void OnDisable()
     {
         if (_ws != null)

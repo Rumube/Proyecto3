@@ -9,28 +9,26 @@ using WebSocketSharp.Server;
 using Newtonsoft.Json;
 public class ServerUtility : MonoBehaviour
 {
+    [Header("Server utilities")]
     const int MAX_TABLETS = 10;
-
     public  Tablet[] _tablets;
-    public  int _connectedTablets;
-    public  bool _updateConnectedTablets;
+
     public  List<string> _ids = new List<string>();
-
-
     ServerPackage _serverPackage;
     public  List<ServerPackage> _allPackages;
 
     public static WebSocketServer _server;
-
     public static WebSocket _ws;
 
-    //Unity actions
+    [Header("Actions")]
+    public int _connectedTablets;
+    public bool _updateConnectedTablets;
+
     public bool _sendAddStudents;
-
     public bool fistTime = true;
-
     public int _numberTabletsEndCall = 0;
-    //  servidor websocket
+
+    /// <summary>Creates a websocket server</summary>
     public string[] createServer()
     {
         //Initialize data
@@ -61,6 +59,7 @@ public class ServerUtility : MonoBehaviour
         return connectionData;
     }
 
+    /// <summary>Initialize the tablets with default info</summary>
     public void InitializeData()
     {
         _tablets = new Tablet[MAX_TABLETS];
@@ -72,7 +71,9 @@ public class ServerUtility : MonoBehaviour
             _tablets[i]._id = -1;
         }
     }
-        public string GetLocalIPAddress()
+
+    /// <summary>Get the device's IP</summary>
+    private string GetLocalIPAddress()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
         foreach (var ip in host.AddressList)
@@ -84,13 +85,15 @@ public class ServerUtility : MonoBehaviour
         }
         throw new System.Exception("No network adapters with an IPv4 address in the system!");
     }
+
+    /// <summary>Receives a message and add it to the packages list</summary>
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log("OnMessagePruebaCliente: " + e.Data);
         ServerPackage _serverHandlePackage = JsonConvert.DeserializeObject<ServerPackage>(e.Data);
         _allPackages.Add(_serverHandlePackage);
     }
 
+    /// <summary>Close connections when the app is closed</summary>
     private void OnDisable()
     {
         if (_server != null)
@@ -98,6 +101,8 @@ public class ServerUtility : MonoBehaviour
         if (_ws != null)
             _ws.Close();
     }
+
+    /// <summary>Close connections when the teacher goes back from the connection screen</summary>
     public void ResetConnections()
     {
         if (_server != null)
@@ -106,6 +111,7 @@ public class ServerUtility : MonoBehaviour
             _ws.Close();
     }
 
+    /// <summary>Process the packages when the list is not empty and after that is removed.</summary>
     private void Update()
     {
         if (_allPackages != null &&_allPackages.Count > 0)
@@ -130,10 +136,12 @@ public class ServerUtility : MonoBehaviour
             _allPackages.Remove(_allPackages[0]);
         }
     }
-# region ServerSender
+    #region ServerSender
+    /// <summary>Send the student list its specific tablet</summary>
     public void AddingStudents()
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.StudentSelection;
 
         for (int i = 0; i < _ids.Count; ++i)
@@ -141,54 +149,64 @@ public class ServerUtility : MonoBehaviour
             Tablet specificTablet = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i];
             _serverPackage._toUser = _ids[i];
             _serverPackage._studentsInfo._studentsToTablets = specificTablet;
-            string packageJson = JsonConvert.SerializeObject(_serverPackage);
-            //Sessions.SendTo(packageJson, _ids[i]);
-            EDebug.Log("Enviando ninos");
-            _ws.Send(packageJson);
-            EDebug.Log("Enviados");
+
+            _ws.Send(JsonConvert.SerializeObject(_serverPackage));
         }
     }
+
+    /// <summary>Send the minigame time</summary>
     public void MinigameTime()
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.StartGame;
         _serverPackage._minigameTime._minutes = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesMinutes;
         _serverPackage._minigameTime._seconds = ServiceLocator.Instance.GetService<UIManager>()._timeMinigamesSeconds;
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
+
+    /// <summary>Send the specific minigame difficulty</summary>
     public void MinigameDifficulty(string toUser, int level)
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
         _serverPackage._gameDifficulty._level = level;
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
+
+    /// <summary>Finish the minigames</summary>
     public void FinishSession()
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.Quit;
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
 
+    /// <summary>Pause/unpause the session</summary>
     public void PauseSession(bool pause)
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.PauseGame;
         _serverPackage._pauseGame._pause = pause;
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
 
+    /// <summary>Send the action of disconnect the device</summary>
     public void TurnOff()
     {
         _serverPackage = new ServerPackage();
+
         _serverPackage._typePackageServer = ServerPackets.Disconnect;
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        _ws.Send(packageJson);
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
     #endregion
 }
