@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StudentButton : MonoBehaviour
 {
     [Header("Popup delete student")]
-    public Text _textButton;
+    public TextMeshProUGUI _textButton;
     [HideInInspector]
     public bool _deleting = false;
     [HideInInspector]

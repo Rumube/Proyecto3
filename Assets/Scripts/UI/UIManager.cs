@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,14 +32,14 @@ public class UIManager : MonoBehaviour
     public string _classNamedb;
 
     [Header("DatabaseUtilitiesClass")]
-    public Text _classNameDeleting;
+    public TextMeshProUGUI _classNameDeleting;
     public GameObject _classPanel;
     public GameObject _classButton;
 
     [Header("DatabaseUtilitiesStudent")]
-    public Text _studentNameDeleting;
+    public TextMeshProUGUI _studentNameDeleting;
     public GameObject _studentPanel;
-    public Text _classNameStudents;
+    public TextMeshProUGUI _classNameStudents;
 
     [Header("Game Configuration")]
     [HideInInspector]

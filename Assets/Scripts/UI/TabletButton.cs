@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TabletButton : MonoBehaviour
 {
-    public Text _textButton;
+    public TextMeshProUGUI _textButton;
     public Image _highlighted;
 
     /// <summary>Select the tablet with highlight and save the text number on UIManager</summary>
