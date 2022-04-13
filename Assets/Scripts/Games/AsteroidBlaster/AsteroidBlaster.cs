@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Crosstales.RTVoice;
+using UnityEngine.UI;
 
 public class AsteroidBlaster : MonoBehaviour
 {
@@ -26,7 +27,6 @@ public class AsteroidBlaster : MonoBehaviour
 
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -136,6 +136,26 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
+    }
+
+    /// <summary>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// </summary>
+    /// <returns>The message</returns>
+    private string GenerateTextMessage()
+    {
+        string msg = "Destruye los asteroides con forma de ";
+        Geometry newGeometry = new Geometry();
+        for (int i = 0; i < _targetList.Count; i++)
+        {
+            if (i == _targetList.Count - 1 && _targetList.Count != 1)
+                msg += "y de " + newGeometry.getGeometryString(_targetList[i]);
+            else
+                msg += newGeometry.getGeometryString(_targetList[i]) + " ";
+        }
+
+        return msg;
     }
 
     /// <summary>
@@ -167,11 +187,15 @@ public class AsteroidBlaster : MonoBehaviour
     {
         _asteroids.Remove(asteroid);
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
+        {
+            //"es-es-x-eea-local"
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
+        }
         else
         {
             _mistakes++;
-            //TODO: Active error
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
         {

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class AsteroidBlasterInput : MonoBehaviour
 {
-    public Text _prueba;
     public GameObject _gunGo;
     public Image _gunTarget;
     Vector2 _lastShotPostion;
@@ -100,7 +99,6 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="hit">Hit values, position, collider...</param>
     void AsteroidHit(RaycastHit2D hit)
     {
-        _prueba.text = "FUNCIONA! :" + hit.collider.gameObject.name;
         if (_canVibrate && hit.collider.tag == "Asteroid")
         {
             hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
