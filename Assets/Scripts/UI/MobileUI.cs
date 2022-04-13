@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
+
 public class MobileUI : UI
 {
+    [Header("Initial screen")]
+    public VideoPlayer _video;
+
     [Header("Main Menu")]
     public Button _continueMainMenu;
 
@@ -98,8 +103,14 @@ public class MobileUI : UI
 
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
-    }
 
+        _video.loopPointReached += InitialAnimEndReached;
+    }
+    void InitialAnimEndReached(VideoPlayer vp)
+    {
+        //Colocar la anim de fade
+    }
+  
     private void Update()
     {
         //Control the instructions deppending on the game state
