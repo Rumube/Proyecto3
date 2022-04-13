@@ -8,6 +8,7 @@ public class MobileUI : UI
 {
     [Header("Initial screen")]
     public VideoPlayer _video;
+    public Animator[] _initialButtonAnims = new Animator[3];
 
     [Header("Main Menu")]
     public Button _continueMainMenu;
@@ -108,7 +109,10 @@ public class MobileUI : UI
     }
     void InitialAnimEndReached(VideoPlayer vp)
     {
-        //Colocar la anim de fade
+        for (int i = 0; i < _initialButtonAnims.Length; ++i)
+        {
+            _initialButtonAnims[i].Play("FadeIn");
+        }       
     }
   
     private void Update()
