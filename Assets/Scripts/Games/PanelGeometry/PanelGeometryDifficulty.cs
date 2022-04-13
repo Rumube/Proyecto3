@@ -19,8 +19,6 @@ public class PanelGeometryDifficulty : MonoBehaviour
         public List<GameObject> possibleGeometry;
         [Tooltip("Possible geometry that can be target at this level")]
         public List<GameObject> targetGeometry;
-        [Tooltip("Total number of targets at this level")]
-        public int numTargets;
         [Tooltip("Total number of different geometry targets at this level")]
         public int numGeometryTargets;
 
