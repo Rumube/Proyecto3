@@ -40,8 +40,6 @@ public class TabletUI : UI
     public Text _studentName;
     public Text _teamColorText;
     public GameObject _panelInfo;   
-    //public Text _gameName;
-    //public Text _gameInfo;
 
     [Header("Game selection")]
     public GameObject _blackTransition;
@@ -71,6 +69,7 @@ public class TabletUI : UI
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
     }
+
     /// <summary>
     /// Save the values places in the input in order to have direct access to the connection if
     /// server port and ip doesn't change
@@ -86,7 +85,10 @@ public class TabletUI : UI
             PlayerPrefs.SetString("PortServer", _portServer.text);
         }      
     }
-    // Update is called once per frame
+
+    /// <summary>
+    /// When the student's package is received, this starts the calling to the rocket
+    /// </summary>
     void Update()
     {
         if (Client._tablet != null && Client._tablet._students != null && Client._tablet._students.Count > 0 && !_callingStudents)
@@ -96,12 +98,18 @@ public class TabletUI : UI
         }
     }
 
+    /// <summary>
+    /// Assigns the color of the team and the rocket deppending on the tablet id
+    /// </summary>
     public void AssingTeamColor()
     {
         _idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
         _rocket.sprite = _rocketColors[Client._tablet._id - 1];
     }
 
+    /// <summary>
+    /// Student's call to the rocket. Once everyone has called, send a package to the server
+    /// </summary>
     public IEnumerator CallingStudents()
     {
         _toTheRocket.gameObject.SetActive(true);
@@ -121,42 +129,67 @@ public class TabletUI : UI
         yield return new WaitForSeconds(4.0f);
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
+
+    /// <summary>
+    /// Astronaut anim and write the student's name into the panel
+    /// </summary>
     IEnumerator AstronautAnimation()
     {
         _astrounautAnimator.Play("Astronaut");
         yield return new WaitForSeconds(8.0f);
         _studentsText.text += _currentStudentName.text + "\n";
     }
+
+    /// <summary>
+    /// Continue button enable
+    /// </summary>
     public void ButtonContinueCallingStudent()
     {
         _continuecallingStudent = true;
     }
 
+    /// <summary>
+    /// Select new student and game
+    /// </summary>
     public void NewStudentGame()
     {
         SelectStudentGame();
         ShowStudentSelectGame();
     }
+
+    /// <summary>
+    /// Select student and game and send it to the server
+    /// </summary>
     void SelectStudentGame()
     {
         ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = -1;
         ServiceLocator.Instance.GetService<GameManager>().SelectStudentAndGame();
         ServiceLocator.Instance.GetService<NetworkManager>().SendStudentGame();
     }
+
+    /// <summary>
+    /// Shows the info of who is going to play 
+    /// </summary>
     void ShowStudentSelectGame()
     {      
         _studentName.text = ServiceLocator.Instance.GetService<GameManager>()._currentstudentName;
         _teamColor = (TEAMCOLOR)(int)Client._tablet._id;
         _teamColorText.text = "EQUIPO " + _teamColor;
-        //_gameName.text = ServiceLocator.Instance.GetService<GameManager>()._currentgameName;
     }
+
+    /// <summary>
+    /// Shows the common scenario
+    /// </summary>
     public void ShowCommonScenario()
     {
         OpenNextWindow();
-        //_panelInfo.SetActive(false);
         _doorsOpen.Play("PuertasTransicionAbrir"); //No funciona bien
         StartCoroutine(ShowGameSelected());
     }
+
+    /// <summary>
+    /// Wait until receives the difficulty from the server and shows the transition to the minigame
+    /// </summary>
     IEnumerator ShowGameSelected()
     {
         //yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1); // esperar a que funcione bien la bbdd
