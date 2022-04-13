@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonCounter : MonoBehaviour
 {
+    [Header("Number of geometry target")]
     public int _nSquare;
     public int _nTriangle;
     public int _nCircle;
@@ -13,6 +14,7 @@ public class ButtonCounter : MonoBehaviour
     public int _nPentagon;
     public int _nHexagon;
 
+    [Header("Number of geometry pressed")]
     public int _squareCounter;
     public int _triangleCounter;
     public int _circleCounter;
@@ -21,20 +23,14 @@ public class ButtonCounter : MonoBehaviour
     public int _pentagonCounter;
     public int _hexagonCounter;
 
-    int _nButton;
     int _totalGeometry;
     int _goodGeometry;
     int _badGeometry;
     public Text _mission;
-    private bool readText;
-
+  
     public CreatePanel _createPanel;
     [SerializeField]
     private CalculatePuntuation _calculatePuntuation;
-    void Start()
-    {
-     
-    }
 
     // Update is called once per frame
     void Update()
@@ -77,29 +73,26 @@ public class ButtonCounter : MonoBehaviour
         CheckGeometry(_nHexagon, _hexagonCounter);
 
         _badGeometry = _totalGeometry - _goodGeometry;
-        //int porcentaje = _goodGeometry / _totalGeometry;
-        EDebug.Log(_goodGeometry+"/"+_totalGeometry);
         _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
+
         _goodGeometry = 0;
         _totalGeometry = 0;
         _nSquare=0;
-         _nTriangle = 0;
-         _nCircle = 0;
+        _nTriangle = 0;
+        _nCircle = 0;
         _nDiamond = 0;
         _nRectangle = 0;
-         _nPentagon = 0;
-         _nHexagon = 0;
-         _squareCounter = 0;
+        _nPentagon = 0;
+        _nHexagon = 0;
+        _squareCounter = 0;
         _triangleCounter = 0;
-         _circleCounter = 0;
+        _circleCounter = 0;
         _diamondCounter = 0;
         _rectangleCounter = 0;
         _pentagonCounter = 0;
         _hexagonCounter = 0;
 
-    _createPanel.Restart();
-      
-
+        _createPanel.Restart();
     }
     /// <summary>Check how much geometry is ok.</summary> 
     /// <param name="nGeometry">The quantity of a geometry</param> 
@@ -116,7 +109,7 @@ public class ButtonCounter : MonoBehaviour
         }
        
     }
-  
+    #region Button Counters
     public void CounterSquare(GameObject button)
     {
         _squareCounter=Counter(button, _squareCounter);
@@ -161,4 +154,5 @@ public class ButtonCounter : MonoBehaviour
         }
         return counter;
     }
+    #endregion
 }
