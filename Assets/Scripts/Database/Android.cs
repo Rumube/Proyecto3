@@ -91,7 +91,7 @@ public class Android : MonoBehaviour
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
          "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
-         "team integer, "+"matchInfo varchar(200),"+
+         "team integer, "+"level integer,"+
          "foreign key(idStudent) references Student(idStudent), "+
          "foreign key(idSession) references Session(idSession), "+
          "foreign key(idGame) references Game(idGame)); "
@@ -123,7 +123,7 @@ public class Android : MonoBehaviour
     }
     public void prueba()
     {
-        Debug.Log(GetDifficulty("La", "JGO1"));
+        Debug.Log(GetDifficulty("pepe", "JUEGO1"));
     }
     public void DeleteClassButton()
     {
