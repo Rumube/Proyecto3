@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Crosstales.RTVoice;
+using TMPro;
+
 public class TabletUI : UI
 {   
     public enum TEAMCOLOR
@@ -19,13 +21,13 @@ public class TabletUI : UI
     public Sprite[] _rocketColors = new Sprite[6];
 
     [Header("Initial screen")]
-    public InputField _ipServer;
-    public InputField _portServer;
+    public TMP_InputField _ipServer;
+    public TMP_InputField _portServer;
 
     [Header("Connection")]
-    public Text _studentsText;
-    public Text _idText;
-    public Text _currentStudentName;
+    public TextMeshProUGUI _studentsText;
+    public TextMeshProUGUI _idText;
+    public TextMeshProUGUI _currentStudentName;
     public Button _continueCallingButton;
     private bool _callingStudents;
     private bool _continuecallingStudent;
@@ -33,12 +35,12 @@ public class TabletUI : UI
     public Animator _rocketAnimator;
     public Animator _doorsClosed;
     public AudioSource _audioSource;
-    public Text _toTheRocket;
+    public TextMeshProUGUI _toTheRocket;
     public Image _rocket;
 
     [Header("Student selection")]
-    public Text _studentName;
-    public Text _teamColorText;
+    public TextMeshProUGUI _studentName;
+    public TextMeshProUGUI _teamColorText;
     public GameObject _panelInfo;   
 
     [Header("Game selection")]
@@ -192,11 +194,11 @@ public class TabletUI : UI
     /// </summary>
     IEnumerator ShowGameSelected()
     {
-        //yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1); // esperar a que funcione bien la bbdd
+        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
         yield return new WaitForSeconds(3.0f);
         _blackTransition.SetActive(true);
-        //No funciona bien porque a veces aunque toque un juego enfoca a otro. La transicion va muy rapido y no te enteras de que enfoca
-        switch (ServiceLocator.Instance.GetService<GameManager>()._currentstudentName)
+        //La transicion va muy rapido y no te enteras de que enfoca
+        switch (ServiceLocator.Instance.GetService<GameManager>()._currentgameName)
         {
             case "CabinGeometry":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");

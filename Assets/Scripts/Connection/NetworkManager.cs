@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +12,9 @@ public class NetworkManager : MonoBehaviour
     public static Server server = new Server();
 
     Client client = new Client();
-    public Text _idText;
-    public InputField _IPText;
-    public InputField _portText;
+    public TextMeshProUGUI _idText;
+    public TMP_InputField _IPText;
+    public TMP_InputField _portText;
 
     [Header("Students to tablets")]
     public List<Tablet> _studentsToTablets = new List<Tablet>();

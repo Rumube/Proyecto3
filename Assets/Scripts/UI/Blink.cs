@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Blink : MonoBehaviour
 {
-    Text _text;
+    TextMeshProUGUI _text;
     // Start is called before the first frame update
     void Start()
     {
-        _text = GetComponent<Text>();
+        _text = GetComponent<TextMeshProUGUI>();
         StartCoroutine(Blinking());     
     }
 

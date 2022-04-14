@@ -31,11 +31,11 @@ public class ClientHandle
         ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
     }
 
-    /// <summary> </summary>
+    /// <summary>Receives the specific difficulty for the given student/game </summary>
     /// <param name="package">The package that is received</param>
     public static void SpecificGameDifficulty(ClientPackage package)
     {
-        //TODO: saber que recibo y tratar la dificultad
+        ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = package._gameDifficulty._level;
     }
 
     /// <summary>Pause the session</summary>
