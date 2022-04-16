@@ -44,16 +44,24 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void PauseGame(ClientPackage package)
     {
-        ServiceLocator.Instance.GetService<GameManager>()._pause = package._pauseGame._pause;
-        EDebug.Log("Pausando? " + ServiceLocator.Instance.GetService<GameManager>()._pause);
+        if (package._pauseGame._pause)
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.pause;
+        }
+        else
+        {
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        }
+        EDebug.Log("Pausando? " + package._pauseGame._pause);
     }
 
     /// <summary>Quit minigames and show the final score</summary>
     /// <param name="package">The package that is received</param>
     public static void QuitGame()
     {
-        SceneManager.LoadScene("CristinaTest");
-        ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
+        ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = true;
+       SceneManager.LoadScene("CristinaTest");
+        //Poner que vaya a la ventana de puntuaciones finales
         EDebug.Log("Quitando el juego");
     }
 

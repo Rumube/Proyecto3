@@ -131,6 +131,7 @@ public class AsteroidBlaster : MonoBehaviour
             _firstGame = false;
         }
         _finishCreateAsteroids = true;
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().SetStartTime(_finishCreateAsteroids);
         _gameFinished = false;
         foreach (GameObject asteroid in _asteroids)
         {

@@ -61,6 +61,7 @@ public class TabletUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._connection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._studentSelection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameSelection);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScoreTablet);
         //Non root windows
         ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(false);
 
@@ -69,12 +70,18 @@ public class TabletUI : UI
         {
             _windowsTree[i].SetActive(false);
         }
-
+        //If a minigame is finished but not the session, it calls another student
         if (ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene)
         {
             _uiIndex = 2;
             NewStudentGame();
             ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = false;
+        }
+        //If the time session ends or the teacher decided it, the tablet opens the final score
+        if (ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet)
+        {
+            _uiIndex = 4;
+            ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = false;
         }
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);      
@@ -223,6 +230,5 @@ public class TabletUI : UI
         SceneManager.LoadScene("RubenTest");
         yield return null;
     }
-
 }
 

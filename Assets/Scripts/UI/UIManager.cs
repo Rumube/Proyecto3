@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     public GameObject _connection;
     public GameObject _studentSelection;
     public GameObject _gameSelection;
+    public GameObject _finalScoreTablet;
 
     [Header("DatabaseUtilities")]
     public string _classNamedb;

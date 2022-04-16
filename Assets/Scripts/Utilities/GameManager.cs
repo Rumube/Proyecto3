@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     int _studentCounter = 0;
     public bool _pause = false;
     public bool _returnToCommonScene = false;
+    public bool _endSessionTablet = false;
     public enum GAME_STATE_SERVER
     {
         init = 0,
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }       
     }
+
     void Start()
     {
         _gameStateServer = GAME_STATE_SERVER.init;
