@@ -507,8 +507,8 @@ GameObject:
   - component: {fileID: 923033817}
   - component: {fileID: 923033818}
   - component: {fileID: 923033819}
-  - component: {fileID: 923033820}
   - component: {fileID: 923033821}
+  - component: {fileID: 923033820}
   - component: {fileID: 923033823}
   - component: {fileID: 923033824}
   - component: {fileID: 923033825}
@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 923033830}
   - component: {fileID: 923033829}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: AsteroidManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -589,7 +589,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923033816}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
   m_Name: 
@@ -600,7 +600,7 @@ MonoBehaviour:
   _uiManager: {fileID: 0}
   _canvasGUI: {fileID: 0}
   _gameTimeConfiguration: {fileID: 923033818}
-  _gameManager: {fileID: 923033821}
+  _gameManager: {fileID: 0}
   _networkManager: {fileID: 0}
   _inputAndroid: {fileID: 923033824}
   _myServer: {fileID: 0}
@@ -615,14 +615,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 923033816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc20f87fadb5e6e4782318060bf0f381, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b49e4d52f769b4db8486a4758226cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigamesNames: []
-  _currentstudentName: 
-  _currentgameName: 
-  _gameStateServer: 0
-  _gameStateClient: 0
+  _canvasGUI: {fileID: 0}
+  _gameTimeConfiguration: {fileID: 923033818}
+  _inputAndroid: {fileID: 923033824}
+  _error: {fileID: 923033827}
+  _frogMessage: {fileID: 923033828}
 --- !u!120 &923033822
 LineRenderer:
   m_ObjectHideFlags: 0

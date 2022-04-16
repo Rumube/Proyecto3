@@ -27,6 +27,20 @@ public class NetworkManager : MonoBehaviour
     [Header("Minigame difficulty server")]
     public int _minigameLevel = -1;
 
+    public static NetworkManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
     /// <summary>Forces an update when the client receives a package</summary>
     void Update()
     {
@@ -82,10 +96,10 @@ public class NetworkManager : MonoBehaviour
     }
 
     /// <summary>Desactivate connections when the app is closed</summary>
-    private void OnDisable()
-    {
-        Client.OnDisable();
-    }
+    //private void OnDisable()
+    //{
+    //    Client.OnDisable();
+    //}
 
     /// <summary>Desactivate connections if she goes back before game connection</summary>
     public void ResetConnections()

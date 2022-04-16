@@ -4,6 +4,7 @@ using UnityEngine;
 using WebSocketSharp;
 using Newtonsoft.Json;
 using ClientPack;
+
 public class Client
 {
     public static string _id;

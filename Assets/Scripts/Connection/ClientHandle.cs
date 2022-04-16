@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ClientPack;
+using UnityEngine.SceneManagement;
+
 public class ClientHandle
 {
     /// <summary>Assign a specific id for this client and for the tablet that is transformed to a color</summary>
@@ -50,6 +52,8 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void QuitGame()
     {
+        SceneManager.LoadScene("CristinaTest");
+        ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
         EDebug.Log("Quitando el juego");
     }
 

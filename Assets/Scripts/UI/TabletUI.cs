@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Crosstales.RTVoice;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TabletUI : UI
 {   
@@ -68,8 +69,15 @@ public class TabletUI : UI
         {
             _windowsTree[i].SetActive(false);
         }
+
+        if (ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene)
+        {
+            _uiIndex = 2;
+            NewStudentGame();
+            ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = false;
+        }
         //Active just the first one
-        _windowsTree[_uiIndex].SetActive(true);
+        _windowsTree[_uiIndex].SetActive(true);      
     }
 
     /// <summary>
@@ -211,6 +219,8 @@ public class TabletUI : UI
                 break;
 
         }
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("RubenTest");
         yield return null;
     }
 
