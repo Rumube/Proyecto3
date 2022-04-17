@@ -34,9 +34,21 @@ public class MinigamesUI : MonoBehaviour
         }
     }
 
+    #region Buttoms
+    /// <summary>
+    /// Close the game scene and move to common scene.
+    /// </summary>
     public void ContinueButtonMinigamesRanking()
     {
         ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
         SceneManager.LoadScene("CristinaTest");
     }
+    /// <summary>
+    /// Repeat the last order gived by Min.
+    /// </summary>
+    public void RepeatLastOrder()
+    {
+        ServiceLocator.Instance.GetService<IFrogMessage>().RepeatLastOrder();
+    }
+    #endregion
 }

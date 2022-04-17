@@ -137,11 +137,11 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), true);
     }
 
     /// <summary>
-    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, bool)"></see>
     /// </summary>
     /// <returns>The message</returns>
     private string GenerateTextMessage()
