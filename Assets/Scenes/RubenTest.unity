@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 923033826}
   - component: {fileID: 923033830}
   - component: {fileID: 923033829}
+  - component: {fileID: 923033831}
   m_Layer: 0
   m_Name: AsteroidManager
   m_TagString: Untagged
@@ -555,6 +556,7 @@ MonoBehaviour:
   _currentTime: 0
   _maxTime: 50
   _finishTime: 0
+  _canStartTime: 0
 --- !u!114 &923033819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,6 +625,7 @@ MonoBehaviour:
   _inputAndroid: {fileID: 923033824}
   _error: {fileID: 923033827}
   _frogMessage: {fileID: 923033828}
+  _positive: {fileID: 923033831}
 --- !u!120 &923033822
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -941,6 +944,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006de6eedb06ec04f95cd8f2486e4d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &923033831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cb192cbc698fe47a546e0eea3bf278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numberOfParticles: 20
+  _floatingTime: 0.5
+  _floatingVelocity: 10
+  _particleVelocity: 8
+  _goodParticle: {fileID: 5408174780371598402, guid: b252830ee012e4244ae1a934e119a179, type: 3}
 --- !u!1 &1068310004
 GameObject:
   m_ObjectHideFlags: 0

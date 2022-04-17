@@ -137,11 +137,11 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), true);
     }
 
     /// <summary>
-    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, bool)"></see>
     /// </summary>
     /// <returns>The message</returns>
     private string GenerateTextMessage()
@@ -192,6 +192,7 @@ public class AsteroidBlaster : MonoBehaviour
             //"es-es-x-eea-local"
             ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(asteroid.transform.position);
         }
         else
         {
