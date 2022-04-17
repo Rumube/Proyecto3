@@ -364,7 +364,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: e0fa0ee6d57262c4d889b11422b0f137, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!1 &665200485
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +402,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1068310005}
     m_Modifications:
+    - target: {fileID: -886379245065097314, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: _needsCheck
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7518683565730518258, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.0014648438
@@ -555,6 +559,7 @@ MonoBehaviour:
   _currentTime: 0
   _maxTime: 50
   _finishTime: 0
+  _canStartTime: 0
 --- !u!114 &923033819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,8 +773,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunGo: {fileID: 326122570}
   _gunTarget: {fileID: 1507236653}
-  _canShot: 1
-  _canVibrate: 1
 --- !u!114 &923033826
 MonoBehaviour:
   m_ObjectHideFlags: 0
