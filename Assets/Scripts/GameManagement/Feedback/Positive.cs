@@ -66,7 +66,7 @@ public class Positive : MonoBehaviour, IPositive
     /// <returns>Vector2 Target</returns>
     private Vector2 GenerateVector2Target()
     {
-        Vector3 frogPos = GameObject.FindGameObjectWithTag("Feedback").GetComponent<RectTransform>().position;
+        Vector3 frogPos = GameObject.FindGameObjectWithTag("CountDown").GetComponent<RectTransform>().position;
         frogPos = new Vector3(frogPos.x, frogPos.y, Camera.main.transform.position.z);
         Vector2 target = Camera.main.ScreenToWorldPoint(frogPos);
         target = new Vector2(target.x, target.y);

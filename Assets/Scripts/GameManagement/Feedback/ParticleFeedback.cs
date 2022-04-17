@@ -74,5 +74,10 @@ public class ParticleFeedback : MonoBehaviour
     private void MoveToTarget()
     {
         transform.position = Vector2.MoveTowards(transform.position, _target, _movementVelocity * Time.deltaTime);
+        if (Vector2.Distance(_target, transform.position) < 0.5f)
+        {
+            //TODO: SONIDO?
+            Destroy(gameObject);
+        }
     }
 }
