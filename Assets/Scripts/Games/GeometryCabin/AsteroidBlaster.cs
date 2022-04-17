@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Crosstales.RTVoice;
+using UnityEngine.UI;
+
 public class AsteroidBlaster : MonoBehaviour
 {
     //Geometry Forms
@@ -25,13 +27,10 @@ public class AsteroidBlaster : MonoBehaviour
 
     bool _firstGame = true;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
-
-    AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
-        _audioSource = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -132,11 +131,32 @@ public class AsteroidBlaster : MonoBehaviour
             _firstGame = false;
         }
         _finishCreateAsteroids = true;
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().SetStartTime(_finishCreateAsteroids);
         _gameFinished = false;
         foreach (GameObject asteroid in _asteroids)
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
+    }
+
+    /// <summary>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// </summary>
+    /// <returns>The message</returns>
+    private string GenerateTextMessage()
+    {
+        string msg = "Destruye los asteroides con forma de ";
+        Geometry newGeometry = new Geometry();
+        for (int i = 0; i < _targetList.Count; i++)
+        {
+            if (i == _targetList.Count - 1 && _targetList.Count != 1)
+                msg += "y de " + newGeometry.getGeometryString(_targetList[i]);
+            else
+                msg += newGeometry.getGeometryString(_targetList[i]) + " ";
+        }
+
+        return msg;
     }
 
     /// <summary>
@@ -170,14 +190,12 @@ public class AsteroidBlaster : MonoBehaviour
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
             //"es-es-x-eea-local"
-            Speaker.Instance.Speak("¡Correcto!", _audioSource);
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
         }
         else
         {
             _mistakes++;
-            Speaker.Instance.Speak("¡Te has equivocado!", _audioSource);
-            //TODO: Active error
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())

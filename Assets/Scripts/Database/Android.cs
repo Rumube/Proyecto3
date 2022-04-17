@@ -8,10 +8,14 @@ using System;
 using System.Data;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
+
 public class Android : MonoBehaviour
 {
     [Header("Envia a la base")]
     public Text _tName;
+    public TMP_InputField _tInputNamePro;
+    public InputField _tInputName;
     public Text _tId;
 
    //[Header("Recibe de la base")]
@@ -24,7 +28,14 @@ public class Android : MonoBehaviour
     private IDataReader _reader;
 
     string _DatabaseName = "Employers.s3db";
+
+
+    [Header("ReaderStudent")]
+    public GameObject _buttonPrefab;
+    public Transform _location;
+
     int level;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,7 +94,7 @@ public class Android : MonoBehaviour
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
          "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
-         "team integer, "+"matchInfo varchar(200),"+
+         "team integer, "+"level integer,"+
          "foreign key(idStudent) references Student(idStudent), "+
          "foreign key(idSession) references Session(idSession), "+
          "foreign key(idGame) references Game(idGame)); "
@@ -111,19 +122,36 @@ public class Android : MonoBehaviour
 
     public void InsertClassButton()
     {
-        InsertClass(_tName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while(_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0,1);
+            }
+            while(_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length-1, 1);
+            }
+            while(_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  "," ");
+            }
+
+            InsertClass(_tInputNamePro.text.ToUpper());
+        }
+            
     }
     public void prueba()
     {
-        Debug.Log(GetDifficulty("La", "JGO1"));
+        Debug.Log(GetDifficulty("pepe", "JUEGO1"));
     }
     public void DeleteClassButton()
     {
-        DeleteClass(_tName.text);
+        DeleteClass(_tInputNamePro.text.ToUpper());
     }
     public void UpdateClassButton()
     {
-        UpdateClass(_tId.text,_tName.text);
+        UpdateClass(_tId.text,_tName.text.ToUpper());
     }
     public void ReadClassData()
     {
@@ -131,15 +159,35 @@ public class Android : MonoBehaviour
     }
     public void InsertStudentButton()
     {
-        InsertStudent(_tName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while (_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0, 1);
+            }
+            while (_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length - 1, 1);
+            }
+            while (_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  ", " ");
+            }
+
+            InsertStudent(_tInputNamePro.text.ToUpper());
+        }
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tName.text);
+        DeleteStudent(_tInputNamePro.text.ToUpper());
     }
     public void UpdateStudentButton()
     {
         UpdateStudent(_tId.text, _tName.text);
+    }
+    public void ReadStudentsData()
+    {
+        ReaderStudent(_buttonPrefab, _location);
     }
 
     #endregion
@@ -260,7 +308,7 @@ public class Android : MonoBehaviour
             IDataReader reader = dbcmd.ExecuteReader();
 
             //Destroy all buttons
-            foreach (Transform child in ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform)
+            foreach (Transform child in ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -273,8 +321,8 @@ public class Android : MonoBehaviour
 
                // _infoText.text += idreaders + Namereaders + " " + "\n";
                 EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
-                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._classButton, ServiceLocator.Instance.GetService<GameManager>()._classPanel.transform);
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
             }
             reader.Close();
             reader = null;
@@ -299,7 +347,7 @@ public class Android : MonoBehaviour
 
             Debug.Log("NAme: " + name);
             IDbCommand dbcmd2 = _dbconn.CreateCommand();
-            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + ServiceLocator.Instance.GetService<GameManager>()._classNamedb + "\"";
+            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + ServiceLocator.Instance.GetService<UIManager>()._classNamedb + "\"";
             EDebug.Log("sql: " + deleteById);
             dbcmd2.CommandText = deleteById;
             IDataReader reader2 = dbcmd2.ExecuteReader();
@@ -321,8 +369,8 @@ public class Android : MonoBehaviour
         }
         //_infoText.text = "";
         EDebug.Log("Insert Done  ");
-        
-        ReaderStudent();
+
+        ReaderStudent(_buttonPrefab, _location);
     }
     /** 
 
@@ -362,7 +410,7 @@ public class Android : MonoBehaviour
            // _stateText.text = deleteById + " Delete  Done ";
 
         }
-        ReaderStudent();
+        ReaderStudent(_buttonPrefab, _location);
 
     }
     /** 
@@ -400,17 +448,17 @@ public class Android : MonoBehaviour
 
     * @desc Lee toda la tabla Student de la base
     */
-    public void ReaderStudent()
+    public void ReaderStudent(GameObject prefab, Transform location)
     {
         int id_Student_readers, id_Classroom_readers;
         string Namereaders;
-        string className = ServiceLocator.Instance.GetService<GameManager>()._classNamedb;
+        string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
 
             //Destroy all buttons
-            foreach (Transform child in ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform)
+            foreach (Transform child in location)
             {
                 GameObject.Destroy(child.gameObject);
             }
@@ -435,9 +483,15 @@ public class Android : MonoBehaviour
                 Namereaders = reader.GetString(1); ;
                 id_Classroom_readers = reader.GetInt32(2);
               //  _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
+
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
-                GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<GameManager>()._studentButton, ServiceLocator.Instance.GetService<GameManager>()._studentPanel.transform);
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                GameObject newButton = Instantiate(prefab, location);
+
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
+                newButton.GetComponentInChildren<StudentButton>()._student = new Student();
+                newButton.GetComponentInChildren<StudentButton>()._student._id = id_Student_readers;
+                newButton.GetComponentInChildren<StudentButton>()._student._name = Namereaders;
+                newButton.GetComponentInChildren<StudentButton>()._student._idClass = id_Classroom_readers;
             }
             reader.Close();
             reader = null;

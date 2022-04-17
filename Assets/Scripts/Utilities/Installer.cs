@@ -11,43 +11,83 @@ public class Installer : MonoBehaviour
     [Header("UI")]
     public MobileUI _canvasMobile;
     public TabletUI _canvasTablet;
+
+    public UIManager _uiManager;
+
     public Canvas _canvasGUI;
+
 
     [Header("Utilities")]
     public GameTimeConfiguration _gameTimeConfiguration;
     public GameManager _gameManager;
+    public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
+
+    public ServerUtility _myServer;
+
     public Error _error;
+    public FrogMessage _frogMessage;
+
 
     private IInput _inputUsed;
     private IDatabase _databaseUsed;
     private IUI _UIUsed;
     private IError _IError;
+    private IFrogMessage _IFrogMessage;
+
     // Start is called before the first frame update
     void Awake()
     {
         //Register services to use globally
-        ServiceLocator.Instance.RegisterService(this);
-        ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
-        ServiceLocator.Instance.RegisterService(_gameManager);
-        ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
-        ServiceLocator.Instance.RegisterService<IError>(_error);
-        ServiceLocator.Instance.RegisterService(_canvasGUI);
+        //ServiceLocator.Instance.RegisterService(this);
+        //ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
+         if (!ServiceLocator.Instance.Contains<GameManager>())
+        {
+            ServiceLocator.Instance.RegisterService(_gameManager);
+        }
+        //else if(ServiceLocator.Instance.GetService<GameManager>() == null)
+        //{
+        //    _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        //}
 
-        if (_server && _canvasMobile != null)
+        if (!ServiceLocator.Instance.Contains<NetworkManager>())
+        {
+            ServiceLocator.Instance.RegisterService(_networkManager);
+        }
+
+        if (ServiceLocator.Instance.Contains<UIManager>())
+        {
+            ServiceLocator.Instance.UnregisterService<UIManager>();
+        }
+        ServiceLocator.Instance.RegisterService(_uiManager);
+
+        if (!ServiceLocator.Instance.Contains<ServerUtility>())
+            ServiceLocator.Instance.RegisterService(_myServer);
+        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+
+        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+        //ServiceLocator.Instance.RegisterService<IError>(_error);
+        //ServiceLocator.Instance.RegisterService(_canvasGUI);
+        //ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
+
+
+        if (!ServiceLocator.Instance.Contains<IUI>() &&_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
             ServiceLocator.Instance.RegisterService(_canvasMobile);
         }
-        else if(!_server && _canvasTablet != null)
+        else if(!ServiceLocator.Instance.Contains<IUI>() && !_server && _canvasTablet != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
+            ServiceLocator.Instance.RegisterService(_canvasTablet);
         }
 
         SetDatabase();
         //SetInput();
         SetUI();
         SetTextToSpeechConf();
+        //Screen never turn off
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     void SetTextToSpeechConf()
@@ -64,9 +104,9 @@ public class Installer : MonoBehaviour
     /// <summary>Set the input method deppending on the platform</summary>
     private void SetInput()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN	
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
         _inputUsed = new DesktopInputAdapter();
-#elif UNITY_ANDROID || UNITY_STANDALONE_WIN	
+#elif UNITY_ANDROID || UNITY_STANDALONE_WIN
         _inputUsed = new AndroidInputAdapter();
 #endif
     }
@@ -86,12 +126,18 @@ public class Installer : MonoBehaviour
     {
         if (_server && _canvasMobile != null)
         {
+            if (_canvasTablet != null)
+            {
+                _canvasTablet.gameObject.SetActive(false);
+            }
             _canvasMobile.gameObject.SetActive(true);
-            _canvasTablet.gameObject.SetActive(false);
         }
         else if (!_server && _canvasTablet != null)
         {
-            _canvasMobile.gameObject.SetActive(false);
+            if (_canvasMobile != null)
+            {
+                _canvasMobile.gameObject.SetActive(false);
+            }
             _canvasTablet.gameObject.SetActive(true);
         }
     }
