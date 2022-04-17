@@ -192,6 +192,7 @@ public class AsteroidBlaster : MonoBehaviour
             //"es-es-x-eea-local"
             ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(asteroid.transform.position);
         }
         else
         {
