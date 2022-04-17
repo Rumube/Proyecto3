@@ -39,27 +39,44 @@ public class Installer : MonoBehaviour
     void Awake()
     {
         //Register services to use globally
-        ServiceLocator.Instance.RegisterService(this);
-        ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
-        ServiceLocator.Instance.RegisterService(_gameManager);
+        //ServiceLocator.Instance.RegisterService(this);
+        //ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
+         if (!ServiceLocator.Instance.Contains<GameManager>())
+        {
+            ServiceLocator.Instance.RegisterService(_gameManager);
+        }
+        //else if(ServiceLocator.Instance.GetService<GameManager>() == null)
+        //{
+        //    _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        //}
 
+        if (!ServiceLocator.Instance.Contains<NetworkManager>())
+        {
+            ServiceLocator.Instance.RegisterService(_networkManager);
+        }
+
+        if (ServiceLocator.Instance.Contains<UIManager>())
+        {
+            ServiceLocator.Instance.UnregisterService<UIManager>();
+        }
         ServiceLocator.Instance.RegisterService(_uiManager);
-        ServiceLocator.Instance.RegisterService(_networkManager);
-        ServiceLocator.Instance.RegisterService(_myServer);
+
+        if (!ServiceLocator.Instance.Contains<ServerUtility>())
+            ServiceLocator.Instance.RegisterService(_myServer);
         //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
-        ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
-        ServiceLocator.Instance.RegisterService<IError>(_error);
-        ServiceLocator.Instance.RegisterService(_canvasGUI);
-        ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
+        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
+        //ServiceLocator.Instance.RegisterService<IError>(_error);
+        //ServiceLocator.Instance.RegisterService(_canvasGUI);
+        //ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
 
 
-        if (_server && _canvasMobile != null)
+        if (!ServiceLocator.Instance.Contains<IUI>() &&_server && _canvasMobile != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasMobile);
             ServiceLocator.Instance.RegisterService(_canvasMobile);
         }
-        else if(!_server && _canvasTablet != null)
+        else if(!ServiceLocator.Instance.Contains<IUI>() && !_server && _canvasTablet != null)
         {
             ServiceLocator.Instance.RegisterService<IUI>(_canvasTablet);
             ServiceLocator.Instance.RegisterService(_canvasTablet);

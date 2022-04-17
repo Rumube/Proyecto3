@@ -8,10 +8,13 @@ using System;
 using System.Data;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
+
 public class Android : MonoBehaviour
 {
     [Header("Envia a la base")]
     public Text _tName;
+    public TMP_InputField _tInputNamePro;
     public InputField _tInputName;
     public Text _tId;
 
@@ -91,7 +94,7 @@ public class Android : MonoBehaviour
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
          "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
-         "team integer, "+"matchInfo varchar(200),"+
+         "team integer, "+"level integer,"+
          "foreign key(idStudent) references Student(idStudent), "+
          "foreign key(idSession) references Session(idSession), "+
          "foreign key(idGame) references Game(idGame)); "
@@ -119,19 +122,36 @@ public class Android : MonoBehaviour
 
     public void InsertClassButton()
     {
-        InsertClass(_tName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while(_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0,1);
+            }
+            while(_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length-1, 1);
+            }
+            while(_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  "," ");
+            }
+
+            InsertClass(_tInputNamePro.text.ToUpper());
+        }
+            
     }
     public void prueba()
     {
-        Debug.Log(GetDifficulty("La", "JGO1"));
+        Debug.Log(GetDifficulty("pepe", "JUEGO1"));
     }
     public void DeleteClassButton()
     {
-        DeleteClass(_tName.text);
+        DeleteClass(_tInputNamePro.text.ToUpper());
     }
     public void UpdateClassButton()
     {
-        UpdateClass(_tId.text,_tName.text);
+        UpdateClass(_tId.text,_tName.text.ToUpper());
     }
     public void ReadClassData()
     {
@@ -139,11 +159,27 @@ public class Android : MonoBehaviour
     }
     public void InsertStudentButton()
     {
-        InsertStudent(_tInputName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while (_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0, 1);
+            }
+            while (_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length - 1, 1);
+            }
+            while (_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  ", " ");
+            }
+
+            InsertStudent(_tInputNamePro.text.ToUpper());
+        }
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tInputName.text);
+        DeleteStudent(_tInputNamePro.text.ToUpper());
     }
     public void UpdateStudentButton()
     {
@@ -286,7 +322,7 @@ public class Android : MonoBehaviour
                // _infoText.text += idreaders + Namereaders + " " + "\n";
                 EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
                 GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
             }
             reader.Close();
             reader = null;
@@ -451,7 +487,7 @@ public class Android : MonoBehaviour
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(prefab, location);
 
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
                 newButton.GetComponentInChildren<StudentButton>()._student = new Student();
                 newButton.GetComponentInChildren<StudentButton>()._student._id = id_Student_readers;
                 newButton.GetComponentInChildren<StudentButton>()._student._name = Namereaders;
