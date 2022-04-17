@@ -505,10 +505,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 923033817}
-  - component: {fileID: 923033818}
-  - component: {fileID: 923033819}
+  - component: {fileID: 923033832}
   - component: {fileID: 923033821}
   - component: {fileID: 923033820}
+  - component: {fileID: 923033818}
+  - component: {fileID: 923033833}
+  - component: {fileID: 923033819}
   - component: {fileID: 923033823}
   - component: {fileID: 923033824}
   - component: {fileID: 923033825}
@@ -591,23 +593,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923033816}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
+  m_Script: {fileID: 11500000, guid: 983aa3f08aa816c4f986749bdace3966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _server: 0
-  _canvasMobile: {fileID: 0}
-  _canvasTablet: {fileID: 0}
-  _uiManager: {fileID: 0}
-  _canvasGUI: {fileID: 0}
-  _gameTimeConfiguration: {fileID: 923033818}
-  _gameManager: {fileID: 0}
-  _networkManager: {fileID: 0}
-  _inputAndroid: {fileID: 923033824}
-  _myServer: {fileID: 0}
-  _error: {fileID: 923033827}
-  _frogMessage: {fileID: 923033828}
+  _currentstudentName: 
+  _pause: 0
+  _gameStateServer: 0
+  _gameStateClient: 0
 --- !u!114 &923033821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,15 +611,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 923033816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b49e4d52f769b4db8486a4758226cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 16b2e0f0a8f186749b391af60805e0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGUI: {fileID: 0}
-  _gameTimeConfiguration: {fileID: 923033818}
-  _inputAndroid: {fileID: 923033824}
-  _error: {fileID: 923033827}
-  _frogMessage: {fileID: 923033828}
-  _positive: {fileID: 923033831}
+  _minigameMinutes: 0
+  _minigameSeconds: 10
+  _minigameLevel: 0
 --- !u!120 &923033822
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -956,11 +947,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58cb192cbc698fe47a546e0eea3bf278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfParticles: 20
+  _numberOfParticles: 8
   _floatingTime: 0.5
   _floatingVelocity: 10
   _particleVelocity: 8
   _goodParticle: {fileID: 5408174780371598402, guid: b252830ee012e4244ae1a934e119a179, type: 3}
+--- !u!114 &923033832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c294e6f08dcef746a43ae5c225915d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGUI: {fileID: 0}
+  _gameTimeConfiguration: {fileID: 923033818}
+  _inputAndroid: {fileID: 923033824}
+  _error: {fileID: 923033827}
+  _frogMessage: {fileID: 923033828}
+  _networkSinBucle: {fileID: 923033821}
+  _gmSinBucle: {fileID: 923033820}
+  _positive: {fileID: 923033831}
+--- !u!114 &923033833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 0
 --- !u!1 &1068310004
 GameObject:
   m_ObjectHideFlags: 0

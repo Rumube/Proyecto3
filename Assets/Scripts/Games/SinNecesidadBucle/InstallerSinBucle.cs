@@ -15,11 +15,12 @@ public class InstallerSinBucle : MonoBehaviour
     public FrogMessage _frogMessage;
     public NetMSinBucle _networkSinBucle;
     public GMSinBucle _gmSinBucle;
+    public Positive _positive;
 
     private IInput _inputUsed;
     private IError _IError;
     private IFrogMessage _IFrogMessage;
-
+    private IPositive _IPositive;
     // Start is called before the first frame update
     void Awake()
     {     
@@ -30,5 +31,6 @@ public class InstallerSinBucle : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
         ServiceLocator.Instance.RegisterService<NetMSinBucle>(_networkSinBucle);
         ServiceLocator.Instance.RegisterService<GMSinBucle>(_gmSinBucle);
+        ServiceLocator.Instance.RegisterService<IPositive>(_positive);
     }
 }
