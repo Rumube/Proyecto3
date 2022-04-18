@@ -81,7 +81,8 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<MobileUI>()._tabletButtonPrefabStadistics.gameObject, ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.gameObject.transform);
-            newButton.GetComponentInChildren<TabletButton>()._textButton.text = (i+1).ToString();
+            newButton.GetComponentInChildren<Image>().sprite = newButton.GetComponentInChildren<TabletButton>()._rocketSprites[i];
+            newButton.GetComponentInChildren<TabletButton>().index_rocket = i+1;
         }      
     }
     #endregion

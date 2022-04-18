@@ -137,17 +137,17 @@ public class AsteroidBlaster : MonoBehaviour
         {
             asteroid.GetComponent<Asteroid>().GenerateNewTarget();
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(GenerateTextMessage(), true);
     }
 
     /// <summary>
-    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, float, Text)"></see>
+    /// Generate the string to the <see cref="FrogMessage.NewFrogMessage(string, bool)"></see>
     /// </summary>
     /// <returns>The message</returns>
     private string GenerateTextMessage()
     {
         string msg = "Destruye los asteroides con forma de ";
-        Geometry newGeometry = new Geometry();
+        Geometry newGeometry = GetComponent<Geometry>();
         for (int i = 0; i < _targetList.Count; i++)
         {
             if (i == _targetList.Count - 1 && _targetList.Count != 1)
@@ -192,6 +192,7 @@ public class AsteroidBlaster : MonoBehaviour
             //"es-es-x-eea-local"
             ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(asteroid.transform.position);
         }
         else
         {
@@ -200,7 +201,7 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+            ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
             //TODO: Finish and generate score
             StopAllCoroutines();
