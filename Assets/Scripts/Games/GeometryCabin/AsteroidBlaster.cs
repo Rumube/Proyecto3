@@ -26,13 +26,21 @@ public class AsteroidBlaster : MonoBehaviour
     public int _mistakes = 0;
 
     bool _firstGame = true;
+    bool _pointsCalculated = false;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
     }
-
+    private void Update()
+    {
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
+        {
+            _pointsCalculated = true;
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _mistakes);
+        }
+    }
     /// <summary>
     /// Obtains a dictionary with asteroids and their
     /// shapes and calls the function generateTargets
@@ -167,6 +175,8 @@ public class AsteroidBlaster : MonoBehaviour
         _currentDataDifficulty = GetComponent<AsteroidBalsterDifficulty>().GenerateDataDifficulty(_level);
         setTarget();
         GenerateAsteroids();
+        _mistakes = 0;
+        _successes = 0;
     }
 
     /// <summary>
@@ -203,7 +213,7 @@ public class AsteroidBlaster : MonoBehaviour
         {
             ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
-            //TODO: Finish and generate score
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_mistakes);
             StopAllCoroutines();
             restartGame();
         }

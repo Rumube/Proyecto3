@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 923033832}
   - component: {fileID: 923033821}
   - component: {fileID: 923033820}
+  - component: {fileID: 923033834}
   - component: {fileID: 923033818}
   - component: {fileID: 923033833}
   - component: {fileID: 923033819}
@@ -619,7 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minigameMinutes: 0
-  _minigameSeconds: 10
+  _minigameSeconds: 20
   _minigameLevel: 0
 --- !u!120 &923033822
 LineRenderer:
@@ -974,6 +975,7 @@ MonoBehaviour:
   _networkSinBucle: {fileID: 923033821}
   _gmSinBucle: {fileID: 923033820}
   _positive: {fileID: 923033831}
+  _calculatePoints: {fileID: 923033834}
 --- !u!114 &923033833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,6 +989,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _geometryType: 0
+--- !u!114 &923033834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b547af850217e49983858fe1968f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points: 0
+  _success: 0
+  _fails: 0
+  _attempt: 0
+  _timeList: []
+  _timeAttemptList: []
+  _average:
+    averagePoints: 0
+    averageTime: 0
+    averageSuccess: 0
+    averageFails: 0
 --- !u!1 &1068310004
 GameObject:
   m_ObjectHideFlags: 0
