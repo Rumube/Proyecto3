@@ -35,7 +35,7 @@ public class Asteroid : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing)
         {
             _collider.enabled = true;
             MoveAsteroid();
@@ -94,7 +94,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void MoveAsteroid()
     {
-        _rb.velocity = _direction * (_movementVelocity * 100) * Time.deltaTime;
+        _rb.velocity = _direction * Time.fixedDeltaTime * 50.0f;
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void RotationAsteroid()
     {
-        float velocity = _rotationVelocity * Time.deltaTime;
+        float velocity = _rotationVelocity * Time.fixedDeltaTime;
         transform.Rotate(transform.rotation.x, transform.rotation.y, velocity);
     }
 
