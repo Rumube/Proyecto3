@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AsteroidBlasterInput : MonoBehaviour
 {
+    [Header("References")]
     public GameObject _gunGo;
     public Image _gunTarget;
     Vector2 _lastShotPostion;
@@ -13,30 +14,74 @@ public class AsteroidBlasterInput : MonoBehaviour
 
     //Configuration
     float _shotCooldown = 1f;
+    private enum ShotType
+    {
+        Move,
+        Static
+    }
+
+    private ShotType _shotType;
+
     //Flags
-    public bool _canShot = true;
+    bool _canShot = true;
     //References
     LineRenderer _lineRenderer;
-    AsteroidBlaster _asteroidManager;
+    GameObject _asteroidManager;
 
-    public bool _canVibrate = true;
+    bool _canVibrate = true;
     // Start is called before the first frame update
     void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _newAngle = 0;
-        _asteroidManager = GetComponent<AsteroidBlaster>();
+        _lastShotPostion = Vector2.zero;
+        _asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
+        if (_asteroidManager.GetComponent<AsteroidBlaster>())
+            _shotType = ShotType.Move;
+        else if (_asteroidManager.GetComponent<SpaceTimeCabin>())
+        {
+            _shotType = ShotType.Static;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _asteroidManager._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        switch (_shotType)
+        {
+            case ShotType.Move:
+                UpdateMoveInput();
+                break;
+            case ShotType.Static:
+                UpdateStaticInput();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    /// <summary>
+    /// Update when the <see cref="_shotType"/> is <see cref="ShotType.Move"/>
+    /// </summary>
+    private void UpdateMoveInput()
+    {
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _asteroidManager.GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
-            //if (!_canShot)
+        }
+    }
+
+    /// <summary>
+    /// Update when the <see cref="_shotType"/> is <see cref="ShotType.Static"/>
+    /// </summary>
+    private void UpdateStaticInput()
+    {
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && !GetComponent<SpaceTimeCabin>()._gameFinished)
+        {
+            //TODO InputStatic
+            //InputController();
         }
     }
 
@@ -123,5 +168,13 @@ public class AsteroidBlasterInput : MonoBehaviour
     {
         yield return new WaitForSeconds(_shotCooldown);
         _canShot = true;
+    }
+
+    public void MoveGun(Vector2 pos)
+    {
+        _newDir = (new Vector3(pos.x, pos.y, 0) - _gunGo.transform.position).normalized;
+        _newAngle = Mathf.Atan2(_newDir.y, _newDir.x) * Mathf.Rad2Deg;
+        _newAngle -= 90;
+        _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
     }
 }

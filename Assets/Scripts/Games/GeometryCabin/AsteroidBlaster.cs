@@ -201,7 +201,7 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+            ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
             //TODO: Finish and generate score
             StopAllCoroutines();
