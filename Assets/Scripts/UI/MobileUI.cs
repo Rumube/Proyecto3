@@ -13,6 +13,9 @@ public class MobileUI : UI
 
     [Header("Main Menu")]
     public Button _continueMainMenu;
+    public Texture _textureVideoMainMenu;
+    public Animator _imageMainMenu;
+    public VideoPlayer _videoMainMenu;
 
     [Header("Delete class popup")]
     public TextMeshProUGUI _deletingClassName;
@@ -169,7 +172,6 @@ public class MobileUI : UI
         //Active the okey button when the input text is equal to the name of the student
         if (ServiceLocator.Instance.GetService<UIManager>()._popupDeleteStudent.activeSelf && !_deleteStudentCorrect)
         {
-            Debug.Log("input "+ _deletingStudentName.text + " other "  + _writingStudentName.text);
             _deleteStudentCorrect = AreEqual(_deletingStudentName.text.ToUpper(), _writingStudentName.text.ToUpper());
         }
         if (_deleteStudentCorrect && !_confirmDeleteStudentButton.interactable)
@@ -294,6 +296,7 @@ public class MobileUI : UI
             ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<ClassButton>()._highlighted.gameObject.SetActive(false);
         }
     }
+    
     #endregion
     #region Class
     /// <summary>Shows the name of the classroom inside class window</summary>
@@ -415,7 +418,8 @@ public class MobileUI : UI
         for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
-            //GetComponentInChildren<TextMeshProUGUI>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i)._id.ToString();
+            newButton.GetComponent<TabletButton>().index_rocket = i;
+            newButton.GetComponent<Image>().sprite = newButton.GetComponent<TabletButton>()._rocketSprites[i];
             _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
             ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
         }

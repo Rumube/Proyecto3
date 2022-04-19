@@ -22,17 +22,25 @@ public class AsteroidBlaster : MonoBehaviour
     public bool _gameFinished = false;
 
     public bool _finishCreateAsteroids = false;
-    public int _successes = 0;
-    public int _mistakes = 0;
+    private int _successes = 0;
+    private int _errors = 0;
 
     bool _firstGame = true;
+    bool _pointsCalculated = false;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
     // Start is called before the first frame update
     void Start()
     {
         restartGame();
     }
-
+    private void Update()
+    {
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
+        {
+            _pointsCalculated = true;
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
+        }
+    }
     /// <summary>
     /// Obtains a dictionary with asteroids and their
     /// shapes and calls the function generateTargets
@@ -167,6 +175,8 @@ public class AsteroidBlaster : MonoBehaviour
         _currentDataDifficulty = GetComponent<AsteroidBalsterDifficulty>().GenerateDataDifficulty(_level);
         setTarget();
         GenerateAsteroids();
+        _errors = 0;
+        _successes = 0;
     }
 
     /// <summary>
@@ -196,14 +206,14 @@ public class AsteroidBlaster : MonoBehaviour
         }
         else
         {
-            _mistakes++;
+            _errors++;
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+            ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
-            //TODO: Finish and generate score
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();
             restartGame();
         }
