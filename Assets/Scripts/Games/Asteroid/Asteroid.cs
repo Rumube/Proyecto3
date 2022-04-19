@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    //Configuration
-    public float _movementVelocity {get; set; }
+    public float _movementVelocity { get; set; }
     public float _rotationVelocity { get; set; }
     [Header("Configuration")]
     [SerializeField]
@@ -18,6 +17,7 @@ public class Asteroid : MonoBehaviour
     public GameObject _destroyGO;
     public GameObject _asteroidGO;
     public GameObject _collisionAsteroid;
+    private bool _canRespawn;
     [Header("References")]
     GameObject _gm;
     Rigidbody2D _rb;
@@ -31,7 +31,7 @@ public class Asteroid : MonoBehaviour
         destroyed = 2
     }
 
-    public Asteroid_State state = Asteroid_State.movement;
+    public Asteroid_State _state = Asteroid_State.movement;
 
     private void FixedUpdate()
     {
@@ -57,7 +57,7 @@ public class Asteroid : MonoBehaviour
     /// <param name="rotationVelocity">The speed value</param>
     /// <param name="gameManager">Reference to the GameManager</param>
     /// <example><code>InitAsteroid(newMovementVelocity, newRotationVelocity, newLevel)</code></example>
-    public void InitAsteroid(float movementVelocity,float rotationVelocity, GameObject gameManager)
+    public void InitAsteroid(float movementVelocity, float rotationVelocity, GameObject gameManager)
     {
         _asteroidGO.SetActive(true);
         _destroyGO.SetActive(false);
@@ -68,10 +68,11 @@ public class Asteroid : MonoBehaviour
         _gm = gameManager;
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _canRespawn = true;
     }
     /// <summary>
     /// Starts execution of asteroid initiation methods.
-    /// Game: Geometri Cabin
+    /// Game: Space Time Cabin
     /// </summary>
     /// <param name="movementVelocity"></param>
     /// <param name="center"></param>
@@ -87,6 +88,11 @@ public class Asteroid : MonoBehaviour
         SetInitialPosition();
         transform.position = _startPostion;
         SetCenterPoint(center);
+        _canRespawn = false;
+        _rotating = true;
+        _rotationVelocity = 10f;
+        int layerAsteroidNoCollision = LayerMask.NameToLayer("AsteroidsNoCollision");
+        gameObject.layer = layerAsteroidNoCollision;
     }
 
     /// <summary>
@@ -188,14 +194,12 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     public void AsteroidShot()
     {
-        state = Asteroid_State.exploding;
+        _state = Asteroid_State.exploding;
         _destroyGO.SetActive(true);
         _asteroidGO.SetActive(false);
         _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
         if (_gm.GetComponent<AsteroidBlaster>())
             _gm.GetComponent<AsteroidBlaster>().CheckIfIsCorrect(gameObject);
-        if(_gm.GetComponent<SpaceTimeCabin>())
-            _gm.GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(gameObject);
         StartCoroutine(FinishExploding());
     }
 
@@ -204,7 +208,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     IEnumerator FinishExploding()
     {
-        
+
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
@@ -221,7 +225,7 @@ public class Asteroid : MonoBehaviour
                 _direction = new Vector2(Random.Range(0.4f, 0.8f), -1);
                 if (isNegative == 0)
                     _direction.x *= -1;
-                 break;
+                break;
             case 1:
                 _direction = new Vector2(Random.Range(0.4f, 0.8f), 1);
                 if (isNegative == 0)
@@ -242,10 +246,18 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.name == "SpaceGame")
+        if (_canRespawn && collision.name == "SpaceGame")
             RestartPosition();
+        else if (!_canRespawn && collision.name == "SpaceGame" && _state == Asteroid_State.movement)
+        {
+            _gm.GetComponent<SpaceTimeCabin>().LoseAsteroid();
+            Destroy(gameObject);
+        }
     }
-
+    /// <summary>
+    /// Creates the animation to the collisions.
+    /// </summary>
+    /// <param name="collision">Collision data</param>
     void CollisionController(Collision2D collision)
     {
         GameObject newCollision = Instantiate(_collisionAsteroid);

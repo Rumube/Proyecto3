@@ -14,6 +14,8 @@ public class SpaceTimeCabin : MonoBehaviour
 
     [Header("Game Data")]
     List<GameObject> _asteroids = new List<GameObject>();
+    public int _successes = 0;
+    public int _errors = 0;
 
     [Header("References")]
     public GameObject _asteroidPrefab;
@@ -40,7 +42,8 @@ public class SpaceTimeCabin : MonoBehaviour
     void RestartGame()
     {
         _targetPoint = GenerateTargetPoint();
-        GenerateAsteroids();
+        StartCoroutine(GenerateAsteroids());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira");
     }
 
     /// <summary>
@@ -60,22 +63,37 @@ public class SpaceTimeCabin : MonoBehaviour
     /// <summary>
     /// Generate the asteroids
     /// </summary>
-    void GenerateAsteroids()
+    IEnumerator GenerateAsteroids()
     {
         for (int i = 0; i < _dataDifficulty.numberAsteroid; i++)
         {
             GameObject newAsteroid = Instantiate(_asteroidPrefab);
             newAsteroid.GetComponent<Asteroid>().InitAsteroid(_dataDifficulty.asteroidMovementVelocity, _targetPoint, gameObject);
+            yield return new WaitForSeconds(_dataDifficulty.delayAsteroidStart);
         }
     }
 
     /// <summary>
-    /// Check if the shot are correct
+    /// Checks if is correct
     /// </summary>
-    /// <param name="asteroid">The asteroid shotting</param>
-    public void CheckIfIsCorrect(GameObject asteroid)
+    /// <param name="newCollider">Shoted collider</param>
+    public void CheckIfIsCorrect(Collider2D newCollider)
     {
-
+        if (newCollider.tag == "Asteroid")
+        {
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(newCollider.transform.position);
+            _successes++;
+        }
+        else
+        {
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+            _errors++;
+        }
     }
 
+    public void LoseAsteroid()
+    {
+        ServiceLocator.Instance.GetService<IError>().GenerateError();
+        _errors++;
+    }
 }

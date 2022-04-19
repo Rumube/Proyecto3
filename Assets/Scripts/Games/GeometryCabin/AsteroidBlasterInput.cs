@@ -90,7 +90,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     private void LineRendererController(Vector2 targetPos)
     {
         _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0,_gunGo.transform.position);
+        _lineRenderer.SetPosition(0, _gunGo.transform.position);
         _lineRenderer.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
         StartCoroutine(StopLaser());
     }
@@ -126,39 +126,44 @@ public class AsteroidBlasterInput : MonoBehaviour
             _lastShotPostion = Camera.main.ScreenToWorldPoint(input.pos);
             _gunTarget.transform.position = input.pos;
             MoveGun(_lastShotPostion);
-            LineRendererController(_lastShotPostion);
         }
         else
         {
             _lastShotPostion = _gunTarget.transform.position;
-            LineRendererController(_lastShotPostion);
         }
 
+        LineRendererController(_lastShotPostion);
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
         _gunGo.GetComponent<Animator>().SetTrigger("Shot");
-        
-        //_newDir = (new Vector3(_lastShotPostion.x, _lastShotPostion.y, 0) - _gunGo.transform.position).normalized;
-        //_newAngle= Mathf.Atan2(_newDir.y, _newDir.x) * Mathf.Rad2Deg;
-        //_newAngle -= 90;
-
 
         StartCoroutine(WaitShot());
-        if (hit.collider != null)
-            AsteroidHit(hit);
+
+        switch (_shotType)
+        {
+            case ShotType.Move:
+                if (hit.collider != null && hit.collider.tag == "Asteroid" && _canVibrate)
+                    AsteroidHit(hit.collider);
+                break;
+            case ShotType.Static:
+                Collider2D colliders = Physics2D.OverlapCircle(_lastShotPostion, 1f);
+                if(colliders != null && colliders.tag == "Asteroid" && _canVibrate)
+                    AsteroidHit(colliders);
+                GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(colliders);
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
     /// Performs the functions of hitting an asteroid.
     /// </summary>
     /// <param name="hit">Hit values, position, collider...</param>
-    void AsteroidHit(RaycastHit2D hit)
+    private void AsteroidHit(Collider2D newCollider)
     {
-        if (_canVibrate && hit.collider.tag == "Asteroid")
-        {
-            hit.collider.gameObject.GetComponent<Asteroid>().AsteroidShot();
-            _canVibrate = false;
-            StartCoroutine(WaitVibration());
-        }
+        newCollider.gameObject.GetComponent<Asteroid>().AsteroidShot();
+        _canVibrate = false;
+        StartCoroutine(WaitVibration());
     }
 
     /// <summary>
