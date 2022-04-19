@@ -16,6 +16,7 @@ public class SpaceTimeCabin : MonoBehaviour
     List<GameObject> _asteroids = new List<GameObject>();
     public int _successes = 0;
     public int _errors = 0;
+    private bool _isAllAsteroidGenerated;
 
     [Header("References")]
     public GameObject _asteroidPrefab;
@@ -52,6 +53,7 @@ public class SpaceTimeCabin : MonoBehaviour
     /// <returns>Value of <see cref="_targetPoint"/></returns>
     private Vector2 GenerateTargetPoint()
     {
+
         float xOffset = _dataDifficulty.shotOffset.x;
         float yOffset = _dataDifficulty.shotOffset.y;
         Vector2 newTargetPoint = new Vector2(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, yOffset)+1);
@@ -65,12 +67,16 @@ public class SpaceTimeCabin : MonoBehaviour
     /// </summary>
     IEnumerator GenerateAsteroids()
     {
+        _isAllAsteroidGenerated = false;
+        yield return new WaitForSeconds(3f);
+
         for (int i = 0; i < _dataDifficulty.numberAsteroid; i++)
         {
             GameObject newAsteroid = Instantiate(_asteroidPrefab);
             newAsteroid.GetComponent<Asteroid>().InitAsteroid(_dataDifficulty.asteroidMovementVelocity, _targetPoint, gameObject);
             yield return new WaitForSeconds(_dataDifficulty.delayAsteroidStart);
         }
+        _isAllAsteroidGenerated = true;
     }
 
     /// <summary>
@@ -89,11 +95,34 @@ public class SpaceTimeCabin : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
             _errors++;
         }
+        CheckIfFinish();
     }
 
+    /// <summary>
+    /// Generate an error when asteroid desapear
+    /// </summary>
     public void LoseAsteroid()
     {
         ServiceLocator.Instance.GetService<IError>().GenerateError();
         _errors++;
+        CheckIfFinish();
+    }
+
+    private void CheckIfFinish()
+    {
+        GameObject[] asteroidsInGame = GameObject.FindGameObjectsWithTag("Asteroid");
+        int noHitAsteroid = asteroidsInGame.Length;
+        foreach (GameObject currentAsteroid in asteroidsInGame)
+        {
+            if (currentAsteroid.GetComponent<Asteroid>()._state == Asteroid.Asteroid_State.exploding)
+                noHitAsteroid--;
+        }
+        if(_isAllAsteroidGenerated && noHitAsteroid == 0)
+        {
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
+            _successes = 0;
+            _errors = 0;
+            Invoke("RestartGame", 3f);
+        }
     }
 }

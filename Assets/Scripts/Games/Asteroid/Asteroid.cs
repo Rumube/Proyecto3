@@ -100,7 +100,7 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void MoveAsteroid()
     {
-        _rb.velocity = _direction * Time.fixedDeltaTime * 50.0f;
+        _rb.velocity = _direction * Time.fixedDeltaTime * _movementVelocity * 50f;
     }
 
     /// <summary>
@@ -208,7 +208,6 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     IEnumerator FinishExploding()
     {
-
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
@@ -250,6 +249,10 @@ public class Asteroid : MonoBehaviour
             RestartPosition();
         else if (!_canRespawn && collision.name == "SpaceGame" && _state == Asteroid_State.movement)
         {
+            _state = Asteroid_State.exploding;
+            _destroyGO.SetActive(true);
+            _asteroidGO.SetActive(false);
+            _destroyGO.GetComponent<Animator>().SetTrigger("Broke");
             _gm.GetComponent<SpaceTimeCabin>().LoseAsteroid();
             Destroy(gameObject);
         }
