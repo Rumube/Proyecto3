@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 549744151}
   - component: {fileID: 549744161}
   - component: {fileID: 549744154}
+  - component: {fileID: 549744168}
   m_Layer: 0
   m_Name: SpaceTimeCabinManager
   m_TagString: AsteroidManager
@@ -794,6 +795,7 @@ MonoBehaviour:
   _networkSinBucle: {fileID: 549744165}
   _gmSinBucle: {fileID: 549744164}
   _positive: {fileID: 549744151}
+  _calculatePoints: {fileID: 549744168}
 --- !u!4 &549744167
 Transform:
   m_ObjectHideFlags: 0
@@ -808,6 +810,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &549744168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549744150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b547af850217e49983858fe1968f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points: 0
+  _success: 0
+  _fails: 0
+  _attempt: 0
+  _timeList: []
+  _timeAttemptList: []
+  _average:
+    averagePoints: 0
+    averageTime: 0
+    averageSuccess: 0
+    averageFails: 0
 --- !u!1 &607407153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1509,10 @@ PrefabInstance:
     - target: {fileID: 7518683566658128703, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683566678957350, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
