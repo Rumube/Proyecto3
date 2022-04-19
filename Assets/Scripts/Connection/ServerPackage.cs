@@ -30,6 +30,7 @@ namespace ServerPack
     public class ServerPackage
     {
         public string _toUser;
+        public string _fromUser;
         public ClientPackets _typePackageClient;
         public ServerPackets _typePackageServer;
         public struct TabletInfo
@@ -59,35 +60,20 @@ namespace ServerPack
             public string _gameName;
         }
         public SelectStudentGame _selectStudentGame;
-        public struct Info
-        {
-            public int _idTablet;
-            public int _idStudent;
-            public string _nameStudent;
-        }
-        public Info _info;
 
-        public struct Data
+        public struct PauseGame
         {
-            public int _idPackage;
-            public int _idSender;
-            public string _jsonData;
+            public bool _pause;
         }
-        public Data _data;
+        public PauseGame _pauseGame;
+        public struct GameDifficulty
+        {
+            public int _level;
+        }
+        public GameDifficulty _gameDifficulty;
+       
         /// <summary>Creates a new empty packet (without an ID).</summary>
         public ServerPackage()
-        {
-
-        }
-        /// <summary>Creates a new packet with a given ID. Used for sending.</summary>
-        /// <param name="_id">The packet ID.</param>
-        public ServerPackage(int idTypePackage)
-        {
-
-        }
-        /// <summary>Creates a packet from which data can be read. Used for receiving.</summary>
-        /// <param name="_data">The bytes to add to the packet.</param>
-        public ServerPackage(string data)
         {
 
         }
