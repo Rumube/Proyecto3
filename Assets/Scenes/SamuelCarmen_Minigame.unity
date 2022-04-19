@@ -653,6 +653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 321773644}
   - component: {fileID: 321773639}
+  - component: {fileID: 321773650}
   - component: {fileID: 321773641}
   - component: {fileID: 321773640}
   - component: {fileID: 321773638}
@@ -702,7 +703,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 321773637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323fbe7a60615a640b9be765d6300280, type: 3}
+  m_Script: {fileID: 11500000, guid: 358817218c5a17e43bfd858f92a582af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _column: 4
@@ -713,17 +714,16 @@ MonoBehaviour:
   _offsetY: 1
   _canvas: {fileID: 1829420497}
   _geometryForms:
+  - {fileID: 677295092}
   - {fileID: 698367021}
   - {fileID: 314538719}
-  - {fileID: 677295092}
   - {fileID: 1903810348}
-  - {fileID: 306653130}
   - {fileID: 1647626211}
   - {fileID: 387435541}
   _geometryList: []
   _targetList: []
   _allList: []
-  _level: 2
+  _level: 1
   _completeThePanel: {fileID: 0}
 --- !u!114 &321773640
 MonoBehaviour:
@@ -751,38 +751,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 321773637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca478d7c8c7165641889f584cfeab519, type: 3}
+  m_Script: {fileID: 11500000, guid: 71499882811c34141911e9292417debb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - possibleGeometry:
+  - column: 3
+    row: 3
+    possibleGeometry:
     - {fileID: 698367021}
     - {fileID: 314538719}
     targetGeometry:
     - {fileID: 698367021}
-    numTargets: 2
-    numGeometryTargets: 1
-  - possibleGeometry:
-    - {fileID: 698367021}
-    - {fileID: 314538719}
-    - {fileID: 677295092}
-    targetGeometry:
-    - {fileID: 698367021}
-    - {fileID: 314538719}
-    - {fileID: 677295092}
-    numTargets: 3
     numGeometryTargets: 3
-  - possibleGeometry:
-    - {fileID: 698367021}
-    - {fileID: 314538719}
+  - column: 5
+    row: 5
+    possibleGeometry:
     - {fileID: 677295092}
-    - {fileID: 1903810348}
+    - {fileID: 698367021}
+    - {fileID: 1647626211}
     targetGeometry:
-    - {fileID: 698367021}
-    - {fileID: 314538719}
     - {fileID: 677295092}
-    numTargets: 12
     numGeometryTargets: 3
+  - column: 0
+    row: 0
+    possibleGeometry: []
+    targetGeometry: []
+    numGeometryTargets: 0
 --- !u!114 &321773642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,7 +821,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &321773645
 MonoBehaviour:
@@ -908,6 +902,47 @@ MonoBehaviour:
   _pause: 0
   _gameStateServer: 0
   _gameStateClient: 0
+--- !u!114 &321773650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321773637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca478d7c8c7165641889f584cfeab519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dataDifficulty:
+  - possibleGeometry:
+    - {fileID: 698367021}
+    - {fileID: 314538719}
+    targetGeometry:
+    - {fileID: 698367021}
+    numTargets: 2
+    numGeometryTargets: 1
+  - possibleGeometry:
+    - {fileID: 698367021}
+    - {fileID: 314538719}
+    - {fileID: 677295092}
+    targetGeometry:
+    - {fileID: 698367021}
+    - {fileID: 314538719}
+    - {fileID: 677295092}
+    numTargets: 3
+    numGeometryTargets: 3
+  - possibleGeometry:
+    - {fileID: 698367021}
+    - {fileID: 314538719}
+    - {fileID: 677295092}
+    - {fileID: 1903810348}
+    targetGeometry:
+    - {fileID: 698367021}
+    - {fileID: 314538719}
+    - {fileID: 677295092}
+    numTargets: 12
+    numGeometryTargets: 3
 --- !u!1 &387435541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,6 +1105,65 @@ RectTransform:
   m_AnchoredPosition: {x: 1331, y: 0}
   m_SizeDelta: {x: 211, y: 201}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &474707150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 474707152}
+  - component: {fileID: 474707151}
+  m_Layer: 0
+  m_Name: ButtonCounterGeometry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &474707151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474707150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7c0af6eaeddcd949aa3ca79b7cc4222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nSquare: 0
+  _nTriangle: 0
+  _nCircle: 0
+  _nDiamond: 0
+  _nRectangle: 0
+  _nPentagon: 0
+  _nHexagon: 0
+  _squareCounter: 0
+  _triangleCounter: 0
+  _circleCounter: 0
+  _diamondCounter: 0
+  _rectangleCounter: 0
+  _pentagonCounter: 0
+  _hexagonCounter: 0
+  _mission: {fileID: 1456344089}
+  _createPanel: {fileID: 1178415256}
+--- !u!4 &474707152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474707150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &528964306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1665,7 +1759,7 @@ MonoBehaviour:
   _pentagonCounter: 0
   _hexagonCounter: 0
   _mission: {fileID: 1456344089}
-  _createPanel: {fileID: 321773639}
+  _createPanel: {fileID: 0}
   _calculatePuntuation: {fileID: 321773638}
 --- !u!4 &936453854
 Transform:
@@ -1679,7 +1773,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &980151551 stripped
 MonoBehaviour:
@@ -1692,6 +1786,113 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1178415252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1178415253}
+  - component: {fileID: 1178415256}
+  - component: {fileID: 1178415254}
+  - component: {fileID: 1178415255}
+  m_Layer: 0
+  m_Name: GameManagerGeometry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1178415253
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178415252}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1178415254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178415252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71499882811c34141911e9292417debb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dataDifficulty:
+  - column: 4
+    row: 4
+    possibleGeometry:
+    - {fileID: 2130675865980192730, guid: 78217b0e1a0f9864ab5313c1baa0c212, type: 3}
+    - {fileID: 4174995236883551095, guid: 8b2d1dfcea5bc2948ba884f748139042, type: 3}
+    - {fileID: 9180665525807242543, guid: 8e05a92d703db6f408cd85bd37c0fed7, type: 3}
+    targetGeometry:
+    - {fileID: 2130675865980192730, guid: 78217b0e1a0f9864ab5313c1baa0c212, type: 3}
+    numGeometryTargets: 3
+  - column: 0
+    row: 0
+    possibleGeometry: []
+    targetGeometry: []
+    numGeometryTargets: 0
+--- !u!114 &1178415255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178415252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983aa3f08aa816c4f986749bdace3966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentstudentName: 
+  _pause: 0
+  _gameStateServer: 0
+  _gameStateClient: 0
+--- !u!114 &1178415256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178415252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358817218c5a17e43bfd858f92a582af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _column: 4
+  _row: 3
+  _gapX: 250
+  _gapY: 250
+  _offsetX: 2
+  _offsetY: 1
+  _canvas: {fileID: 1829420497}
+  _geometryForms:
+  - {fileID: 2130675865980192730, guid: 78217b0e1a0f9864ab5313c1baa0c212, type: 3}
+  - {fileID: 4174995236883551095, guid: 8b2d1dfcea5bc2948ba884f748139042, type: 3}
+  - {fileID: 9180665525807242543, guid: 8e05a92d703db6f408cd85bd37c0fed7, type: 3}
+  - {fileID: 5135984880703213529, guid: e96df9d1c5b093449bb4bbe396d70488, type: 3}
+  - {fileID: 5886385627745467275, guid: acfbf2f1dadedce4cb6ab0b57d364e76, type: 3}
+  - {fileID: 3070492593538968660, guid: 5f67b62d7ffa8f746b411df96e4d1897, type: 3}
+  _geometryList: []
+  _targetList: []
+  _allList: []
+  _level: 1
+  _completeThePanel: {fileID: 0}
 --- !u!1001 &1191418504
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1979,7 +2180,7 @@ Transform:
   - {fileID: 1829420501}
   - {fileID: 803223959}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1456344089 stripped
 MonoBehaviour:
@@ -2602,7 +2803,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026399629
 GameObject:
