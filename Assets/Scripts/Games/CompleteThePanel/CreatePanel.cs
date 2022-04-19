@@ -10,8 +10,8 @@ public class CreatePanel : MonoBehaviour
     public int _row;
     public int _gapX;
     public int _gapY;
-    public int _offsetX;
-    public int _offsetY;
+    public float _offsetX;
+    public float _offsetY;
 
     int _count;
 
@@ -22,7 +22,7 @@ public class CreatePanel : MonoBehaviour
     public List<GameObject> _targetList = new List<GameObject>();
     public List<GameObject> _allList = new List<GameObject>();
     private List<Geometry.Geometry_Type> _typeTargetGeometry = new List<Geometry.Geometry_Type>();
-   
+    private ButtonCounter _buttomCounter;
     //Game Configuration
     [SerializeField]
     private int _level;
@@ -35,6 +35,7 @@ public class CreatePanel : MonoBehaviour
     {
         _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
+        _buttomCounter = GameObject.Find("ButtonCounter").GetComponent<ButtonCounter>();
         GeneratePanel();
     }
 
@@ -60,8 +61,13 @@ public class CreatePanel : MonoBehaviour
             }
         }
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        Invoke("SendMessage", 1f);
     }
 
+    private void SendMessage()
+    {
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame());
+    }
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
@@ -162,7 +168,7 @@ public class CreatePanel : MonoBehaviour
     {
         if (_allList.Count==_row*_column)
         {
-            if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i <_allList.Count; i++)
                 {
