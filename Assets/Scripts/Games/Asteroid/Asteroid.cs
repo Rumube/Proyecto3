@@ -135,13 +135,13 @@ public class Asteroid : MonoBehaviour
             case 0: //Top Y = 6
                 SetTopPosition();
                 break;
-            case 1: //Bottom Y = -6
+            case 1: //Bottom Y = -5
                 SetBottomPosition();
                 break;
-            case 2: //Left X = -10
+            case 2: //Left X = -7
                 SetLeftPosition();
                 break;
-            case 3: //Right X = 10
+            case 3: //Right X = 7
                 SetRightPosition();
                 break;
         }
@@ -152,8 +152,8 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void SetTopPosition()
     {
-        int xPos = Random.Range(-6, 7);
-        _startPostion = new Vector2(xPos, 7);
+        int xPos = Random.Range(-4, 4);
+        _startPostion = new Vector2(xPos, 6);
     }
 
     /// <summary>
@@ -161,8 +161,8 @@ public class Asteroid : MonoBehaviour
     /// </summary>
     void SetBottomPosition()
     {
-        int xPos = Random.Range(-6, 7);
-        _startPostion = new Vector2(xPos, -7);
+        int xPos = Random.Range(-4, 4);
+        _startPostion = new Vector2(xPos, -5);
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class Asteroid : MonoBehaviour
     void SetLeftPosition()
     {
         int yPos = Random.Range(-2, 3);
-        _startPostion = new Vector2(-10, yPos);
+        _startPostion = new Vector2(-7, yPos);
     }
 
     /// <summary>
@@ -180,7 +180,7 @@ public class Asteroid : MonoBehaviour
     void SetRightPosition()
     {
         int yPos = Random.Range(-2, 3);
-        _startPostion = new Vector2(10, yPos);
+        _startPostion = new Vector2(7, yPos);
     }
 
     /// <summary>
