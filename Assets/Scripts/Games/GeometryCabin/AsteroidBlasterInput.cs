@@ -7,7 +7,7 @@ public class AsteroidBlasterInput : MonoBehaviour
 {
     [Header("References")]
     public GameObject _gunGo;
-    public Image _gunTarget;
+    public GameObject _gunTarget;
     LineRenderer _lineRenderer;
     GameObject _asteroidManager;
 
@@ -68,7 +68,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _asteroidManager.GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
-            InputController(false);
+            InputController();
         }
     }
 
@@ -79,14 +79,14 @@ public class AsteroidBlasterInput : MonoBehaviour
     {
         if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && !GetComponent<SpaceTimeCabin>()._gameFinished)
         {
-            //TODO InputStatic
-            InputController(true);
+            InputController();
         }
     }
 
     /// <summary>
-    /// Draw the laser
+    /// Draw the laser to the correct target position
     /// </summary>
+    /// <param name="targetPos">Last point of the laser</param>
     private void LineRendererController(Vector2 targetPos)
     {
         _lineRenderer.enabled = true;
@@ -104,7 +104,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <summary>
     /// Detects inputs during game play.
     /// </summary>
-    void InputController(bool isStatic)
+    private void InputController()
     {
 
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
@@ -130,8 +130,8 @@ public class AsteroidBlasterInput : MonoBehaviour
         }
         else
         {
-            _lastShotPostion = Camera.main.ScreenToWorldPoint(_gunTarget.transform.position);
-            LineRendererController(Camera.main.ScreenToWorldPoint(_gunTarget.transform.position));
+            _lastShotPostion = _gunTarget.transform.position;
+            LineRendererController(_lastShotPostion);
         }
 
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
