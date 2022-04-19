@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1300,7 +1300,8 @@ MonoBehaviour:
   _geometryList: []
   _targetList: []
   _allList: []
-  _level: 1
+  _typeTargetGeometry: 
+  _level: 4
   _completeThePanel: {fileID: 0}
 --- !u!114 &880524496
 MonoBehaviour:
@@ -1349,6 +1350,7 @@ MonoBehaviour:
   - possibleGeometry:
     - {fileID: 30599328}
     - {fileID: 1557274001}
+    - {fileID: 781645544}
     targetGeometry:
     - {fileID: 30599328}
     numTargets: 2
@@ -1361,19 +1363,24 @@ MonoBehaviour:
     - {fileID: 30599328}
     - {fileID: 1557274001}
     - {fileID: 781645544}
-    numTargets: 3
+    numTargets: 5
     numGeometryTargets: 3
   - possibleGeometry:
     - {fileID: 30599328}
     - {fileID: 1557274001}
+    targetGeometry:
+    - {fileID: 781645544}
+    numTargets: 5
+    numGeometryTargets: 1
+  - possibleGeometry:
+    - {fileID: 1557274001}
+    targetGeometry:
     - {fileID: 781645544}
     - {fileID: 1949193997}
-    targetGeometry:
+    - {fileID: 1512212270}
     - {fileID: 30599328}
-    - {fileID: 1557274001}
-    - {fileID: 781645544}
-    numTargets: 12
-    numGeometryTargets: 3
+    numTargets: 5
+    numGeometryTargets: 2
 --- !u!114 &880524499
 MonoBehaviour:
   m_ObjectHideFlags: 0
