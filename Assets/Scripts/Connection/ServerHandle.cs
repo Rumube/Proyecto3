@@ -4,6 +4,10 @@ using UnityEngine;
 using ServerPack;
 public class ServerHandle {
 
+    public static void UpdateReadyRockets(int id)
+    {
+        ServiceLocator.Instance.GetService<MobileUI>().UpdateReadyRockets(id);
+    }
     /// <summary>Enable the continue button and change the help info</summary>
     public static void ContinueGameTime()
     {

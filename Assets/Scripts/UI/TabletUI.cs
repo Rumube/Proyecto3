@@ -143,7 +143,7 @@ public class TabletUI : UI
         _rocketAnimator.Play("NaveDespegue");
         _doorsClosed.gameObject.SetActive(true);
         _doorsClosed.Play("PuertasTransicionCerrar");
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(6.0f);
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
 

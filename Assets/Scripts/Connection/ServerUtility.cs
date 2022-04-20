@@ -121,7 +121,8 @@ public class ServerUtility : MonoBehaviour
             {
                 case ClientPackets.studentsEndCall:
                     _numberTabletsEndCall++;
-                    if(_numberTabletsEndCall == _connectedTablets)
+                    ServerHandle.UpdateReadyRockets(_allPackages[0]._tabletInfo._idTablet);
+                    if (_numberTabletsEndCall == _connectedTablets)
                     {
                         ServerHandle.ContinueGameTime();
                     }                    
