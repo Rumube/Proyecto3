@@ -13,6 +13,7 @@ public class MobileUI : UI
 
     [Header("Main Menu")]
     public Button _continueMainMenu;
+    public TextMeshProUGUI _adviceTextMainMenu;
     public Texture _textureVideoMainMenu;
     public Animator _imageMainMenu;
     public VideoPlayer _videoMainMenu;
@@ -214,12 +215,14 @@ public class MobileUI : UI
     /// <summary>Activates the continue button of main menu</summary>
     public void ActivateContinueMainMenu()
     {
+        _adviceTextMainMenu.gameObject.SetActive(false);
         _continueMainMenu.interactable = true;
     }
 
     /// <summary>Desactivates the continue button of main menu</summary>
     public void DesctivateContinueMainMenu()
     {
+        _adviceTextMainMenu.gameObject.SetActive(true);
         _continueMainMenu.interactable = false;
     }
 
@@ -542,13 +545,13 @@ public class MobileUI : UI
         {
             GameObject newRocket = Instantiate(_rocketReady,_rocketsReady.transform);
             newRocket.GetComponent<Image>().sprite = _rocketReadySprites[i];
-            newRocket.GetComponent<Image>().color = new Color(newRocket.GetComponent<Image>().color.r, newRocket.GetComponent<Image>().color.g, newRocket.GetComponent<Image>().color.b,50);
+            newRocket.GetComponent<Image>().color = new Color(newRocket.GetComponent<Image>().color.r, newRocket.GetComponent<Image>().color.g, newRocket.GetComponent<Image>().color.b,0.5f);
         }
     }
     public void UpdateReadyRockets(int id)
     {
         id -= 1;
-        _rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 100);
+        _rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 1);
     }
     #endregion
 
