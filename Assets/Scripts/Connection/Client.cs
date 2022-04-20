@@ -89,6 +89,7 @@ public class Client
         ClientPackage package = new ClientPackage();
 
         package._typePackageClient = ClientPackets.studentsEndCall;
+        package._tabletInfo._idTablet = _tablet._id;
         package._callingDone._isDone = true;
 
         _ws.Send(JsonConvert.SerializeObject(package));

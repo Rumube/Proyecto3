@@ -65,6 +65,9 @@ public class MobileUI : UI
     public TMP_InputField _inputMinigamesSeconds;
     public TextMeshProUGUI _adviceStudents;
     public Button _continueGameTimer;
+    public GameObject _rocketsReady;
+    public GameObject _rocketReady;
+    public Sprite[] _rocketReadySprites;
 
     [Header("Student stadistics")]
     public TextMeshProUGUI _countdown;
@@ -531,6 +534,21 @@ public class MobileUI : UI
         ServiceLocator.Instance.GetService<UIManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
         PlayerPrefs.SetString("MinigamesMinutes", _inputMinigamesMinutes.text);
         PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
+    }
+
+    public void CreateReadyRockets()
+    {
+        for (int i = 0; i < ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets; ++i)
+        {
+            GameObject newRocket = Instantiate(_rocketReady,_rocketsReady.transform);
+            newRocket.GetComponent<Image>().sprite = _rocketReadySprites[i];
+            newRocket.GetComponent<Image>().color = new Color(newRocket.GetComponent<Image>().color.r, newRocket.GetComponent<Image>().color.g, newRocket.GetComponent<Image>().color.b,50);
+        }
+    }
+    public void UpdateReadyRockets(int id)
+    {
+        id -= 1;
+        _rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 100);
     }
     #endregion
 
