@@ -589,8 +589,6 @@ MonoBehaviour:
   _targetList: 
   _gameFinished: 0
   _finishCreateAsteroids: 0
-  _successes: 0
-  _mistakes: 0
 --- !u!114 &923033820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunGo: {fileID: 326122570}
-  _gunTarget: {fileID: 1507236653}
+  _gunTarget: {fileID: 1507236651}
 --- !u!114 &923033826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,7 +783,7 @@ MonoBehaviour:
     numAsteroids: 5
     numTargets: 2
     numGeometryTargets: 1
-    speedMovement: 10
+    speedMovement: 3
     asteroidsCanRotate: 0
     speedRotation: 0
   - possibleGeometry: 00000000010000000200000003000000
@@ -793,7 +791,7 @@ MonoBehaviour:
     numAsteroids: 5
     numTargets: 2
     numGeometryTargets: 3
-    speedMovement: 10
+    speedMovement: 3
     asteroidsCanRotate: 0
     speedRotation: 0
 --- !u!114 &923033827
@@ -1804,7 +1802,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1815,5 +1813,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 28, y: 13}
+  m_Size: {x: 15, y: 11}
   m_EdgeRadius: 0
