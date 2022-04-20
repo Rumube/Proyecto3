@@ -64,6 +64,7 @@ public class SimonGameManager : MonoBehaviour
     {
         Debug.Log("StartNextRound");
         startButton.SetActive(false);
+        StartCoroutine(StartNextRound());
     }
 
     public IEnumerator HighlightButton(int buttonId)
@@ -97,6 +98,7 @@ public class SimonGameManager : MonoBehaviour
         buttons.interactable = true;
         yield return null;
     }
+
 }
 
 
