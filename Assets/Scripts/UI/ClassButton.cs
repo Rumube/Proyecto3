@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClassButton : MonoBehaviour
 {
-    public Text _textButton;
+    public TextMeshProUGUI _textButton;
     public Image _highlighted;
     [HideInInspector]
     public bool _deleting = false;

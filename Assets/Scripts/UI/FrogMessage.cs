@@ -12,6 +12,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
 
     public float _timeWriting;
     public float _messageDuration;
+    private string _lastOrder;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,20 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
         StartCoroutine(FrogCoroutine(message));
     }
+    /// <summary>
+    /// Start the messages process and save the message in <see cref="_lastOrder"/>
+    /// </summary>
+    /// <param name="message">The message text</param>
+    /// <param name="isOrder">The message is an order</param>
+    public void NewFrogMessage(string message, bool isOrder)
+    {
+        StopAllCoroutines();
+        _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<Text>();
+        _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
+        StartCoroutine(FrogCoroutine(message));
+        if (isOrder)
+            _lastOrder = message;
+    }
 
     /// <summary>
     /// Makes the message and opens the panel
@@ -61,6 +76,13 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             yield return new WaitForSeconds(waitTime);
         }
         StartCoroutine(CloseMessage());
+    }
+    /// <summary>
+    /// Repeat the last order gived by Min
+    /// </summary>
+    public void RepeatLastOrder()
+    {
+        NewFrogMessage(_lastOrder);
     }
 
     /// <summary>

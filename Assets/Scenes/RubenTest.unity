@@ -364,7 +364,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: e0fa0ee6d57262c4d889b11422b0f137, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!1 &665200485
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +402,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1068310005}
     m_Modifications:
+    - target: {fileID: -886379245065097314, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: _needsCheck
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7518683565730518258, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.0014648438
@@ -505,10 +509,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 923033817}
-  - component: {fileID: 923033818}
-  - component: {fileID: 923033819}
-  - component: {fileID: 923033820}
+  - component: {fileID: 923033832}
   - component: {fileID: 923033821}
+  - component: {fileID: 923033820}
+  - component: {fileID: 923033834}
+  - component: {fileID: 923033818}
+  - component: {fileID: 923033833}
+  - component: {fileID: 923033819}
   - component: {fileID: 923033823}
   - component: {fileID: 923033824}
   - component: {fileID: 923033825}
@@ -518,9 +525,10 @@ GameObject:
   - component: {fileID: 923033826}
   - component: {fileID: 923033830}
   - component: {fileID: 923033829}
+  - component: {fileID: 923033831}
   m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
+  m_Name: AsteroidManager
+  m_TagString: AsteroidManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -555,6 +563,7 @@ MonoBehaviour:
   _currentTime: 0
   _maxTime: 50
   _finishTime: 0
+  _canStartTime: 0
 --- !u!114 &923033819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,21 +600,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 923033816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
+  m_Script: {fileID: 11500000, guid: 983aa3f08aa816c4f986749bdace3966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _server: 0
-  _canvasMobile: {fileID: 0}
-  _canvasTablet: {fileID: 0}
-  _uiManager: {fileID: 0}
-  _canvasGUI: {fileID: 0}
-  _gameTimeConfiguration: {fileID: 923033818}
-  _gameManager: {fileID: 923033821}
-  _networkManager: {fileID: 0}
-  _inputAndroid: {fileID: 923033824}
-  _myServer: {fileID: 0}
-  _error: {fileID: 923033827}
-  _frogMessage: {fileID: 923033828}
+  _currentstudentName: 
+  _pause: 0
+  _gameStateServer: 0
+  _gameStateClient: 0
 --- !u!114 &923033821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,14 +616,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 923033816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc20f87fadb5e6e4782318060bf0f381, type: 3}
+  m_Script: {fileID: 11500000, guid: 16b2e0f0a8f186749b391af60805e0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minigamesNames: []
-  _currentstudentName: 
-  _currentgameName: 
-  _gameStateServer: 0
-  _gameStateClient: 0
+  _minigameMinutes: 0
+  _minigameSeconds: 20
+  _minigameLevel: 0
 --- !u!120 &923033822
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -767,9 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunGo: {fileID: 326122570}
-  _gunTarget: {fileID: 1507236653}
-  _canShot: 1
-  _canVibrate: 1
+  _gunTarget: {fileID: 1507236651}
 --- !u!114 &923033826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,6 +938,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006de6eedb06ec04f95cd8f2486e4d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &923033831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58cb192cbc698fe47a546e0eea3bf278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _numberOfParticles: 8
+  _floatingTime: 0.5
+  _floatingVelocity: 10
+  _particleVelocity: 8
+  _goodParticle: {fileID: 5408174780371598402, guid: b252830ee012e4244ae1a934e119a179, type: 3}
+--- !u!114 &923033832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c294e6f08dcef746a43ae5c225915d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGUI: {fileID: 0}
+  _gameTimeConfiguration: {fileID: 923033818}
+  _inputAndroid: {fileID: 923033824}
+  _error: {fileID: 923033827}
+  _frogMessage: {fileID: 923033828}
+  _networkSinBucle: {fileID: 923033821}
+  _gmSinBucle: {fileID: 923033820}
+  _positive: {fileID: 923033831}
+  _calculatePoints: {fileID: 923033834}
+--- !u!114 &923033833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 0
+--- !u!114 &923033834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923033816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b547af850217e49983858fe1968f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _points: 0
+  _success: 0
+  _fails: 0
+  _attempt: 0
+  _timeList: []
+  _timeAttemptList: []
+  _average:
+    averagePoints: 0
+    averageTime: 0
+    averageSuccess: 0
+    averageFails: 0
 --- !u!1 &1068310004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5607469987175810924, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.701
+      value: -3.72
       objectReference: {fileID: 0}
     - target: {fileID: 5607469987175810924, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1733,7 +1804,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1744,5 +1815,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 28, y: 13}
+  m_Size: {x: 15, y: 11}
   m_EdgeRadius: 0
