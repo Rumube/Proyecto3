@@ -10,8 +10,6 @@ public class SimonGameManager : MonoBehaviour
 
     public List<AudioClip> buttonSoundsList = new List<AudioClip>();
 
-    public List<List<Color32>> buttonColors = new List<List<Color32>>();
-
     public List<Button> clickableButtons;
 
     public AudioClip loseSound;
@@ -22,16 +20,13 @@ public class SimonGameManager : MonoBehaviour
 
     public GameObject startButton;
 
-    public void Awake()
+    private SimonGameDifficulty.dataDiffilcuty _data;
+    public int _level;
+
+    private void Start()
     {
-        buttonColors.Add(new List<Color32> { new Color32(255, 100, 100, 255), new Color32(255, 0, 0, 255) });//Add Red (First Regular, Then Highlighted)
-        buttonColors.Add(new List<Color32> { new Color32(255, 187, 109, 255), new Color32(255, 136, 0, 255) });//Add Orange
-        buttonColors.Add(new List<Color32> { new Color32(162, 255, 124, 255), new Color32(72, 248, 0, 255) });//Add Green
-        buttonColors.Add(new List<Color32> { new Color32(57, 111, 255, 255), new Color32(0, 70, 255, 255) });//Add Blue
-        for (int i=0;i<4;i++)
-        {
-         clickableButtons[i].GetComponent<Image>().color = buttonColors[i][0];
-        }
+       _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
+        StartGame();
     }
     public void AddToPlayerSequenceList(int buttonId)
     {
@@ -63,16 +58,19 @@ public class SimonGameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("StartNextRound");
-        startButton.SetActive(false);
+        playerSequenceList.Clear();
+        playerTaskList.Clear();
+        GeneratePanel();
         StartCoroutine(StartNextRound());
+
     }
 
     public IEnumerator HighlightButton(int buttonId)
     {
-        clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];//Highlighted Color
-        audioSource.PlayOneShot(buttonSoundsList[buttonId]);
+       /* clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];//Highlighted Color
+        audioSource.PlayOneShot(buttonSoundsList[buttonId]);*/
         yield return new WaitForSeconds(0.5f);
-        clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];//Regular Color
+       // clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];//Regular Color
     }
 
     public IEnumerator PlayerLost()
@@ -89,8 +87,8 @@ public class SimonGameManager : MonoBehaviour
     {
         playerSequenceList.Clear();
         buttons.interactable = false;
-        yield return new WaitForSeconds(1f);
-        playerTaskList.Add(Random.Range(0, 4));
+        yield return new WaitForSeconds(_data.simonVelocity);
+        playerTaskList.Add(Random.Range(0, _data.numberButtons));
         foreach(int index in playerTaskList)
         {
             yield return StartCoroutine(HighlightButton(index));
@@ -98,7 +96,17 @@ public class SimonGameManager : MonoBehaviour
         buttons.interactable = true;
         yield return null;
     }
+    private void GeneratePanel()
+    {
+        List<Button> auxList = new List<Button>(clickableButtons);
 
+        for (int i = 0; i < _data.numberButtons; i++)
+        {
+            int randIndex = Random.Range(0,auxList.Count);
+            auxList[randIndex].gameObject.SetActive(true);
+            auxList.RemoveAt(randIndex);            
+        }
+    }
 }
 
 
