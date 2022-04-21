@@ -30,9 +30,27 @@ public class SimonGameManager : MonoBehaviour
     {
         _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
         _rounds = _data.roundList;
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         StartGame();
     }
 
+    private void Update()
+    {
+        if(GetComponent<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing)
+        {
+            buttons.interactable = true;
+        }
+        else
+        {
+            buttons.interactable = false;
+        }
+    }
+
+    #region Buttom
+    /// <summary>
+    /// Add to the PlayerSequence the button pressed
+    /// </summary>
+    /// <param name="button">Reference of the button</param>
     public void AddToPlayerSequenceList(Button button)
     {
         _playerSequenceList.Add(button.gameObject.GetComponent<Geometry>()._geometryType);
@@ -48,7 +66,7 @@ public class SimonGameManager : MonoBehaviour
             else
             {
                 ServiceLocator.Instance.GetService<IError>().GenerateError();
-                Debug.Log("You have lost");
+                ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(0, 1);
                 StartGame();
                 //StartCoroutine(PlayerLost());
                 return;
@@ -60,17 +78,20 @@ public class SimonGameManager : MonoBehaviour
             print(_currentRounds);
             if(_currentRounds < _rounds)
             {
-                Debug.Log("Start Next Round");
                 StartCoroutine(StartNextRound());
             }
             else
             {
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+                ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(1, 0);
                 StartGame();
             }
         }
     }
-
+    #endregion
+    /// <summary>
+    /// Starts the game parameters
+    /// </summary>
     public void StartGame()
     {
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
@@ -80,7 +101,6 @@ public class SimonGameManager : MonoBehaviour
             if (currentButton.activeSelf)
                 currentButton.SetActive(false);
         }
-        Debug.Log("StartNextRound");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Completa la secuencia para aterrizar la nave!");
         _currentRounds = 0;
         _playerSequenceList.Clear();
@@ -98,16 +118,9 @@ public class SimonGameManager : MonoBehaviour
         // clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];//Regular Color
     }
 
-    public IEnumerator PlayerLost()
-    {
-        audioSource.PlayOneShot(loseSound);
-        _playerSequenceList.Clear();
-        _playerTaskList.Clear();
-        yield return new WaitForSeconds(2f);
-        startButton.SetActive(true);
-
-    }
-
+    /// <summary>
+    /// Starts new round in the game
+    /// </summary>
     public IEnumerator StartNextRound()
     {
         _playerSequenceList.Clear();

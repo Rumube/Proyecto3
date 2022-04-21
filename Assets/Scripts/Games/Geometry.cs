@@ -17,6 +17,7 @@ public class Geometry: MonoBehaviour
     }
 
     public Geometry_Type _geometryType;
+    public List<AudioClip> _geometryAudio;
 
     /// <summary>
     /// Returns the geometry name in spanish
@@ -91,6 +92,31 @@ public class Geometry: MonoBehaviour
 
             default:
                 return "error";
+        }
+    }
+
+    public void GenerateSound()
+    {
+        switch (_geometryType)
+        {
+            case Geometry_Type.circle:
+                break;
+            case Geometry_Type.triangle:
+                break;
+            case Geometry_Type.square:
+                break;
+            case Geometry_Type.diamond:
+                break;
+            case Geometry_Type.rectangle:
+                break;
+            case Geometry_Type.pentagon:
+                break;
+            case Geometry_Type.hexagon:
+                break;
+            case Geometry_Type.star:
+                break;
+            default:
+                break;
         }
     }
 }
