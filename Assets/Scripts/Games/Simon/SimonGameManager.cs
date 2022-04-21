@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class SimonGameManager : MonoBehaviour
 {
-    private List<int> playerTaskList = new List<int>();
-    private List<int> playerSequenceList = new List<int>();
+    public List<Geometry.Geometry_Type> playerTaskList = new List<Geometry.Geometry_Type>();
+    public List<Geometry.Geometry_Type> playerSequenceList = new List<Geometry.Geometry_Type>();
 
     public List<AudioClip> buttonSoundsList = new List<AudioClip>();
 
@@ -22,17 +22,19 @@ public class SimonGameManager : MonoBehaviour
 
     private SimonGameDifficulty.dataDiffilcuty _data;
     public int _level;
+    private List<GameObject> playableButtons = new List<GameObject>();
+    
 
     private void Start()
     {
        _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
         StartGame();
     }
-    public void AddToPlayerSequenceList(int buttonId)
+    public void AddToPlayerSequenceList(Button button)
     {
-        playerSequenceList.Add(buttonId);
+        playerSequenceList.Add(button.gameObject.GetComponent<Geometry>()._geometryType);
 
-        StartCoroutine(HighlightButton(buttonId));
+        //StartCoroutine(HighlightButton(buttonId));
 
         for (int i = 0; i < playerSequenceList.Count; i++)
         {
@@ -88,24 +90,41 @@ public class SimonGameManager : MonoBehaviour
         playerSequenceList.Clear();
         buttons.interactable = false;
         yield return new WaitForSeconds(_data.simonVelocity);
-        playerTaskList.Add(Random.Range(0, _data.numberButtons));
+        int indexButton = Random.Range(0,_data.numberButtons);
+        playerTaskList.Add(playableButtons[indexButton].GetComponent<Geometry>()._geometryType);
+        string pista = "";
         foreach(int index in playerTaskList)
         {
-            yield return StartCoroutine(HighlightButton(index));
+            pista +=" "+playableButtons[index];
+          //  yield return StartCoroutine(HighlightButton(index));
         }
+        Debug.Log(pista);
         buttons.interactable = true;
         yield return null;
     }
     private void GeneratePanel()
     {
         List<Button> auxList = new List<Button>(clickableButtons);
+        playableButtons.Clear();
 
         for (int i = 0; i < _data.numberButtons; i++)
         {
             int randIndex = Random.Range(0,auxList.Count);
             auxList[randIndex].gameObject.SetActive(true);
+            
             auxList.RemoveAt(randIndex);            
         }
+
+        GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
+
+        foreach (GameObject currentButton in findButtons)
+        {
+            if (currentButton.activeSelf)
+            {
+                playableButtons.Add(currentButton);
+            }
+        }
+
     }
 }
 
