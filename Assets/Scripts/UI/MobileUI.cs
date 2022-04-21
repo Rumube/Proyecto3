@@ -132,7 +132,7 @@ public class MobileUI : UI
                 //Update the number of tablets that are connected just when something is new connected
                 if (ServiceLocator.Instance.GetService<NetworkManager>().GetUpdateConnectedTablets())
                 {
-                    _connectedTablets.text = ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets().ToString();
+                    _connectedTablets.text = ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() + "/6";
                     ServiceLocator.Instance.GetService<NetworkManager>().SetUpdateConnectedTablets(false);
                 }
                 if (ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() > 0)
@@ -474,12 +474,12 @@ public class MobileUI : UI
     {
         if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet > 0)
         {
-            _numMininautas.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count.ToString();
+            _numMininautas.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count + "/12";
 
         }
         else
         {
-            _numMininautas.text = "0";
+            _numMininautas.text = "0/12";
         }
     }
 
