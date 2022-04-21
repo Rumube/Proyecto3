@@ -12,7 +12,8 @@ public class Geometry: MonoBehaviour
         diamond = 3,
         rectangle = 4,
         pentagon = 5,
-        hexagon = 6
+        hexagon = 6,
+        star = 7
     }
 
     public Geometry_Type _geometryType;
@@ -45,6 +46,9 @@ public class Geometry: MonoBehaviour
 
             case Geometry_Type.hexagon:
                 return "hexágono";
+
+            case Geometry_Type.star:
+                return "estrella";
 
             default:
                 return "error";
@@ -81,6 +85,9 @@ public class Geometry: MonoBehaviour
 
             case Geometry_Type.hexagon:
                 return "hexágono";
+
+            case Geometry_Type.star:
+                return "estrella";
 
             default:
                 return "error";

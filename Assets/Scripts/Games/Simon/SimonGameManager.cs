@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class SimonGameManager : MonoBehaviour
 {
-    public List<Geometry.Geometry_Type> playerTaskList = new List<Geometry.Geometry_Type>();
-    public List<Geometry.Geometry_Type> playerSequenceList = new List<Geometry.Geometry_Type>();
+    private List<Geometry.Geometry_Type> _playerTaskList = new List<Geometry.Geometry_Type>();
+    private List<Geometry.Geometry_Type> _playerSequenceList = new List<Geometry.Geometry_Type>();
 
     public List<AudioClip> buttonSoundsList = new List<AudioClip>();
 
@@ -22,46 +22,69 @@ public class SimonGameManager : MonoBehaviour
 
     private SimonGameDifficulty.dataDiffilcuty _data;
     public int _level;
-    private List<GameObject> playableButtons = new List<GameObject>();
-    
+    private List<GameObject> _playableButtons = new List<GameObject>();
+    private int _rounds;
+    private int _currentRounds = 0;
 
     private void Start()
     {
-       _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
+        _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
+        _rounds = _data.roundList;
         StartGame();
     }
+
     public void AddToPlayerSequenceList(Button button)
     {
-        playerSequenceList.Add(button.gameObject.GetComponent<Geometry>()._geometryType);
+        _playerSequenceList.Add(button.gameObject.GetComponent<Geometry>()._geometryType);
 
         //StartCoroutine(HighlightButton(buttonId));
 
-        for (int i = 0; i < playerSequenceList.Count; i++)
+        for (int i = 0; i < _playerSequenceList.Count; i++)
         {
-            if (playerTaskList[i]==playerSequenceList[i])
+            if (_playerTaskList[i] == _playerSequenceList[i])
             {
                 continue;
             }
             else
             {
+                ServiceLocator.Instance.GetService<IError>().GenerateError();
                 Debug.Log("You have lost");
-                StartCoroutine(PlayerLost());
+                StartGame();
+                //StartCoroutine(PlayerLost());
                 return;
             }
         }
-
-        if (playerSequenceList.Count == playerTaskList.Count)
+        if (_playerSequenceList.Count == _playerTaskList.Count && _currentRounds < _rounds)
         {
-            Debug.Log("Start Next Round");
-            StartCoroutine(StartNextRound());
+            _currentRounds++;
+            print(_currentRounds);
+            if(_currentRounds < _rounds)
+            {
+                Debug.Log("Start Next Round");
+                StartCoroutine(StartNextRound());
+            }
+            else
+            {
+                ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+                StartGame();
+            }
         }
     }
 
     public void StartGame()
     {
+        GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
+
+        foreach (GameObject currentButton in findButtons)
+        {
+            if (currentButton.activeSelf)
+                currentButton.SetActive(false);
+        }
         Debug.Log("StartNextRound");
-        playerSequenceList.Clear();
-        playerTaskList.Clear();
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Completa la secuencia para aterrizar la nave!");
+        _currentRounds = 0;
+        _playerSequenceList.Clear();
+        _playerTaskList.Clear();
         GeneratePanel();
         StartCoroutine(StartNextRound());
 
@@ -69,17 +92,17 @@ public class SimonGameManager : MonoBehaviour
 
     public IEnumerator HighlightButton(int buttonId)
     {
-       /* clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];//Highlighted Color
-        audioSource.PlayOneShot(buttonSoundsList[buttonId]);*/
+        /* clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][1];//Highlighted Color
+         audioSource.PlayOneShot(buttonSoundsList[buttonId]);*/
         yield return new WaitForSeconds(0.5f);
-       // clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];//Regular Color
+        // clickableButtons[buttonId].GetComponent<Image>().color = buttonColors[buttonId][0];//Regular Color
     }
 
     public IEnumerator PlayerLost()
     {
         audioSource.PlayOneShot(loseSound);
-        playerSequenceList.Clear();
-        playerTaskList.Clear();
+        _playerSequenceList.Clear();
+        _playerTaskList.Clear();
         yield return new WaitForSeconds(2f);
         startButton.SetActive(true);
 
@@ -87,16 +110,16 @@ public class SimonGameManager : MonoBehaviour
 
     public IEnumerator StartNextRound()
     {
-        playerSequenceList.Clear();
+        _playerSequenceList.Clear();
         buttons.interactable = false;
         yield return new WaitForSeconds(_data.simonVelocity);
-        int indexButton = Random.Range(0,_data.numberButtons);
-        playerTaskList.Add(playableButtons[indexButton].GetComponent<Geometry>()._geometryType);
+        int indexButton = Random.Range(0, _data.numberButtons);
+        _playerTaskList.Add(_playableButtons[indexButton].GetComponent<Geometry>()._geometryType);
         string pista = "";
-        foreach(int index in playerTaskList)
+        foreach (Geometry.Geometry_Type geometry in _playerTaskList)
         {
-            pista +=" "+playableButtons[index];
-          //  yield return StartCoroutine(HighlightButton(index));
+            pista += " " + geometry.ToString();
+            //  yield return StartCoroutine(HighlightButton(index));
         }
         Debug.Log(pista);
         buttons.interactable = true;
@@ -105,14 +128,14 @@ public class SimonGameManager : MonoBehaviour
     private void GeneratePanel()
     {
         List<Button> auxList = new List<Button>(clickableButtons);
-        playableButtons.Clear();
+        _playableButtons.Clear();
 
         for (int i = 0; i < _data.numberButtons; i++)
         {
-            int randIndex = Random.Range(0,auxList.Count);
+            int randIndex = Random.Range(0, auxList.Count);
             auxList[randIndex].gameObject.SetActive(true);
-            
-            auxList.RemoveAt(randIndex);            
+
+            auxList.RemoveAt(randIndex);
         }
 
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
@@ -121,7 +144,7 @@ public class SimonGameManager : MonoBehaviour
         {
             if (currentButton.activeSelf)
             {
-                playableButtons.Add(currentButton);
+                _playableButtons.Add(currentButton);
             }
         }
 
