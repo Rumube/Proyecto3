@@ -11,6 +11,7 @@ public class Positive : MonoBehaviour, IPositive
     public float _particleVelocity;
     [Header("References")]
     public GameObject _goodParticle;
+    public Vector2 _targetFeedback = new Vector2(6, 4);
 
     // Start is called before the first frame update
     void Start()
@@ -49,27 +50,13 @@ public class Positive : MonoBehaviour, IPositive
     {
         float radialPart = 360 / _numberOfParticles;
         float degrees = Random.Range(0, 360);
-        Vector2 newTarget = GenerateVector2Target();
         for (int i = 0; i < _numberOfParticles; i++)
         {
             Vector2 dir = (Vector2)(Quaternion.Euler(0, 0, degrees) * Vector2.right);
             GameObject newParticle = Instantiate(_goodParticle);
             newParticle.transform.position = initPosition;
-            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, newTarget, _floatingTime, _floatingVelocity, _particleVelocity);
+            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, _targetFeedback, _floatingTime, _floatingVelocity, _particleVelocity);
             degrees += radialPart;
         }
-    }
-
-    /// <summary>
-    /// Transforms the target position on the canvas into a position in the game world
-    /// </summary>
-    /// <returns>Vector2 Target</returns>
-    private Vector2 GenerateVector2Target()
-    {
-        Vector3 frogPos = GameObject.FindGameObjectWithTag("CountDown").GetComponent<RectTransform>().position;
-        frogPos = new Vector3(frogPos.x, frogPos.y, Camera.main.transform.position.z);
-        Vector2 target = Camera.main.ScreenToWorldPoint(frogPos);
-        target = new Vector2(target.x, target.y);
-        return target;
     }
 }
