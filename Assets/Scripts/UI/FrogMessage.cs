@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Crosstales.RTVoice;
 using Crosstales.RTVoice.Model;
+using TMPro;
 
 public class FrogMessage : MonoBehaviour, IFrogMessage
 {
-    AudioSource _audio;
-    Text _textMessage;
-    Image _imageMassage;
+    private AudioSource _audio;
+    private TextMeshProUGUI _textMessage;
+    private Image _imageMassage;
     [SerializeField]
     public List<string> _messagePile = new List<string>();
     private bool _messageAtive;
@@ -52,9 +53,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     }
 
 
-    private void SendMessage(string message)
+    private new void SendMessage(string message)
     {
-        _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<Text>();
+        _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<TextMeshProUGUI>();
         _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
         StartCoroutine(FrogCoroutine(message));
     }
@@ -89,7 +90,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     private IEnumerator FrogCoroutine(string message)
     {
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
-        _textMessage.text = "";
+        _textMessage.SetText("");
         _imageMassage.color = new Color(0, 0, 0, 1);
 
         string currentMessage = "";
@@ -99,7 +100,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         for (int i = 0; i < textSplit.Length; i++)
         {
             currentMessage += textSplit[i];
-            _textMessage.text = currentMessage;
+            _textMessage.SetText(currentMessage);
 
             yield return new WaitForSeconds(waitTime);
         }
