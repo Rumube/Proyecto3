@@ -12,11 +12,13 @@ public class Positive : MonoBehaviour, IPositive
     [Header("References")]
     public GameObject _goodParticle;
     public Vector2 _targetFeedback = new Vector2(6, 4);
+    public AudioClip _clip;
+    private AudioSource _audio;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,12 +36,16 @@ public class Positive : MonoBehaviour, IPositive
     {
         GenerateVisualFeedback(initPosition);
         //TODO: GENERATE AUDITIVE EFFECTS
+        AudioManagement();
     }
-    
-    public void GenerateFeedback()
+
+    /// <summary>
+    /// Set the audio clip and play the sound
+    /// </summary>
+    private void AudioManagement()
     {
-        GenerateVisualFeedback(Vector2.zero);
-        //TODO: GENERATE AUDITIVE EFFECTS
+        _audio.clip = _clip;
+        _audio.Play();
     }
 
     /// <summary>
