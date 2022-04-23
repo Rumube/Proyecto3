@@ -24,6 +24,7 @@ public class TabletUI : UI
     [Header("Initial screen")]
     public TMP_InputField _ipServer;
     public TMP_InputField _portServer;
+    public GameObject _cantConnectText;
 
     [Header("Connection")]
     public TextMeshProUGUI _studentsText;
@@ -82,9 +83,12 @@ public class TabletUI : UI
         {
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = false;
+            ServiceLocator.Instance.GetService<NetworkManager>().SendViewingFinalScore();
+
         }
         //Active just the first one
-        _windowsTree[_uiIndex].SetActive(true);      
+        _windowsTree[_uiIndex].SetActive(true);
+        _continueNextScreen = true;
     }
 
     /// <summary>

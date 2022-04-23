@@ -7,6 +7,7 @@ public abstract class UI : MonoBehaviour,IUI
 {
     protected int _uiIndex;
     protected List<GameObject> _windowsTree;
+    public bool _continueNextScreen;
     private void Awake()
     {
         _windowsTree = new List<GameObject>();
@@ -38,9 +39,12 @@ public abstract class UI : MonoBehaviour,IUI
     /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>
     public void OpenNextWindow()
     {
-        _uiIndex++;
-        _windowsTree[_uiIndex].SetActive(true);
-        _windowsTree[_uiIndex - 1].SetActive(false);
+        if (_continueNextScreen)
+        {
+            _uiIndex++;
+            _windowsTree[_uiIndex].SetActive(true);
+            _windowsTree[_uiIndex - 1].SetActive(false);
+        }      
     }
 
     /// <summary>Open the previous window deppending on the position of the array and close the current one</summary>

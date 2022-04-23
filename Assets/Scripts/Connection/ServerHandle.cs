@@ -30,4 +30,8 @@ public class ServerHandle {
         //ServiceLocator.Instance.GetService<ServerUtility>().MinigameDifficulty(_package._fromUser, ServiceLocator.Instance.GetService<GameManager>().gameObject.GetComponent<Android>().GetDifficulty(_package._selectStudentGame._studentName, _package._selectStudentGame._gameName));
         ServiceLocator.Instance.GetService<ServerUtility>().MinigameDifficulty(_package._fromUser, ServiceLocator.Instance.GetService<GameManager>().gameObject.GetComponent<Android>().GetDifficulty(_package._selectStudentGame._studentName, "JGO1"));// el de arriba es el de verdad
     }
+    public static void UpdateTabletsViewingFinalScore(int numberTabletsViewFinalScore)
+    {
+        ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberTabletsLookingFinalScore();
+    }
 }

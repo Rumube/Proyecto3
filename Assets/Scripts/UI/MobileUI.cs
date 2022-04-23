@@ -10,6 +10,7 @@ public class MobileUI : UI
     [Header("Initial screen")]
     public VideoPlayer _video;
     public Animator[] _initialButtonAnims = new Animator[3];
+    public Animator _fadeOutInitialScreen;
 
     [Header("Main Menu")]
     public Button _continueMainMenu;
@@ -31,6 +32,10 @@ public class MobileUI : UI
     [Header("Add class popup")]
     public TMP_InputField _introducedNameClass;
     public TextMeshProUGUI _numCharactersClass;
+    public TextMeshProUGUI _errorAdviceAddClass;
+
+    [Header("Class")]
+    public GameObject _loading;
 
     [Header("Delete student popup")]
     public TextMeshProUGUI _deletingStudentName;
@@ -44,6 +49,7 @@ public class MobileUI : UI
     public TMP_InputField _introducedNameStudent;
     public TextMeshProUGUI _numCharactersStudent;
     public TextMeshProUGUI _studentNameWritingAdd;
+    public TextMeshProUGUI _errorAdviceAddStudent;
 
     [Header("Game Connection")]
     public TextMeshProUGUI _ip;
@@ -83,6 +89,9 @@ public class MobileUI : UI
     public Sprite _playPressedSprite;
     public Sprite _pauseSprite;
     public Sprite _pausePressedSprite;
+
+    [Header("Final Score")]
+    public TextMeshProUGUI _numTabletsViewingFinalScore;
     void Start()
     {
         //Adding root windows in order of appearance
@@ -112,7 +121,10 @@ public class MobileUI : UI
 
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
-
+        _continueNextScreen = true;
+        //Initial animations
+        _fadeOutInitialScreen.Play("InitialScreenFadeOut");
+        _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
     }
     void InitialAnimEndReached(VideoPlayer vp)
@@ -122,7 +134,14 @@ public class MobileUI : UI
             _initialButtonAnims[i].Play("FadeIn");
         }       
     }
-  
+    public void Alpha100InitialButtons()
+    {
+        for (int i = 0; i < _initialButtonAnims.Length; ++i)
+        {
+            _initialButtonAnims[i].enabled = false;
+           _initialButtonAnims[i].gameObject.GetComponent<Image>().color = Color.white;
+        }
+    }
     private void Update()
     {
         //Control the instructions deppending on the game state
@@ -244,6 +263,7 @@ public class MobileUI : UI
     public void PopupAddClass()
     {
         _introducedNameClass.text = "";
+        _errorAdviceAddClass.gameObject.SetActive(false);
         ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.activeSelf);
     }
 
@@ -302,7 +322,10 @@ public class MobileUI : UI
             ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform.GetChild(i).GetComponentInChildren<ClassButton>()._highlighted.gameObject.SetActive(false);
         }
     }
-    
+    public void AddingTwoClassesWithSameName()
+    {
+        _errorAdviceAddClass.gameObject.SetActive(true);
+    }
     #endregion
     #region Class
     /// <summary>Shows the name of the classroom inside class window</summary>
@@ -315,6 +338,7 @@ public class MobileUI : UI
     public void PopupAddStudent()
     {
         _introducedNameStudent.text = "";
+        _errorAdviceAddStudent.gameObject.SetActive(false);
         ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.activeSelf);
     }
 
@@ -385,6 +409,28 @@ public class MobileUI : UI
             }
             _deleteStudent.GetComponent<Image>().sprite = _bin;
         }
+    }
+    public void AddingTwoStudentsWithSameName()
+    {
+        _errorAdviceAddStudent.gameObject.SetActive(true);
+    }
+
+    public void ShowLoading()
+    {
+        //_loading.SetActive(true);
+        StartCoroutine(Loading());
+    }
+    IEnumerator Loading()
+    {
+        
+        _loading.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
+        yield return null;
+    }
+    public void HideLoading()
+    {
+        _loading.SetActive(false);
     }
     #endregion
     #region GameConnection
@@ -539,6 +585,30 @@ public class MobileUI : UI
         PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
     }
 
+    public void ChechIfSessionSecondsIsCorrect()
+    {
+        int seconds = 0; 
+        if (int.TryParse(_inputSessionSeconds.text, out seconds))
+        {
+            if (seconds > 59)
+            {
+                _inputSessionSeconds.text = "59";
+            }
+        }
+    }
+
+    public void ChechIfMinigameSecondsIsCorrect()
+    {
+        int seconds = 0;
+        if (int.TryParse(_inputMinigamesSeconds.text, out seconds))
+        {
+            if (seconds > 59)
+            {
+                _inputMinigamesSeconds.text = "59";
+            }
+        }       
+    }
+
     public void CreateReadyRockets()
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets; ++i)
@@ -560,7 +630,16 @@ public class MobileUI : UI
     /// <summary>Show the timer</summary>
     private void ShowCountDown()
     {
-        _countdown.text = ServiceLocator.Instance.GetService<UIManager>()._timeSessionMinutes + ":" + ServiceLocator.Instance.GetService<UIManager>()._timeSessionSeconds;
+        int secondsCorrected = ServiceLocator.Instance.GetService<UIManager>()._timeSessionSeconds;
+        if (secondsCorrected < 10)
+        {
+            _countdown.text = ServiceLocator.Instance.GetService<UIManager>()._timeSessionMinutes + ":0" + secondsCorrected;
+        }
+        else
+        {
+            _countdown.text = ServiceLocator.Instance.GetService<UIManager>()._timeSessionMinutes + ":" + secondsCorrected;
+        }
+       
     }
 
     /// <summary>Quit the highlight of every tablet in stadistics screen</summary>
@@ -619,5 +698,10 @@ public class MobileUI : UI
         ServiceLocator.Instance.GetService<ServerUtility>().TurnOff();
         QuitGame();
     }
+
+    public void UpdateNumberTabletsLookingFinalScore()
+    {
+        _numTabletsViewingFinalScore.text = ServiceLocator.Instance.GetService<ServerUtility>()._numberTabletsViewFinalScore + "/" + ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets;
+     }
     #endregion
 }

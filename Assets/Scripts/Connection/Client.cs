@@ -22,11 +22,21 @@ public class Client
         _ws.OnMessage += Ws_OnMessage;
         _ws.Connect();
 
-        EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+        if (_ws.Ping())
+        {
+            EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+            ClientHandle.CanConnectServer();
 
-        _allPackages = new List<ClientPackage>();
+            _allPackages = new List<ClientPackage>();
 
-        InitializeData();
+            InitializeData();
+        }
+        else
+        {
+            ClientHandle.CantConnectServer();
+            if (_ws != null)
+                _ws.Close();
+        }     
     }
 
     /// <summary>Initialize a tablet and assing -1 for tablet id</summary>
@@ -104,6 +114,15 @@ public class Client
         package._fromUser = _id;
         package._selectStudentGame._studentName = studentName;
         package._selectStudentGame._gameName = gameName;
+
+        _ws.Send(JsonConvert.SerializeObject(package));
+    }
+
+    public void ViewFinalScore()
+    {
+        ClientPackage package = new ClientPackage();
+
+        package._typePackageClient = ClientPackets.viewFinalScore;
 
         _ws.Send(JsonConvert.SerializeObject(package));
     }

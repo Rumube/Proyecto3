@@ -166,4 +166,10 @@ public class NetworkManager : MonoBehaviour
     }
     #endregion
 
+    #region FinalScore
+    public void SendViewingFinalScore()
+    {
+        client.ViewFinalScore();
+    }
+    #endregion
 }
