@@ -34,6 +34,8 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if (_messagePile.Count >= 1 && !_messageAtive)
         {
+            //TODO: Delete duplicate messages
+
             //List<int> toDelete = new List<int>();
             //for (int i = 1; i < _messagePile.Count; i++)
             //{
@@ -58,7 +60,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             //    }
             //    _messagePile = new List<string>(deleteList);
             //}
-
+ 
             _messageAtive = true;
             SendMessage(_messagePile[0]);
             _messagePile.Remove(_messagePile[0]);
