@@ -34,6 +34,19 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if (_messagePile.Count >= 1 && !_messageAtive)
         {
+            //List<int> toDelete = new List<int>();
+            //for (int i = 1; i < _messagePile.Count; i++)
+            //{
+            //    if(_messagePile[0] == _messagePile[i])
+            //    {
+            //        toDelete.Add(i);
+            //    }
+            //}
+
+            //for (int i = 0; i < toDelete.Count; i++)
+            //{
+            //    _messagePile.RemoveAt(toDelete[i]);
+            //}
             //if(_messagePile.Count > 1)
             //{
             //    int count = 0;
