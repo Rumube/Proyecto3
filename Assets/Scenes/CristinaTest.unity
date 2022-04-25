@@ -17868,6 +17868,7 @@ GameObject:
   - component: {fileID: 1095689881}
   - component: {fileID: 1095689880}
   - component: {fileID: 1095689883}
+  - component: {fileID: 1095689884}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -18011,6 +18012,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1095689884}
+        m_TargetAssemblyTypeName: Android, Assembly-CSharp
+        m_MethodName: InsertSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1095689881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18063,6 +18076,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1704763841}
   _clip: {fileID: 8300000, guid: 93df0bf4f706fd04fa1680218e68ad1d, type: 3}
+--- !u!114 &1095689884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095689878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f536ebe08928908498fbf11ca668edc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tName: {fileID: 0}
+  _tInputNamePro: {fileID: 0}
+  _tInputName: {fileID: 0}
+  _tId: {fileID: 0}
+  _buttonPrefab: {fileID: 0}
+  _location: {fileID: 0}
 --- !u!1001 &1104397826
 PrefabInstance:
   m_ObjectHideFlags: 0

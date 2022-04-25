@@ -172,4 +172,11 @@ public class NetworkManager : MonoBehaviour
         client.ViewFinalScore();
     }
     #endregion
+
+    #region Scores
+    public void SendMatchData()
+    {
+        client.StudentScore();
+    }
+    #endregion
 }

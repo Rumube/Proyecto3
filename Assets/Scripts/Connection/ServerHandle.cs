@@ -34,4 +34,17 @@ public class ServerHandle {
     {
         ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberTabletsLookingFinalScore();
     }
+    public static void MatchData(ServerPackage _package)
+    {
+        string studentName = _package._matchData._studentName;
+        string gameName = _package._matchData._gameName;
+        int team = _package._matchData._team;
+        int level = _package._matchData._gameLevel;
+        int success = _package._matchData._averageSuccess;
+        int errors = _package._matchData._averageErrors;
+        int points = _package._matchData._averagePoints;
+        float time = _package._matchData._averageGameTime;
+
+        ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().InsertMatch(studentName, gameName,team, success, errors, time, points, level);
+    }
 }

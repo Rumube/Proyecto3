@@ -131,7 +131,7 @@ public class ServerUtility : MonoBehaviour
                     ServerHandle.FindDificulty(_allPackages[0]);
                     break;
                 case ClientPackets.matchData:
-
+                    ServerHandle.MatchData(_allPackages[0]);
                     break;
                 case ClientPackets.viewFinalScore:
                     _numberTabletsViewFinalScore++;

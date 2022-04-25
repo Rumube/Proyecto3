@@ -611,6 +611,33 @@ public class Android : MonoBehaviour
 
         }
     }
+
+    public int GetIDSession()
+    {
+        int id = -1;
+        using (_dbconn = new SqliteConnection(_conn))
+        {
+            _dbconn.Open(); //Open connection to the database.
+            IDbCommand dbcmd = _dbconn.CreateCommand();
+            string sqlQuery = "SELECT idSession " + "FROM Session ORDER BY idSession DESC LIMIT 1";
+            dbcmd.CommandText = sqlQuery;
+            IDataReader reader = dbcmd.ExecuteReader();
+            while (reader.Read())
+            {
+                id = reader.GetInt32(0);
+
+                // _infoText.text += date + " " + "\n";
+                EDebug.Log("Value=" + id + " name =");
+            }
+            reader.Close();
+            reader = null;
+            dbcmd.Dispose();
+            dbcmd = null;
+            _dbconn.Close();
+            //       dbconn = null;
+        }
+        return id;
+    }
     #endregion
 
 
@@ -669,8 +696,6 @@ public class Android : MonoBehaviour
             //return json;
         }
         // _infoText.text = "";
-       
-
     }
     /** 
 
@@ -683,19 +708,34 @@ public class Android : MonoBehaviour
 * @param string matchInfo- Informacion de la partida
 
     */
-    private void InsertMatch(int idStudent, int idSession, int idGame, int team, string matchInfo)
+    public void InsertMatch(string nameStudent, string nameGame, int team, int success, int errors, float gameTime, int points, int level)
     {
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
+
             _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idLevelConf, team, matchInfo ) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\")", idStudent, idSession, idGame, team, matchInfo);// table name
+
+            string idGame = "SELECT idGame FROM Game where Name = \"" + nameGame + "\"";
+            _dbcmd.CommandText = idGame;
+            IDataReader reader = _dbcmd.ExecuteReader();
+
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string idStudent = "SELECT idStudent FROM Student where Name = \"" + nameStudent + "\"";
+            dbcmd2.CommandText = idStudent;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+            EDebug.Log("Reader: GAME " + reader.GetValue(0));
+            EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
+
+            int idSession = GetIDSession();
+            _dbcmd = _dbconn.CreateCommand();
+            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idGame, team, level, averageSuccess, averageErrors, averagePoints, averageTime) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\")", idStudent, idSession, idGame, team, level, success, errors, points, gameTime);// table name
             _dbcmd.CommandText = _sqlQuery;
             _dbcmd.ExecuteScalar();
             _dbconn.Close();
         }
        // _infoText.text = "";
-        EDebug.Log("Insert Done  ");
+        EDebug.Log("Insert Done: InsertMatch");
 
     }
     #endregion

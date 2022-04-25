@@ -79,4 +79,9 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
         _average.averageSuccess = _success / (_success + _fails);
         _average.averageFails = _fails / (_success + _fails);
     }
+
+    public Average GetAverage()
+    {
+        return _average;
+    }
 }
