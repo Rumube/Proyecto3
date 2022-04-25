@@ -34,10 +34,10 @@ public class AsteroidBlasterInput : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _newAngle = 0;
         _lastShotPostion = Vector2.zero;
-        _asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
-        if (_asteroidManager.GetComponent<AsteroidBlaster>())
+        //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
+        if (GetComponent<AsteroidBlaster>())
             _shotType = ShotType.Move;
-        else if (_asteroidManager.GetComponent<SpaceTimeCabin>())
+        else if (GetComponent<SpaceTimeCabin>())
         {
             _shotType = ShotType.Static;
         }
