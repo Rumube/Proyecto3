@@ -239,7 +239,7 @@ public class TabletUI : UI
 
         }
         yield return new WaitForSeconds(3.0f);
-        SceneManager.LoadScene("RubenTest");
+        SceneManager.LoadScene("RubenSpaceTimeCabin");
         yield return null;
     }
 }

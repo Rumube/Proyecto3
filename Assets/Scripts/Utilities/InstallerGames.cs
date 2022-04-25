@@ -14,12 +14,7 @@ public class InstallerGames : MonoBehaviour
     public Error _error;
     public FrogMessage _frogMessage;
     public Positive _positive;
-
-
-    private IInput _inputUsed;
-    private IError _IError;
-    private IFrogMessage _IFrogMessage;
-    private IPositive _IPositive;
+    public CalculatePuntuation _calculatePuntiation;
 
     // Start is called before the first frame update
     void Awake()
@@ -48,6 +43,10 @@ public class InstallerGames : MonoBehaviour
         {
             ServiceLocator.Instance.UnregisterService<IPositive>();
         }
+        if (ServiceLocator.Instance.Contains<ICalculatePoints>())
+        {
+            ServiceLocator.Instance.UnregisterService<ICalculatePoints>();
+        }
 
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
@@ -55,5 +54,6 @@ public class InstallerGames : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_canvasGUI);
         ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
+        ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePuntiation);
     }
 }
