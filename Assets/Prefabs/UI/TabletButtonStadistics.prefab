@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 6481346493763463857}
   - component: {fileID: 6481346493763463856}
   - component: {fileID: 1035796940259708716}
+  - component: {fileID: 3721679081939710013}
   m_Layer: 5
   m_Name: TabletButtonStadistics
   m_TagString: Untagged
@@ -209,6 +210,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3721679081939710013}
+        m_TargetAssemblyTypeName: UISounds, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1035796940259708716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,3 +243,17 @@ MonoBehaviour:
   - {fileID: 1756885567448849811, guid: 4ddbb5f8ad742fe47aed6e780a66425d, type: 3}
   - {fileID: -8862628157876884443, guid: 4ddbb5f8ad742fe47aed6e780a66425d, type: 3}
   _highlighted: {fileID: 7855510393787392627}
+--- !u!114 &3721679081939710013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6481346493763463858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dd38c2dcb9d3f498e99b0337862e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  _clip: {fileID: 8300000, guid: 93df0bf4f706fd04fa1680218e68ad1d, type: 3}
