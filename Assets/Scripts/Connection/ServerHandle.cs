@@ -44,7 +44,8 @@ public class ServerHandle {
         int errors = _package._matchData._averageErrors;
         int points = _package._matchData._averagePoints;
         float time = _package._matchData._averageGameTime;
+        int idSession = ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().GetIDSession();
 
-        ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().InsertMatch(studentName, gameName,team, success, errors, time, points, level);
+        ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().InsertMatch(idSession,studentName, gameName,team, success, errors, time, points, level);
     }
 }

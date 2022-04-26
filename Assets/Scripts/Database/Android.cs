@@ -27,7 +27,7 @@ public class Android : MonoBehaviour
     IDbCommand _dbcmd;
     private IDataReader _reader;
 
-    string _DatabaseName = "Employers.s3db";
+    string _DatabaseName = "Mininautas.s3db";
 
 
     [Header("ReaderStudent")]
@@ -93,9 +93,9 @@ public class Android : MonoBehaviour
 
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
-         "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
-         "team integer, "+"level integer,"+
-         "foreign key(idStudent) references Student(idStudent), "+
+         "idStudent INTEGER, idSession INTEGER, idGame INTEGER, "+
+         "team INTEGER, level INTEGER, averageSuccess INTEGER, averageErrors INTEGER, averagePoints INTEGER, averageTime FLOAT, " +
+         "foreign key(idStudent) references Student(idStudent), " +
          "foreign key(idSession) references Session(idSession), "+
          "foreign key(idGame) references Game(idGame)); "
          ;
@@ -629,10 +629,13 @@ public class Android : MonoBehaviour
                 // _infoText.text += date + " " + "\n";
                 EDebug.Log("Value=" + id + " name =");
             }
+
             reader.Close();
             reader = null;
+
             dbcmd.Dispose();
             dbcmd = null;
+
             _dbconn.Close();
             //       dbconn = null;
         }
@@ -708,14 +711,13 @@ public class Android : MonoBehaviour
 * @param string matchInfo- Informacion de la partida
 
     */
-    public void InsertMatch(string nameStudent, string nameGame, int team, int success, int errors, float gameTime, int points, int level)
+    public void InsertMatch(int idSession,string nameStudent, string nameGame, int team, int success, int errors, float gameTime, int points, int level)
     {
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
 
             _dbcmd = _dbconn.CreateCommand();
-
             string idGame = "SELECT idGame FROM Game where Name = \"" + nameGame + "\"";
             _dbcmd.CommandText = idGame;
             IDataReader reader = _dbcmd.ExecuteReader();
@@ -724,14 +726,26 @@ public class Android : MonoBehaviour
             string idStudent = "SELECT idStudent FROM Student where Name = \"" + nameStudent + "\"";
             dbcmd2.CommandText = idStudent;
             IDataReader reader2 = dbcmd2.ExecuteReader();
+
             EDebug.Log("Reader: GAME " + reader.GetValue(0));
             EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
 
-            int idSession = GetIDSession();
-            _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idGame, team, level, averageSuccess, averageErrors, averagePoints, averageTime) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\")", idStudent, idSession, idGame, team, level, success, errors, points, gameTime);// table name
-            _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+            IDbCommand _dbcmd3 = _dbconn.CreateCommand();
+            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idGame, team, level, averageSuccess, averageErrors, averagePoints, averageTime) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\")", reader2.GetValue(0), idSession, reader.GetValue(0), team, level, success, errors, points, gameTime);// table name
+            _dbcmd3.CommandText = _sqlQuery;
+            _dbcmd3.ExecuteScalar();
+
+            reader.Close();
+            reader = null;
+            reader2.Close();
+            reader2 = null;
+            _dbcmd.Dispose();
+            _dbcmd = null;
+            dbcmd2.Dispose();
+            dbcmd2 = null;
+            _dbcmd3.Dispose();
+            _dbcmd3 = null;
+
             _dbconn.Close();
         }
        // _infoText.text = "";

@@ -227,13 +227,14 @@ public class TabletUI : UI
         //La transicion va muy rapido y no te enteras de que enfoca
         switch (ServiceLocator.Instance.GetService<GameManager>()._currentgameName)
         {
-            case "CabinGeometry":
+            case "Cabina Geometría":
+            case "Cabina Espacio/Tiempo":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
                 break;
-            case "TelescopeGeometry":
+            case "Telescopio Geometría":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
                 break;
-            case "PanelButtonAssociation":
+            case "Panel botones Asociación":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
                 break;
 
