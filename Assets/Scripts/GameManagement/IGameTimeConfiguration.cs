@@ -6,4 +6,7 @@ public interface IGameTimeConfiguration
 {
     public void StartGameTime();
     public void SetStartTime(bool state);
+
+    public float GetCurrentTime();
+    public float GetFinishTime();
 }

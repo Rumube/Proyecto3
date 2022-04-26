@@ -52,4 +52,14 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         _canStartTime = state;
     }
+
+    public float GetCurrentTime()
+    {
+        return _currentTime;
+    }
+
+    public float GetFinishTime()
+    {
+        return _finishTime;
+    }
 }
