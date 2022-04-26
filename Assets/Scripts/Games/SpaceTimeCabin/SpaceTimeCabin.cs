@@ -43,10 +43,13 @@ public class SpaceTimeCabin : MonoBehaviour
     /// </summary>
     void RestartGame()
     {
-        _finishingGame = false;
-        _targetPoint = GenerateTargetPoint();
-        StartCoroutine(GenerateAsteroids());
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira");
+        if(ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing)
+        {
+            _finishingGame = false;
+            _targetPoint = GenerateTargetPoint();
+            StartCoroutine(GenerateAsteroids());
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira");
+        }
     }
 
     /// <summary>
