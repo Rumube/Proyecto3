@@ -13,6 +13,12 @@ public class Error : MonoBehaviour, IError
     [Header("Error Messages")]
     public List<string> _errorMessages;
 
+
+    private void Start()
+    {
+        _audio = GetComponent<AudioSource>();
+    }
+
     /// <summary>
     /// Generates the error feedback
     /// </summary>
@@ -28,7 +34,6 @@ public class Error : MonoBehaviour, IError
     /// </summary>
     private void AudioManagement()
     {
-        _audio = GetComponent<AudioSource>();
         _audio.clip = _clip;
         _audio.Play();
     }

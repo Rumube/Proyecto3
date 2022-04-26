@@ -207,7 +207,16 @@ public class Android : MonoBehaviour
             _dbcmd = _dbconn.CreateCommand();
             _sqlQuery = string.Format("insert into Classroom (Name) values (\"{0}\")", name);// table name
             _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+
+            try
+            {
+                _dbcmd.ExecuteScalar();
+                ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            }
             _dbconn.Close();
         }
         //_infoText.text = "";
@@ -358,7 +367,15 @@ public class Android : MonoBehaviour
             _dbcmd = _dbconn.CreateCommand();
             _sqlQuery = string.Format("insert into Student (Name, idClassroom) values (\"{0}\",\"{1}\")", name, reader2.GetValue(0));// table name
             _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+            try
+            {
+                _dbcmd.ExecuteScalar();
+                ServiceLocator.Instance.GetService<MobileUI>().PopupAddStudent();
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Instance.GetService<MobileUI>().AddingTwoStudentsWithSameName();
+            }
 
             reader2.Close();
             reader2 = null;

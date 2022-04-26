@@ -24,6 +24,7 @@ public class TabletUI : UI
     [Header("Initial screen")]
     public TMP_InputField _ipServer;
     public TMP_InputField _portServer;
+    public GameObject _cantConnectText;
 
     [Header("Connection")]
     public TextMeshProUGUI _studentsText;
@@ -38,6 +39,9 @@ public class TabletUI : UI
     public AudioSource _audioSource;
     public TextMeshProUGUI _toTheRocket;
     public Image _rocket;
+    public AudioSource _astronautAudio;
+    public AudioSource _doorsClosedAudio;
+    public AudioSource _spaceShipAudio;
 
     [Header("Student selection")]
     public TextMeshProUGUI _studentName;
@@ -82,9 +86,12 @@ public class TabletUI : UI
         {
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = false;
+            ServiceLocator.Instance.GetService<NetworkManager>().SendViewingFinalScore();
+
         }
         //Active just the first one
-        _windowsTree[_uiIndex].SetActive(true);      
+        _windowsTree[_uiIndex].SetActive(true);
+        _continueNextScreen = true;
     }
 
     /// <summary>
@@ -141,9 +148,12 @@ public class TabletUI : UI
             yield return AstronautAnimation();
         }     
         _rocketAnimator.Play("NaveDespegue");
+        _spaceShipAudio.Play();
         _doorsClosed.gameObject.SetActive(true);
         _doorsClosed.Play("PuertasTransicionCerrar");
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
+        _doorsClosedAudio.Play();
+        yield return new WaitForSeconds(3.0f);
         ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
     }
 
@@ -152,8 +162,10 @@ public class TabletUI : UI
     /// </summary>
     IEnumerator AstronautAnimation()
     {
+        _astronautAudio.Play();
         _astrounautAnimator.Play("Astronaut");
         yield return new WaitForSeconds(8.0f);
+        _astronautAudio.Stop();
         _studentsText.text += _currentStudentName.text + "\n";
     }
 

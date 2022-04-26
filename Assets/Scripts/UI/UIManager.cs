@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour
     {
         _timeSessionMinutes = int.Parse(minutes);
         _timeSessionSeconds = int.Parse(seconds);
-        print("t " + _timeSessionMinutes + " : " + _timeSessionSeconds);
     }
 
     /// <summary>Set the time for all minigames</summary>
@@ -70,7 +69,6 @@ public class UIManager : MonoBehaviour
     {
         _timeMinigamesMinutes = int.Parse(minutes);
         _timeMinigamesSeconds = int.Parse(seconds);
-        print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
     }
 
     /// <summary>Just start the timer when the configuration is done and show the number of tablets that are connected</summary>

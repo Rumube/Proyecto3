@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using ServerPack;
 public class Server : WebSocketBehavior
 {
-    const int MAX_TABLETS = 10;
+    const int MAX_TABLETS = 10; //Maybe change to 6
 
     ServerPackage _serverPackage;
 
@@ -17,14 +17,18 @@ public class Server : WebSocketBehavior
     protected override void OnOpen()
     {
         base.OnOpen();
-             
+        //No more tablets can connect
+        if (ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets == 6)
+        {
+            return;
+        }
         if (!ServiceLocator.Instance.GetService<ServerUtility>().fistTime)
         {
             EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
             ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets = (Sessions.Count - 1);
             ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = true;
             
-            ServiceLocator.Instance.GetService<ServerUtility>()._ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
+            ServiceLocator.Instance.GetService<ServerUtility>()._ids.Add(ID); 
 
             StartedPackage();
 
