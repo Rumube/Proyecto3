@@ -58,7 +58,6 @@ public class SpaceTimeCabin : MonoBehaviour
     /// <returns>Value of <see cref="_targetPoint"/></returns>
     private Vector2 GenerateTargetPoint()
     {
-
         float xOffset = _dataDifficulty.shotOffset.x;
         float yOffset = _dataDifficulty.shotOffset.y;
         Vector2 newTargetPoint = new Vector2(Random.Range(-xOffset, xOffset), Random.Range(-yOffset, yOffset)+1);
