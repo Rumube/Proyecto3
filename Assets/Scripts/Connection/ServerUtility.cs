@@ -172,12 +172,27 @@ public class ServerUtility : MonoBehaviour
     }
 
     /// <summary>Send the specific minigame difficulty</summary>
-    public void MinigameDifficulty(string toUser, int level)
+    public void MinigameDifficulty(string toUser, int level, int averagePoints)
     {
         _serverPackage = new ServerPackage();
 
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
+        print("Antes level" + level);
+        if (averagePoints < 33)
+        {
+            if(level > 0)
+            {
+                level--;
+            }               
+        }else if (averagePoints > 66)
+        {
+            if(level < ServiceLocator.Instance.GetService<GameManager>()._minigamesMaximumLevel)
+            {
+                level++;
+            }          
+        }
+        print("Despues level" + level);
         _serverPackage._gameDifficulty._level = level;
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));

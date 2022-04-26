@@ -35,7 +35,7 @@ public class Android : MonoBehaviour
     public Transform _location;
 
     int level;
-
+    int averagePoints;
     // Start is called before the first frame update
     void Start()
     {
@@ -649,7 +649,7 @@ public class Android : MonoBehaviour
     /// <param name="nameStudent">Name of the student</param>
     /// <param name="nameGame">Name of the game</param>
     ///<returns>The number of difficulty, if there is not record returns 0.</returns>
-    public int GetDifficulty(string nameStudent, string nameGame)
+    public int[] GetDifficulty(string nameStudent, string nameGame)
     {
         
         using (_dbconn = new SqliteConnection(_conn))
@@ -668,16 +668,14 @@ public class Android : MonoBehaviour
             EDebug.Log("Reader: GAME " + reader.GetValue(0));
             EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
             IDbCommand dbcmd3 = _dbconn.CreateCommand();
-            string difficulty = "SELECT level FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
+            string difficulty = "SELECT level,averagePoints FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
             dbcmd3.CommandText = difficulty;
             IDataReader reader3 = dbcmd3.ExecuteReader();
-            //string json= reader3.GetString(0);
-            //int level = reader3.GetInt32(0);
-            //EDebug.Log("Reader: Level" + reader3.GetValue(0));
             while (reader3.Read())
             {
                 level = reader3.GetInt32(0);
-                EDebug.Log("Reader: Level int" + level);
+                averagePoints = reader3.GetInt32(1);
+                EDebug.Log("Reader: Level int" + level + " averagePoints:"+ averagePoints);
             }
                 
            
@@ -695,7 +693,12 @@ public class Android : MonoBehaviour
             dbcmd3 = null;
 
             _dbconn.Close();
-            return level;
+
+            int[] data = new int[2];
+            data[0] = level;
+            data[1] = averagePoints;
+
+            return data;
             //return json;
         }
         // _infoText.text = "";
