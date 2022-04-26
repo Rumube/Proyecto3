@@ -17,6 +17,7 @@ public class SpaceTimeCabin : MonoBehaviour
     public int _successes = 0;
     public int _errors = 0;
     private bool _isAllAsteroidGenerated;
+    private bool _finishingGame = false;
 
     [Header("References")]
     public GameObject _asteroidPrefab;
@@ -42,6 +43,7 @@ public class SpaceTimeCabin : MonoBehaviour
     /// </summary>
     void RestartGame()
     {
+        _finishingGame = false;
         _targetPoint = GenerateTargetPoint();
         StartCoroutine(GenerateAsteroids());
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira");
@@ -117,8 +119,9 @@ public class SpaceTimeCabin : MonoBehaviour
             if (currentAsteroid.GetComponent<Asteroid>()._state == Asteroid.Asteroid_State.exploding)
                 noHitAsteroid--;
         }
-        if(_isAllAsteroidGenerated && noHitAsteroid == 0)
+        if(_isAllAsteroidGenerated && noHitAsteroid == 0 && !_finishingGame)
         {
+            _finishingGame = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
             _successes = 0;
             _errors = 0;
