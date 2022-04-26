@@ -8,9 +8,13 @@ using TMPro;
 
 public class FrogMessage : MonoBehaviour, IFrogMessage
 {
+    [Header("References")]
     private AudioSource _audio;
     private TextMeshProUGUI _textMessage;
     private Image _imageMassage;
+    private Animator _minAnim;
+    
+    [Header("Min Configuration")]
     [SerializeField]
     public List<string> _messagePile = new List<string>();
     private bool _messageAtive;
@@ -72,10 +76,14 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<TextMeshProUGUI>();
         _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
+        _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
+
         StartCoroutine(FrogCoroutine(message));
     }
     private void MessageComplete(Wrapper wrapper)
     {
+        //TODO: STOP MIN TALK ANIM
+        _minAnim.Play("animIdle");
         StartCoroutine(CloseMessage());
     }
     /// <summary>
@@ -104,6 +112,25 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// <param name="message">The message text</param>
     private IEnumerator FrogCoroutine(string message)
     {
+        //TODO: START MIN TALK ANIM
+        int randomAnim = Random.Range(0, 3);
+        string animName = "";
+        switch (randomAnim)
+        {
+            case 0:
+                //anim0
+                break;
+            case 1:
+                //anim1
+                break;
+            case 2:
+                //anim2
+                break;
+            default:
+                break;
+        }
+        _minAnim.Play(animName);
+
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
         _imageMassage.color = new Color(0, 0, 0, 1);
