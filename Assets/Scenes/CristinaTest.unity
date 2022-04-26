@@ -3397,7 +3397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _server: 1
+  _server: 0
   _canvasMobile: {fileID: 1207306178}
   _canvasTablet: {fileID: 758638563}
   _uiManager: {fileID: 282740217}
@@ -4749,6 +4749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 231572108}
   - component: {fileID: 231572107}
+  - component: {fileID: 231572109}
   m_Layer: 0
   m_Name: Server
   m_TagString: Untagged
@@ -4790,6 +4791,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &231572109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231572106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f536ebe08928908498fbf11ca668edc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tName: {fileID: 0}
+  _tInputNamePro: {fileID: 0}
+  _tInputName: {fileID: 0}
+  _tId: {fileID: 0}
+  _buttonPrefab: {fileID: 0}
+  _location: {fileID: 0}
 --- !u!1 &234034261
 GameObject:
   m_ObjectHideFlags: 0
@@ -17868,6 +17887,7 @@ GameObject:
   - component: {fileID: 1095689881}
   - component: {fileID: 1095689880}
   - component: {fileID: 1095689883}
+  - component: {fileID: 1095689884}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -18011,6 +18031,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1095689884}
+        m_TargetAssemblyTypeName: Android, Assembly-CSharp
+        m_MethodName: InsertSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1095689881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18063,6 +18095,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1704763841}
   _clip: {fileID: 8300000, guid: 93df0bf4f706fd04fa1680218e68ad1d, type: 3}
+--- !u!114 &1095689884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095689878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f536ebe08928908498fbf11ca668edc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tName: {fileID: 0}
+  _tInputNamePro: {fileID: 0}
+  _tInputName: {fileID: 0}
+  _tId: {fileID: 0}
+  _buttonPrefab: {fileID: 0}
+  _location: {fileID: 0}
 --- !u!1001 &1104397826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30814,9 +30864,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minigamesNames:
-  - TelescopeGeometry
-  - PanelButtonAssociation
-  - CabinGeometry
+  - "Telescopio Geometr\xEDa"
+  - "Panel botones Asociaci\xF3n"
+  - "Cabina Geometr\xEDa"
+  - Cabina Espacio/Tiempo
   _currentstudentName: 
   _currentgameName: 
   _pause: 0
