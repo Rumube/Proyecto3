@@ -25,6 +25,7 @@ namespace ServerPack
         studentsEndCall = 1,
         selectedStudentGame = 2,
         matchData = 3,
+        viewFinalScore = 4
     }
 
     public class ServerPackage

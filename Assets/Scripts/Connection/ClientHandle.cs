@@ -72,4 +72,14 @@ public class ClientHandle
         EDebug.Log("Apagando");
         ServiceLocator.Instance.GetService<TabletUI>().QuitGame();
     }
+    public static void CantConnectServer()
+    {
+        ServiceLocator.Instance.GetService<TabletUI>()._cantConnectText.SetActive(true);
+        ServiceLocator.Instance.GetService<TabletUI>()._continueNextScreen = false;
+    }
+    public static void CanConnectServer()
+    {
+        ServiceLocator.Instance.GetService<TabletUI>()._cantConnectText.SetActive(false);
+        ServiceLocator.Instance.GetService<TabletUI>()._continueNextScreen = true;
+    }
 }

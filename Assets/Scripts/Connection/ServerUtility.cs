@@ -27,7 +27,7 @@ public class ServerUtility : MonoBehaviour
     public bool _sendAddStudents;
     public bool fistTime = true;
     public int _numberTabletsEndCall = 0;
-
+    public int _numberTabletsViewFinalScore = 0;
     /// <summary>Creates a websocket server</summary>
     public string[] createServer()
     {
@@ -121,7 +121,8 @@ public class ServerUtility : MonoBehaviour
             {
                 case ClientPackets.studentsEndCall:
                     _numberTabletsEndCall++;
-                    if(_numberTabletsEndCall == _connectedTablets)
+                    ServerHandle.UpdateReadyRockets(_allPackages[0]._tabletInfo._idTablet);
+                    if (_numberTabletsEndCall == _connectedTablets)
                     {
                         ServerHandle.ContinueGameTime();
                     }                    
@@ -131,6 +132,10 @@ public class ServerUtility : MonoBehaviour
                     break;
                 case ClientPackets.matchData:
 
+                    break;
+                case ClientPackets.viewFinalScore:
+                    _numberTabletsViewFinalScore++;
+                    ServerHandle.UpdateTabletsViewingFinalScore(_numberTabletsViewFinalScore);
                     break;
             }
             _allPackages.Remove(_allPackages[0]);
