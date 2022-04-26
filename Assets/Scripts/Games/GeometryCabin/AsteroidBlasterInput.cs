@@ -145,10 +145,15 @@ public class AsteroidBlasterInput : MonoBehaviour
                     AsteroidHit(hit.collider);
                 break;
             case ShotType.Static:
-                Collider2D colliders = Physics2D.OverlapCircle(_lastShotPostion, 1f);
-                if(colliders != null && colliders.tag == "Asteroid" && _canVibrate)
-                    AsteroidHit(colliders);
-                GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(colliders);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(_lastShotPostion, 1f);
+                foreach (Collider2D currentCollider in colliders)
+                {
+                    if (colliders != null && currentCollider.tag == "Asteroid")
+                        AsteroidHit(currentCollider);
+                    GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(currentCollider);
+                }
+
+                
                 break;
             default:
                 break;

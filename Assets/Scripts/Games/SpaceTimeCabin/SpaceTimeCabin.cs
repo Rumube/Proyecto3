@@ -90,11 +90,11 @@ public class SpaceTimeCabin : MonoBehaviour
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(newCollider.transform.position);
             _successes++;
         }
-        else
-        {
-            ServiceLocator.Instance.GetService<IError>().GenerateError();
-            _errors++;
-        }
+        //else
+        //{
+        //    ServiceLocator.Instance.GetService<IError>().GenerateError();
+        //    _errors++;
+        //}
         CheckIfFinish();
     }
 
