@@ -26,17 +26,19 @@ public class ButtonCounter_Prueba : MonoBehaviour
     int _totalGeometry;
     int _goodGeometry;
     int _badGeometry;
-    public Text _mission;
 
-    public CreatePanel_Prueba _createPanel;
-    [SerializeField]
-    private CalculatePuntuation _calculatePuntuation;
+    private CreatePanel_Prueba _createPanel;
 
     // Update is called once per frame
     void Update()
     {
         //_gameText= GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
         //GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
+    }
+
+    private void Start()
+    {
+        _createPanel = GetComponent<CreatePanel_Prueba>();
     }
 
     public string GetTextGame()
@@ -77,8 +79,13 @@ public class ButtonCounter_Prueba : MonoBehaviour
         CheckGeometry(_nHexagon, _hexagonCounter);
 
         _badGeometry = _totalGeometry - _goodGeometry;
-        _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
-        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+        if (_badGeometry > 0)
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        else
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+
+
+        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
         _goodGeometry = 0;
         _totalGeometry = 0;
         _nSquare = 0;

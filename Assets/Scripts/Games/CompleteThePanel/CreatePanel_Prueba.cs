@@ -28,17 +28,55 @@ public class CreatePanel_Prueba : MonoBehaviour
     [SerializeField]
     private int _level;
 
-    [SerializeField]
-    CompleteThePanelDifficulty _completeThePanel;
+    private Button _checkButton;
     CompleteThePanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
     void Start()
     {
-        _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
-        _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
+        _currentDataDifficulty = GetComponent<CompleteThePanelDifficulty>().GenerateDataDifficulty(_level);
         GeneratePanel();
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        _checkButton = GameObject.FindGameObjectWithTag("CheckButton").GetComponent<Button>();
     }
+    // Update is called once per frame
+    void Update()
+    {
+        if(ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing && _allList[0].GetComponent<Button>().interactable)
+        {
+            foreach (GameObject currentButton in _allList)
+            {
+                currentButton.GetComponent<Button>().interactable = false;
+            }
+            _checkButton.interactable = false;
+        }
+        else if(ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && !_allList[0].GetComponent<Button>().interactable)
+        {
+            foreach (GameObject currentButton in _allList)
+            {
+                currentButton.GetComponent<Button>().interactable = true;
+            }
+            _checkButton.interactable = true;
+        }
 
+
+        //if (_allList.Count == _row * _column)
+        //{
+        //    if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+        //    {
+        //        for (int i = 0; i < _allList.Count; i++)
+        //        {
+        //            _allList[i].GetComponent<Button>().interactable = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < _allList.Count; i++)
+        //        {
+        //            _allList[i].GetComponent<Button>().interactable = true;
+        //        }
+        //    }
+        //}
+    }
     /// <summary>
     /// Creates a panel with geometry.
     /// </summary>
@@ -60,7 +98,6 @@ public class CreatePanel_Prueba : MonoBehaviour
                 _count++;
             }
         }
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)
@@ -93,7 +130,7 @@ public class CreatePanel_Prueba : MonoBehaviour
 
     private void SendMessage()
     {
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);
     }
     /// <summary>
     /// Generates the normal geometry.
@@ -213,28 +250,7 @@ public class CreatePanel_Prueba : MonoBehaviour
         }
         return result;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        if (_allList.Count == _row * _column)
-        {
-            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
-            {
-                for (int i = 0; i < _allList.Count; i++)
-                {
-                    _allList[i].GetComponent<Button>().interactable = false;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < _allList.Count; i++)
-                {
-                    _allList[i].GetComponent<Button>().interactable = true;
-                }
-            }
-        }
 
-    }
 
     /// <summary>
     /// Restarts the minigame.
