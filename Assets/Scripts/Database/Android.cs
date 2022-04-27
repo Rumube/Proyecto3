@@ -8,10 +8,13 @@ using System;
 using System.Data;
 using System.IO;
 using UnityEngine.UI;
+using TMPro;
+
 public class Android : MonoBehaviour
 {
     [Header("Envia a la base")]
     public Text _tName;
+    public TMP_InputField _tInputNamePro;
     public InputField _tInputName;
     public Text _tId;
 
@@ -24,7 +27,7 @@ public class Android : MonoBehaviour
     IDbCommand _dbcmd;
     private IDataReader _reader;
 
-    string _DatabaseName = "Employers.s3db";
+    string _DatabaseName = "Mininautas.s3db";
 
 
     [Header("ReaderStudent")]
@@ -32,7 +35,7 @@ public class Android : MonoBehaviour
     public Transform _location;
 
     int level;
-
+    int averagePoints;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,9 +93,9 @@ public class Android : MonoBehaviour
 
         "create table if not exists Match("+
          "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
-         "idStudent INTEGER, idSession INTEGER, idGame INTEGER,"+
-         "team integer, "+"level integer,"+
-         "foreign key(idStudent) references Student(idStudent), "+
+         "idStudent INTEGER, idSession INTEGER, idGame INTEGER, "+
+         "team INTEGER, level INTEGER, averageSuccess INTEGER, averageErrors INTEGER, averagePoints INTEGER, averageTime FLOAT, " +
+         "foreign key(idStudent) references Student(idStudent), " +
          "foreign key(idSession) references Session(idSession), "+
          "foreign key(idGame) references Game(idGame)); "
          ;
@@ -119,7 +122,24 @@ public class Android : MonoBehaviour
 
     public void InsertClassButton()
     {
-        InsertClass(_tName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while(_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0,1);
+            }
+            while(_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length-1, 1);
+            }
+            while(_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  "," ");
+            }
+
+            InsertClass(_tInputNamePro.text.ToUpper());
+        }
+            
     }
     public void prueba()
     {
@@ -127,11 +147,11 @@ public class Android : MonoBehaviour
     }
     public void DeleteClassButton()
     {
-        DeleteClass(_tName.text);
+        DeleteClass(_tInputNamePro.text.ToUpper());
     }
     public void UpdateClassButton()
     {
-        UpdateClass(_tId.text,_tName.text);
+        UpdateClass(_tId.text,_tName.text.ToUpper());
     }
     public void ReadClassData()
     {
@@ -139,11 +159,27 @@ public class Android : MonoBehaviour
     }
     public void InsertStudentButton()
     {
-        InsertStudent(_tInputName.text);
+        if (!string.IsNullOrEmpty(_tInputNamePro.text))
+        {
+            while (_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(0, 1);
+            }
+            while (_tInputNamePro.text.EndsWith(" ") || _tInputNamePro.text.EndsWith("\t"))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Remove(_tInputNamePro.text.Length - 1, 1);
+            }
+            while (_tInputNamePro.text.Contains("  "))
+            {
+                _tInputNamePro.text = _tInputNamePro.text.Replace("  ", " ");
+            }
+
+            InsertStudent(_tInputNamePro.text.ToUpper());
+        }
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tInputName.text);
+        DeleteStudent(_tInputNamePro.text.ToUpper());
     }
     public void UpdateStudentButton()
     {
@@ -171,7 +207,16 @@ public class Android : MonoBehaviour
             _dbcmd = _dbconn.CreateCommand();
             _sqlQuery = string.Format("insert into Classroom (Name) values (\"{0}\")", name);// table name
             _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+
+            try
+            {
+                _dbcmd.ExecuteScalar();
+                ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            }
             _dbconn.Close();
         }
         //_infoText.text = "";
@@ -286,7 +331,7 @@ public class Android : MonoBehaviour
                // _infoText.text += idreaders + Namereaders + " " + "\n";
                 EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
                 GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
             }
             reader.Close();
             reader = null;
@@ -322,7 +367,15 @@ public class Android : MonoBehaviour
             _dbcmd = _dbconn.CreateCommand();
             _sqlQuery = string.Format("insert into Student (Name, idClassroom) values (\"{0}\",\"{1}\")", name, reader2.GetValue(0));// table name
             _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+            try
+            {
+                _dbcmd.ExecuteScalar();
+                ServiceLocator.Instance.GetService<MobileUI>().PopupAddStudent();
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Instance.GetService<MobileUI>().AddingTwoStudentsWithSameName();
+            }
 
             reader2.Close();
             reader2 = null;
@@ -451,7 +504,7 @@ public class Android : MonoBehaviour
                 EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(prefab, location);
 
-                newButton.GetComponentInChildren<Text>().text = Namereaders;
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
                 newButton.GetComponentInChildren<StudentButton>()._student = new Student();
                 newButton.GetComponentInChildren<StudentButton>()._student._id = id_Student_readers;
                 newButton.GetComponentInChildren<StudentButton>()._student._name = Namereaders;
@@ -558,6 +611,36 @@ public class Android : MonoBehaviour
 
         }
     }
+
+    public int GetIDSession()
+    {
+        int id = -1;
+        using (_dbconn = new SqliteConnection(_conn))
+        {
+            _dbconn.Open(); //Open connection to the database.
+            IDbCommand dbcmd = _dbconn.CreateCommand();
+            string sqlQuery = "SELECT idSession " + "FROM Session ORDER BY idSession DESC LIMIT 1";
+            dbcmd.CommandText = sqlQuery;
+            IDataReader reader = dbcmd.ExecuteReader();
+            while (reader.Read())
+            {
+                id = reader.GetInt32(0);
+
+                // _infoText.text += date + " " + "\n";
+                EDebug.Log("Value=" + id + " name =");
+            }
+
+            reader.Close();
+            reader = null;
+
+            dbcmd.Dispose();
+            dbcmd = null;
+
+            _dbconn.Close();
+            //       dbconn = null;
+        }
+        return id;
+    }
     #endregion
 
 
@@ -566,7 +649,7 @@ public class Android : MonoBehaviour
     /// <param name="nameStudent">Name of the student</param>
     /// <param name="nameGame">Name of the game</param>
     ///<returns>The number of difficulty, if there is not record returns 0.</returns>
-    public int GetDifficulty(string nameStudent, string nameGame)
+    public int[] GetDifficulty(string nameStudent, string nameGame)
     {
         
         using (_dbconn = new SqliteConnection(_conn))
@@ -585,16 +668,14 @@ public class Android : MonoBehaviour
             EDebug.Log("Reader: GAME " + reader.GetValue(0));
             EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
             IDbCommand dbcmd3 = _dbconn.CreateCommand();
-            string difficulty = "SELECT level FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
+            string difficulty = "SELECT level,averagePoints FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
             dbcmd3.CommandText = difficulty;
             IDataReader reader3 = dbcmd3.ExecuteReader();
-            //string json= reader3.GetString(0);
-            //int level = reader3.GetInt32(0);
-            //EDebug.Log("Reader: Level" + reader3.GetValue(0));
             while (reader3.Read())
             {
                 level = reader3.GetInt32(0);
-                EDebug.Log("Reader: Level int" + level);
+                averagePoints = reader3.GetInt32(1);
+                EDebug.Log("Reader: Level int" + level + " averagePoints:"+ averagePoints);
             }
                 
            
@@ -612,12 +693,15 @@ public class Android : MonoBehaviour
             dbcmd3 = null;
 
             _dbconn.Close();
-            return level;
+
+            int[] data = new int[2];
+            data[0] = level;
+            data[1] = averagePoints;
+
+            return data;
             //return json;
         }
         // _infoText.text = "";
-       
-
     }
     /** 
 
@@ -630,19 +714,45 @@ public class Android : MonoBehaviour
 * @param string matchInfo- Informacion de la partida
 
     */
-    private void InsertMatch(int idStudent, int idSession, int idGame, int team, string matchInfo)
+    public void InsertMatch(int idSession,string nameStudent, string nameGame, int team, int success, int errors, float gameTime, int points, int level)
     {
         using (_dbconn = new SqliteConnection(_conn))
         {
             _dbconn.Open(); //Open connection to the database.
+
             _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idLevelConf, team, matchInfo ) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\")", idStudent, idSession, idGame, team, matchInfo);// table name
-            _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
+            string idGame = "SELECT idGame FROM Game where Name = \"" + nameGame + "\"";
+            _dbcmd.CommandText = idGame;
+            IDataReader reader = _dbcmd.ExecuteReader();
+
+            IDbCommand dbcmd2 = _dbconn.CreateCommand();
+            string idStudent = "SELECT idStudent FROM Student where Name = \"" + nameStudent + "\"";
+            dbcmd2.CommandText = idStudent;
+            IDataReader reader2 = dbcmd2.ExecuteReader();
+
+            EDebug.Log("Reader: GAME " + reader.GetValue(0));
+            EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
+
+            IDbCommand _dbcmd3 = _dbconn.CreateCommand();
+            _sqlQuery = string.Format("insert into Match (idStudent, idSession, idGame, team, level, averageSuccess, averageErrors, averagePoints, averageTime) values (\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\")", reader2.GetValue(0), idSession, reader.GetValue(0), team, level, success, errors, points, gameTime);// table name
+            _dbcmd3.CommandText = _sqlQuery;
+            _dbcmd3.ExecuteScalar();
+
+            reader.Close();
+            reader = null;
+            reader2.Close();
+            reader2 = null;
+            _dbcmd.Dispose();
+            _dbcmd = null;
+            dbcmd2.Dispose();
+            dbcmd2 = null;
+            _dbcmd3.Dispose();
+            _dbcmd3 = null;
+
             _dbconn.Close();
         }
        // _infoText.text = "";
-        EDebug.Log("Insert Done  ");
+        EDebug.Log("Insert Done: InsertMatch");
 
     }
     #endregion

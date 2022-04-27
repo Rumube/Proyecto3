@@ -1,61 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour
 {
-
     [Header("Game Connection")]
     public string _ip;
     public string _port;
     public static Server server = new Server();
 
     Client client = new Client();
-    public Text _idText;
-    //Testing 
-    public InputField _IPTest;
-    public InputField _portTest;
+    public TextMeshProUGUI _idText;
+    public TMP_InputField _IPText;
+    public TMP_InputField _portText;
 
     [Header("Students to tablets")]
     public List<Tablet> _studentsToTablets = new List<Tablet>();
-    public int _selectedTablet;
+    public int _selectedTablet = -10;
 
     [Header("Minigame timer client")]
     public int _minigameMinutes;
     public int _minigameSeconds;
 
     [Header("Minigame difficulty server")]
-    string _minigameData;
+    public int _minigameLevel = -1;
 
+    public static NetworkManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+    /// <summary>Forces an update when the client receives a package</summary>
     void Update()
     {
-
-        //Not finished
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-            _idText.text = Client._tablet._id.ToString();
-        }
-
-        //if (Server._allPackages != null && Server._allPackages.Count > 0)
-        //{
-        //    server.DoUpdate();
-        //}
-
-            //server.DoUpdate();
-        
+        }      
     }
 
-    /// <summary>Starts a new server and provide the ip and port's device</summary>
+    /// <summary>Starts a new server and saves the ip and port</summary>
     public void StartServer()
     {
         string[] connectionData = new string[2];
 
-        //server = new Server();
-        EDebug.Log(1 + " " + server.State);
         connectionData = ServiceLocator.Instance.GetService<ServerUtility>().createServer();
-        EDebug.Log(3 + " " + server.State);
 
         _ip = connectionData[0];
         _port = connectionData[1];
@@ -92,21 +92,20 @@ public class NetworkManager : MonoBehaviour
     /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
     public void StartClient()
     {
-        //client = new Client();
-        client.CreateClient(_IPTest.text, _portTest.text);
+        client.CreateClient(_IPText.text, _portText.text);
     }
-
 
     /// <summary>Desactivate connections when the app is closed</summary>
-    private void OnDisable()
-    {
-        Client.OnDisable();
-    }
+    //private void OnDisable()
+    //{
+    //    Client.OnDisable();
+    //}
 
     /// <summary>Desactivate connections if she goes back before game connection</summary>
     public void ResetConnections()
     {
         Client.OnDisable();
+        ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
     }
 
     #region AddStudent
@@ -138,24 +137,46 @@ public class NetworkManager : MonoBehaviour
         }
 
     }
-
-    public void AddingStudentsToTablets()
+    /// <summary>Check if every tablet has at least one student added</summary>
+    public bool CheckIfTabletsHasStudents()
     {
-        // EDebug.Log(server.Context);
-        //server.AddingStudents();
-        // EDebug.Log(server.Context);
-        //Server._sendAddStudents = true;
+        bool atLeastOneStudent = true;
+        foreach (Tablet tablet in _studentsToTablets)
+        {
+            if (tablet._students.Count == 0)
+            {
+                atLeastOneStudent = false;
+            }
+        }
+        return atLeastOneStudent;
     }
+    #endregion
 
+    #region CallingStudents
+
+    /// <summary>It's called when every student has been called to the rocket</summary>
     public void SendEndCalling()
     {
         client.EndCallingStudents();
     }
-
+    /// <summary>It's called when a student and game has been selected to play</summary>
     public void SendStudentGame()
     {
         client.StudentGameSelection(ServiceLocator.Instance.GetService<GameManager>()._currentstudentName, ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
     }
+    #endregion
 
+    #region FinalScore
+    public void SendViewingFinalScore()
+    {
+        client.ViewFinalScore();
+    }
+    #endregion
+
+    #region Scores
+    public void SendMatchData()
+    {
+        client.StudentScore();
+    }
     #endregion
 }
