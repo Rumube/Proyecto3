@@ -39,7 +39,7 @@ public class SimonGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (GetComponent<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _canClick)
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _canClick)
         {
             _buttons.interactable = true;
         }
