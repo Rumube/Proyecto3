@@ -26,7 +26,8 @@ public class Error : MonoBehaviour, IError
     {
         AudioManagement();
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
-        StartCoroutine(StartFrogMessage());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
+        //StartCoroutine(StartFrogMessage());
     }
 
     /// <summary>
@@ -44,6 +45,5 @@ public class Error : MonoBehaviour, IError
     IEnumerator StartFrogMessage()
     {
         yield return new WaitForSeconds(1f);
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
     }
 }

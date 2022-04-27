@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
-    public Image _timeImage;
+    Image _timeImage;
     public float _currentTime;
     private float _maxTime;
     [HideInInspector]
@@ -43,6 +43,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
         if (_currentTime >= _finishTime)
         {
+            print("Holiwis soy ranking xd");
             ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
             _canStartTime = false;
             ServiceLocator.Instance.GetService<NetworkManager>().SendMatchData();
