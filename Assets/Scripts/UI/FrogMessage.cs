@@ -31,6 +31,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _audio.pitch = 1.2f;
         _messageAtive = false;
         Speaker.Instance.OnSpeakComplete += MessageComplete;
+        _minAnim.Play("MinIdle");
     }
 
     // Update is called once per frame
@@ -82,8 +83,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     }
     private void MessageComplete(Wrapper wrapper)
     {
-        //TODO: STOP MIN TALK ANIM
-        _minAnim.Play("animIdle");
+        _minAnim.Play("MinIdle");
         StartCoroutine(CloseMessage());
     }
     /// <summary>
@@ -112,19 +112,18 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// <param name="message">The message text</param>
     private IEnumerator FrogCoroutine(string message)
     {
-        //TODO: START MIN TALK ANIM
         int randomAnim = Random.Range(0, 3);
         string animName = "";
         switch (randomAnim)
         {
             case 0:
-                //anim0
+                animName = "MinTalk1";
                 break;
             case 1:
-                //anim1
+                animName = "MinTalk2";
                 break;
             case 2:
-                //anim2
+                animName = "MinTalk3";
                 break;
             default:
                 break;
