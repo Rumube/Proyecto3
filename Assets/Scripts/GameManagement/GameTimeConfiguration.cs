@@ -45,10 +45,21 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         {
             ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
             _canStartTime = false;
+            ServiceLocator.Instance.GetService<NetworkManager>().SendMatchData();
         }         
     }
     public void SetStartTime(bool state)
     {
         _canStartTime = state;
+    }
+
+    public float GetCurrentTime()
+    {
+        return _currentTime;
+    }
+
+    public float GetFinishTime()
+    {
+        return _finishTime;
     }
 }
