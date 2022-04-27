@@ -71,6 +71,24 @@ namespace ClientPack
             public int _level;
         }
         public GameDifficulty _gameDifficulty;
+        public struct MatchData
+        {
+            public string _studentName;
+            public string _gameName;
+            public int _team;
+            public int _averageSuccess;
+            public int _averageErrors;
+            public float _averageGameTime;
+            public int _averagePoints;
+            public int _gameLevel;
+        }
+        public MatchData _matchData;
+        public struct RankingPoints
+        {
+            public int _team;
+            public int _points;
+        }
+        public RankingPoints _rankingPoints;
 
         /// <summary>Creates a new empty packet (without an ID).</summary>
         public ClientPackage()

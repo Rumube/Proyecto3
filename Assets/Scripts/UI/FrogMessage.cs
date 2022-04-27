@@ -151,6 +151,10 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// </summary>
     public void RepeatLastOrder()
     {
+        if(_lastOrder == "")
+        {
+            _lastOrder = "No hay órdenes";
+        }
         NewFrogMessage(_lastOrder);
     }
 
