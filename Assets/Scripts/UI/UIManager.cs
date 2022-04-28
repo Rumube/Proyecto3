@@ -77,27 +77,28 @@ public class UIManager : MonoBehaviour
         ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.playing;
         StartCoroutine(StartCountdown());
 
-        RectTransform rt = ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.GetComponent(typeof(RectTransform)) as RectTransform;
-        switch (ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets())
-        {
-            //Change measures for bigger ones
-            case 1:
-            case 2:
-               rt.sizeDelta = new Vector2(620,rt.sizeDelta.y);
-                break;
-            case 3:
-                rt.sizeDelta = new Vector2(745, rt.sizeDelta.y);
-                break;
-            case 4:
-                rt.sizeDelta = new Vector2(1006, rt.sizeDelta.y);
-                break;
-            case 5:
-                rt.sizeDelta = new Vector2(1275, rt.sizeDelta.y);
-                break;
-            case 6:
-                rt.sizeDelta = new Vector2(1550, rt.sizeDelta.y);
-                break;
-        }
+        //RectTransform rt = ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.GetComponent(typeof(RectTransform)) as RectTransform;
+        //switch (ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets())
+        //{
+        //    //Change measures for bigger ones
+        //    case 1:
+        //    case 2:
+        //       rt.sizeDelta = new Vector2(620,rt.sizeDelta.y);
+        //        break;
+        //    case 3:
+        //        rt.sizeDelta = new Vector2(745, rt.sizeDelta.y);
+        //        break;
+        //    case 4:
+        //        rt.sizeDelta = new Vector2(1006, rt.sizeDelta.y);
+        //        break;
+        //    case 5:
+        //        rt.sizeDelta = new Vector2(1275, rt.sizeDelta.y);
+        //        break;
+        //    case 6:
+        //        rt.sizeDelta = new Vector2(1550, rt.sizeDelta.y);
+        //        break;
+        //}
+
         for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<MobileUI>()._tabletButtonPrefabStadistics.gameObject, ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.gameObject.transform);
