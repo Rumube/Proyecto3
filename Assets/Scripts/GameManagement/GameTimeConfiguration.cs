@@ -5,18 +5,20 @@ using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
-    public Image _timeImage;
+    Image _timeImage;
     public float _currentTime;
-    [SerializeField]
-    public float _maxTime;
+    private float _maxTime;
+    [HideInInspector]
     public float _finishTime;
     private float _startTime;
-    public bool _canStartTime = false;
+    private bool _canStartTime = false;
 
     private void Update()
     {
         if(_canStartTime && ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing)
+        {
             TimeProgress();
+        }
     }
 
     /// <summary>
@@ -24,6 +26,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     /// </summary>
     public void StartGameTime()
     {
+        _canStartTime = true;
         _timeImage = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Image>();
         _maxTime = (ServiceLocator.Instance.GetService<NetMSinBucle>()._minigameMinutes * 60) + ServiceLocator.Instance.GetService<NetMSinBucle>()._minigameSeconds;
         _finishTime = Time.realtimeSinceStartup + _maxTime;
@@ -40,12 +43,24 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
         if (_currentTime >= _finishTime)
         {
+            print("Holiwis soy ranking xd");
             ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
             _canStartTime = false;
+            ServiceLocator.Instance.GetService<NetworkManager>().SendMatchData();
         }         
     }
     public void SetStartTime(bool state)
     {
         _canStartTime = state;
+    }
+
+    public float GetCurrentTime()
+    {
+        return _currentTime;
+    }
+
+    public float GetFinishTime()
+    {
+        return _finishTime;
     }
 }

@@ -27,7 +27,7 @@ public class ServerUtility : MonoBehaviour
     public bool _sendAddStudents;
     public bool fistTime = true;
     public int _numberTabletsEndCall = 0;
-
+    public int _numberTabletsViewFinalScore = 0;
     /// <summary>Creates a websocket server</summary>
     public string[] createServer()
     {
@@ -131,7 +131,11 @@ public class ServerUtility : MonoBehaviour
                     ServerHandle.FindDificulty(_allPackages[0]);
                     break;
                 case ClientPackets.matchData:
-
+                    ServerHandle.MatchData(_allPackages[0]);
+                    break;
+                case ClientPackets.viewFinalScore:
+                    _numberTabletsViewFinalScore++;
+                    ServerHandle.UpdateTabletsViewingFinalScore(_numberTabletsViewFinalScore);
                     break;
             }
             _allPackages.Remove(_allPackages[0]);
@@ -168,12 +172,27 @@ public class ServerUtility : MonoBehaviour
     }
 
     /// <summary>Send the specific minigame difficulty</summary>
-    public void MinigameDifficulty(string toUser, int level)
+    public void MinigameDifficulty(string toUser, int level, int averagePoints)
     {
         _serverPackage = new ServerPackage();
 
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
+        print("Antes level" + level);
+        if (averagePoints < 33)
+        {
+            if(level > 0)
+            {
+                level--;
+            }               
+        }else if (averagePoints > 66)
+        {
+            if(level < ServiceLocator.Instance.GetService<GameManager>()._minigamesMaximumLevel)
+            {
+                level++;
+            }          
+        }
+        print("Despues level" + level);
         _serverPackage._gameDifficulty._level = level;
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
