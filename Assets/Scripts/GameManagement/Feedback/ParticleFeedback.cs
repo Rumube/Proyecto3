@@ -19,10 +19,6 @@ public class ParticleFeedback : MonoBehaviour
     private float _movementVelocity;
     private Positive _positiveScript;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -78,7 +74,6 @@ public class ParticleFeedback : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, _target, _movementVelocity * Time.deltaTime);
         if (Vector2.Distance(_target, transform.position) < 0.5f)
         {
-            //TODO: SONIDO?
             _positiveScript.AddPoints();
             Destroy(gameObject);
         }

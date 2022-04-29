@@ -13,8 +13,11 @@ public class Positive : MonoBehaviour, IPositive
     public int _pointsPerParticle;
     public int _currentPoints;
     public int _totalPoints;
+    private float _pitchValue = 1;
+    private float _finishCombo;
     [Header("References")]
     public GameObject _goodParticle;
+    public GameObject _scoreEffect;
     public Vector2 _targetFeedback = new Vector2(6, 4);
     public AudioClip _clip;
     private AudioSource _audio;
@@ -33,8 +36,12 @@ public class Positive : MonoBehaviour, IPositive
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            GenerateFeedback(new Vector2(0,0));
+
+        if(Time.realtimeSinceStartup >= _finishCombo)
+        {
+            _pitchValue = 1;
+        }
+
         if (_currentPoints < _totalPoints)
         {
             _currentPoints++;
@@ -81,6 +88,16 @@ public class Positive : MonoBehaviour, IPositive
 
     public void AddPoints()
     {
+        _pitchValue += 0.01f;
+        _finishCombo = Time.realtimeSinceStartup + 1f;
+
+        GameObject newEffect = Instantiate(_scoreEffect);
+        newEffect.GetComponent<ScoreEffect>().InitValues(_pointsPerParticle, _pitchValue);
+
+        GameObject[] scoreEffectSpawners = GameObject.FindGameObjectsWithTag("ScoreEffectSpawner");
+        int randomPos = Random.Range(0, scoreEffectSpawners.Length);
+        newEffect.transform.parent = scoreEffectSpawners[0].transform.parent;
+        newEffect.transform.position = scoreEffectSpawners[randomPos].transform.position;
         _totalPoints += _pointsPerParticle;
     }
 }
