@@ -17,6 +17,7 @@ public class ParticleFeedback : MonoBehaviour
     private float _finishFloating;
     private float _floatingVelocity;
     private float _movementVelocity;
+    private Positive _positiveScript;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +51,7 @@ public class ParticleFeedback : MonoBehaviour
     /// <param name="timeFloating">Time the particle is floating</param>
     /// <param name="velocityFloating">Velocity of the particle in floating state</param>
     /// <param name="movementFloating">Velocity of the particle in movement state</param>
-    public void SetStartValues(Vector2 direction, Vector2 target, float timeFloating, float velocityFloating, float movementFloating)
+    public void SetStartValues(Vector2 direction, Vector2 target, float timeFloating, float velocityFloating, float movementFloating, Positive feedback)
     {
         _direction = direction;
         _target = target;
@@ -58,6 +59,7 @@ public class ParticleFeedback : MonoBehaviour
         _floatingVelocity = velocityFloating;
         _movementVelocity = movementFloating;
         _state = ParticleState.floating;
+        _positiveScript = feedback;
     }
 
     /// <summary>
@@ -77,6 +79,7 @@ public class ParticleFeedback : MonoBehaviour
         if (Vector2.Distance(_target, transform.position) < 0.5f)
         {
             //TODO: SONIDO?
+            _positiveScript.AddPoints();
             Destroy(gameObject);
         }
     }
