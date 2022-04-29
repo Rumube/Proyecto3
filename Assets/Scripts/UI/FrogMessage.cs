@@ -142,8 +142,8 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
                 break;
         }
         _minAnim.Play(animName);
-
-        Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
+        if(_isInGame)
+            Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
         _imageMassage.color = new Color(0, 0, 0, 1);
 
@@ -157,12 +157,12 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             _textMessage.SetText(currentMessage);
             yield return new WaitForSeconds(waitTime);
         }
-        if (!_isInGame)
-        {
-            yield return new WaitForSeconds(3.0f);
-            MessageComplete();
-            StopFrogSpeaker();
-        }
+        //if (!_isInGame)
+        //{
+        //    yield return new WaitForSeconds(3.0f);
+        //    MessageComplete();
+        //    StopFrogSpeaker();
+        //}
        
     }
     /// <summary>
