@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public interface IFrogMessage
 {
     public void NewFrogMessage(string message);
-    public void NewFrogMessage(string message, bool isOrder, bool isGame = true);
+    public void NewFrogMessage(string message, bool isOrder);
     public void RepeatLastOrder();
     public void StopFrogSpeaker();
 }

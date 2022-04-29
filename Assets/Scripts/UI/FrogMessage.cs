@@ -22,7 +22,6 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     public float _timeWriting;
     public float _messageDuration;
     private string _lastOrder;
-    private bool _isInGame;
 
     // Start is called before the first frame update
     void Start()
@@ -111,12 +110,11 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// </summary>
     /// <param name="message">The message text</param>
     /// <param name="isOrder">The message is an order</param>
-    public void NewFrogMessage(string message, bool isOrder, bool isGame = true)
+    public void NewFrogMessage(string message, bool isOrder)
     {
         if (isOrder)
             _lastOrder = message;
         _messagePile.Add(message);
-        _isInGame = isGame; 
     }
 
     /// <summary>
@@ -142,8 +140,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
                 break;
         }
         _minAnim.Play(animName);
-        if(_isInGame)
-            Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
+        Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
         _imageMassage.color = new Color(0, 0, 0, 1);
 

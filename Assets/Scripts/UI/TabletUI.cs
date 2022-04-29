@@ -165,15 +165,15 @@ public class TabletUI : UI
         //_toTheRocket.gameObject.SetActive(true);
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
-            //_currentStudentName.text = Client._tablet._students[i]._name;
+            _currentStudentName.text = Client._tablet._students[i]._name;
             string message = Client._tablet._students[i]._name + "¡A la nave!";
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(message,true,false);
+            //ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(message,true,false);
             //Speaker.Instance.Speak(message);
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
             _continueCallingButton.gameObject.SetActive(false);
-            yield return AstronautAnimation();
+            yield return AstronautAnimation(Client._tablet._students[i]._name);
         }     
         _rocketAnimator.Play("NaveDespegue");
         _spaceShipAudio.Play();
@@ -188,13 +188,13 @@ public class TabletUI : UI
     /// <summary>
     /// Astronaut anim and write the student's name into the panel
     /// </summary>
-    IEnumerator AstronautAnimation()
+    IEnumerator AstronautAnimation(string studentName)
     {
         _astronautAudio.Play();
         _astrounautAnimator.Play("Astronaut");
         yield return new WaitForSeconds(8.0f);
         _astronautAudio.Stop();
-        _studentsText.text += Client._tablet._students[i]._name.text + "\n";
+        _studentsText.text += studentName + "\n";
     }
 
     /// <summary>
