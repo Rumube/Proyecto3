@@ -9,6 +9,9 @@ public class Positive : MonoBehaviour, IPositive
     public float _floatingTime;
     public float _floatingVelocity;
     public float _particleVelocity;
+    public int _pointsPerParticle;
+    private int _currentPoints;
+    private int _totalPoints;
     [Header("References")]
     public GameObject _goodParticle;
     public Vector2 _targetFeedback = new Vector2(6, 4);
@@ -26,6 +29,8 @@ public class Positive : MonoBehaviour, IPositive
     {
         if (Input.GetKeyDown(KeyCode.Space))
             GenerateFeedback(new Vector2(0,0));
+        if (_currentPoints > _totalPoints)
+            _currentPoints++;
     }
 
     /// <summary>
@@ -60,8 +65,13 @@ public class Positive : MonoBehaviour, IPositive
             Vector2 dir = (Vector2)(Quaternion.Euler(0, 0, degrees) * Vector2.right);
             GameObject newParticle = Instantiate(_goodParticle);
             newParticle.transform.position = initPosition;
-            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, _targetFeedback, _floatingTime, _floatingVelocity, _particleVelocity);
+            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, _targetFeedback, _floatingTime, _floatingVelocity, _particleVelocity, this);
             degrees += radialPart;
         }
+    }
+
+    public void AddPoints()
+    {
+        _totalPoints += _pointsPerParticle;
     }
 }
