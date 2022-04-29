@@ -6,9 +6,7 @@ public class InstallerGames : MonoBehaviour
 {
     [Tooltip("Tick if you are testing your games in your scene")]
     public bool _notGameLoop;
-    public NetworkManager _netManagerWithLoop;
     public NetMSinBucle _netManagerWithOutLoop;
-    public GameManager _gameManagerWithLoop;
     public GMSinBucle _gameManagerWithOutLoop;
 
     [Header("UI")]
@@ -67,11 +65,6 @@ public class InstallerGames : MonoBehaviour
         {
             ServiceLocator.Instance.RegisterService<IGameManager>(_gameManagerWithOutLoop);
             ServiceLocator.Instance.RegisterService<INetworkManager>(_netManagerWithOutLoop);
-        }
-        else
-        {
-            ServiceLocator.Instance.RegisterService<IGameManager>(_gameManagerWithLoop);
-            ServiceLocator.Instance.RegisterService<INetworkManager>(_netManagerWithLoop);
         }
     }
 }

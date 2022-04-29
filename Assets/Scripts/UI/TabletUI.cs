@@ -162,11 +162,13 @@ public class TabletUI : UI
     /// </summary>
     public IEnumerator CallingStudents()
     {
-        _toTheRocket.gameObject.SetActive(true);
+        //_toTheRocket.gameObject.SetActive(true);
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
-            _currentStudentName.text = Client._tablet._students[i]._name;
-            //Aqui llamar al chiquillo por voz
+            //_currentStudentName.text = Client._tablet._students[i]._name;
+            string message = Client._tablet._students[i]._name + "¡A la nave!";
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(message,true,false);
+            //Speaker.Instance.Speak(message);
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
