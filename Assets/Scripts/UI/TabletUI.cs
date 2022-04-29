@@ -194,7 +194,7 @@ public class TabletUI : UI
         _astrounautAnimator.Play("Astronaut");
         yield return new WaitForSeconds(8.0f);
         _astronautAudio.Stop();
-        _studentsText.text += _currentStudentName.text + "\n";
+        _studentsText.text += Client._tablet._students[i]._name.text + "\n";
     }
 
     /// <summary>
