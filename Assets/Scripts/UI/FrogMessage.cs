@@ -31,6 +31,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _audio.pitch = 1.2f;
         _messageAtive = false;
         Speaker.Instance.OnSpeakComplete += MessageComplete;
+        _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
         _minAnim.Play("MinIdle");
     }
 
