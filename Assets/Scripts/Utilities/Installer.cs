@@ -62,13 +62,18 @@ public class Installer : MonoBehaviour
         ServiceLocator.Instance.RegisterService(_uiManager);
 
         if (!ServiceLocator.Instance.Contains<ServerUtility>())
+        {
             ServiceLocator.Instance.RegisterService(_myServer);
+        }
         //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
         //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
         //ServiceLocator.Instance.RegisterService<IError>(_error);
         //ServiceLocator.Instance.RegisterService(_canvasGUI);
-        //ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
+        if (!ServiceLocator.Instance.Contains<IFrogMessage>())
+        {
+            ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
+        }
 
 
         if (!ServiceLocator.Instance.Contains<IUI>() &&_server && _canvasMobile != null)
