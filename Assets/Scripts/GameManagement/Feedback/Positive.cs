@@ -35,7 +35,6 @@ public class Positive : MonoBehaviour, IPositive
     public void GenerateFeedback(Vector2 initPosition)
     {
         GenerateVisualFeedback(initPosition);
-        //TODO: GENERATE AUDITIVE EFFECTS
         AudioManagement();
     }
 
