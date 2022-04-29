@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Positive : MonoBehaviour, IPositive
 {
@@ -10,18 +11,23 @@ public class Positive : MonoBehaviour, IPositive
     public float _floatingVelocity;
     public float _particleVelocity;
     public int _pointsPerParticle;
-    private int _currentPoints;
-    private int _totalPoints;
+    public int _currentPoints;
+    public int _totalPoints;
     [Header("References")]
     public GameObject _goodParticle;
     public Vector2 _targetFeedback = new Vector2(6, 4);
     public AudioClip _clip;
     private AudioSource _audio;
+    private Text _scorePanelText;
 
     // Start is called before the first frame update
     void Start()
     {
         _audio = GetComponent<AudioSource>();
+        _scorePanelText = GameObject.FindGameObjectWithTag("ScorePanel").GetComponent<Text>();
+        _currentPoints = 0;
+        _totalPoints = 0;
+        _scorePanelText.text = 0.ToString();
     }
 
     // Update is called once per frame
@@ -29,8 +35,11 @@ public class Positive : MonoBehaviour, IPositive
     {
         if (Input.GetKeyDown(KeyCode.Space))
             GenerateFeedback(new Vector2(0,0));
-        if (_currentPoints > _totalPoints)
+        if (_currentPoints < _totalPoints)
+        {
             _currentPoints++;
+            _scorePanelText.text = _currentPoints.ToString();
+        }
     }
 
     /// <summary>
