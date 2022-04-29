@@ -13,7 +13,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     private TextMeshProUGUI _textMessage;
     private Image _imageMassage;
     private Animator _minAnim;
-    
+
     [Header("Min Configuration")]
     [SerializeField]
     public List<string> _messagePile = new List<string>();
@@ -66,7 +66,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             //    }
             //    _messagePile = new List<string>(deleteList);
             //}
- 
+
             _messageAtive = true;
             SendMessage(_messagePile[0]);
             _messagePile.Remove(_messagePile[0]);
@@ -160,7 +160,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         //    MessageComplete();
         //    StopFrogSpeaker();
         //}
-       
+
     }
     /// <summary>
     /// Repeat the last order gived by Min
@@ -169,7 +169,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if(_lastOrder == "")
         {
-            _lastOrder = "No hay órdenes";
+            _lastOrder = "No hay ï¿½rdenes";
         }
         NewFrogMessage(_lastOrder);
     }
