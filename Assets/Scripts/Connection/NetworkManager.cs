@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : MonoBehaviour,INetworkManager
 {
     [Header("Game Connection")]
     public string _ip;

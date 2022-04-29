@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GMSinBucle : MonoBehaviour
+public class GMSinBucle : MonoBehaviour,IGameManager
 {
     [Header("Minigame student client")]
     public string _currentstudentName;

@@ -166,7 +166,7 @@ public class TabletUI : UI
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
             _currentStudentName.text = Client._tablet._students[i]._name;
-            Speaker.Instance.Speak(_currentStudentName.text + " a la nave", _audioSource);
+            //Aqui llamar al chiquillo por voz
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
@@ -254,36 +254,36 @@ public class TabletUI : UI
         switch (ServiceLocator.Instance.GetService<GameManager>()._currentgameName)
         {
             case "Cabina Geometría":
-            case "Cabina Espacio/Tiempo":
+            case "Cabina Espacio Tiempo":
             case "Cabina Asociación":
-            case "Cabina Sumas/Restas":
+            case "Cabina Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
                 break;
             case "Telescopio Geometría":
-            case "Telescopio Espacio/Tiempo":
+            case "Telescopio Espacio Tiempo":
             case "Telescopio Asociación":
-            case "Telescopio Sumas/Restas":
+            case "Telescopio Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
                 break;
             case "Panel botones Geometría":
-            case "Panel botones Espacio/Tiempo":
+            case "Panel botones Espacio Tiempo":
             case "Panel botones Asociación":
-            case "Panel botones Sumas/Restas":
+            case "Panel botones Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
                 break;
             case "Panel tapa Geometría":
-            case "Panel tapa Espacio/Tiempo":
+            case "Panel tapa Espacio Tiempo":
             case "Panel tapa Asociación":
-            case "Panel tapa Sumas/Restas":
+            case "Panel tapa Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Door");
                 break;
 
         }
         yield return new WaitForSeconds(3.0f);
         
-        SceneManager.LoadScene("RubenSpaceTimeCabin");
+        //SceneManager.LoadScene("RubenSpaceTimeCabin");
         //Cuando este listo es el de abajo, llamar a los minijuegos tal cual estan aqui
-        //SceneManager.LoadScene(ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
+        SceneManager.LoadScene(ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
         yield return null;
     }
 }

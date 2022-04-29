@@ -9310,10 +9310,9 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1725880706}
+  m_Children: []
   m_Father: {fileID: 1095689879}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -9631,7 +9630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &512837361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13406,7 +13405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &758638563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17749,6 +17748,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1725880706}
   - {fileID: 473510856}
   m_Father: {fileID: 512837361}
   m_RootOrder: 1
@@ -18690,7 +18690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2927972563209937637, guid: ab1aa44e81a080e47a1654e77707c08b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2927972563209937690, guid: ab1aa44e81a080e47a1654e77707c08b, type: 3}
       propertyPath: m_Pivot.x
@@ -19148,7 +19148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1207306177
 Transform:
   m_ObjectHideFlags: 0
@@ -27769,12 +27769,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 473510856}
+  m_Father: {fileID: 1095689879}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 112}
+  m_AnchoredPosition: {x: 0, y: 110}
   m_SizeDelta: {x: 865.1377, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1725880707
@@ -30615,10 +30615,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minigamesNames:
-  - "Telescopio Geometr\xEDa"
-  - "Panel botones Asociaci\xF3n"
   - "Cabina Geometr\xEDa"
-  - Cabina Espacio/Tiempo
+  - Cabina Espacio Tiempo
+  - "Panel botones Geometr\xEDa"
+  - Panel botones Espacio Tiempo
   _minigamesMaximumLevel: 5
   _currentstudentName: 
   _currentgameName: 
@@ -31064,7 +31064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1955386192
 RectTransform:
   m_ObjectHideFlags: 0

@@ -8,4 +8,5 @@ public interface IFrogMessage
     public void NewFrogMessage(string message);
     public void NewFrogMessage(string message, bool isOrder);
     public void RepeatLastOrder();
+    public void StopFrogSpeaker();
 }

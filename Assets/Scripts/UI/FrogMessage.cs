@@ -84,8 +84,11 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     }
     private void MessageComplete(Wrapper wrapper)
     {
-        _minAnim.Play("MinIdle");
-        StartCoroutine(CloseMessage());
+        if (_minAnim != null)
+        {
+            _minAnim.Play("MinIdle");
+            StartCoroutine(CloseMessage());
+        }
     }
     /// <summary>
     /// Start the messages process
@@ -168,5 +171,10 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _textMessage.text = "";
         _imageMassage.color = new Color(0, 0, 0, 0);
         _messageAtive = false;
+    }
+
+    public void StopFrogSpeaker()
+    {
+        Speaker.Instance.Silence();
     }
 }
