@@ -64,7 +64,7 @@ public class ParticleFeedback : MonoBehaviour
     private void FloatingMovement()
     {
         transform.position += (Vector3)_direction * _floatingVelocity * Time.deltaTime;
-        transform.position = new Vector3(transform.position.x,transform.position.y,-5);
+        transform.position = new Vector3(transform.position.x,transform.position.y,0);
     }
 
     /// <summary>

@@ -90,14 +90,14 @@ public class CreatePanel_Prueba : MonoBehaviour
 
         //COLOCAR BOTONES EN POSICIÓN
         randomize(_allList, _allList.Count);
-        for (int x = 0; x < _column; x++)
-        {
-            for (int y = 0; y < _row; y++)
-            {
-                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-                _count++;
-            }
-        }
+        //for (int x = 0; x < _column; x++)
+        //{
+        //    for (int y = 0; y < _row; y++)
+        //    {
+        //        _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+        //        _count++;
+        //    }
+        //}
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)

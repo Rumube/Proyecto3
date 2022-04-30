@@ -112,7 +112,7 @@ public class ButtonCounter : MonoBehaviour
             }
         }
 
-        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         //CheckGeometry(_nCircle, _circleCounter);
         //CheckGeometry(_nTriangle, _triangleCounter);
         //CheckGeometry(_nSquare, _squareCounter);
