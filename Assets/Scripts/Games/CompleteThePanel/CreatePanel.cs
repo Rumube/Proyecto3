@@ -36,7 +36,7 @@ public class CreatePanel : MonoBehaviour
     {
         _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
-        _buttomCounter = GameObject.Find("ButtonCounter").GetComponent<ButtonCounter>();
+        _buttomCounter = GetComponent<ButtonCounter>();
         GeneratePanel();
     }
 
@@ -94,7 +94,7 @@ public class CreatePanel : MonoBehaviour
 
     private void SendMessage()
     {
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);
     }
     /// <summary>
     /// Generates the normal geometry.
@@ -155,11 +155,7 @@ public class CreatePanel : MonoBehaviour
                         newGeometry.transform.SetParent(_canvas.transform, false);
                         isCorrect = true;
                     }
-
                 } while (!isCorrect);
-
-
-               
             }
         } while (!CheckTargets());
     }
