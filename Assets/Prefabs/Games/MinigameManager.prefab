@@ -28,10 +28,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2092755308462480912}
+  - {fileID: 5711205756721114322}
   - {fileID: 2092755306999010328}
   - {fileID: 2092755307233629503}
   - {fileID: 2092755307475918666}
-  - {fileID: 5711205756721114322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -68,7 +68,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2092755306920782513}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2092755306999010341
 MonoBehaviour:
@@ -86,9 +86,13 @@ MonoBehaviour:
   _floatingTime: 0.3
   _floatingVelocity: 10
   _particleVelocity: 8
+  _pointsPerParticle: 10
+  _currentPoints: 0
+  _totalPoints: 0
   _goodParticle: {fileID: 5408174780371598402, guid: b252830ee012e4244ae1a934e119a179, type: 3}
+  _scoreEffect: {fileID: 2642457865211177166, guid: 00a07baecf77c7b44aeb0e1b1470ad52, type: 3}
   _targetFeedback: {x: 6, y: 4}
-  _clip: {fileID: 0}
+  _clip: {fileID: 8300000, guid: ca25d3d96ad09db46a4718f5ce2b86de, type: 3}
 --- !u!114 &2092755306999010342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +108,10 @@ MonoBehaviour:
   _failDuration: 0.3
   _shakeAmount: 0.7
   _clip: {fileID: 0}
-  _errorMessages: []
+  _errorMessages:
+  - "\xA1Casi lo tienes!"
+  - "Int\xE9ntalo de nuevo"
+  - "La pr\xF3xima vez mejor"
 --- !u!114 &2092755306999010343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +263,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2092755306920782513}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092755307475918667
 GameObject:
@@ -287,7 +294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2092755306920782513}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2092755307475918664
 MonoBehaviour:
@@ -301,7 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1a657077d71664ebd1430845dde055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeImage: {fileID: 0}
   _currentTime: 0
   _finishTime: 0
 --- !u!1 &2092755308462480913
@@ -323,7 +329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2092755308462480912
 Transform:
   m_ObjectHideFlags: 0
@@ -388,8 +394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minigameMinutes: 0
-  _minigameSeconds: 0
-  _minigameLevel: -1
+  _minigameSeconds: 60
+  _minigameLevel: 1
 --- !u!114 &8342110124163581035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5711205756721114322
 Transform:
   m_ObjectHideFlags: 0
@@ -433,7 +439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2092755306920782513}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6745391449054171874
 MonoBehaviour:
