@@ -40,8 +40,8 @@ public class MinigamesUI : MonoBehaviour
     /// </summary>
     public void ContinueButtonMinigamesRanking()
     {
-        //ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
-        //SceneManager.LoadScene("CristinaTest");
+        ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
+        SceneManager.LoadScene("CristinaTest");
     }
     /// <summary>
     /// Repeat the last order gived by Min.

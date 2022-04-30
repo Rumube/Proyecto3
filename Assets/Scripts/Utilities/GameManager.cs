@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Minigames scene names")]
     public List<string> _minigamesNames = new List<string>();
+    public int _minigamesMaximumLevel = 5;
     [Header("Minigame student client")]
     public string _currentstudentName;
     public string _currentgameName;

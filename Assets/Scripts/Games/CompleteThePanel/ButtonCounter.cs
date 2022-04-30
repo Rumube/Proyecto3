@@ -27,7 +27,7 @@ public class ButtonCounter : MonoBehaviour
     int _goodGeometry;
     int _badGeometry;
     public Text _mission;
-  
+
     public CreatePanel _createPanel;
     [SerializeField]
     private CalculatePuntuation _calculatePuntuation;
@@ -35,8 +35,15 @@ public class ButtonCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _mission.text = GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
-        GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
+        //_gameText= GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
+        //GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
+    }
+
+    public string GetTextGame()
+    {
+        string message = (GeometryNumberText(_nCircle, "círculo") + GeometryNumberText(_nTriangle, "triángulo") + GeometryNumberText(_nSquare, "cuadrado") +
+        GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono"));
+        return "Selecciona " + message;
     }
 
     /// <summary>Show the geometry name in plural or singular.</summary> 
@@ -47,6 +54,7 @@ public class ButtonCounter : MonoBehaviour
     /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public string GeometryNumberText(int nGeometry,string geometryName)
     {
+        Debug.Log("He entrado en GeometryNumber");
         if (nGeometry==0)
         {
             return "";
@@ -64,7 +72,7 @@ public class ButtonCounter : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nDiamond, _diamondCounter);
@@ -74,7 +82,7 @@ public class ButtonCounter : MonoBehaviour
 
         _badGeometry = _totalGeometry - _goodGeometry;
         _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
-
+        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
         _goodGeometry = 0;
         _totalGeometry = 0;
         _nSquare=0;

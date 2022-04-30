@@ -22,11 +22,21 @@ public class Client
         _ws.OnMessage += Ws_OnMessage;
         _ws.Connect();
 
-        EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+        if (_ws.Ping())
+        {
+            EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+            ClientHandle.CanConnectServer();
 
-        _allPackages = new List<ClientPackage>();
+            _allPackages = new List<ClientPackage>();
 
-        InitializeData();
+            InitializeData();
+        }
+        else
+        {
+            ClientHandle.CantConnectServer();
+            if (_ws != null)
+                _ws.Close();
+        }     
     }
 
     /// <summary>Initialize a tablet and assing -1 for tablet id</summary>
@@ -105,6 +115,31 @@ public class Client
         package._selectStudentGame._studentName = studentName;
         package._selectStudentGame._gameName = gameName;
 
+        _ws.Send(JsonConvert.SerializeObject(package));
+    }
+
+    public void ViewFinalScore()
+    {
+        ClientPackage package = new ClientPackage();
+
+        package._typePackageClient = ClientPackets.viewFinalScore;
+
+        _ws.Send(JsonConvert.SerializeObject(package));
+    }
+
+    public void StudentScore()
+    {
+        ClientPackage package = new ClientPackage();
+
+        package._typePackageClient = ClientPackets.matchData;
+        package._matchData._studentName = ServiceLocator.Instance.GetService<GameManager>()._currentstudentName;
+        package._matchData._gameName = ServiceLocator.Instance.GetService<GameManager>()._currentgameName;
+        package._matchData._team = _tablet._id;
+        package._matchData._averageSuccess = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess * 100;
+        package._matchData._averageErrors = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageFails * 100;
+        package._matchData._averageGameTime = ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageTime;
+        package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averagePoints;
+        package._matchData._gameLevel = ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel;
         _ws.Send(JsonConvert.SerializeObject(package));
     }
     #endregion

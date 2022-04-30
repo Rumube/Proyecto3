@@ -34,10 +34,10 @@ public class AsteroidBlasterInput : MonoBehaviour
         _lineRenderer = GetComponent<LineRenderer>();
         _newAngle = 0;
         _lastShotPostion = Vector2.zero;
-        _asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
-        if (_asteroidManager.GetComponent<AsteroidBlaster>())
+        //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
+        if (GetComponent<AsteroidBlaster>())
             _shotType = ShotType.Move;
-        else if (_asteroidManager.GetComponent<SpaceTimeCabin>())
+        else if (GetComponent<SpaceTimeCabin>())
         {
             _shotType = ShotType.Static;
         }
@@ -65,7 +65,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void UpdateMoveInput()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _asteroidManager.GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
@@ -145,10 +145,15 @@ public class AsteroidBlasterInput : MonoBehaviour
                     AsteroidHit(hit.collider);
                 break;
             case ShotType.Static:
-                Collider2D colliders = Physics2D.OverlapCircle(_lastShotPostion, 1f);
-                if(colliders != null && colliders.tag == "Asteroid" && _canVibrate)
-                    AsteroidHit(colliders);
-                GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(colliders);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(_lastShotPostion, 1f);
+                foreach (Collider2D currentCollider in colliders)
+                {
+                    if (colliders != null && currentCollider.tag == "Asteroid")
+                        AsteroidHit(currentCollider);
+                    GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(currentCollider);
+                }
+
+                
                 break;
             default:
                 break;

@@ -13,6 +13,12 @@ public class Error : MonoBehaviour, IError
     [Header("Error Messages")]
     public List<string> _errorMessages;
 
+
+    private void Start()
+    {
+        _audio = GetComponent<AudioSource>();
+    }
+
     /// <summary>
     /// Generates the error feedback
     /// </summary>
@@ -20,7 +26,8 @@ public class Error : MonoBehaviour, IError
     {
         AudioManagement();
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
-        StartCoroutine(StartFrogMessage());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
+        //StartCoroutine(StartFrogMessage());
     }
 
     /// <summary>
@@ -28,7 +35,6 @@ public class Error : MonoBehaviour, IError
     /// </summary>
     private void AudioManagement()
     {
-        _audio = GetComponent<AudioSource>();
         _audio.clip = _clip;
         _audio.Play();
     }
@@ -39,6 +45,5 @@ public class Error : MonoBehaviour, IError
     IEnumerator StartFrogMessage()
     {
         yield return new WaitForSeconds(1f);
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
     }
 }
