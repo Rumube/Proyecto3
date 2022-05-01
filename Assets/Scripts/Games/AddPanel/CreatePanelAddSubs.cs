@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,16 +28,18 @@ public class CreatePanelAddSubs : MonoBehaviour
     //Game Configuration
     [SerializeField]
     private int _level;
-
+    public int _pressedButtons;
+    public int _orderButtons;
     [SerializeField]
     AddPanelDifficulty _completeThePanel;
     AddPanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
-    public ButtonManager buttonCounter;
+    public ButtonManager _buttonManager;
     void Start()
     {
         _completeThePanel = GetComponent<AddPanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
+       
         GeneratePanel();
     }
 
@@ -45,6 +48,23 @@ public class CreatePanelAddSubs : MonoBehaviour
     /// </summary>
     void GeneratePanel()
     {
+        _pressedButtons = UnityEngine.Random.Range(0, _column*_row);
+        if (_pressedButtons+_currentDataDifficulty.elementToAddSubs>_column*_row)
+        {
+            _orderButtons = _pressedButtons - _currentDataDifficulty.elementToAddSubs;
+        }
+        else
+        {
+            int random = UnityEngine.Random.Range(0, 1);
+            if (random==0)
+            {
+                _orderButtons = _pressedButtons - _currentDataDifficulty.elementToAddSubs;
+            }
+            else
+            {
+                _orderButtons = _pressedButtons + _currentDataDifficulty.elementToAddSubs;
+            }
+        }
         _geometryList.Clear();
         _targetList.Clear();
         _allList.Clear();
@@ -52,7 +72,7 @@ public class CreatePanelAddSubs : MonoBehaviour
         GenerateNoTargetGeometry();
 
         //COLOCAR BOTONES EN POSICIÓN
-
+        randomize(_allList, _allList.Count);
         for (int x = 0; x < _column; x++)
         {
             for (int y = 0; y < _row; y++)
@@ -63,14 +83,46 @@ public class CreatePanelAddSubs : MonoBehaviour
             }
         }
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        Invoke("SendMessage", 1f);
+    }
+    static void randomize(List<GameObject> arr, int n)
+    {
+        // Creating a object
+        // for Random class
+        var rand = new System.Random(UnityEngine.Random.Range(0, n));
+
+        // Start from the last element and
+        // swap one by one. We don't need to
+        // run for the first element
+        // that's why i > 0
+        for (int i = n - 1; i > 0; i--)
+        {
+
+            // Pick a random index
+            // from 0 to i
+            int j = rand.Next(0, i + 1);
+
+            // Swap arr[i] with the
+            // element at random index
+            GameObject temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        // Prints the random array
+        for (int i = 0; i < n; i++)
+            Console.Write(arr[i] + " ");
     }
 
+    private void SendMessage()
+    {
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttonManager.GetTextGame());
+    }
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
     private void GenerateNoTargetGeometry()
     {
-        for (int i = 0; i < (_row * _column) - _currentDataDifficulty.pressedButtons; i++)
+        for (int i = 0; i < (_row * _column) - _pressedButtons; i++)
         {
             GameObject newGeometry;
             newGeometry = Instantiate(button, new Vector3(0, 0, 0), Quaternion.identity);
@@ -94,11 +146,11 @@ public class CreatePanelAddSubs : MonoBehaviour
             }
             _targetList.Clear();
             _allList.Clear();
-            for (int i = 0; i < _currentDataDifficulty.pressedButtons; i++)
+            for (int i = 0; i < _pressedButtons; i++)
             {
-                int idGeometry = Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
+                int idGeometry = UnityEngine.Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
                 GameObject newGeometry = Instantiate(button, new Vector3(0, 0, 0), Quaternion.identity);
-                buttonCounter._buttonCounter = 1 + buttonCounter._buttonCounter;
+                //buttonCounter._buttonCounter = 1 + buttonCounter._buttonCounter;
                 newGeometry.GetComponent<Image>().sprite = newGeometry.GetComponent<Button>().spriteState.pressedSprite;
                 newGeometry.GetComponent<ObjectPanel>()._placed = false;
                 newGeometry.GetComponent<ObjectPanel>()._pressed = true;
@@ -159,12 +211,13 @@ public class CreatePanelAddSubs : MonoBehaviour
     //    }
     //    return result;
     //}
+    
     // Update is called once per frame
     void Update()
     {
         if (_allList.Count == _row * _column)
         {
-            if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i < _allList.Count; i++)
                 {

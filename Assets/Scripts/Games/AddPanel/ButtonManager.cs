@@ -33,20 +33,24 @@ public class ButtonManager : MonoBehaviour
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
        
     }
-
+    public string GetTextGame()
+    {
+        string message = (GeometryNumberText(_createPanel._orderButtons) );
+        return "Selecciona " + message;
+    }
     // Update is called once per frame
     void Update()
     {
-        _mission.text = GeometryNumberText(_currentDataDifficulty.elementToAddSubs, "botón");
+       
     }
-
+   
     /// <summary>Show the geometry name in plural or singular.</summary> 
 
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="geometryName">The name of the geometry</param>
 
     /// <returns>Empty or the name of the geometry in singular or plural</returns> 
-    public string GeometryNumberText(int nGeometry, string geometryName)
+    public string GeometryNumberText(int nGeometry)
     {
         if (nGeometry == 0)
         {
@@ -65,8 +69,8 @@ public class ButtonManager : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
-        CheckGeometry(_currentDataDifficulty.elementToAddSubs, _buttonCounter);
+        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
+        CheckGeometry(_createPanel._orderButtons, _buttonCounter);
        
         _badGeometry = _totalGeometry - _goodGeometry;
         _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
