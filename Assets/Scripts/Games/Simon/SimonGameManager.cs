@@ -19,7 +19,6 @@ public class SimonGameManager : MonoBehaviour
     public CanvasGroup _buttons;
 
     public GameObject startButton;
-    public GameObject _imgTapa;
 
     private SimonGameDifficulty.dataDiffilcuty _data;
     public int _level;
@@ -28,6 +27,7 @@ public class SimonGameManager : MonoBehaviour
     private int _rounds;
     private int _currentRounds = 0;
     private bool _canClick = false;
+    public Animator _animTapa;
 
     private void Start()
     {
@@ -110,7 +110,7 @@ public class SimonGameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _imgTapa.SetActive(true);
+        _animTapa.Play("PanelOpen");
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
 
         foreach (GameObject currentButton in findButtons)
@@ -141,7 +141,7 @@ public class SimonGameManager : MonoBehaviour
     public IEnumerator StartNextRound()
     {
         yield return new WaitForSeconds(_data.simonVelocity);
-        _imgTapa.SetActive(false);
+        _animTapa.Play("PanelClose");
         _playerSequenceList.Clear();
         _canClick = false;
         yield return new WaitForSeconds(_data.simonVelocity);
