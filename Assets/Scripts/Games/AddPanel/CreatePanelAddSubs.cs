@@ -78,6 +78,7 @@ public class CreatePanelAddSubs : MonoBehaviour
             for (int y = 0; y < _row; y++)
             {
                 _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+                _allList[_count].transform.SetParent(_canvas.transform, false);
                 _count++;
                
             }
@@ -126,7 +127,7 @@ public class CreatePanelAddSubs : MonoBehaviour
         {
             GameObject newGeometry;
             newGeometry = Instantiate(button, new Vector3(0, 0, 0), Quaternion.identity);
-            newGeometry.transform.SetParent(_canvas.transform, false);
+            //newGeometry.transform.SetParent(_canvas.transform, false);
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -156,7 +157,7 @@ public class CreatePanelAddSubs : MonoBehaviour
                 newGeometry.GetComponent<ObjectPanel>()._pressed = true;
                 _targetList.Add(newGeometry);
                 _allList.Add(newGeometry);
-                newGeometry.transform.SetParent(_canvas.transform, false);
+                //newGeometry.transform.SetParent(_canvas.transform, false);
             }
         //} while (!CheckTargets());
     }
