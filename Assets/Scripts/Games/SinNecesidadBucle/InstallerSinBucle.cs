@@ -13,8 +13,8 @@ public class InstallerSinBucle : MonoBehaviour
     public AndroidInputAdapter _inputAndroid;
     public Error _error;
     public FrogMessage _frogMessage;
-    public NetMSinBucle _networkSinBucle;
-    public GMSinBucle _gmSinBucle;
+    public NetworkManager _networkSinBucle;
+    public GameManager _GameManager;
     public Positive _positive;
     public CalculatePuntuation _calculatePoints;
 
@@ -31,8 +31,8 @@ public class InstallerSinBucle : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IError>(_error);
         ServiceLocator.Instance.RegisterService(_canvasGUI);
         ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
-        ServiceLocator.Instance.RegisterService<NetMSinBucle>(_networkSinBucle);
-        ServiceLocator.Instance.RegisterService<GMSinBucle>(_gmSinBucle);
+        ServiceLocator.Instance.RegisterService<NetworkManager>(_networkSinBucle);
+        ServiceLocator.Instance.RegisterService<GameManager>(_GameManager);
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
         ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePoints);
     }

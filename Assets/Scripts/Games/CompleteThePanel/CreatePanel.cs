@@ -37,6 +37,7 @@ public class CreatePanel : MonoBehaviour
         _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         _buttomCounter = GetComponent<ButtonCounter>();
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         GeneratePanel();
     }
 
@@ -53,15 +54,14 @@ public class CreatePanel : MonoBehaviour
 
         //COLOCAR BOTONES EN POSICIÓN
         randomize(_allList, _allList.Count);
-        for (int x = 0; x < _column; x++)
-        {
-            for (int y = 0; y < _row; y++)
-            {
-                 _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-                 _count++;
-            }
-        }
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        //for (int x = 0; x < _column; x++)
+        //{
+        //    for (int y = 0; y < _row; y++)
+        //    {
+        //         _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+        //         _count++;
+        //    }
+        //}
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)
@@ -215,7 +215,7 @@ public class CreatePanel : MonoBehaviour
     {
         if (_allList.Count==_row*_column)
         {
-            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i <_allList.Count; i++)
                 {

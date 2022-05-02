@@ -35,7 +35,7 @@ public class AsteroidBlaster : MonoBehaviour
     }
     private void Update()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
+        if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
         {
             _pointsCalculated = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
@@ -199,8 +199,6 @@ public class AsteroidBlaster : MonoBehaviour
         _asteroids.Remove(asteroid);
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
-            //"es-es-x-eea-local"
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(asteroid.transform.position);
         }
@@ -211,7 +209,7 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
+            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();

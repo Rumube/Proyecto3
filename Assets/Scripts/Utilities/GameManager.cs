@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour,IGameManager
 {
     [Header("Minigames scene names")]
     public List<string> _minigamesNames = new List<string>();

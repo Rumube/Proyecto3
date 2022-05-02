@@ -668,7 +668,7 @@ public class Android : MonoBehaviour
             EDebug.Log("Reader: GAME " + reader.GetValue(0));
             EDebug.Log("Reader: STUDENT " + reader2.GetValue(0));
             IDbCommand dbcmd3 = _dbconn.CreateCommand();
-            string difficulty = "SELECT level,averagePoints FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""/*+ " AND idGame = \"" + reader.GetValue(0) + "\""*/;
+            string difficulty = "SELECT level,averagePoints FROM Match where idStudent = \"" + reader2.GetValue(0) + "\""+ " AND idGame = \"" + reader.GetValue(0) + "\"";
             dbcmd3.CommandText = difficulty;
             IDataReader reader3 = dbcmd3.ExecuteReader();
             while (reader3.Read())
