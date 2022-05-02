@@ -11,4 +11,18 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
     [Header("Minigame difficulty server")]
     public int _minigameLevel = -1;
 
+    public int GetMinigameMinutes()
+    {
+        return _minigameMinutes;
+    }
+
+    public int GetMinigameSeconds()
+    {
+        return _minigameSeconds;
+    }
+
+    public void SendMatchData()
+    {
+        throw new System.NotImplementedException();
+    }
 }

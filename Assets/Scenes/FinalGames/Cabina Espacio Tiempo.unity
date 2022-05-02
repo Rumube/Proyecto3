@@ -756,6 +756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentstudentName: 
   _pause: 0
+  _returnToCommonScene: 0
   _gameStateServer: 0
   _gameStateClient: 0
 --- !u!114 &549744165
@@ -2369,6 +2370,10 @@ PrefabInstance:
       propertyPath: _timeImage
       value: 
       objectReference: {fileID: 1792356884}
+    - target: {fileID: 2092755308462480913, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameLevel
       value: 1
@@ -2376,6 +2381,10 @@ PrefabInstance:
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameSeconds
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3917465416531648716, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: _notGameLoop
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3c0236698413144ab459213746d3b06, type: 3}

@@ -15,7 +15,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 
     private void Update()
     {
-        if(_canStartTime && ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        if(_canStartTime && ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             TimeProgress();
         }
@@ -28,7 +28,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         _canStartTime = true;
         _timeImage = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Image>();
-        _maxTime = (ServiceLocator.Instance.GetService<NetworkManager>()._minigameMinutes * 60) + ServiceLocator.Instance.GetService<NetworkManager>()._minigameSeconds;
+        _maxTime = (ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameMinutes() * 60) + ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameSeconds();
         _finishTime = Time.realtimeSinceStartup + _maxTime;
         _currentTime = Time.realtimeSinceStartup;
         _startTime = Time.realtimeSinceStartup;
@@ -44,9 +44,9 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         if (_currentTime >= _finishTime)
         {
             ServiceLocator.Instance.GetService<IFrogMessage>().StopFrogSpeaker();
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.ranking);
             _canStartTime = false;
-            ServiceLocator.Instance.GetService<NetworkManager>().SendMatchData();
+            ServiceLocator.Instance.GetService<INetworkManager>().SendMatchData();
         }         
     }
     public void SetStartTime(bool state)
