@@ -43,7 +43,7 @@ public class SpaceTimeCabin : MonoBehaviour
     /// </summary>
     void RestartGame()
     {
-        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        if(ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             _finishingGame = false;
             _targetPoint = GenerateTargetPoint();
