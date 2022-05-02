@@ -41,7 +41,7 @@ public class CreatePanel_Prueba : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing && _allList[0].GetComponent<Button>().interactable)
+        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing && _allList[0].GetComponent<Button>().interactable)
         {
             foreach (GameObject currentButton in _allList)
             {
@@ -49,7 +49,7 @@ public class CreatePanel_Prueba : MonoBehaviour
             }
             _checkButton.interactable = false;
         }
-        else if(ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && !_allList[0].GetComponent<Button>().interactable)
+        else if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing && !_allList[0].GetComponent<Button>().interactable)
         {
             foreach (GameObject currentButton in _allList)
             {
@@ -61,7 +61,7 @@ public class CreatePanel_Prueba : MonoBehaviour
 
         //if (_allList.Count == _row * _column)
         //{
-        //    if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+        //    if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
         //    {
         //        for (int i = 0; i < _allList.Count; i++)
         //        {
@@ -90,14 +90,14 @@ public class CreatePanel_Prueba : MonoBehaviour
 
         //COLOCAR BOTONES EN POSICIÓN
         randomize(_allList, _allList.Count);
-        for (int x = 0; x < _column; x++)
-        {
-            for (int y = 0; y < _row; y++)
-            {
-                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-                _count++;
-            }
-        }
+        //for (int x = 0; x < _column; x++)
+        //{
+        //    for (int y = 0; y < _row; y++)
+        //    {
+        //        _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+        //        _count++;
+        //    }
+        //}
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)

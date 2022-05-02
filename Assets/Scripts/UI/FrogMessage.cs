@@ -8,9 +8,13 @@ using TMPro;
 
 public class FrogMessage : MonoBehaviour, IFrogMessage
 {
+    [Header("References")]
     private AudioSource _audio;
     private TextMeshProUGUI _textMessage;
     private Image _imageMassage;
+    private Animator _minAnim;
+
+    [Header("Min Configuration")]
     [SerializeField]
     public List<string> _messagePile = new List<string>();
     private bool _messageAtive;
@@ -27,6 +31,8 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _audio.pitch = 1.2f;
         _messageAtive = false;
         Speaker.Instance.OnSpeakComplete += MessageComplete;
+        _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
+        _minAnim.Play("MinIdle");
     }
 
     // Update is called once per frame
@@ -60,7 +66,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             //    }
             //    _messagePile = new List<string>(deleteList);
             //}
- 
+
             _messageAtive = true;
             SendMessage(_messagePile[0]);
             _messagePile.Remove(_messagePile[0]);
@@ -72,11 +78,24 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<TextMeshProUGUI>();
         _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
+        _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
         StartCoroutine(FrogCoroutine(message));
     }
     private void MessageComplete(Wrapper wrapper)
     {
-        StartCoroutine(CloseMessage());
+        if (_minAnim != null)
+        {
+            _minAnim.Play("MinIdle");
+            StartCoroutine(CloseMessage());
+        }
+    }
+    private void MessageComplete()
+    {
+        if (_minAnim != null)
+        {
+            _minAnim.Play("MinIdle");
+            StartCoroutine(CloseMessage());
+        }
     }
     /// <summary>
     /// Start the messages process
@@ -104,6 +123,23 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// <param name="message">The message text</param>
     private IEnumerator FrogCoroutine(string message)
     {
+        int randomAnim = Random.Range(0, 3);
+        string animName = "";
+        switch (randomAnim)
+        {
+            case 0:
+                animName = "MinTalk1";
+                break;
+            case 1:
+                animName = "MinTalk2";
+                break;
+            case 2:
+                animName = "MinTalk3";
+                break;
+            default:
+                break;
+        }
+        _minAnim.Play(animName);
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
         _imageMassage.color = new Color(0, 0, 0, 1);
@@ -116,9 +152,15 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         {
             currentMessage += textSplit[i];
             _textMessage.SetText(currentMessage);
-
             yield return new WaitForSeconds(waitTime);
         }
+        //if (!_isInGame)
+        //{
+        //    yield return new WaitForSeconds(3.0f);
+        //    MessageComplete();
+        //    StopFrogSpeaker();
+        //}
+
     }
     /// <summary>
     /// Repeat the last order gived by Min
@@ -127,7 +169,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if(_lastOrder == "")
         {
-            _lastOrder = "No hay órdenes";
+            _lastOrder = "No hay ï¿½rdenes";
         }
         NewFrogMessage(_lastOrder);
     }
@@ -141,5 +183,10 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _textMessage.text = "";
         _imageMassage.color = new Color(0, 0, 0, 0);
         _messageAtive = false;
+    }
+
+    public void StopFrogSpeaker()
+    {
+        Speaker.Instance.Silence();
     }
 }

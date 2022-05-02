@@ -471,7 +471,7 @@ public class MobileUI : UI
         {
             GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
             newButton.GetComponent<TabletButton>().index_rocket = i;
-            newButton.GetComponent<Image>().sprite = newButton.GetComponent<TabletButton>()._rocketSprites[i];
+            newButton.GetComponentInChildren<Image>().sprite = newButton.GetComponent<TabletButton>()._rocketSprites[i];
             _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
             ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
         }

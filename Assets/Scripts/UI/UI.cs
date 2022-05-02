@@ -33,7 +33,7 @@ public abstract class UI : MonoBehaviour,IUI
     }
     public void CreditsTablet()
     {
-        ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._credits.activeSelf);
+        ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.activeSelf);
     }
 
     /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>

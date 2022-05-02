@@ -26,11 +26,7 @@ public class ButtonCounter : MonoBehaviour
     int _totalGeometry;
     int _goodGeometry;
     int _badGeometry;
-    public Text _mission;
-
     public CreatePanel _createPanel;
-    [SerializeField]
-    private CalculatePuntuation _calculatePuntuation;
 
     // Update is called once per frame
     void Update()
@@ -72,18 +68,69 @@ public class ButtonCounter : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
-        CheckGeometry(_nCircle, _circleCounter);
-        CheckGeometry(_nSquare, _squareCounter);
-        CheckGeometry(_nDiamond, _diamondCounter);
-        CheckGeometry(_nRectangle, _rectangleCounter);
-        CheckGeometry(_nPentagon, _pentagonCounter);
-        CheckGeometry(_nHexagon, _hexagonCounter);
 
-        _badGeometry = _totalGeometry - _goodGeometry;
-        _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
-        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+        List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
+
+        foreach(GameObject currentButton in _createPanel._allList)
+        {
+            if (!geometryButtons.Contains(currentButton.GetComponent<Geometry>()._geometryType))
+            {
+                geometryButtons.Add(currentButton.GetComponent<Geometry>()._geometryType);
+            }
+        }
+
+        foreach (Geometry.Geometry_Type currentGeometry in geometryButtons)
+        {
+            switch (currentGeometry)
+            {
+                case Geometry.Geometry_Type.circle:
+                    CheckGeometry(_nCircle, _circleCounter);
+                    break;
+                case Geometry.Geometry_Type.triangle:
+                    CheckGeometry(_nTriangle, _triangleCounter);
+                    break;
+                case Geometry.Geometry_Type.square:
+                    CheckGeometry(_nSquare, _squareCounter);
+                    break;
+                case Geometry.Geometry_Type.diamond:
+                    CheckGeometry(_nDiamond, _diamondCounter);
+                    break;
+                case Geometry.Geometry_Type.rectangle:
+                    CheckGeometry(_nRectangle, _rectangleCounter);
+                    break;
+                case Geometry.Geometry_Type.pentagon:
+                    CheckGeometry(_nPentagon, _pentagonCounter);
+                    break;
+                case Geometry.Geometry_Type.hexagon:
+                    CheckGeometry(_nHexagon, _hexagonCounter);
+                    break;
+                case Geometry.Geometry_Type.star:
+                    CheckGeometry(_nHexagon, _hexagonCounter);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+        //CheckGeometry(_nCircle, _circleCounter);
+        //CheckGeometry(_nTriangle, _triangleCounter);
+        //CheckGeometry(_nSquare, _squareCounter);
+        //CheckGeometry(_nDiamond, _diamondCounter);
+        //CheckGeometry(_nRectangle, _rectangleCounter);
+        //CheckGeometry(_nPentagon, _pentagonCounter);
+        //CheckGeometry(_nHexagon, _hexagonCounter);
+
+        //_badGeometry = _totalGeometry - _goodGeometry;
+        if (_badGeometry > 0)
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        else
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+
+        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
+
         _goodGeometry = 0;
+        _badGeometry = 0;
         _totalGeometry = 0;
         _nSquare=0;
         _nTriangle = 0;
@@ -107,15 +154,14 @@ public class ButtonCounter : MonoBehaviour
     /// <param name="counter">The geometry of the player</param>
     public void CheckGeometry(int nGeometry, int counter)
     {
-        if (nGeometry > 0)
-        {
-            _totalGeometry += 1;
             if (nGeometry == counter)
             {
-                _goodGeometry += 1;
+                _goodGeometry++;
             }
-        }
-       
+            else
+            {
+                _badGeometry++;
+            }
     }
     #region Button Counters
     public void CounterSquare(GameObject button)

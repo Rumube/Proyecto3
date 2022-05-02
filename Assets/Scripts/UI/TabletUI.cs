@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Crosstales.RTVoice;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class TabletUI : UI
 {   
@@ -25,6 +26,10 @@ public class TabletUI : UI
     public TMP_InputField _ipServer;
     public TMP_InputField _portServer;
     public GameObject _cantConnectText;
+    public VideoPlayer _video;
+    public Animator[] _initialButtonAnims = new Animator[3];
+    public Animator _conectionBackgroundAnims;
+    public Animator _fadeOutInitialScreen;
 
     [Header("Connection")]
     public TextMeshProUGUI _studentsText;
@@ -92,8 +97,29 @@ public class TabletUI : UI
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
         _continueNextScreen = true;
-    }
 
+        //Initial animations
+        _fadeOutInitialScreen.Play("InitialScreenFadeOut");
+        _video.Play();
+        _video.loopPointReached += InitialAnimEndReached;
+        
+    }
+    void InitialAnimEndReached(VideoPlayer vp)
+    {
+        for (int i = 0; i < _initialButtonAnims.Length; ++i)
+        {
+            _initialButtonAnims[i].Play("FadeIn");
+        }
+        _conectionBackgroundAnims.Play("FadeInConnection");
+    }
+    public void Alpha100InitialButtons()
+    {
+        for (int i = 0; i < _initialButtonAnims.Length; ++i)
+        {
+            _initialButtonAnims[i].enabled = false;
+            _initialButtonAnims[i].gameObject.GetComponent<Image>().color = Color.white;
+        }
+    }
     /// <summary>
     /// Save the values places in the input in order to have direct access to the connection if
     /// server port and ip doesn't change
@@ -136,16 +162,18 @@ public class TabletUI : UI
     /// </summary>
     public IEnumerator CallingStudents()
     {
-        _toTheRocket.gameObject.SetActive(true);
+        //_toTheRocket.gameObject.SetActive(true);
         for (int i = 0; i < Client._tablet._students.Count; ++i)
         {
             _currentStudentName.text = Client._tablet._students[i]._name;
-            Speaker.Instance.Speak(_currentStudentName.text + " a la nave", _audioSource);
+            string message = Client._tablet._students[i]._name + "¡A la nave!";
+            //ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(message,true,false);
+            //Speaker.Instance.Speak(message);
             _continuecallingStudent = false;
             _continueCallingButton.gameObject.SetActive(true);
             yield return new WaitUntil(() => _continuecallingStudent == true);
             _continueCallingButton.gameObject.SetActive(false);
-            yield return AstronautAnimation();
+            yield return AstronautAnimation(Client._tablet._students[i]._name);
         }     
         _rocketAnimator.Play("NaveDespegue");
         _spaceShipAudio.Play();
@@ -160,13 +188,13 @@ public class TabletUI : UI
     /// <summary>
     /// Astronaut anim and write the student's name into the panel
     /// </summary>
-    IEnumerator AstronautAnimation()
+    IEnumerator AstronautAnimation(string studentName)
     {
         _astronautAudio.Play();
         _astrounautAnimator.Play("Astronaut");
         yield return new WaitForSeconds(8.0f);
         _astronautAudio.Stop();
-        _studentsText.text += _currentStudentName.text + "\n";
+        _studentsText.text += studentName + "\n";
     }
 
     /// <summary>
@@ -212,7 +240,7 @@ public class TabletUI : UI
     public void ShowCommonScenario()
     {
         OpenNextWindow();
-        _doorsOpen.Play("PuertasTransicionAbrir"); //No funciona bien
+        _doorsOpen.Play("PuertasTransicionAbrir");
         StartCoroutine(ShowGameSelected());
     }
 
@@ -224,23 +252,40 @@ public class TabletUI : UI
         yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
         yield return new WaitForSeconds(3.0f);
         _blackTransition.SetActive(true);
-        //La transicion va muy rapido y no te enteras de que enfoca
+
         switch (ServiceLocator.Instance.GetService<GameManager>()._currentgameName)
         {
             case "Cabina Geometría":
-            case "Cabina Espacio/Tiempo":
+            case "Cabina Espacio Tiempo":
+            case "Cabina Asociación":
+            case "Cabina Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
                 break;
             case "Telescopio Geometría":
+            case "Telescopio Espacio Tiempo":
+            case "Telescopio Asociación":
+            case "Telescopio Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
                 break;
+            case "Panel botones Geometría":
+            case "Panel botones Espacio Tiempo":
             case "Panel botones Asociación":
+            case "Panel botones Sumas Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
+                break;
+            case "Panel tapa Geometría":
+            case "Panel tapa Espacio Tiempo":
+            case "Panel tapa Asociación":
+            case "Panel tapa Sumas Restas":
+                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Door");
                 break;
 
         }
         yield return new WaitForSeconds(3.0f);
-        SceneManager.LoadScene("RubenSpaceTimeCabin");
+        
+        //SceneManager.LoadScene("RubenSpaceTimeCabin");
+        //Cuando este listo es el de abajo, llamar a los minijuegos tal cual estan aqui
+        SceneManager.LoadScene(ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
         yield return null;
     }
 }
