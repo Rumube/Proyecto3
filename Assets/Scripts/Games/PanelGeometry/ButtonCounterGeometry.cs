@@ -64,7 +64,7 @@ public class ButtonCounterGeometry : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+        ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.ranking);
         CheckGeometry(_nCircle, _circleCounter);
         CheckGeometry(_nSquare, _squareCounter);
         CheckGeometry(_nDiamond, _diamondCounter);

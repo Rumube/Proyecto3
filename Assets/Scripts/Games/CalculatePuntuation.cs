@@ -68,7 +68,7 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
         CalculateAverage();
         //EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / finishTime))));
         EDebug.Log("Intento "+_attempt+"puntos "+_points);
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
         
     }
     /// <summary>Calculates the average of the points , time, success fails</summary>

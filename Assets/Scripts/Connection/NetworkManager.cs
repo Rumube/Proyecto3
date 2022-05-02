@@ -108,6 +108,16 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
     }
 
+    public int GetMinigameMinutes()
+    {
+        return _minigameMinutes;
+    }
+
+    public int GetMinigameSeconds()
+    {
+        return _minigameSeconds;
+    }
+
     #region AddStudent
 
     /// <summary>Add or remove childrens on selected tablet</summary>
