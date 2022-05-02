@@ -22,8 +22,10 @@ public class AlienGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        alienposition = _alienBase.GetComponent<RectTransform>();
+        GameObject[] armPositions = GameObject.FindGameObjectsWithTag("LegSpawner");
         GenerateAlien(2, 3, 5, 4);
+
+
     }
 
     private void Update()
