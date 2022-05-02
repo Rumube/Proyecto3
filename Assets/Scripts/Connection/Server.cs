@@ -9,23 +9,26 @@ using Newtonsoft.Json;
 using ServerPack;
 public class Server : WebSocketBehavior
 {
-    const int MAX_TABLETS = 10;
+    const int MAX_TABLETS = 10; //Maybe change to 6
 
     ServerPackage _serverPackage;
-    
+
+    /// <summary>It's called when a client is connected. Assing the first information</summary>
     protected override void OnOpen()
     {
         base.OnOpen();
-             
+        //No more tablets can connect
+        if (ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets == 6)
+        {
+            return;
+        }
         if (!ServiceLocator.Instance.GetService<ServerUtility>().fistTime)
         {
             EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
             ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets = (Sessions.Count - 1);
             ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = true;
             
-
-            ServiceLocator.Instance.GetService<ServerUtility>()._ids.Add(ID); //In the future could not work, because I saw that ID could change within the same session
-            EDebug.Log("ids OPEN: " + ServiceLocator.Instance.GetService<ServerUtility>()._ids[Sessions.Count - 2]);
+            ServiceLocator.Instance.GetService<ServerUtility>()._ids.Add(ID); 
 
             StartedPackage();
 
@@ -37,8 +40,8 @@ public class Server : WebSocketBehavior
                 {
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = Sessions.Count-1; //Provisional
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
-                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
-                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = "";
+                    ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = "";
                     ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
                     return;
                 }
@@ -51,19 +54,19 @@ public class Server : WebSocketBehavior
         }
       
     }
+    /// <summary>It's called when a client is disconnected. Get that client and rewrite the info for a default one</summary>
     protected override void OnClose(CloseEventArgs e)
     {
         base.OnClose(e);
-        Debug.Log("-- Se ha desconectado alguien. " + (Sessions.Count-1));
-        EDebug.Log("ids CLOSE: " + ServiceLocator.Instance.GetService<ServerUtility>()._ids);
+        EDebug.Log("-- Se ha desconectado alguien. " + (Sessions.Count-1));
         for (int i = 0; i < MAX_TABLETS - 1; ++i)
         {
             if (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id == (Sessions.Count-1))
             {
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id = -1;
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._students = new List<Student>();
-                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = -1;
-                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = -1;
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentStudent = "";
+                ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._currentGame = "";
                 ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._score = -1;
             }
         }
@@ -72,26 +75,25 @@ public class Server : WebSocketBehavior
         ServiceLocator.Instance.GetService<ServerUtility>()._ids.Remove(ID);
 
     }
+    /// <summary>It's called when a message is received and the server do a broadcast for every client</summary>
     protected override void OnMessage(MessageEventArgs e)
     {
         base.OnMessage(e);
-        Debug.Log("OnMessageBroadcast: " + e.Data);
         Sessions.Broadcast(e.Data);
     }
-    
+
     #region ServerSender
+
+    /// <summary>Send the tablet's id</summary>
     public void StartedPackage()
     {
-        EDebug.Log("SendStarted");
         _serverPackage = new ServerPackage();
+
         _serverPackage._toUser = ServiceLocator.Instance.GetService<ServerUtility>()._ids[(Sessions.Count - 2)];
         _serverPackage._typePackageServer = ServerPackets.IdTablet;
         _serverPackage._tabletInfo._idTablet = (Sessions.Count-1);
-        string packageJson = JsonConvert.SerializeObject(_serverPackage);
-        EDebug.Log("Envio paquete antes:" + (Sessions.Count - 1));
-        //Sessions.SendTo(packageJson,_ids[Sessions.Count - 1]);
-        Send(packageJson);
-        EDebug.Log("Envio paquete");
+
+        Send(JsonConvert.SerializeObject(_serverPackage));
     }
 
     #endregion

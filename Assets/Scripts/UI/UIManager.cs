@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,20 +23,24 @@ public class UIManager : MonoBehaviour
 
     [Header("TabletWindows")]
     public GameObject _initialScreenTablet;
+    public GameObject _creditsTablet;
     public GameObject _connection;
+    public GameObject _studentSelection;
+    public GameObject _gameSelection;
+    public GameObject _finalScoreTablet;
 
     [Header("DatabaseUtilities")]
     public string _classNamedb;
 
     [Header("DatabaseUtilitiesClass")]
-    public Text _classNameDeleting;
+    public TextMeshProUGUI _classNameDeleting;
     public GameObject _classPanel;
     public GameObject _classButton;
 
     [Header("DatabaseUtilitiesStudent")]
-    public Text _studentNameDeleting;
+    public TextMeshProUGUI _studentNameDeleting;
     public GameObject _studentPanel;
-    public Text _classNameStudents;
+    public TextMeshProUGUI _classNameStudents;
 
     [Header("Game Configuration")]
     [HideInInspector]
@@ -55,7 +60,6 @@ public class UIManager : MonoBehaviour
     {
         _timeSessionMinutes = int.Parse(minutes);
         _timeSessionSeconds = int.Parse(seconds);
-        print("t " + _timeSessionMinutes + " : " + _timeSessionSeconds);
     }
 
     /// <summary>Set the time for all minigames</summary>
@@ -65,14 +69,19 @@ public class UIManager : MonoBehaviour
     {
         _timeMinigamesMinutes = int.Parse(minutes);
         _timeMinigamesSeconds = int.Parse(seconds);
-        print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
     }
 
-    /// <summary>Just start the timer when the configuration is done</summary>
+    /// <summary>Just start the timer when the configuration is done and show the number of tablets that are connected</summary>
     public void StartGameSession()
     {
         ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.playing;
         StartCoroutine(StartCountdown());
+        for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
+        {
+            GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<MobileUI>()._tabletButtonPrefabStadistics.gameObject, ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.gameObject.transform);
+            newButton.GetComponentInChildren<Image>().sprite = newButton.GetComponentInChildren<TabletButton>()._rocketSprites[i];
+            newButton.GetComponentInChildren<TabletButton>().index_rocket = i+1;
+        }      
     }
     #endregion
 
@@ -82,6 +91,7 @@ public class UIManager : MonoBehaviour
     {
         while ((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))
         {
+            yield return new WaitUntil(() => ServiceLocator.Instance.GetService<GameManager>()._pause == false);
             if (_timeSessionSeconds >= 1)
             {
                 _timeSessionSeconds--;
@@ -90,10 +100,10 @@ public class UIManager : MonoBehaviour
             {
                 _timeSessionMinutes--;
                 _timeSessionSeconds = 59;
-            }
+            }         
             yield return new WaitForSeconds(1f);
         }
-        //TODO: End session, send packages end
+        ServiceLocator.Instance.GetService<MobileUI>().ShownFinalScoreScreen();
     }
     #endregion
 

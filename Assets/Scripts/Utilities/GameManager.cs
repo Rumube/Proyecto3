@@ -7,10 +7,14 @@ public class GameManager : MonoBehaviour
 {
     [Header("Minigames scene names")]
     public List<string> _minigamesNames = new List<string>();
+    public int _minigamesMaximumLevel = 5;
     [Header("Minigame student client")]
     public string _currentstudentName;
     public string _currentgameName;
     int _studentCounter = 0;
+    public bool _pause = false;
+    public bool _returnToCommonScene = false;
+    public bool _endSessionTablet = false;
     public enum GAME_STATE_SERVER
     {
         init = 0,
@@ -38,6 +42,21 @@ public class GameManager : MonoBehaviour
 
     }
     public GAME_STATE_CLIENT _gameStateClient;
+
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }       
+    }
 
     void Start()
     {

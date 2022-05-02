@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StudentButton : MonoBehaviour
 {
     [Header("Popup delete student")]
-    public Text _textButton;
+    public TextMeshProUGUI _textButton;
     [HideInInspector]
     public bool _deleting = false;
     [HideInInspector]
@@ -15,13 +16,14 @@ public class StudentButton : MonoBehaviour
 
     [Header("Add student")]   
     public Student _student;
+    public Sprite _backgroundButton;
+    public Sprite _backgroundButtonSelected;
+    public Image _highlighted;
     bool _addingToTablet = false;
     bool _add = true;
     int _selectedTablet = -1;
-    public Image _highlighted;
     bool _selected = false;
-    public Sprite _backgroundButton;
-    public Sprite _backgroundButtonSelected;
+    
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -95,25 +97,31 @@ public class StudentButton : MonoBehaviour
     {
         //Check if she is on the correct screen in order to have different behaviours
         if (_addingToTablet && (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet || _selectedTablet == -1))
-        {
-            ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, _add);
+        {          
             if (_add)
             {
-                _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;
-                _highlighted.gameObject.SetActive(true);
-                _selected = true;
+                //Don't do anything if the tablet already has 12 students
+                if (ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count < 12)
+                {
+                    ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, true);
+                    _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;
+                    _highlighted.gameObject.SetActive(true);
+                    _selected = true;
+                    _add = !_add;
+                }
             }
             else
             {
+                ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, false);
+                _add = !_add;
                 _selectedTablet = -1;
                 _highlighted.gameObject.SetActive(false);
                 _selected = false;
             }
+            ServiceLocator.Instance.GetService<MobileUI>().ContinueButtonAddStudent(ServiceLocator.Instance.GetService<NetworkManager>().CheckIfTabletsHasStudents());
             ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
-            _add = !_add;
-        }
-        
-       
+            
+        }  
     }
 
 }
