@@ -94,7 +94,9 @@ public class CreatePanel_Prueba : MonoBehaviour
         {
             for (int y = 0; y < _row; y++)
             {
-                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+                
+                _allList[_count].GetComponent<RectTransform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+                _allList[_count].transform.SetParent(_canvas.transform, false);
                 _count++;
             }
         }
@@ -145,7 +147,7 @@ public class CreatePanel_Prueba : MonoBehaviour
 
             GameObject newGeometry;
             newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
-            newGeometry.transform.SetParent(_canvas.transform, false);
+            //newGeometry.transform.SetParent(_canvas.transform, false);
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -188,7 +190,7 @@ public class CreatePanel_Prueba : MonoBehaviour
                         newGeometry.GetComponent<ObjectPanel_Prueba>()._placed = false;
                         _targetList.Add(newGeometry);
                         _allList.Add(newGeometry);
-                        newGeometry.transform.SetParent(_canvas.transform, false);
+                        //newGeometry.transform.SetParent(_canvas.transform, false);
                         isCorrect = true;
                     }
 
