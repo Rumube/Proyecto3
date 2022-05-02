@@ -49,20 +49,30 @@ public class CreatePanelAddSubs : MonoBehaviour
     void GeneratePanel()
     {
         _pressedButtons = UnityEngine.Random.Range(0, _column*_row);
+        
         if (_pressedButtons+_currentDataDifficulty.elementToAddSubs>_column*_row)
         {
             _orderButtons = _pressedButtons - _currentDataDifficulty.elementToAddSubs;
         }
         else
         {
-            int random = UnityEngine.Random.Range(0, 1);
+            int random = UnityEngine.Random.Range(0, 2);
             if (random==0)
             {
+                _pressedButtons = UnityEngine.Random.Range(_currentDataDifficulty.elementToAddSubs+1, _column * _row);
+                //if (_pressedButtons == _currentDataDifficulty.elementToAddSubs)
+                //{
+                //    _pressedButtons = _column * _row - _pressedButtons;
+                //}
                 _orderButtons = _pressedButtons - _currentDataDifficulty.elementToAddSubs;
+               
+                EDebug.Log("resta");
             }
             else
             {
                 _orderButtons = _pressedButtons + _currentDataDifficulty.elementToAddSubs;
+                EDebug.Log("suma");
+
             }
         }
         _geometryList.Clear();
@@ -116,7 +126,7 @@ public class CreatePanelAddSubs : MonoBehaviour
 
     private void SendMessage()
     {
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttonManager.GetTextGame());
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttonManager.GetTextGame(), true);
     }
     /// <summary>
     /// Generates the normal geometry.
@@ -218,7 +228,7 @@ public class CreatePanelAddSubs : MonoBehaviour
     {
         if (_allList.Count == _row * _column)
         {
-            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i < _allList.Count; i++)
                 {

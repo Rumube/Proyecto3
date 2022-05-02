@@ -69,7 +69,7 @@ public class ButtonManager : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
+        ServiceLocator.Instance.GetService<IGameManager>().SetClientState (IGameManager.GAME_STATE_CLIENT.ranking);
         CheckGeometry(_createPanel._orderButtons, _buttonCounter);
        
         _badGeometry = _totalGeometry - _goodGeometry;
