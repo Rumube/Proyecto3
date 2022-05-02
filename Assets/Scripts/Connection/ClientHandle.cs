@@ -46,11 +46,11 @@ public class ClientHandle
     {
         if (package._pauseGame._pause)
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.pause;
+            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.pause);
         }
         else
         {
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
         }
         EDebug.Log("Pausando? " + package._pauseGame._pause);
     }
