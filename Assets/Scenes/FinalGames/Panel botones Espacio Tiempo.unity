@@ -1892,6 +1892,10 @@ PrefabInstance:
       propertyPath: _targetFeedback.y
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: _minigameLevel
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3c0236698413144ab459213746d3b06, type: 3}
 --- !u!1 &1164077104 stripped
@@ -1927,8 +1931,14 @@ MonoBehaviour:
   audioSource: {fileID: 717792279}
   _buttons: {fileID: 1246770490}
   startButton: {fileID: 0}
-  _level: 1
-  _orderListButtons: []
+  _secuenceTexts:
+  - Atiende a la secuencia.
+  - Repite la secuencia.
+  - "F\xEDjate en los botones."
+  _turnTexts:
+  - "\xA1Es tu turno!"
+  - Te toca.
+  - "\xA1Ahora!"
   _animTapa: {fileID: 1352785867}
 --- !u!114 &1164077106
 MonoBehaviour:
