@@ -29,6 +29,8 @@ public class SpaceTimeCabin : MonoBehaviour
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         _dataDifficulty = GetComponent<SpaceTimeCabinDifficulty>().GenerateDataDifficulty(_level);
         _target = GameObject.FindGameObjectWithTag("GunTarget");
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira", true);
+
         RestartGame();
     }
 
@@ -48,7 +50,6 @@ public class SpaceTimeCabin : MonoBehaviour
             _finishingGame = false;
             _targetPoint = GenerateTargetPoint();
             StartCoroutine(GenerateAsteroids());
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira");
         }
     }
 

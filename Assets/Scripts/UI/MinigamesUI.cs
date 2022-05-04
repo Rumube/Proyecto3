@@ -34,9 +34,15 @@ public class MinigamesUI : MonoBehaviour
     void Update()
     {
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
+        {
             _Min.interactable = false;
+            _checkButton.interactable = false;
+        }
         else
+        {
             _Min.interactable = true;
+            _checkButton.interactable = true;
+        }
 
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.ranking && !_rankingMinigame.activeInHierarchy)
         {
