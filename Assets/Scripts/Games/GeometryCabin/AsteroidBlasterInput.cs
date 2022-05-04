@@ -108,11 +108,13 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void InputController()
     {
-
-        AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
-        if (newInput.result && _canShot)
+        if(ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
-            ShotGun(newInput);
+            AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
+            if (newInput.result && _canShot)
+            {
+                ShotGun(newInput);
+            }
         }
     }
 

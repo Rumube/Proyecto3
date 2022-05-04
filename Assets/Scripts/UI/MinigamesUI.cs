@@ -6,11 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class MinigamesUI : MonoBehaviour
 {
+    [Header("Configuration")]
     [Tooltip("Is this minigame needed a check?")]
     public bool _needsCheck;
+
+    [Header("References")]
     public Button _checkButton;
     public GameObject _rankingMinigame;
     public Animator _panelScoreAnim;
+    public Button _Min;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +33,11 @@ public class MinigamesUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
+            _Min.interactable = false;
+        else
+            _Min.interactable = true;
+
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.ranking && !_rankingMinigame.activeInHierarchy)
         {
             _rankingMinigame.SetActive(true);

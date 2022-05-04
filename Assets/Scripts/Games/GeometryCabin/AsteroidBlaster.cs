@@ -210,7 +210,6 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
             _gameFinished = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();
