@@ -41,6 +41,8 @@ public class ButtonsManager : MonoBehaviour
         }
         currentTextSub.text = "" + _finalNumber;
     }
+
+
     #endregion Buttons
 
 

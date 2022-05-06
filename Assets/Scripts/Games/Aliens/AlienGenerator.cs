@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AlienGenerator : MonoBehaviour
 {
@@ -19,18 +20,43 @@ public class AlienGenerator : MonoBehaviour
 
     public RectTransform _alienPosition;
 
+    [Header("Instructions")]
+    public int _legInstructions;
+    public int _armInstructions;
+    public int _eyeInstructions;
+    public int _mouthInstructions;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        GenerateAlien(2, 3, 5, 4);
-
-
+        Restart();
     }
 
     private void Update()
     {
         
     }
+
+    private void Restart()
+    {
+        GenerateNewValues();
+        GenerateAlien(_armInstructions, _legInstructions, _eyeInstructions, _mouthInstructions);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Cuenta las partes del alien", true);
+
+        _eyeText.GetComponent<Text>().text = ""+0;
+        _legText.GetComponent<Text>().text = ""+0;
+        _armText.GetComponent<Text>().text = ""+0;
+        _mouthText.GetComponent<Text>().text = ""+0;
+    }
+
+    private void GenerateNewValues()
+    {
+        _legInstructions = Random.Range(0, 4);
+        _armInstructions = Random.Range(0, 4);
+        _eyeInstructions = Random.Range(0, 4);
+        _mouthInstructions = Random.Range(0, 4);
+}
 
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
     {
@@ -63,13 +89,8 @@ public class AlienGenerator : MonoBehaviour
             Vector2 newPositionLeg = legPositions[indexLeg].transform.position;
             legPositions.RemoveAt(indexLeg);
             newLeg.GetComponent<RectTransform>().position = newPositionLeg;
-
-            //if(newPositionLeg.x <= 0)
-            //{
-                
-           // }
-
         }
+
         for (int i = 0; i < eye; i++)
         {
             GameObject newEye = Instantiate(_alienEye, _alienPosition);
@@ -77,8 +98,8 @@ public class AlienGenerator : MonoBehaviour
             Vector2 newPositionEye = eyePositions[indexEye].transform.position;
             eyePositions.RemoveAt(indexEye);
             newEye.GetComponent<RectTransform>().position = newPositionEye;
-           
         }
+
         for (int i = 0; i < mouth; i++)
         {
             GameObject newMouth = Instantiate(_alienMouth, _alienPosition);
@@ -99,7 +120,36 @@ public class AlienGenerator : MonoBehaviour
 
     public void CheckAnswer()
     {
-        
+        int numEye = int.Parse(_eyeText.GetComponent<Text>().text);
+
+        int numLeg = int.Parse(_legText.GetComponent<Text>().text);
+
+        int numArm = int.Parse(_armText.GetComponent<Text>().text);
+
+        int numMouth = int.Parse(_mouthText.GetComponent<Text>().text);
+
+        if (numEye == _eyeInstructions && numArm == _armInstructions && numLeg == _legInstructions && numMouth == _mouthInstructions)
+        {
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+            cleanAlien();
+            Restart();
+        }else
+        {
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        }
+    }
+
+    private void cleanAlien()
+    {
+        RectTransform[] allChildren = _alienBase.GetComponentsInChildren<RectTransform>();
+        List<RectTransform> allChindrenCopy = new List<RectTransform>(allChildren);
+        for (int i = 0; i < allChindrenCopy.Count; i++)
+        {
+            if(allChildren[i].name != "AlienParts")
+            {
+                Destroy(allChildren[i].gameObject);
+            }
+        }
     }
 
 }
