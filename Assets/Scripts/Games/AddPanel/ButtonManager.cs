@@ -36,7 +36,7 @@ public class ButtonManager : MonoBehaviour
     public string GetTextGame()
     {
         string message = (GeometryNumberText(_createPanel._orderButtons) );
-        return "Selecciona " + message;
+        return  message;
     }
     // Update is called once per frame
     void Update()
@@ -58,26 +58,34 @@ public class ButtonManager : MonoBehaviour
         }
         else if (nGeometry > 1)
         {
-            return nGeometry + " botones";
+            return "Manten pulsados "+nGeometry + " botones";
         }
         else
         {
-            return nGeometry + " botón";
+            return "Manten pulsado " + nGeometry + " botón";
         }
     }
 
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        ServiceLocator.Instance.GetService<IGameManager>().SetClientState (IGameManager.GAME_STATE_CLIENT.ranking);
+       // ServiceLocator.Instance.GetService<IGameManager>().SetClientState (IGameManager.GAME_STATE_CLIENT.ranking);
         CheckGeometry(_createPanel._orderButtons, _buttonCounter);
-       
-        _badGeometry = _totalGeometry - _goodGeometry;
+
+        if (_badGeometry > 0)
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        else
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+
+        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
+
+
         _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
 
         _goodGeometry = 0;
-        _totalGeometry = 0;
+        _badGeometry = 0;
         _nButton = 0;
+        _buttonCounter = 0;
 
         _createPanel.Restart();
     }
@@ -88,10 +96,14 @@ public class ButtonManager : MonoBehaviour
     {
         if (nGeometry > 0)
         {
-            _totalGeometry += 1;
+           
             if (nGeometry == counter)
             {
                 _goodGeometry += 1;
+            }
+            else
+            {
+                _badGeometry += 1;
             }
         }
 
@@ -109,12 +121,14 @@ public class ButtonManager : MonoBehaviour
             counter++;
             button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.pressedSprite;
             button.GetComponent<ObjectPanel>()._pressed = true;
+            //button.GetComponent<GeometryButton>()._isPresed = true;
         }
         else
         {
             counter--;
             button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.disabledSprite;
             button.GetComponent<ObjectPanel>()._pressed = false;
+            //button.GetComponent<GeometryButton>()._isPresed = false;
         }
         return counter;
     }

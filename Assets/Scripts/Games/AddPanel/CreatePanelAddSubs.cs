@@ -31,6 +31,7 @@ public class CreatePanelAddSubs : MonoBehaviour
     public int _pressedButtons;
     public int _orderButtons;
     [SerializeField]
+    
     AddPanelDifficulty _completeThePanel;
     AddPanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
@@ -161,7 +162,7 @@ public class CreatePanelAddSubs : MonoBehaviour
             {
                 int idGeometry = UnityEngine.Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
                 GameObject newGeometry = Instantiate(button, new Vector3(0, 0, 0), Quaternion.identity);
-                //buttonCounter._buttonCounter = 1 + buttonCounter._buttonCounter;
+                _buttonManager._buttonCounter = 1 + _buttonManager._buttonCounter;
                 newGeometry.GetComponent<Image>().sprite = newGeometry.GetComponent<Button>().spriteState.pressedSprite;
                 newGeometry.GetComponent<ObjectPanel>()._placed = false;
                 newGeometry.GetComponent<ObjectPanel>()._pressed = true;
