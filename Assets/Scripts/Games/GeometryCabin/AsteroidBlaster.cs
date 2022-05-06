@@ -11,6 +11,7 @@ public class AsteroidBlaster : MonoBehaviour
     public GameObject[] _geometryForms;
 
     //Game Configuration
+    private bool _newGame = true;
     [SerializeField]
     private int _level;
     [SerializeField]
@@ -155,7 +156,16 @@ public class AsteroidBlaster : MonoBehaviour
     /// <returns>The message</returns>
     private string GenerateTextMessage()
     {
-        string msg = "Destruye los asteroides con forma de ";
+        string msg = "";
+        if (_newGame)
+        {
+            _newGame = false;
+            msg = "Destruye los asteroides con forma de ";
+        }
+        else
+        {
+            msg = "Ahora de ";
+        }
         Geometry newGeometry = GetComponent<Geometry>();
         for (int i = 0; i < _targetList.Count; i++)
         {
