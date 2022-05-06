@@ -21,8 +21,13 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
         return _minigameSeconds;
     }
 
+    public int GetMinigameLevel()
+    {
+        return _minigameLevel;
+    }
+
     public void SendMatchData()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

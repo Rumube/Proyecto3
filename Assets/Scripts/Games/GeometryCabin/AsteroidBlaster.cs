@@ -11,6 +11,7 @@ public class AsteroidBlaster : MonoBehaviour
     public GameObject[] _geometryForms;
 
     //Game Configuration
+    private bool _newGame = true;
     [SerializeField]
     private int _level;
     [SerializeField]
@@ -31,6 +32,7 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         restartGame();
     }
     private void Update()
@@ -154,7 +156,16 @@ public class AsteroidBlaster : MonoBehaviour
     /// <returns>The message</returns>
     private string GenerateTextMessage()
     {
-        string msg = "Destruye los asteroides con forma de ";
+        string msg = "";
+        if (_newGame)
+        {
+            _newGame = false;
+            msg = "Destruye los asteroides con forma de ";
+        }
+        else
+        {
+            msg = "Ahora de ";
+        }
         Geometry newGeometry = GetComponent<Geometry>();
         for (int i = 0; i < _targetList.Count; i++)
         {
@@ -209,7 +220,6 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
             _gameFinished = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();
