@@ -118,6 +118,11 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         return _minigameSeconds;
     }
 
+    public int GetMinigameLevel()
+    {
+        return _minigameLevel;
+    }
+
     #region AddStudent
 
     /// <summary>Add or remove childrens on selected tablet</summary>

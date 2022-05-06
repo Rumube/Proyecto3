@@ -31,6 +31,7 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         restartGame();
     }
     private void Update()
@@ -209,7 +210,6 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
             _gameFinished = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();

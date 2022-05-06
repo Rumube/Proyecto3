@@ -13,6 +13,10 @@ public class Error : MonoBehaviour, IError
     [Header("Error Messages")]
     public List<string> _errorMessages;
 
+    [Header("References")]
+    private Animator _panelAnim;
+    private Animator _minAnim;
+
 
     private void Start()
     {
@@ -24,10 +28,14 @@ public class Error : MonoBehaviour, IError
     /// </summary>
     public void GenerateError()
     {
+        _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
+        _panelAnim = GameObject.FindGameObjectWithTag("CanvasPanel").GetComponent<Animator>();
         AudioManagement();
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
+        _panelAnim.Play("Vibration");
+        _minAnim.Play("MinFail");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
-        //StartCoroutine(StartFrogMessage());
+        StartCoroutine(FinishFail());
     }
 
     /// <summary>
@@ -42,8 +50,33 @@ public class Error : MonoBehaviour, IError
     /// <summary>
     /// Waits to the sound finish
     /// </summary>
-    IEnumerator StartFrogMessage()
+    IEnumerator FinishFail()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_failDuration);
+        _panelAnim.Play("Static");
+        if (ServiceLocator.Instance.GetService<IFrogMessage>().GetMessageAtive())
+        {
+            int randomAnim = Random.Range(0, 3);
+            string animName = "";
+            switch (randomAnim)
+            {
+                case 0:
+                    animName = "MinTalk1";
+                    break;
+                case 1:
+                    animName = "MinTalk2";
+                    break;
+                case 2:
+                    animName = "MinTalk3";
+                    break;
+                default:
+                    break;
+            }
+            _minAnim.Play(animName);
+        }
+        else
+        {
+            _minAnim.Play("Idle");
+        }
     }
 }

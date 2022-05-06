@@ -189,4 +189,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         Speaker.Instance.Silence();
     }
+
+    public bool GetMessageAtive()
+    {
+        return _messageAtive;
+    }
 }

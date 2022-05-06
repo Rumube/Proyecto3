@@ -54,14 +54,15 @@ public class CreatePanel : MonoBehaviour
 
         //COLOCAR BOTONES EN POSICIÓN
         randomize(_allList, _allList.Count);
-        //for (int x = 0; x < _column; x++)
-        //{
-        //    for (int y = 0; y < _row; y++)
-        //    {
-        //         _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-        //         _count++;
-        //    }
-        //}
+        for (int x = 0; x < _column; x++)
+        {
+            for (int y = 0; y < _row; y++)
+            {
+                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+                _allList[_count].transform.SetParent(_canvas.transform, false);
+                _count++;
+            }
+        }
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)
@@ -109,7 +110,7 @@ public class CreatePanel : MonoBehaviour
 
             GameObject newGeometry;
             newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
-            newGeometry.transform.SetParent(_canvas.transform, false);
+            //newGeometry.transform.SetParent(_canvas.transform, false);
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -152,7 +153,7 @@ public class CreatePanel : MonoBehaviour
                         newGeometry.GetComponent<ObjectPanel>()._placed = false;
                         _targetList.Add(newGeometry);
                         _allList.Add(newGeometry);
-                        newGeometry.transform.SetParent(_canvas.transform, false);
+                        //newGeometry.transform.SetParent(_canvas.transform, false);
                         isCorrect = true;
                     }
                 } while (!isCorrect);
