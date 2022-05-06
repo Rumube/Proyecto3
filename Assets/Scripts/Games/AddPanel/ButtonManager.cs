@@ -119,14 +119,14 @@ public class ButtonManager : MonoBehaviour
         if (button.GetComponent<ObjectPanel>()._pressed == false)
         {
             counter++;
-            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.pressedSprite;
+            button.GetComponent<Image>().sprite = button.GetComponent<ObjectPanel>()._pressedSprite;
             button.GetComponent<ObjectPanel>()._pressed = true;
             //button.GetComponent<GeometryButton>()._isPresed = true;
         }
         else
         {
             counter--;
-            button.GetComponent<Image>().sprite = button.GetComponent<Button>().spriteState.disabledSprite;
+            button.GetComponent<Image>().sprite = button.GetComponent<ObjectPanel>()._restSprite;
             button.GetComponent<ObjectPanel>()._pressed = false;
             //button.GetComponent<GeometryButton>()._isPresed = false;
         }
