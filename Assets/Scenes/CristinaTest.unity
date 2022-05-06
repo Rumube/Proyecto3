@@ -1508,6 +1508,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: MinigameSecondsMinus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &62039348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1700,7 +1712,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 77930389}
   m_OnClick:
     m_PersistentCalls:
@@ -3377,7 +3389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _server: 0
+  _server: 1
   _canvasMobile: {fileID: 1207306178}
   _canvasTablet: {fileID: 758638563}
   _uiManager: {fileID: 282740217}
@@ -4804,6 +4816,18 @@ MonoBehaviour:
       - m_Target: {fileID: 244509208}
         m_TargetAssemblyTypeName: UISounds, Assembly-CSharp
         m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: SessionMinutesMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7189,7 +7213,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
   m_sharedMaterial: {fileID: 1895159792876159406, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
@@ -10245,7 +10269,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
   m_sharedMaterial: {fileID: 1895159792876159406, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
@@ -14035,6 +14059,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: MinigameMinutesPlus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &762427660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14173,6 +14209,18 @@ MonoBehaviour:
       - m_Target: {fileID: 763888389}
         m_TargetAssemblyTypeName: UISounds, Assembly-CSharp
         m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: MinigameMinutesMinus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19450,10 +19498,15 @@ MonoBehaviour:
   _tabletButton: {fileID: 6481346493763463858, guid: d96b730d2858c344cab7f82881a80d7e, type: 3}
   _numMininautas: {fileID: 88507119}
   _continueButtonAddStudent: {fileID: 77930388}
-  _inputSessionMinutes: {fileID: 0}
-  _inputSessionSeconds: {fileID: 0}
-  _inputMinigamesMinutes: {fileID: 0}
-  _inputMinigamesSeconds: {fileID: 0}
+  _sessionMinutes: {fileID: 539161566}
+  _sessionMinutesPlus: {fileID: 2131926063}
+  _sessionMinutesMinus: {fileID: 244509209}
+  _minigameMinutes: {fileID: 344409417}
+  _minigamesMinutesPlus: {fileID: 762427659}
+  _minigamesMinutesMinus: {fileID: 763888390}
+  _minigameSeconds: {fileID: 2039037743}
+  _minigamesSecondsPlus: {fileID: 1765590268}
+  _minigamesSecondsMinus: {fileID: 62039347}
   _adviceStudents: {fileID: 473510857}
   _continueGameTimer: {fileID: 1095689880}
   _rocketsReady: {fileID: 1725880705}
@@ -27790,6 +27843,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: MinigameSecondsPlus
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1765590269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31325,7 +31390,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u200B"
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
   m_sharedMaterial: {fileID: 1895159792876159406, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
@@ -32992,6 +33057,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2131926062}
         m_TargetAssemblyTypeName: UISounds, Assembly-CSharp
         m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207306178}
+        m_TargetAssemblyTypeName: MobileUI, Assembly-CSharp
+        m_MethodName: SessionMinutesPlus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

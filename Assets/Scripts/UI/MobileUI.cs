@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -66,10 +67,15 @@ public class MobileUI : UI
     public Button _continueButtonAddStudent;
 
     [Header("Game Timer")]
-    public TMP_InputField _inputSessionMinutes;
-    public TMP_InputField _inputSessionSeconds;
-    public TMP_InputField _inputMinigamesMinutes;
-    public TMP_InputField _inputMinigamesSeconds;
+    public TextMeshProUGUI _sessionMinutes;
+    public Button _sessionMinutesPlus;
+    public Button _sessionMinutesMinus;
+    public TextMeshProUGUI _minigameMinutes;
+    public Button _minigamesMinutesPlus;
+    public Button _minigamesMinutesMinus;
+    public TextMeshProUGUI _minigameSeconds;
+    public Button _minigamesSecondsPlus;
+    public Button _minigamesSecondsMinus;
     public TextMeshProUGUI _adviceStudents;
     public Button _continueGameTimer;
     public GameObject _rocketsReady;
@@ -558,56 +564,112 @@ public class MobileUI : UI
     /// <summary>Get the values for the timers if it's not their first time playing. Acts like placeholders</summary>
     public void GetTimesSaved()
     {
-        if (PlayerPrefs.HasKey("SessionMinutes") && PlayerPrefs.HasKey("SessionSeconds"))
+        if (PlayerPrefs.HasKey("SessionMinutes"))
         {
-            _inputSessionMinutes.text = PlayerPrefs.GetString("SessionMinutes");
-            _inputSessionSeconds.text = PlayerPrefs.GetString("SessionSeconds");
+            _sessionMinutes.text = PlayerPrefs.GetString("SessionMinutes");
         }
         if (PlayerPrefs.HasKey("MinigamesMinutes") && PlayerPrefs.HasKey("MinigamesSeconds"))
         {
-            _inputMinigamesMinutes.text = PlayerPrefs.GetString("MinigamesMinutes");
-            _inputMinigamesSeconds.text = PlayerPrefs.GetString("MinigamesSeconds");
+            _minigameMinutes.text = PlayerPrefs.GetString("MinigamesMinutes");
+            _minigameSeconds.text = PlayerPrefs.GetString("MinigamesSeconds");
         }
     }
     /// <summary>Set the time for the whole session passing values to the GM</summary>
     public void SetTimeSession()
     {
-        ServiceLocator.Instance.GetService<UIManager>().SetTimeSession(_inputSessionMinutes.text, _inputSessionSeconds.text);
-        PlayerPrefs.SetString("SessionMinutes", _inputSessionMinutes.text);
-        PlayerPrefs.SetString("SessionSeconds", _inputSessionSeconds.text);
+        ServiceLocator.Instance.GetService<UIManager>().SetTimeSession(_sessionMinutes.text);
+        PlayerPrefs.SetString("SessionMinutes", _sessionMinutes.text);
     }
 
     /// <summary>Set the time for all minigames passing values to the GM</summary>
     public void SetTimeMinigames()
     {
-        ServiceLocator.Instance.GetService<UIManager>().SetTimeMinigames(_inputMinigamesMinutes.text, _inputMinigamesSeconds.text);
-        PlayerPrefs.SetString("MinigamesMinutes", _inputMinigamesMinutes.text);
-        PlayerPrefs.SetString("MinigamesSeconds", _inputMinigamesSeconds.text);
+        ServiceLocator.Instance.GetService<UIManager>().SetTimeMinigames(_minigameMinutes.text, _minigameSeconds.text);
+        PlayerPrefs.SetString("MinigamesMinutes", _minigameMinutes.text);
+        PlayerPrefs.SetString("MinigamesSeconds", _minigameSeconds.text);
     }
-
-    public void ChechIfSessionSecondsIsCorrect()
+    #region Buttons
+    public void SessionMinutesPlus()
     {
-        int seconds = 0; 
-        if (int.TryParse(_inputSessionSeconds.text, out seconds))
+        int minutes;
+        if (int.TryParse(_sessionMinutes.text, out minutes))
         {
-            if (seconds > 59)
+            if ((minutes + 1) <= 99)
             {
-                _inputSessionSeconds.text = "59";
+                _sessionMinutes.text = (minutes + 1).ToString();
             }
         }
+       
     }
-
-    public void ChechIfMinigameSecondsIsCorrect()
+    public void SessionMinutesMinus()
     {
-        int seconds = 0;
-        if (int.TryParse(_inputMinigamesSeconds.text, out seconds))
+        int minutes;
+        if (int.TryParse(_sessionMinutes.text, out minutes))
         {
-            if (seconds > 59)
+            if ((minutes - 1) >= 0)
             {
-                _inputMinigamesSeconds.text = "59";
-            }
-        }       
+                _sessionMinutes.text = (minutes - 1).ToString();
+            }           
+        }
     }
+    public void MinigameMinutesPlus()
+    {
+        int minutes;
+        if (int.TryParse(_minigameMinutes.text, out minutes))
+        {
+            if ((minutes + 1) <= 99)
+            {
+                _minigameMinutes.text = (minutes + 1).ToString();
+            }
+            
+        }
+    }
+    public void MinigameMinutesMinus()
+    {
+        int minutes;
+        if (int.TryParse(_minigameMinutes.text, out minutes))
+        {
+            if((minutes - 1) >= 0)
+            {
+                _minigameMinutes.text = (minutes - 1).ToString();
+            }          
+        }
+    }
+    public void MinigameSecondsPlus()
+    {
+        int seconds;
+        int minutes;
+        if (int.TryParse(_minigameSeconds.text, out seconds))
+        {
+            if ((seconds + 15) < 60)
+            {
+                _minigameSeconds.text = (seconds + 15).ToString();
+            }else if ((seconds + 15) == 60)
+            {
+                if (int.TryParse(_minigameMinutes.text, out minutes))
+                {
+                    if(minutes <= 99)
+                    {
+                        _minigameMinutes.text = (minutes + 1).ToString();
+                    }                    
+                }
+            }
+            
+        }
+    }
+    public void MinigameSecondsMinus()
+    {
+        int seconds;
+        if (int.TryParse(_minigameSeconds.text, out seconds))
+        {
+            if ((seconds-15) >= 0 )
+            {
+                _minigameSeconds.text = (seconds - 15).ToString();
+            }
+            
+        }
+    }
+    #endregion
 
     public void CreateReadyRockets()
     {
