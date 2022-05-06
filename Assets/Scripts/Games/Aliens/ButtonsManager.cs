@@ -8,7 +8,7 @@ public class ButtonsManager : MonoBehaviour
 {
 
     [Header("Configuration")]
-    private int _finalNumber;
+    public int _finalNumber;
     public Text _text;
 
     // Start is called before the first frame update
