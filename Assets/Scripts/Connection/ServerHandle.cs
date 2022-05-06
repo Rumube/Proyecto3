@@ -29,6 +29,8 @@ public class ServerHandle {
         Debug.Log("Entra paquete nino minijuego: " +_package._selectStudentGame._studentName + " g " + _package._selectStudentGame._gameName);
         int[] data = new int[2];
         data = ServiceLocator.Instance.GetService<GameManager>().gameObject.GetComponent<Android>().GetDifficulty(_package._selectStudentGame._studentName, _package._selectStudentGame._gameName);
+        Debug.Log("Level:"+data[0] +" average points:"+data[1]);
+
         ServiceLocator.Instance.GetService<ServerUtility>().MinigameDifficulty(_package._fromUser,data[0],data[1]);
     }
     public static void UpdateTabletsViewingFinalScore(int numberTabletsViewFinalScore)

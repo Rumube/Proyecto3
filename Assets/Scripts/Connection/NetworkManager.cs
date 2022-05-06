@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : MonoBehaviour,INetworkManager
 {
     [Header("Game Connection")]
     public string _ip;
@@ -106,6 +106,21 @@ public class NetworkManager : MonoBehaviour
     {
         Client.OnDisable();
         ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
+    }
+
+    public int GetMinigameMinutes()
+    {
+        return _minigameMinutes;
+    }
+
+    public int GetMinigameSeconds()
+    {
+        return _minigameSeconds;
+    }
+
+    public int GetMinigameLevel()
+    {
+        return _minigameLevel;
     }
 
     #region AddStudent

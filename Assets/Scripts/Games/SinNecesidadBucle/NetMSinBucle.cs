@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetMSinBucle : MonoBehaviour
+public class NetMSinBucle : MonoBehaviour,INetworkManager
 {
     [Header("Minigame timer client")]
     public int _minigameMinutes;
@@ -11,4 +11,23 @@ public class NetMSinBucle : MonoBehaviour
     [Header("Minigame difficulty server")]
     public int _minigameLevel = -1;
 
+    public int GetMinigameMinutes()
+    {
+        return _minigameMinutes;
+    }
+
+    public int GetMinigameSeconds()
+    {
+        return _minigameSeconds;
+    }
+
+    public int GetMinigameLevel()
+    {
+        return _minigameLevel;
+    }
+
+    public void SendMatchData()
+    {
+        return;
+    }
 }

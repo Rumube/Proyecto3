@@ -46,18 +46,20 @@ public class AsteroidBlasterInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (_shotType)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
-            case ShotType.Move:
-                UpdateMoveInput();
-                break;
-            case ShotType.Static:
-                UpdateStaticInput();
-                break;
-            default:
-                break;
+            switch (_shotType)
+            {
+                case ShotType.Move:
+                    UpdateMoveInput();
+                    break;
+                case ShotType.Static:
+                    UpdateStaticInput();
+                    break;
+                default:
+                    break;
+            }
         }
-
     }
 
     /// <summary>
@@ -65,7 +67,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void UpdateMoveInput()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
             _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
             InputController();
@@ -77,7 +79,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void UpdateStaticInput()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && !GetComponent<SpaceTimeCabin>()._gameFinished)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && !GetComponent<SpaceTimeCabin>()._gameFinished)
         {
             InputController();
         }
@@ -106,11 +108,13 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void InputController()
     {
-
-        AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
-        if (newInput.result && _canShot)
+        if(ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
-            ShotGun(newInput);
+            AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
+            if (newInput.result && _canShot)
+            {
+                ShotGun(newInput);
+            }
         }
     }
 

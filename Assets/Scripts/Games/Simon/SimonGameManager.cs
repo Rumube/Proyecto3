@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SimonGameManager : MonoBehaviour
 {
+    [Header("Configuration")]
+    private int _level;
     private List<Geometry.Geometry_Type> _playerTaskList = new List<Geometry.Geometry_Type>();
     private List<Geometry.Geometry_Type> _playerSequenceList = new List<Geometry.Geometry_Type>();
 
@@ -19,18 +21,21 @@ public class SimonGameManager : MonoBehaviour
     public CanvasGroup _buttons;
 
     public GameObject startButton;
-    public GameObject _imgTapa;
+    [Header("Text references")]
+    public List<string> _secuenceTexts;
+    public List<string> _turnTexts;
 
     private SimonGameDifficulty.dataDiffilcuty _data;
-    public int _level;
     private List<GameObject> _playableButtons = new List<GameObject>();
-    public List<GameObject> _orderListButtons = new List<GameObject>();
+    private List<GameObject> _orderListButtons = new List<GameObject>();
     private int _rounds;
     private int _currentRounds = 0;
     private bool _canClick = false;
+    public Animator _animTapa;
 
     private void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
         _rounds = _data.roundList;
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
@@ -39,7 +44,7 @@ public class SimonGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing && _canClick)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && _canClick)
         {
             _buttons.interactable = true;
         }
@@ -93,6 +98,9 @@ public class SimonGameManager : MonoBehaviour
             print(_currentRounds);
             if (_currentRounds < _rounds)
             {
+                int randomText = Random.Range(0, _secuenceTexts.Count);
+                string msg = _secuenceTexts[randomText];
+                ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(msg);
                 StartCoroutine(StartNextRound());
             }
             else
@@ -110,7 +118,7 @@ public class SimonGameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _imgTapa.SetActive(true);
+        _animTapa.Play("PanelOpen");
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
 
         foreach (GameObject currentButton in findButtons)
@@ -118,7 +126,7 @@ public class SimonGameManager : MonoBehaviour
             if (currentButton.activeSelf)
                 currentButton.SetActive(false);
         }
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Completa la secuencia para aterrizar la nave!");
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Completa la secuencia para aterrizar la nave!", true);
         _currentRounds = 0;
         _playerSequenceList.Clear();
         _playerTaskList.Clear();
@@ -127,6 +135,11 @@ public class SimonGameManager : MonoBehaviour
         StartCoroutine(StartNextRound());
     }
 
+    /// <summary>
+    /// Press the button effects
+    /// </summary>
+    /// <param name="simonButton">The button to press</param>
+    /// <returns></returns>
     public IEnumerator HighlightButton(GameObject simonButton)
     {
         simonButton.GetComponent<GeometryButton>()._light.SetActive(true);//Highlighted Color
@@ -141,23 +154,27 @@ public class SimonGameManager : MonoBehaviour
     public IEnumerator StartNextRound()
     {
         yield return new WaitForSeconds(_data.simonVelocity);
-        _imgTapa.SetActive(false);
+        _animTapa.Play("PanelClose");
         _playerSequenceList.Clear();
         _canClick = false;
         yield return new WaitForSeconds(_data.simonVelocity);
         int indexButton = Random.Range(0, _data.numberButtons);
         _playerTaskList.Add(_playableButtons[indexButton].GetComponent<Geometry>()._geometryType);
         _orderListButtons.Add(_playableButtons[indexButton]);
-        string pista = "";
         foreach (GameObject currentButton in _orderListButtons)
         {
-            pista += " " + currentButton.GetComponent<GeometryButton>().getGeometryString();
             yield return StartCoroutine(HighlightButton(currentButton));
         }
-        Debug.Log(pista);
+
+        int randomText = Random.Range(0, _turnTexts.Count);
+        string msg = _turnTexts[randomText];
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(msg);
         _canClick = true;
         yield return null;
     }
+    /// <summary>
+    /// Generate the panel and the buttons to the game
+    /// </summary>
     private void GeneratePanel()
     {
         List<Button> auxList = new List<Button>(clickableButtons);
