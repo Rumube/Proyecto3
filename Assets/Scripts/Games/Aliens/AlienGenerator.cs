@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AlienGenerator : MonoBehaviour
 {
+    #region Configuration
     [Header("ForTextComprobation")]
     public GameObject _eyeText;
     public GameObject _armText;
@@ -18,7 +19,6 @@ public class AlienGenerator : MonoBehaviour
 
     [Header("AlienEyes")]
     public GameObject _alienEye;
-    public GameObject _eyeSmall;
 
     public List<GameObject> _eyesList;
 
@@ -29,19 +29,16 @@ public class AlienGenerator : MonoBehaviour
 
     [Header ("AlienArms")]
     public GameObject _alienArm;
-    public GameObject _armSmall;
 
     public List<GameObject> _armList;
 
     [Header ("AlienLegs")]
     public GameObject _alienLeg;
-    public GameObject _legSmall;
 
     public List<GameObject> _LegList;
 
     [Header ("AlienMouths")]
     public GameObject _alienMouth;
-    public GameObject _mouthSmall;
 
     public List<GameObject> _mouthList;
 
@@ -50,7 +47,7 @@ public class AlienGenerator : MonoBehaviour
     public int _armInstructions;
     public int _eyeInstructions;
     public int _mouthInstructions;
-
+    #endregion
 
 
     // Start is called before the first frame update
@@ -110,7 +107,8 @@ public class AlienGenerator : MonoBehaviour
 
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
     {
-        
+        GameObject newBody = Instantiate(_alienBody, _alienPosition);
+
         GameObject[] armPositionsArr = GameObject.FindGameObjectsWithTag("ArmSpawner");
         List<GameObject> armPositions = new List<GameObject>(armPositionsArr);
 
@@ -211,7 +209,7 @@ public class AlienGenerator : MonoBehaviour
         List<RectTransform> allChindrenCopy = new List<RectTransform>(allChildren);
         for (int i = 0; i < allChindrenCopy.Count; i++)
         {
-            if(allChildren[i].name != "AlienParts")
+            if(allChildren[i].name != "Alien")
             {
                 Destroy(allChildren[i].gameObject);
             }
