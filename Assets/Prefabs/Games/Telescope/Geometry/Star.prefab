@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 1836168676560783080}
   - component: {fileID: 1836168676560783082}
   - component: {fileID: 1836168676560783081}
+  - component: {fileID: 5467685539503678899}
+  - component: {fileID: 295602195279607994}
   m_Layer: 0
   m_Name: Star
-  m_TagString: Untagged
+  m_TagString: Star
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,3 +77,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5467685539503678899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836168676560783087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c456907e5ac3d41ab5197fdeadd0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 0
+  _geometryAudio: []
+  _needsHold: 1
+  _timePressed: 0
+  _timeToBePressed: 1
+--- !u!58 &295602195279607994
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836168676560783087}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 55
