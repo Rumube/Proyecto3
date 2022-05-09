@@ -48,6 +48,8 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     public void GenerateNewOrde()
     {
         //TODO: DESTROY STARS
+        DestroyStars();
+
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
         switch (_serieType)
         {
@@ -65,11 +67,22 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         GenerateHighToLow();
     }
 
+    private void DestroyStars()
+    {
+        List<GameObject> auxList = new List<GameObject>(_starList);
+        for (int i = 0; i < auxList.Count; i++)
+        {
+            Destroy(_starList[i]);
+        }
+        _starList.Clear();
+    }
+
     /// <summary>
     /// Generates the stars in the <see cref="SERIES_TYPE.highToLow"/> game.
     /// </summary>
     private void GenerateHighToLow()
     {
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor tamaño", true);
         int maxSerie = _dataDifficulty.maxSerie;
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
         List<GameObject> spawnsList = new List<GameObject>(spawns);
@@ -92,6 +105,9 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         _starList.Reverse();
     }
 
+    /// <summary>
+    /// Controlls the input of the game
+    /// </summary>
     private void InputManager()
     {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
@@ -101,7 +117,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             if (!_pressed)
             {
                 _pressed = true;
-                GetComponent<ConstelationGenerator>().AddNewPosition(newInput.pos);
+                //GetComponent<ConstelationGenerator>().AddNewPosition(newInput.pos);
             }
             else
             {
@@ -127,5 +143,4 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             }
         }
     }
-
 }
