@@ -11,20 +11,46 @@ public class AlienGenerator : MonoBehaviour
     public GameObject _legText;
     public GameObject _mouthText;
 
-    [Header("AlienParts")]
+    [Header("Configuration")]
     public GameObject _alienBase;
-    public GameObject _alienEye;
-    public GameObject _alienArm;
-    public GameObject _alienLeg;
-    public GameObject _alienMouth;
 
     public RectTransform _alienPosition;
+
+    [Header("AlienEyes")]
+    public GameObject _alienEye;
+    public GameObject _eyeSmall;
+
+    public List<GameObject> _eyesList;
+
+    [Header("AlienBody")]
+    public GameObject _alienBody;
+
+    public List<GameObject> _bodyList;
+
+    [Header ("AlienArms")]
+    public GameObject _alienArm;
+    public GameObject _armSmall;
+
+    public List<GameObject> _armList;
+
+    [Header ("AlienLegs")]
+    public GameObject _alienLeg;
+    public GameObject _legSmall;
+
+    public List<GameObject> _LegList;
+
+    [Header ("AlienMouths")]
+    public GameObject _alienMouth;
+    public GameObject _mouthSmall;
+
+    public List<GameObject> _mouthList;
 
     [Header("Instructions")]
     public int _legInstructions;
     public int _armInstructions;
     public int _eyeInstructions;
     public int _mouthInstructions;
+
 
 
     // Start is called before the first frame update
@@ -38,25 +64,49 @@ public class AlienGenerator : MonoBehaviour
         
     }
 
+
     private void Restart()
     {
         GenerateNewValues();
-        GenerateAlien(_armInstructions, _legInstructions, _eyeInstructions, _mouthInstructions);
+        PartsSelection();
+        GenerateAlien(_armInstructions, _legInstructions, _mouthInstructions, _eyeInstructions);
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Cuenta las partes del alien", true);
 
+        
         _eyeText.GetComponent<Text>().text = ""+0;
         _legText.GetComponent<Text>().text = ""+0;
         _armText.GetComponent<Text>().text = ""+0;
         _mouthText.GetComponent<Text>().text = ""+0;
     }
 
+    /// <summary>
+    /// Random pick quantity of spawners
+    /// </summary>
     private void GenerateNewValues()
     {
-        _legInstructions = Random.Range(0, 4);
-        _armInstructions = Random.Range(0, 4);
-        _eyeInstructions = Random.Range(0, 4);
-        _mouthInstructions = Random.Range(0, 4);
-}
+        _legInstructions = Random.Range(0, 5);
+        _armInstructions = Random.Range(0, 8);
+        _eyeInstructions = Random.Range(0, 6);
+        _mouthInstructions = Random.Range(0, 5);
+    }
+
+    private void PartsSelection()
+    {
+        int _alienEyeSelect = Random.Range(0, _eyesList.Count);
+        _alienEye = _eyesList[_alienEyeSelect];
+
+        int _alienBodySelect = Random.Range(0, _bodyList.Count);
+        _alienBody = _bodyList[_alienBodySelect];
+
+        int _alienArmSelect = Random.Range(0, _armList.Count);
+        _alienArm = _armList[_alienArmSelect];
+
+        int _alienLegSelect = Random.Range(0, _LegList.Count);
+        _alienLeg = _LegList[_alienLegSelect];
+
+        int _alienMouthSelect = Random.Range(0, _mouthList.Count);
+        _alienMouth = _mouthList[_alienArmSelect];
+    }
 
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
     {
@@ -80,6 +130,11 @@ public class AlienGenerator : MonoBehaviour
             Vector2 newPosition = armPositions[index].transform.position;
             armPositions.RemoveAt(index);
             newArm.GetComponent<RectTransform>().position = newPosition;
+
+            if (newArm.GetComponent<RectTransform>().position.x > _alienBase.GetComponent<RectTransform>().position.x)
+            {
+                newArm.transform.localScale = new Vector3(-1, 1, 1);
+            }
         }
 
         for (int i = 0; i < leg; i++)
@@ -89,6 +144,12 @@ public class AlienGenerator : MonoBehaviour
             Vector2 newPositionLeg = legPositions[indexLeg].transform.position;
             legPositions.RemoveAt(indexLeg);
             newLeg.GetComponent<RectTransform>().position = newPositionLeg;
+
+            if (newLeg.GetComponent<RectTransform>().position.x > _alienBase.GetComponent<RectTransform>().position.x)
+            {
+                newLeg.transform.localScale = new Vector3(-1, 1, 1);
+            }
+
         }
 
         for (int i = 0; i < eye; i++)
@@ -117,7 +178,9 @@ public class AlienGenerator : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Compare number extracted from text.
+    /// </summary>
     public void CheckAnswer()
     {
         int numEye = int.Parse(_eyeText.GetComponent<Text>().text);
@@ -139,6 +202,9 @@ public class AlienGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Delete alien parts for restart.
+    /// </summary>
     private void cleanAlien()
     {
         RectTransform[] allChildren = _alienBase.GetComponentsInChildren<RectTransform>();

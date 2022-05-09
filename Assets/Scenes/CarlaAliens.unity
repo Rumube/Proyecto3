@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 56514060}
   - component: {fileID: 56514059}
   m_Layer: 5
-  m_Name: Number
+  m_Name: EyeNumber
   m_TagString: EyeAlienText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,6 +773,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399977239}
   m_CullTransparentMesh: 1
+--- !u!1 &477392074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 477392075}
+  m_Layer: 5
+  m_Name: Alien
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &477392075
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477392074}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1834083096}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &589322531
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +837,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1319361736}
+  - {fileID: 1801183378}
   - {fileID: 1995441358}
   - {fileID: 1388657074}
   - {fileID: 962375745}
@@ -1203,7 +1238,7 @@ GameObject:
   - component: {fileID: 726563111}
   - component: {fileID: 726563110}
   m_Layer: 5
-  m_Name: Number (1)
+  m_Name: LegNumber
   m_TagString: LegAlienText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1440,7 +1475,7 @@ GameObject:
   - component: {fileID: 962375747}
   - component: {fileID: 962375746}
   m_Layer: 5
-  m_Name: Number (3)
+  m_Name: MouthNumber
   m_TagString: MouthAlienText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1861,12 +1896,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 589322532}
+  m_Father: {fileID: 1345912935}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -195, y: -11}
+  m_AnchoredPosition: {x: -195, y: -15}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1319361737
@@ -1936,7 +1971,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1801183378}
+  - {fileID: 1319361736}
   - {fileID: 670148798}
   - {fileID: 633666434}
   - {fileID: 56514058}
@@ -2417,16 +2452,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea5dafb0c27066469b3a134a81f68a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eyeText: {fileID: 962375744}
+  _eyeText: {fileID: 56514057}
   _armText: {fileID: 1908895238}
   _legText: {fileID: 726563108}
-  _mouthText: {fileID: 56514057}
+  _mouthText: {fileID: 962375744}
   _alienBase: {fileID: 224387885}
-  _alienEye: {fileID: 54568256998434357, guid: a9d0c36177dc39146b3447a4452b4381, type: 3}
-  _alienArm: {fileID: 3426501656597514893, guid: 50ba1e4072ef18f4f94a1bdb376501bc, type: 3}
-  _alienLeg: {fileID: 3642552730317107583, guid: 4e173fc38ad12964084b4147322ed76f, type: 3}
-  _alienMouth: {fileID: 5803790365726294287, guid: 2c21628879410184cb6207f181581b8b, type: 3}
   _alienPosition: {fileID: 224387886}
+  _alienEye: {fileID: 54568256998434357, guid: a9d0c36177dc39146b3447a4452b4381, type: 3}
+  _eyesList:
+  - {fileID: 54568256998434357, guid: a9d0c36177dc39146b3447a4452b4381, type: 3}
+  - {fileID: 54568256998434357, guid: 2cd242df51aabe3459744ce4e1ac824a, type: 3}
+  _alienBody: {fileID: 0}
+  _bodyList:
+  - {fileID: 6399426844549635821, guid: 4be1922398ffaf446bf1da090ceac0e9, type: 3}
+  - {fileID: 6399426844549635821, guid: 6b59313723b98eb43ac70ac9b9ee68d6, type: 3}
+  - {fileID: 6399426844549635821, guid: 5772d38169367254c87c28aa2c3e39d9, type: 3}
+  - {fileID: 6399426844549635821, guid: b953a7a34e3247742bc60235ff7aca25, type: 3}
+  _alienArm: {fileID: 3426501656597514893, guid: 50ba1e4072ef18f4f94a1bdb376501bc, type: 3}
+  _armList:
+  - {fileID: 3426501656597514893, guid: 50ba1e4072ef18f4f94a1bdb376501bc, type: 3}
+  - {fileID: 3426501656597514893, guid: 2592ad59178d76c429fc6da2b98e4859, type: 3}
+  - {fileID: 3426501656597514893, guid: 2a4d4e69e600bad42a5c83d066e13477, type: 3}
+  _alienLeg: {fileID: 3642552730317107583, guid: 4e173fc38ad12964084b4147322ed76f, type: 3}
+  _LegList:
+  - {fileID: 3642552730317107583, guid: 4e173fc38ad12964084b4147322ed76f, type: 3}
+  - {fileID: 3642552730317107583, guid: 2a48baca19ba9534d8e45f19c1d784d7, type: 3}
+  - {fileID: 3642552730317107583, guid: e7ca6e95b7085764dbad5a2c671f1f55, type: 3}
+  _alienMouth: {fileID: 5803790365726294287, guid: 2c21628879410184cb6207f181581b8b, type: 3}
+  _mouthList:
+  - {fileID: 5803790365726294287, guid: 845a223defb515f41afedc6548f56bf5, type: 3}
+  - {fileID: 5803790365726294287, guid: 98d0479b1dac8854795f0bcce19164fe, type: 3}
+  - {fileID: 5803790365726294287, guid: d8db1804fb638464b8c9a1338d114388, type: 3}
+  - {fileID: 5803790365726294287, guid: 2c21628879410184cb6207f181581b8b, type: 3}
   _legInstructions: 2
   _armInstructions: 2
   _eyeInstructions: 2
@@ -2460,12 +2517,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1345912935}
+  m_Father: {fileID: 589322532}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -195, y: 0.000030517578}
+  m_AnchoredPosition: {x: -195, y: 1}
   m_SizeDelta: {x: 51.9, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1801183379
@@ -2601,8 +2658,9 @@ RectTransform:
   - {fileID: 1852496878}
   - {fileID: 1606973682}
   - {fileID: 755553855}
-  - {fileID: 2078067815}
+  - {fileID: 477392075}
   - {fileID: 3794641083000118639}
+  - {fileID: 2078067815}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2698,7 +2756,7 @@ GameObject:
   - component: {fileID: 1908895241}
   - component: {fileID: 1908895240}
   m_Layer: 5
-  m_Name: Number (2)
+  m_Name: ArmNumber
   m_TagString: ArmAlienText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3007,7 +3065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518683566658128699, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7518683566658128699, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3231,6 +3289,14 @@ PrefabInstance:
     - target: {fileID: 6399426844549635821, guid: 4be1922398ffaf446bf1da090ceac0e9, type: 3}
       propertyPath: m_Name
       value: AlienBody
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399426844662370559, guid: 4be1922398ffaf446bf1da090ceac0e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 63
+      objectReference: {fileID: 0}
+    - target: {fileID: 6399426845411759850, guid: 4be1922398ffaf446bf1da090ceac0e9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -26
       objectReference: {fileID: 0}
     - target: {fileID: 7810949548048608619, guid: 4be1922398ffaf446bf1da090ceac0e9, type: 3}
       propertyPath: m_Pivot.x
