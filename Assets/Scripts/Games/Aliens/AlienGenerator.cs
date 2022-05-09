@@ -81,10 +81,10 @@ public class AlienGenerator : MonoBehaviour
     /// </summary>
     private void GenerateNewValues()
     {
-        _legInstructions = Random.Range(0, 5);
-        _armInstructions = Random.Range(0, 8);
-        _eyeInstructions = Random.Range(0, 6);
-        _mouthInstructions = Random.Range(0, 5);
+        _legInstructions = Random.Range(0, 4);
+        _armInstructions = Random.Range(0, 4);
+        _eyeInstructions = Random.Range(0, 4);
+        _mouthInstructions = Random.Range(0, 4);
     }
 
     private void PartsSelection()
@@ -127,6 +127,7 @@ public class AlienGenerator : MonoBehaviour
             int index= Random.Range(0, armPositions.Count);
             Vector2 newPosition = armPositions[index].transform.position;
             armPositions.RemoveAt(index);
+            //newArm.transform.parent = armPositions[index].transform;
             newArm.GetComponent<RectTransform>().position = newPosition;
 
             if (newArm.GetComponent<RectTransform>().position.x > _alienBase.GetComponent<RectTransform>().position.x)
