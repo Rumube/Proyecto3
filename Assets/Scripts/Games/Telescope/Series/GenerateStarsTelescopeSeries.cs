@@ -97,35 +97,26 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
         print(newInput);
         if (newInput.result)
-        {
-            print("Pos:" + newInput.pos);
-            
+        {            
             if (!_pressed)
             {
-                print("Apretar");
                 _pressed = true;
                 GetComponent<ConstelationGenerator>().AddNewPosition(newInput.pos);
             }
             else
             {
-                print("Update last position pre");
                 GetComponent<ConstelationGenerator>().UpdateLastPosition(newInput.pos);
             }
 
-            //Collider2D[] colliders = Physics2D.OverlapCircleAll(newInput.pos, 1f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(newInput.pos, 1f);
 
-            //foreach (Collider2D currentCollider in colliders)
-            //{
-            //    if(currentCollider.gameObject.name == "Star(Clone)" && !currentCollider.GetComponent<Star>().GetIsConnected())
-            //    {
-            //        currentCollider.gameObject.GetComponent<Star>().CollisionDetected();
-            //    }
-            //}
-            //if (!starDetected)
-            //{
-            //    GetComponent<ConstelationGenerator>().UpdateLastPosition(newInput.pos);
-            //}
-
+            foreach (Collider2D currentCollider in colliders)
+            {
+                if (currentCollider.gameObject.name == "Star(Clone)" && !currentCollider.GetComponent<Star>().GetIsConnected())
+                {
+                    currentCollider.gameObject.GetComponent<Star>().CollisionDetected();
+                }
+            }
         }
         else
         {
@@ -133,7 +124,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             {
                 _pressed = false;
                 GetComponent<ConstelationGenerator>().ClearConstelation();
-                print("Soltar");
             }
         }
     }

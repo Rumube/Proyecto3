@@ -48,7 +48,6 @@ public class Star : Geometry
 
     public void CollisionDetected()
     {
-        print("Tocado");
         _touched = true;
     }
 

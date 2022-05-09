@@ -25,19 +25,8 @@ public class ConstelationGenerator : MonoBehaviour
     /// <param name="newPos">Position</param>
     public void UpdateLastPosition(Vector2 newPos)
     {
-        print("Update last position dentro" + newPos);
         Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
-        _line.SetPosition(_constelationPositions.Count - 1, posFormat);
-
-
-        //if (_constelationPositions.Count > 1)
-        //{
-        //    _line.SetPosition(_constelationPositions.Count - 1, posFormat);
-        //}
-        //else
-        //{
-        //    _line.SetPosition(0, posFormat);
-        //}
+        _constelationPositions[_constelationPositions.Count - 1] = posFormat;
     }
     /// <summary>
     /// Add new position to the list
@@ -46,6 +35,7 @@ public class ConstelationGenerator : MonoBehaviour
     public void AddNewPosition(Vector2 newPos)
     {
         Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
+        //if(_constelationPositions.Count > )
         _constelationPositions.Add(posFormat);
         _constelationPositions.Add(posFormat);
     }
@@ -66,7 +56,6 @@ public class ConstelationGenerator : MonoBehaviour
 
     public void ClearConstelation()
     {
-        print("Limpiar");
         _constelationPositions.Clear();
         GameObject[] starsInScene = GameObject.FindGameObjectsWithTag("Star");
         for (int i = 0; i < starsInScene.Length; i++)
