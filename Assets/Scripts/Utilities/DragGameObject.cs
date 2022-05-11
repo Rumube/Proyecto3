@@ -8,6 +8,7 @@ public class DragGameObject : MonoBehaviour
     public static GameObject itemDraging;
     public GameObject selectedObject;
 
+
     [Header("Positions")]
     Vector3 mousePosition;
     Vector3 startPosition;
@@ -121,7 +122,16 @@ public class DragGameObject : MonoBehaviour
             dragParentPosition = collision.gameObject.transform;
             _collisionDetected = true;
             transform.position = dragParentPosition.position;
-            _isReturning = false;
+            if (collision.gameObject.GetComponent<DragParentPropieties>().correct==true)
+            {
+                
+                _isReturning = false;
+            }
+            else
+            {
+                _isReturning = transform;
+            }
+            
         }
     }
 
