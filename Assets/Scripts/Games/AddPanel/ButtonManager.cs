@@ -27,11 +27,14 @@ public class ButtonManager : MonoBehaviour
     AddPanelDifficulty _completeThePanel;
     AddPanelDifficulty.dataDiffilcuty _currentDataDifficulty;
 
+    GameObject checkButton;
+
     void Start()
     {
         //_completeThePanel = GetComponent<AddPanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
-       
+        checkButton = GameObject.FindGameObjectWithTag("CheckButton");
+
     }
     public string GetTextGame()
     {
@@ -41,7 +44,14 @@ public class ButtonManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (_buttonCounter>0)
+        {
+            checkButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            checkButton.GetComponent<Button>().interactable = false;
+        }
     }
    
     /// <summary>Show the geometry name in plural or singular.</summary> 
