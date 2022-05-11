@@ -14,6 +14,8 @@ public class AlienGenerator : MonoBehaviour
 
     public GameObject _hand;
 
+    public GameObject _button;
+
     [Header("Configuration")]
     public GameObject _alienBase;
 
@@ -44,17 +46,35 @@ public class AlienGenerator : MonoBehaviour
 
     public List<GameObject> _mouthList;
 
+
     [Header("Instructions")]
     public int _legInstructions;
     public int _armInstructions;
     public int _eyeInstructions;
     public int _mouthInstructions;
+
+    [Header("Boxes")]
+    public GameObject _eyeBox;
+    public GameObject _armBox;
+    public GameObject _legBox;
+    public GameObject _mouthBox;
     #endregion
+
+    private int _correctLegs = 0;
+    private int _correctArms = 0;
+    private int _correctEyes = 0;
+    private int _correctMouth = 0;
+
+    private AlienDifficulty.dataDiffilcuty _dataDifficulty;
+    private int _level;
+    private bool _isCheking = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
+        _dataDifficulty = GetComponent<AlienDifficulty>().GenerateDataDifficulty(_level);
         Restart();
     }
 
@@ -83,10 +103,52 @@ public class AlienGenerator : MonoBehaviour
     /// </summary>
     private void GenerateNewValues()
     {
-        _legInstructions = Random.Range(0, 4);
-        _armInstructions = Random.Range(0, 4);
-        _eyeInstructions = Random.Range(0, 4);
-        _mouthInstructions = Random.Range(0, 4);
+        _correctLegs = 0;
+        _correctArms = 0;
+        _correctEyes = 0;
+        _correctMouth = 0;
+
+        _legInstructions = Random.Range(0, _dataDifficulty._numberParts);
+        _armInstructions = Random.Range(0, _dataDifficulty._numberParts);
+        _eyeInstructions = Random.Range(0, _dataDifficulty._numberParts);
+        _mouthInstructions = Random.Range(0, _dataDifficulty._numberParts);
+
+        List<string> partsString =  new List<string>();
+        partsString.Add("eye");
+        partsString.Add("arm");
+        partsString.Add("leg");
+        partsString.Add("mouth");
+        List<string> partsStringAux = new List<string>(partsString);
+
+        _eyeBox.SetActive(false);
+        _armBox.SetActive(false);
+        _legBox.SetActive(false);
+        _mouthBox.SetActive(false);
+
+        for (int i = 0; i < _dataDifficulty._partTypes; i++)
+        {
+            int randomPart = Random.Range(0, partsStringAux.Count);
+            switch (partsString[randomPart])
+            {
+                case "eye":
+                    _correctEyes = _eyeInstructions;
+                    _eyeBox.SetActive(true);
+                    break;
+                case "arm":
+                    _correctArms = _armInstructions;
+                    _armBox.SetActive(false);
+                    break;
+                case "leg":
+                    _correctLegs = _legInstructions;
+                    _legBox.SetActive(false);
+                    break;
+                case "mouth":
+                    _correctMouth = _mouthInstructions;
+                    _mouthBox.SetActive(false);
+                    break;
+            }
+            partsStringAux.RemoveAt(randomPart);
+        }
     }
 
     private void PartsSelection()
@@ -105,6 +167,7 @@ public class AlienGenerator : MonoBehaviour
 
         int _alienMouthSelect = Random.Range(0, _mouthList.Count);
         _alienMouth = _mouthList[_alienMouthSelect];
+
     }
 
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
@@ -122,6 +185,7 @@ public class AlienGenerator : MonoBehaviour
 
         GameObject[] mouthPositionsArr = GameObject.FindGameObjectsWithTag("MouthSpawner");
         List<GameObject> mouthPositions = new List<GameObject>(mouthPositionsArr);
+
 
         for (int i = 0; i < arm; i++)
         {
@@ -178,29 +242,55 @@ public class AlienGenerator : MonoBehaviour
                 newMouth.transform.rotation = Quaternion.Euler(0, 0, -degrees);
         }
 
+
+        _isCheking = false;
     }
     /// <summary>
     /// Compare number extracted from text.
     /// </summary>
     public void CheckAnswer()
     {
-        _hand.GetComponent<Animator>().Play("HandWritting_anim");
-
-        int numEye = int.Parse(_eyeText.GetComponent<Text>().text);
-
-        int numLeg = int.Parse(_legText.GetComponent<Text>().text);
-
-        int numArm = int.Parse(_armText.GetComponent<Text>().text);
-
-        int numMouth = int.Parse(_mouthText.GetComponent<Text>().text);
-
-        if (numEye == _eyeInstructions && numArm == _armInstructions && numLeg == _legInstructions && numMouth == _mouthInstructions)
+        if (!_isCheking)
         {
-            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
-            StartCoroutine(cleanAlien());
-        }else
-        {
-            ServiceLocator.Instance.GetService<IError>().GenerateError();
+            _hand.GetComponent<Animator>().Play("HandWritting_anim");
+
+            int numEye = 0; 
+
+            int numLeg = 0; 
+
+            int numArm = 0; ;
+
+            int numMouth = 0; 
+
+            if (_correctArms > 0)
+            {
+                numArm = int.Parse(_armText.GetComponent<Text>().text);
+            }
+            if(_correctEyes > 0)
+            {
+                numEye = int.Parse(_eyeText.GetComponent<Text>().text);
+            }
+            if(_correctLegs > 0)
+            {
+                numLeg = int.Parse(_legText.GetComponent<Text>().text);
+            }
+            if(_correctMouth > 0)
+            {
+                numMouth = int.Parse(_mouthText.GetComponent<Text>().text);
+            }
+
+
+            if (numEye == _eyeInstructions && numArm == _armInstructions && numLeg == _legInstructions && numMouth == _mouthInstructions)
+            {
+                _isCheking = true;
+                ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+                StartCoroutine(cleanAlien());
+            }
+            else
+            {
+
+                ServiceLocator.Instance.GetService<IError>().GenerateError();
+            }
         }
     }
 
