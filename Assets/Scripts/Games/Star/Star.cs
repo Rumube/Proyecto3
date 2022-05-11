@@ -15,6 +15,7 @@ public class Star : Geometry
     [Header("References")]
     private AudioSource _audio;
     public AudioClip _clipStarSelected;
+    public GameObject _light;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class Star : Geometry
                 _timePressed += Time.deltaTime;
                 if(_timePressed >= _timeToBePressed && !_isConnected)
                 {
+                    _light.SetActive(true);
                     _isConnected = true;
                     _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
                     _audio.clip = _clipStarSelected;
@@ -59,12 +61,13 @@ public class Star : Geometry
     public void InitStart(GameObject gm)
     {
         _gm = gm;
-        _timeToBePressed = 0.3f;
+        _timeToBePressed = 0.5f;
     }
 
     public void SetIsConnected(bool value)
     {
         _isConnected = value;
+        _light.SetActive(value);
     }
 
     public bool GetIsConnected()

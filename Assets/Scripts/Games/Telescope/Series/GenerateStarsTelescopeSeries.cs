@@ -192,7 +192,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             if (!_pressed)
             {
                 _pressed = true;
-                //GetComponent<ConstelationGenerator>().AddNewPosition(newInput.pos);
             }
             else
             {
