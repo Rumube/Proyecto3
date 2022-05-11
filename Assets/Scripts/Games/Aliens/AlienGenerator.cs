@@ -184,6 +184,8 @@ public class AlienGenerator : MonoBehaviour
     /// </summary>
     public void CheckAnswer()
     {
+        _hand.GetComponent<Animator>().Play("HandWritting_anim");
+
         int numEye = int.Parse(_eyeText.GetComponent<Text>().text);
 
         int numLeg = int.Parse(_legText.GetComponent<Text>().text);
