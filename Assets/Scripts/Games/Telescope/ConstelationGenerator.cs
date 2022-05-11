@@ -92,8 +92,7 @@ public class ConstelationGenerator : MonoBehaviour
             {
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
 
-                ClearConstelation();
-                GetComponent<GenerateStarsTelescopeSeries>().GenerateNewOrde();
+                StartCoroutine(GetComponent<GenerateStarsTelescopeSeries>().GenerateNewOrde());
             }
             else
             {

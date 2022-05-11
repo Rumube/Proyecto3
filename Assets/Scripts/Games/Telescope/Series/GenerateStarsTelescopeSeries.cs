@@ -16,6 +16,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     private int _level;
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
+    private bool _firstRound = true;
 
     private enum SERIES_TYPE
     {
@@ -30,7 +31,8 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<TelescopeSeriesDifficulty>().GenerateDataDifficulty(_level);
-        GenerateNewOrde();
+        StartCoroutine(GenerateNewOrde());
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
 
     // Update is called once per frame
@@ -45,10 +47,9 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     /// <summary>
     /// Starts the generation process
     /// </summary>
-    public void GenerateNewOrde()
+    public IEnumerator GenerateNewOrde()
     {
-        
-        //TODO: DESTROY STARS
+        yield return new WaitForSeconds(1f);
         DestroyStars();
 
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
@@ -75,6 +76,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
     private void DestroyStars()
     {
+        GetComponent<ConstelationGenerator>().ClearConstelation();
         List<GameObject> auxList = new List<GameObject>(_starList);
         for (int i = 0; i < auxList.Count; i++)
         {
@@ -107,15 +109,31 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
             newStar.GetComponent<Star>().InitStart(gameObject);
         }
-        if (isHighToLow)
+
+        string _textOrder = "";
+
+        if (_firstRound)
         {
-            _starList.Reverse();
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor tamaño", true);
+            _firstRound = false;
+            _textOrder += "Une las estrellas de ";
         }
         else
         {
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de menor a mayor tamaño", true);
+            _textOrder += "Ahora de ";
         }
+
+        if (isHighToLow)
+        {
+            _starList.Reverse();
+            _textOrder += "mayor a menor tamaño";
+        }
+        else
+        {
+            _textOrder += "menor a mayor tamaño";
+        }
+
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
+
     }
 
     private void GenerateSpikes(bool isMoreToLees)
@@ -136,15 +154,31 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
             newStar.GetComponent<Star>().InitStart(gameObject);
         }
-        if (isMoreToLees)
+
+
+        string _textOrder = "";
+
+        if (_firstRound)
         {
-            _starList.Reverse();
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor puntas", true);
+            _firstRound = false;
+            _textOrder += "Une las estrellas de ";
         }
         else
         {
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de menor a mayor puntas", true);
+            _textOrder += "Ahora de ";
         }
+
+        if (isMoreToLees)
+        {
+            _starList.Reverse();
+            _textOrder += "más a menos puntas";
+        }
+        else
+        {
+            _textOrder += "menos a más puntas";
+        }
+
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
     }
 
     /// <summary>

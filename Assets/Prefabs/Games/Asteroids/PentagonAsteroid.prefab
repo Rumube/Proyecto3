@@ -55,7 +55,7 @@ MonoBehaviour:
   _destroyGO: {fileID: 2872252406776265931}
   _asteroidGO: {fileID: 8350677976570666351}
   _collisionAsteroid: {fileID: 2060959695332549021, guid: 76351a5e2a72aee48a2ce767217c5eb8, type: 3}
-  state: 0
+  _state: 0
 --- !u!60 &6876258819629278229
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _geometryType: 5
+  _geometryAudio: []
 --- !u!95 &-3094135947381050385
 Animator:
   serializedVersion: 3
@@ -189,7 +190,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
