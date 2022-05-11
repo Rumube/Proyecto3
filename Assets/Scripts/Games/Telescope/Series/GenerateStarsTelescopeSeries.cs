@@ -51,27 +51,23 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         DestroyStars();
 
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
-        //switch (_serieType)
-        //{
-        //    case SERIES_TYPE.highToLow:
-        //        GenerateSize(true);
-        //        break;
-        //    case SERIES_TYPE.lowToHigh:
-        //        GenerateSize(false);
-        //        break;
-        //    case SERIES_TYPE.moreSpikesToLess:
-        //        //GenerateSpikes(true);
-        //        GenerateSize(true);
-        //        break;
-        //    case SERIES_TYPE.lessSpikesToMore:
-        //        //GenerateSpikes(false);
-        //        GenerateSize(false);
-        //        break;
-        //    default:
-        //        break;
-        //}
-        GenerateSpikes(true);
-
+        switch (_serieType)
+        {
+            case SERIES_TYPE.highToLow:
+                GenerateSize(true);
+                break;
+            case SERIES_TYPE.lowToHigh:
+                GenerateSize(false);
+                break;
+            case SERIES_TYPE.moreSpikesToLess:
+                GenerateSpikes(true);
+                break;
+            case SERIES_TYPE.lessSpikesToMore:
+                GenerateSpikes(false);
+                break;
+            default:
+                break;
+        }
     }
 
     private void DestroyStars()
