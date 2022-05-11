@@ -22,7 +22,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         highToLow = 0,
         lowToHigh = 1,
         moreSpikesToLess = 2,
-        lessSpikesToMore = 4
+        lessSpikesToMore = 3
     }
     private SERIES_TYPE _serieType;
     // Start is called before the first frame update
@@ -68,6 +68,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
                 GenerateSpikes(false);
                 break;
             default:
+                GenerateSize(true);
                 break;
         }
     }
