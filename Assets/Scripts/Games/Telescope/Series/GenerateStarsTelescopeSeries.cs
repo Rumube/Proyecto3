@@ -51,20 +51,27 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         DestroyStars();
 
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
-        switch (_serieType)
-        {
-            case SERIES_TYPE.highToLow:
-                break;
-            case SERIES_TYPE.lowToHigh:
-                break;
-            case SERIES_TYPE.moreSpikesToLess:
-                break;
-            case SERIES_TYPE.lessSpikesToMore:
-                break;
-            default:
-                break;
-        }
-        GenerateHighToLow();
+        //switch (_serieType)
+        //{
+        //    case SERIES_TYPE.highToLow:
+        //        GenerateSize(true);
+        //        break;
+        //    case SERIES_TYPE.lowToHigh:
+        //        GenerateSize(false);
+        //        break;
+        //    case SERIES_TYPE.moreSpikesToLess:
+        //        //GenerateSpikes(true);
+        //        GenerateSize(true);
+        //        break;
+        //    case SERIES_TYPE.lessSpikesToMore:
+        //        //GenerateSpikes(false);
+        //        GenerateSize(false);
+        //        break;
+        //    default:
+        //        break;
+        //}
+        GenerateSpikes(true);
+
     }
 
     private void DestroyStars()
@@ -80,9 +87,8 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     /// <summary>
     /// Generates the stars in the <see cref="SERIES_TYPE.highToLow"/> game.
     /// </summary>
-    private void GenerateHighToLow()
+    private void GenerateSize(bool isHighToLow)
     {
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor tamaño", true);
         int maxSerie = _dataDifficulty.maxSerie;
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
         List<GameObject> spawnsList = new List<GameObject>(spawns);
@@ -102,7 +108,44 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
             newStar.GetComponent<Star>().InitStart(gameObject);
         }
-        _starList.Reverse();
+        if (isHighToLow)
+        {
+            _starList.Reverse();
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor tamaño", true);
+        }
+        else
+        {
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de menor a mayor tamaño", true);
+        }
+    }
+
+    private void GenerateSpikes(bool isMoreToLees)
+    {
+        int maxSerie = _dataDifficulty.maxSerie;
+        GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
+        List<GameObject> spawnsList = new List<GameObject>(spawns);
+
+        for (int i = 0; i < maxSerie; i++)
+        {
+            GameObject newStar = Instantiate(_spikesStars[i], _starsParent.transform);
+
+            //Generate star position
+            int randomIndex = Random.Range(0, spawnsList.Count);
+            newStar.transform.position = spawnsList[randomIndex].transform.position;
+            spawnsList.RemoveAt(randomIndex);
+            _starList.Add(newStar);
+
+            newStar.GetComponent<Star>().InitStart(gameObject);
+        }
+        if (isMoreToLees)
+        {
+            _starList.Reverse();
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de mayor a menor puntas", true);
+        }
+        else
+        {
+            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Une las estrellas de menor a mayor puntas", true);
+        }
     }
 
     /// <summary>
@@ -111,7 +154,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     private void InputManager()
     {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
-        print(newInput);
         if (newInput.result)
         {            
             if (!_pressed)
