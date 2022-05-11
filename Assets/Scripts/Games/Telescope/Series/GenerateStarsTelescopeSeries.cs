@@ -60,16 +60,18 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         //        GenerateSize(false);
         //        break;
         //    case SERIES_TYPE.moreSpikesToLess:
-        //        GenerateSpikes(true);
+        //        //GenerateSpikes(true);
+        //        GenerateSize(true);
         //        break;
         //    case SERIES_TYPE.lessSpikesToMore:
-        //        GenerateSpikes(false);
+        //        //GenerateSpikes(false);
+        //        GenerateSize(false);
         //        break;
         //    default:
         //        break;
         //}
         GenerateSpikes(true);
-        
+
     }
 
     private void DestroyStars()
