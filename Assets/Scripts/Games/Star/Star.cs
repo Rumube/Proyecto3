@@ -30,7 +30,8 @@ public class Star : Geometry
                 if(_timePressed >= _timeToBePressed && !_isConnected)
                 {
                     _isConnected = true;
-                    _gm.GetComponent<ConstelationGenerator>().AddNewPosition(transform.position);
+                    //_gm.GetComponent<ConstelationGenerator>().AddNewPosition(transform.position);
+                    _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
                 }
             }
             else

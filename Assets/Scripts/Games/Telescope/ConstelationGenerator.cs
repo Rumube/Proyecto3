@@ -6,6 +6,7 @@ public class ConstelationGenerator : MonoBehaviour
 {
     private LineRenderer _line;
     List<Vector2> _constelationPositions = new List<Vector2>();
+    List<GameObject> _playerStarList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,11 @@ public class ConstelationGenerator : MonoBehaviour
     /// <param name="newPos">Position</param>
     public void UpdateLastPosition(Vector2 newPos)
     {
-        Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
-        _constelationPositions[_constelationPositions.Count - 1] = posFormat;
+        if(_constelationPositions.Count > 1)
+        {
+            Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
+            _constelationPositions[_constelationPositions.Count - 1] = posFormat;
+        }
     }
     /// <summary>
     /// Add new position to the list
@@ -35,7 +39,6 @@ public class ConstelationGenerator : MonoBehaviour
     public void AddNewPosition(Vector2 newPos)
     {
         Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
-        //if(_constelationPositions.Count > )
         _constelationPositions.Add(posFormat);
         _constelationPositions.Add(posFormat);
     }
@@ -54,13 +57,51 @@ public class ConstelationGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clean the constelation arry and redraw
+    /// </summary>
     public void ClearConstelation()
     {
         _constelationPositions.Clear();
+        _playerStarList.Clear();
         GameObject[] starsInScene = GameObject.FindGameObjectsWithTag("Star");
         for (int i = 0; i < starsInScene.Length; i++)
         {
             starsInScene[i].GetComponent<Star>().SetIsConnected(false);
+        }
+    }
+
+    public void CheckIfIsCorrect(GameObject star)
+    {
+        _playerStarList.Add(star);
+        AddNewPosition(star.transform.position);
+        List<GameObject> gameStarList = new List<GameObject>(GetComponent<GenerateStarsTelescopeSeries>()._starList);
+
+        if(_playerStarList.Count == gameStarList.Count)
+        {
+            bool isCorrect = true;
+            for (int i = 0; i < _playerStarList.Count; i++)
+            {
+                if(_playerStarList[i] != gameStarList[i])
+                {
+                    isCorrect = false;
+                }
+            }
+
+            if (isCorrect)
+            {
+                foreach (GameObject currentStart in _playerStarList)
+                {
+                    ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(currentStart.transform.position);
+                }
+                ClearConstelation();
+                GetComponent<GenerateStarsTelescopeSeries>().GenerateNewOrde();
+            }
+            else
+            {
+                ServiceLocator.Instance.GetService<IError>().GenerateError();
+                ClearConstelation();
+            }
         }
     }
 }
