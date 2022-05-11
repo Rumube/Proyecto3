@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class AlienGenerator : MonoBehaviour
 {
-    #region Configuration
+    #region Variables
     [Header("ForTextComprobation")]
     public GameObject _eyeText;
     public GameObject _armText;
     public GameObject _legText;
     public GameObject _mouthText;
+
+    public GameObject _hand;
 
     [Header("Configuration")]
     public GameObject _alienBase;
@@ -102,7 +104,7 @@ public class AlienGenerator : MonoBehaviour
         _alienLeg = _LegList[_alienLegSelect];
 
         int _alienMouthSelect = Random.Range(0, _mouthList.Count);
-        _alienMouth = _mouthList[_alienArmSelect];
+        _alienMouth = _mouthList[_alienMouthSelect];
     }
 
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
@@ -127,7 +129,7 @@ public class AlienGenerator : MonoBehaviour
             int index= Random.Range(0, armPositions.Count);
             Vector2 newPosition = armPositions[index].transform.position;
             armPositions.RemoveAt(index);
-            //newArm.transform.parent = armPositions[index].transform;
+            
             newArm.GetComponent<RectTransform>().position = newPosition;
 
             if (newArm.GetComponent<RectTransform>().position.x > _alienBase.GetComponent<RectTransform>().position.x)
@@ -193,8 +195,7 @@ public class AlienGenerator : MonoBehaviour
         if (numEye == _eyeInstructions && numArm == _armInstructions && numLeg == _legInstructions && numMouth == _mouthInstructions)
         {
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
-            cleanAlien();
-            Restart();
+            StartCoroutine(cleanAlien());
         }else
         {
             ServiceLocator.Instance.GetService<IError>().GenerateError();
@@ -204,7 +205,7 @@ public class AlienGenerator : MonoBehaviour
     /// <summary>
     /// Delete alien parts for restart.
     /// </summary>
-    private void cleanAlien()
+    private IEnumerator cleanAlien()
     {
         RectTransform[] allChildren = _alienBase.GetComponentsInChildren<RectTransform>();
         List<RectTransform> allChindrenCopy = new List<RectTransform>(allChildren);
@@ -215,6 +216,8 @@ public class AlienGenerator : MonoBehaviour
                 Destroy(allChildren[i].gameObject);
             }
         }
+        yield return new WaitForSeconds(1.5f);
+        Restart();
     }
 
 }
