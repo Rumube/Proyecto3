@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     [HideInInspector]
     public int _timeSessionMinutes;
     [HideInInspector]
-    public int _timeSessionSeconds;
+    public int _timeSessionSeconds = 59;
     [HideInInspector]
     public int _timeMinigamesMinutes;
     [HideInInspector]
@@ -56,10 +56,9 @@ public class UIManager : MonoBehaviour
     /// <summary>Set the time for the whole session</summary>
     /// <param name="minutes">The session's minutes</param>
     /// <param name="seconds">The session's seconds</param>
-    public void SetTimeSession(string minutes, string seconds)
+    public void SetTimeSession(string minutes)
     {
         _timeSessionMinutes = int.Parse(minutes);
-        _timeSessionSeconds = int.Parse(seconds);
     }
 
     /// <summary>Set the time for all minigames</summary>

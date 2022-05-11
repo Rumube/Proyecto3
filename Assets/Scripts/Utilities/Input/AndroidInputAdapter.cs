@@ -29,6 +29,10 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
             {
                 newDatos.result = true;
                 newDatos.pos = touch.position;
+            }else if(touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                newDatos.result = true;
+                newDatos.pos = touch.position;
             }
             else
             {
