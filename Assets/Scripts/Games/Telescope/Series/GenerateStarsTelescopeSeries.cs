@@ -47,10 +47,12 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     /// </summary>
     public void GenerateNewOrde()
     {
+        
         //TODO: DESTROY STARS
         DestroyStars();
 
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
+        print("Tipo: " + _serieType);
         switch (_serieType)
         {
             case SERIES_TYPE.highToLow:
@@ -166,7 +168,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
             foreach (Collider2D currentCollider in colliders)
             {
-                if (currentCollider.gameObject.name == "Star(Clone)" && !currentCollider.GetComponent<Star>().GetIsConnected())
+                if (currentCollider.gameObject.tag == "Star" && !currentCollider.GetComponent<Star>().GetIsConnected())
                 {
                     currentCollider.gameObject.GetComponent<Star>().CollisionDetected();
                 }

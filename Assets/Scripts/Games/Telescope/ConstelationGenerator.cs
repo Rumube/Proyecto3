@@ -90,10 +90,8 @@ public class ConstelationGenerator : MonoBehaviour
 
             if (isCorrect)
             {
-                foreach (GameObject currentStart in _playerStarList)
-                {
-                    ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(currentStart.transform.position);
-                }
+                ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
+
                 ClearConstelation();
                 GetComponent<GenerateStarsTelescopeSeries>().GenerateNewOrde();
             }
