@@ -14,7 +14,7 @@ public class Cover_Panel_Series_Difficulty : MonoBehaviour
         [Tooltip("Possible geometry that can be target at this level")]
         public int seriesLenght;
         [Tooltip("Possible geometry that can be target at this level")]
-        public List<GameObject> targetGeometry;
+        public List<GameObject> possibleGeometry;
         [Tooltip("Total number of targets at this level")]
         public int numTargets;
         [Tooltip("Total number of different geometry targets at this level")]
