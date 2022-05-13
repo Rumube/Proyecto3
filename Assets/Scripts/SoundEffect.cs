@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundEffect : MonoBehaviour
 {
-    public AudioClip shootSound; //add sound to be played
+    public AudioClip ClickSound; //add sound to be played
 
     AudioSource sound;
 
@@ -19,7 +19,7 @@ public class SoundEffect : MonoBehaviour
     {
         if (Input.GetMouseButton(0)) 
         {
-            sound.clip = shootSound;
+            sound.clip = ClickSound;
             sound.Play();
         }
     }
