@@ -7,15 +7,27 @@ using TMPro;
 public class CreditsButtons : MonoBehaviour
 {
     public GameObject _creditPanel;
-    public string _eachText;
-    public TMP_Text _panelText;
     int _showingValue;
+
+    public GameObject ClickSound;
+
+    public TMP_Text _panelText;
+    public string _eachText;
+
 
     void Start()
     {
         _creditPanel.SetActive(false);
         _showingValue = 0;
        _panelText.text = _eachText;
+    }
+
+    void Update()
+    {
+      if (Input.GetMouseButton(0))
+      {
+            Instantiate(ClickSound);
+      }
     }
 
     public void ShowMessage()
