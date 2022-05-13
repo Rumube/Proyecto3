@@ -36,14 +36,11 @@ public class CreditsButtons : MonoBehaviour
         {
             _creditPanel.SetActive(true);
             _showingValue = 1;
-     
         }
         else 
         {
             _creditPanel.SetActive(false);
             _showingValue = 0;
-           
         }
     }
-
 }
