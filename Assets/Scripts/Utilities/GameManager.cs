@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour,IGameManager
     public bool _pause = false;
     public bool _returnToCommonScene = false;
     public bool _endSessionTablet = false;
+
+
+    public Dictionary<int, int> _teamPoints = new Dictionary<int, int>();
     public enum GAME_STATE_SERVER
     {
         init = 0,
@@ -61,6 +64,9 @@ public class GameManager : MonoBehaviour,IGameManager
     void Start()
     {
         _gameStateServer = GAME_STATE_SERVER.init;
+        _teamPoints.Add(0,34);
+        _teamPoints.Add(1,70);
+        _teamPoints.Add(2,130);
     }
 
     public void PreviousConfigurationState()
