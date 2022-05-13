@@ -48,10 +48,10 @@ public class AlienGenerator : MonoBehaviour
 
 
     [Header("Instructions")]
-    public int _legInstructions;
-    public int _armInstructions;
-    public int _eyeInstructions;
-    public int _mouthInstructions;
+    private int _legInstructions;
+    private int _armInstructions;
+    private int _eyeInstructions;
+    private int _mouthInstructions;
 
     [Header("Boxes")]
     public GameObject _eyeBox;
@@ -60,10 +60,10 @@ public class AlienGenerator : MonoBehaviour
     public GameObject _mouthBox;
     #endregion
 
-    private int _correctLegs = 0;
-    private int _correctArms = 0;
-    private int _correctEyes = 0;
-    private int _correctMouth = 0;
+    public int _correctLegs = 0;
+    public int _correctArms = 0;
+    public int _correctEyes = 0;
+    public int _correctMouth = 0;
 
     private AlienDifficulty.dataDiffilcuty _dataDifficulty;
     private int _level;
@@ -75,6 +75,7 @@ public class AlienGenerator : MonoBehaviour
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<AlienDifficulty>().GenerateDataDifficulty(_level);
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         Restart();
     }
 
@@ -136,15 +137,15 @@ public class AlienGenerator : MonoBehaviour
                     break;
                 case "arm":
                     _correctArms = _armInstructions;
-                    _armBox.SetActive(false);
+                    _armBox.SetActive(true);
                     break;
                 case "leg":
                     _correctLegs = _legInstructions;
-                    _legBox.SetActive(false);
+                    _legBox.SetActive(true);
                     break;
                 case "mouth":
                     _correctMouth = _mouthInstructions;
-                    _mouthBox.SetActive(false);
+                    _mouthBox.SetActive(true);
                     break;
             }
             partsStringAux.RemoveAt(randomPart);
@@ -280,7 +281,7 @@ public class AlienGenerator : MonoBehaviour
             }
 
 
-            if (numEye == _eyeInstructions && numArm == _armInstructions && numLeg == _legInstructions && numMouth == _mouthInstructions)
+            if (numEye == _correctEyes && numArm == _correctArms && numLeg == _correctLegs && numMouth == _correctMouth)
             {
                 _isCheking = true;
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
@@ -288,7 +289,6 @@ public class AlienGenerator : MonoBehaviour
             }
             else
             {
-
                 ServiceLocator.Instance.GetService<IError>().GenerateError();
             }
         }
