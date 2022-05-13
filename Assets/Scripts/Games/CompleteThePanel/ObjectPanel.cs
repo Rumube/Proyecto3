@@ -6,6 +6,8 @@ public class ObjectPanel : MonoBehaviour
 {
     public bool _placed=true;
     public bool _pressed = false;
+    public Sprite _pressedSprite;
+    public Sprite _restSprite;
     public ButtonCounter buttonCounter;
     void Start()
     {   
