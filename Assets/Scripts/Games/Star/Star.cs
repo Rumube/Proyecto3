@@ -28,12 +28,16 @@ public class Star : Geometry
     // Update is called once per frame
     void Update()
     {
+        _needsHold = false;
+        if (_gm.GetComponent<ConstelationGenerator>().GetStarsSelecteds() > 0)
+            _needsHold = true;
+
         if (_needsHold)
         {
             if (_touched)
             {
                 _timePressed += Time.deltaTime;
-                if(_timePressed >= _timeToBePressed && !_isConnected)
+                if (_timePressed >= _timeToBePressed && !_isConnected)
                 {
                     _light.SetActive(true);
                     _isConnected = true;
@@ -52,6 +56,21 @@ public class Star : Geometry
         else
         {
             //TODO: NO NEED HOLD
+            if (_touched)
+            {
+
+                _light.SetActive(true);
+                _isConnected = true;
+                _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
+                _audio.clip = _clipStarSelected;
+                _audio.Play();
+                _anim.gameObject.SetActive(true);
+                _anim.Play("Star_Slected_Rotation");
+            }
+            else
+            {
+                _timePressed = 0;
+            }
         }
         _touched = false;
     }
