@@ -71,6 +71,10 @@ public class ConstelationGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check's if the player list of stars is correct, and add the last star pressed
+    /// </summary>
+    /// <param name="star">The star pressed</param>
     public void CheckIfIsCorrect(GameObject star)
     {
         _playerStarList.Add(star);
@@ -100,5 +104,14 @@ public class ConstelationGenerator : MonoBehaviour
                 ClearConstelation();
             }
         }
+    }
+
+    /// <summary>
+    /// Returns the number of star selecteds for the player
+    /// </summary>
+    /// <returns></returns>
+    public int GetStarsSelecteds()
+    {
+        return _playerStarList.Count;
     }
 }
