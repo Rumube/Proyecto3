@@ -16,11 +16,13 @@ public class Star : Geometry
     private AudioSource _audio;
     public AudioClip _clipStarSelected;
     public GameObject _light;
+    public Animator _anim;
 
     // Start is called before the first frame update
     void Start()
     {
         _audio = GetComponent<AudioSource>();
+        _anim.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,6 +40,8 @@ public class Star : Geometry
                     _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();
+                    _anim.gameObject.SetActive(true);
+                    _anim.Play("Star_Slected_Rotation");
                 }
             }
             else
@@ -68,6 +72,8 @@ public class Star : Geometry
     {
         _isConnected = value;
         _light.SetActive(value);
+        _anim.Play("Static");
+        _anim.gameObject.SetActive(value);
     }
 
     public bool GetIsConnected()
