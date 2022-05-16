@@ -7,8 +7,15 @@ public class RankingServer : MonoBehaviour
 {
     public TextMeshProUGUI _minPoints;
     public TextMeshProUGUI _maxPoints;
-    float maxPoints = 0;
-    float minPoints = 99999;
+
+    public float maxPoints = 0;
+    public float minPoints = 99999;
+
+    public float _currentMaxPoints = 0;
+    public float _currentMinPoints = 0;
+
+    public float _lastMaxPoints = 0;
+    public float _lastMinPoints = 0;
 
     [Header("Test")]
     public bool _newDataFromClient;
@@ -31,6 +38,8 @@ public class RankingServer : MonoBehaviour
 
     public GameObject[,] _gridPositions;
     private int _numTotalTeams;
+
+    private bool _rankingStarted = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +62,26 @@ public class RankingServer : MonoBehaviour
             _generateGrid = false;
             CreateGrid();
         }
+
+        if (_currentMaxPoints < maxPoints && _rankingStarted)
+        {
+            _currentMaxPoints++;
+            _maxPoints.text = _currentMaxPoints.ToString();
+        }
+        else
+        {
+            _lastMaxPoints = maxPoints;
+        }
+        if (_currentMinPoints < minPoints && _rankingStarted)
+        {
+            _currentMinPoints++;
+            _minPoints.text = _currentMinPoints.ToString();
+        }
+        else
+        {
+            _lastMinPoints = minPoints;
+        }
+
     }
 
     public void CreateGrid()
@@ -95,11 +124,6 @@ public class RankingServer : MonoBehaviour
             }
         }
         int currentTeam = 0;
-        //foreach (GameObject currentTeamParent in teamParentList)
-        //{
-        //    currentTeamParent.transform.position = _gridPositions[currentTeam, 0].transform.position;
-        //    currentTeam++;
-        //}
 
         foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
         {
@@ -112,6 +136,9 @@ public class RankingServer : MonoBehaviour
 
     void UpdateRankingPoints()
     {
+
+        if (!_rankingStarted)
+            _rankingStarted = true;
 
         if (float.TryParse(_maxPoints.text,out maxPoints))
         {
@@ -143,6 +170,7 @@ public class RankingServer : MonoBehaviour
 
     void CalculateRocketsPosition()
     {
+        int teamNumbers = 0;
         foreach(KeyValuePair<int, float> team in _testingRankings._teamPoints)
         {
             float positionYRelative = (team.Value - minPoints) / (maxPoints - minPoints);
@@ -152,11 +180,9 @@ public class RankingServer : MonoBehaviour
             int positionY = (int)positionYRelative;
             print("Pos: " + positionY);
 
-            _rocketsTransforms[team.Key].transform.position = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[positionY].position.y);
-
-            //float positionY = ((_lowerLevel.position.y + positionYRelative) - _lowerLevel.position.y) / (_upperLevel.position.y - _lowerLevel.position.y);
-
-            //_rocketsTransforms[team.Key].transform.position = new Vector3(_rocketsTransforms[team.Key].transform.position.x, _rocketsTransforms[team.Key].transform.position.y + positionY, _rocketsTransforms[team.Key].transform.position.z);
+            Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _gridPositions[teamNumbers, positionY].transform.position.y);
+            _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
+            teamNumbers++;
         }
         
     }
