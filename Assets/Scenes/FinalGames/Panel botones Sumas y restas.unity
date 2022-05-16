@@ -769,9 +769,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 677568442}
     m_Modifications:
     - target: {fileID: 2358988455651259123, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: _restSprite
+      value: 
+      objectReference: {fileID: -5553790553327872427, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
+    - target: {fileID: 2358988455651259123, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: buttonCounter
       value: 
       objectReference: {fileID: 279974412}
+    - target: {fileID: 2358988455651259123, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: _pressedSprite
+      value: 
+      objectReference: {fileID: 1514931929053953958, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
     - target: {fileID: 2358988455651259124, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -866,8 +874,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2358988455651259125, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: m_Name
-      value: Circulo
+      value: Cuadrado_
       objectReference: {fileID: 0}
+    - target: {fileID: 2358988455651259126, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5553790553327872427, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
+    - target: {fileID: 2358988455651259127, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 1514931929053953958, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
+    - target: {fileID: 2358988455651259127, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 4119246855930237807, guid: 405509bb91967db40a8d56ab97780f43, type: 3}
     - target: {fileID: 2358988455651259127, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -927,6 +947,18 @@ PrefabInstance:
     - target: {fileID: 7099718177122498437, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995969326993208913, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995969326993208913, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5984247
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995969326993208913, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
+      propertyPath: m_Color.r
+      value: 0.172549
       objectReference: {fileID: 0}
     - target: {fileID: 7995969326993208913, guid: 19bd295641de0b8418fd9b8bca572e24, type: 3}
       propertyPath: m_Intensity
@@ -2458,6 +2490,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
+  - possibleGeometry:
+    - {fileID: 0}
+    targetGeometry:
+    - {fileID: 0}
+    elementToAddSubs: 3
+    pressedButtons: 4
+  - possibleGeometry:
+    - {fileID: 0}
+    targetGeometry:
+    - {fileID: 0}
+    elementToAddSubs: 3
+    pressedButtons: 4
   - possibleGeometry:
     - {fileID: 0}
     targetGeometry:
