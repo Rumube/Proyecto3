@@ -6,10 +6,11 @@ public class Generate_CoverPanel : MonoBehaviour
 {
     [Header("Table Configuration")]
     public int _column;
-   
+
     public int _gapX;
-  
+
     public int _offsetX;
+    public float scale;
 
     public List<GameObject> _referentList;
 
@@ -29,29 +30,44 @@ public class Generate_CoverPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     void GenerateGears()
     {
-        
-        int random = Random.Range(0,2);
+
+        int random = Random.Range(0, 2);
         int decrease = _column;
         for (int i = 0; i < _column; i++)
         {
             GameObject newGear;
-           newGear= Instantiate(_currentDataDifficulty.possibleGeometry[1], new Vector3((i + _offsetX) * _gapX * 0.25f, 0, 0), Quaternion.identity);
+            newGear = Instantiate(_currentDataDifficulty.possibleGeometry[1], new Vector3((i + _offsetX) * _gapX, 0, 0), Quaternion.identity);
             float scale = i * 0.25f;
-            if (random==1)//increase
+            newGear.transform.localScale = new Vector3(newGear.transform.localScale.x * scale, newGear.transform.localScale.y * scale, newGear.transform.localScale.y * scale);
+            if (random == 1)//increase
             {
-                newGear.transform.localScale = new Vector3(newGear.transform.localScale.x * scale, newGear.transform.localScale.y * scale, newGear.transform.localScale.y * scale);
+
             }
             else//decrease
             {
                 //float scale = decrease * 0.25f;
             }
-           
+
             _referentList.Add(newGear);
 
         }
-}}
+        if (random == 1)//increase
+        {
+            for (int i = _column; i == 0; i--)
+            {
+                _referentList[i].transform.position = new Vector3((i + _offsetX) * _gapX, 0, 0);
+
+            }
+            Debug.Log("decrease");
+        }
+       
+    }
+}
+
+    
+
 
