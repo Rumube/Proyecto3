@@ -28,6 +28,10 @@ public class ButtonCounter : MonoBehaviour
     int _badGeometry;
     public CreatePanel _createPanel;
 
+    [Header("Animations")]
+    public GameObject _bar;
+    public GameObject _radar;
+
     // Update is called once per frame
     void Update()
     {
@@ -68,7 +72,7 @@ public class ButtonCounter : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        if (_squareCounter+_triangleCounter+_circleCounter+_diamondCounter+_rectangleCounter+_nHexagon+_nPentagon>0)
+        if (_squareCounter+_triangleCounter+_circleCounter+_diamondCounter+_rectangleCounter+_hexagonCounter+_pentagonCounter>0)
         {
             List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
 
@@ -129,6 +133,9 @@ public class ButtonCounter : MonoBehaviour
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
 
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
+
+            _bar.GetComponent<Animator>().Play("Bar_Animation");
+            _radar.GetComponent<Animator>().Play("Radar_Animation");
 
             _goodGeometry = 0;
             _badGeometry = 0;

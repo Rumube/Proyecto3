@@ -29,6 +29,11 @@ public class ButtonManager : MonoBehaviour
 
     GameObject checkButton;
 
+    [Header("Animations")]
+    public GameObject _spedometer;
+    public GameObject _spedometer2;
+    public GameObject _bar;
+
     void Start()
     {
         //_completeThePanel = GetComponent<AddPanelDifficulty>();
@@ -89,6 +94,9 @@ public class ButtonManager : MonoBehaviour
 
         ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
 
+        _bar.GetComponent<Animator>().Play("Bar_Animation");
+        _spedometer.GetComponent<Animator>().Play("Speedometer_01_Animation");
+        _spedometer2.GetComponent<Animator>().Play("Speedometer_02_Animation");
 
         _calculatePuntuation.Puntuation(_goodGeometry, _badGeometry);
 
