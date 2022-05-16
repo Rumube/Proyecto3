@@ -12,6 +12,8 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     public float _finishTime;
     private float _startTime;
     private bool _canStartTime = false;
+    private bool _lastSeconds = false;
+    private Animator _anim;
 
     private void Update()
     {
@@ -28,10 +30,12 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         _canStartTime = true;
         _timeImage = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Image>();
+        _anim = GameObject.FindGameObjectWithTag("Timer").GetComponent<Animator>();
         _maxTime = (ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameMinutes() * 60) + ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameSeconds();
         _finishTime = Time.realtimeSinceStartup + _maxTime;
         _currentTime = Time.realtimeSinceStartup;
         _startTime = Time.realtimeSinceStartup;
+        _lastSeconds = false;
     }
 
     /// <summary>
@@ -41,6 +45,26 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         _currentTime += Time.deltaTime;
         _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
+
+        _anim.Play("Timer");
+        //_startTime = 10;
+        //_finishTime = 30;
+
+        if (_currentTime >= _startTime + _finishTime / 2)
+        {
+            _anim.Play("Temporizador_Poco_Tiempo");
+            //_anim.Play("Temporizador_Mitad");
+            
+        }
+
+        if (_currentTime >= _finishTime - 3 && !_lastSeconds)
+        {
+            //Activamos anim;
+            _lastSeconds = true;
+            _anim.Play("Temporizador_Poco_Tiempo");
+
+        }
+
         if (_currentTime >= _finishTime)
         {
             ServiceLocator.Instance.GetService<IFrogMessage>().StopFrogSpeaker();
