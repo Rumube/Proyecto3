@@ -68,11 +68,11 @@ public class ButtonManager : MonoBehaviour
         }
         else if (nGeometry > 1)
         {
-            return "Manten pulsados "+nGeometry + " botones";
+            return "Manten encendidos "+nGeometry + " botones";
         }
         else
         {
-            return "Manten pulsado " + nGeometry + " botón";
+            return "Manten encendido " + nGeometry + " botón";
         }
     }
 
