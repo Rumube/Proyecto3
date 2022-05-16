@@ -6,14 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class MinigamesUI : MonoBehaviour
 {
+    [Header("Configuration")]
     [Tooltip("Is this minigame needed a check?")]
     public bool _needsCheck;
+
+    [Header("References")]
     public Button _checkButton;
     public GameObject _rankingMinigame;
+    public Animator _panelScoreAnim;
+    public Button _Min;
     // Start is called before the first frame update
     void Start()
     {
-        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
+        ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
         _rankingMinigame.SetActive(false);
         if (_needsCheck)
         {
@@ -28,9 +33,21 @@ public class MinigamesUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.ranking && !_rankingMinigame.activeInHierarchy)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
+        {
+            _Min.interactable = false;
+            _checkButton.interactable = false;
+        }
+        else
+        {
+            _Min.interactable = true;
+            _checkButton.interactable = true;
+        }
+
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.ranking && !_rankingMinigame.activeInHierarchy)
         {
             _rankingMinigame.SetActive(true);
+            _panelScoreAnim.Play("ScorePanel");
         }
     }
 
@@ -40,7 +57,7 @@ public class MinigamesUI : MonoBehaviour
     /// </summary>
     public void ContinueButtonMinigamesRanking()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = true;
+        ServiceLocator.Instance.GetService<IGameManager>().SetReturnToCommonScene(true);
         SceneManager.LoadScene("CristinaTest");
     }
     /// <summary>

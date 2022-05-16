@@ -11,6 +11,7 @@ public class AsteroidBlaster : MonoBehaviour
     public GameObject[] _geometryForms;
 
     //Game Configuration
+    private bool _newGame = true;
     [SerializeField]
     private int _level;
     [SerializeField]
@@ -31,11 +32,12 @@ public class AsteroidBlaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         restartGame();
     }
     private void Update()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.ranking && !_pointsCalculated)
         {
             _pointsCalculated = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
@@ -154,7 +156,16 @@ public class AsteroidBlaster : MonoBehaviour
     /// <returns>The message</returns>
     private string GenerateTextMessage()
     {
-        string msg = "Destruye los asteroides con forma de ";
+        string msg = "";
+        if (_newGame)
+        {
+            _newGame = false;
+            msg = "Destruye los asteroides con forma de ";
+        }
+        else
+        {
+            msg = "Ahora de ";
+        }
         Geometry newGeometry = GetComponent<Geometry>();
         for (int i = 0; i < _targetList.Count; i++)
         {
@@ -199,8 +210,6 @@ public class AsteroidBlaster : MonoBehaviour
         _asteroids.Remove(asteroid);
         if (_targetList.Contains(asteroid.GetComponent<Geometry>()._geometryType))
         {
-            //"es-es-x-eea-local"
-            ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("¡Correcto!");
             _successes++;
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(asteroid.transform.position);
         }
@@ -211,7 +220,6 @@ public class AsteroidBlaster : MonoBehaviour
         }
         if (CheckIfIsFinish())
         {
-            ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
             _gameFinished = true;
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes,_errors);
             StopAllCoroutines();

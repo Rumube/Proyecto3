@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GMSinBucle : MonoBehaviour
+public class GMSinBucle : MonoBehaviour,IGameManager
 {
     [Header("Minigame student client")]
     public string _currentstudentName;
     public bool _pause = false;
- 
+    public bool _returnToCommonScene = false;
+
     public enum GAME_STATE_SERVER
     {
         init = 0,
@@ -22,19 +23,19 @@ public class GMSinBucle : MonoBehaviour
     }
     public GAME_STATE_SERVER _gameStateServer;
 
-    public enum GAME_STATE_CLIENT
-    {
-        init = 0,
-        searching = 1,
-        selectStudent = 2,
-        playing = 3,
-        pause = 4,
-        gameOver = 5,
-        ranking = 6,
-        globalRanking = 7,
+    //public enum GAME_STATE_CLIENT
+    //{
+    //    init = 0,
+    //    searching = 1,
+    //    selectStudent = 2,
+    //    playing = 3,
+    //    pause = 4,
+    //    gameOver = 5,
+    //    ranking = 6,
+    //    globalRanking = 7,
 
-    }
-    public GAME_STATE_CLIENT _gameStateClient;
+    //}
+    public IGameManager.GAME_STATE_CLIENT _gameStateClient;
 
     void Start()
     {
@@ -67,5 +68,23 @@ public class GMSinBucle : MonoBehaviour
             list[k] = list[n];
             list[n] = value;
         }
+    }
+
+    public void SelectStudentAndGame()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public IGameManager.GAME_STATE_CLIENT GetClientState()
+    {
+        return _gameStateClient;
+    }
+    public void SetClientState(IGameManager.GAME_STATE_CLIENT gameStateClient)
+    {
+        _gameStateClient = gameStateClient;
+    }
+    public void SetReturnToCommonScene(bool value)
+    {
+        _returnToCommonScene = value;
     }
 }

@@ -162,7 +162,7 @@ public class CreatePanelGeometry : MonoBehaviour
     {
         if (_allList.Count == _row * _column)
         {
-            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i < _allList.Count; i++)
                 {

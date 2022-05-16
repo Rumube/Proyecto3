@@ -36,7 +36,7 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
     public void Puntuation(int success, int fails)
     {
 
-        //ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.ranking;
+        //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         float finishTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetFinishTime();
         float currentTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetCurrentTime();
         if (_attempt>0)
@@ -67,9 +67,7 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
 
         CalculateAverage();
         //EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / finishTime))));
-        EDebug.Log("Intento "+_attempt+"puntos "+_points);
-        ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient = GMSinBucle.GAME_STATE_CLIENT.playing;
-        
+        EDebug.Log("Intento "+_attempt+"puntos "+_points);        
     }
     /// <summary>Calculates the average of the points , time, success fails</summary>
     public void CalculateAverage()

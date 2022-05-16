@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class InstallerGames : MonoBehaviour
 {
+    [Tooltip("Tick if you are testing your games in your scene")]
+    public bool _notGameLoop;
+    public NetMSinBucle _netManagerWithOutLoop;
+    public GMSinBucle _gameManagerWithOutLoop;
+
     [Header("UI")]
     public Canvas _canvasGUI;
 
@@ -55,5 +60,11 @@ public class InstallerGames : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
         ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePuntiation);
+
+        if (_notGameLoop)
+        {
+            ServiceLocator.Instance.RegisterService<IGameManager>(_gameManagerWithOutLoop);
+            ServiceLocator.Instance.RegisterService<INetworkManager>(_netManagerWithOutLoop);
+        }
     }
 }

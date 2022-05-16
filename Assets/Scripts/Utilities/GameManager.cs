@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour,IGameManager
 {
     [Header("Minigames scene names")]
     public List<string> _minigamesNames = new List<string>();
@@ -29,19 +29,19 @@ public class GameManager : MonoBehaviour
     }
     public GAME_STATE_SERVER _gameStateServer;
 
-    public enum GAME_STATE_CLIENT
-    {
-        init = 0,
-        searching = 1,
-        selectStudent = 2,
-        playing = 3,
-        pause = 4,
-        gameOver = 5,
-        ranking = 6,
-        globalRanking = 7,
+    //public enum GAME_STATE_CLIENT
+    //{
+    //    init = 0,
+    //    searching = 1,
+    //    selectStudent = 2,
+    //    playing = 3,
+    //    pause = 4,
+    //    gameOver = 5,
+    //    ranking = 6,
+    //    globalRanking = 7,
 
-    }
-    public GAME_STATE_CLIENT _gameStateClient;
+    //}
+    public IGameManager.GAME_STATE_CLIENT _gameStateClient;
 
     public static GameManager Instance;
 
@@ -99,5 +99,18 @@ public class GameManager : MonoBehaviour
         _currentstudentName = Client._tablet._students[_studentCounter]._name;
         _currentgameName = _minigamesNames[Random.Range(0, _minigamesNames.Count)];
         _studentCounter++;
+    }
+
+    public IGameManager.GAME_STATE_CLIENT GetClientState()
+    {
+        return _gameStateClient;
+    }
+    public void SetClientState(IGameManager.GAME_STATE_CLIENT gameStateClient)
+    {
+        _gameStateClient = gameStateClient;
+    }
+    public void SetReturnToCommonScene(bool value)
+    {
+        _returnToCommonScene = value;
     }
 }

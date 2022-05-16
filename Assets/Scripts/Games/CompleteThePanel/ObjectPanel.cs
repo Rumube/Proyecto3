@@ -6,6 +6,8 @@ public class ObjectPanel : MonoBehaviour
 {
     public bool _placed=true;
     public bool _pressed = false;
+    public Sprite _pressedSprite;
+    public Sprite _restSprite;
     public ButtonCounter buttonCounter;
     void Start()
     {   
@@ -41,6 +43,14 @@ public class ObjectPanel : MonoBehaviour
             }
 
         }
+        //if (_pressed==true)
+        //{
+        //    GetComponent<GeometryButton>()._light.SetActive(false);
+        //}
+        //else
+        //{
+        //    GetComponent<GeometryButton>()._light.SetActive(true);
+        //}
     }
 
     // Update is called once per frame

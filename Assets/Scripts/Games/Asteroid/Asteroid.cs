@@ -35,7 +35,7 @@ public class Asteroid : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient == GMSinBucle.GAME_STATE_CLIENT.playing)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             _collider.enabled = true;
             MoveAsteroid();

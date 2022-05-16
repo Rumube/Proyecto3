@@ -37,6 +37,7 @@ public class CreatePanel : MonoBehaviour
         _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         _buttomCounter = GetComponent<ButtonCounter>();
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         GeneratePanel();
     }
 
@@ -57,11 +58,11 @@ public class CreatePanel : MonoBehaviour
         {
             for (int y = 0; y < _row; y++)
             {
-                 _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-                 _count++;
+                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
+                _allList[_count].transform.SetParent(_canvas.transform, false);
+                _count++;
             }
         }
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)
@@ -109,7 +110,7 @@ public class CreatePanel : MonoBehaviour
 
             GameObject newGeometry;
             newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
-            newGeometry.transform.SetParent(_canvas.transform, false);
+            //newGeometry.transform.SetParent(_canvas.transform, false);
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -152,7 +153,7 @@ public class CreatePanel : MonoBehaviour
                         newGeometry.GetComponent<ObjectPanel>()._placed = false;
                         _targetList.Add(newGeometry);
                         _allList.Add(newGeometry);
-                        newGeometry.transform.SetParent(_canvas.transform, false);
+                        //newGeometry.transform.SetParent(_canvas.transform, false);
                         isCorrect = true;
                     }
                 } while (!isCorrect);
@@ -215,7 +216,7 @@ public class CreatePanel : MonoBehaviour
     {
         if (_allList.Count==_row*_column)
         {
-            if (ServiceLocator.Instance.GetService<GMSinBucle>()._gameStateClient != GMSinBucle.GAME_STATE_CLIENT.playing)
+            if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
             {
                 for (int i = 0; i <_allList.Count; i++)
                 {

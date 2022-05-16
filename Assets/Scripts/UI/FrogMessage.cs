@@ -13,7 +13,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     private TextMeshProUGUI _textMessage;
     private Image _imageMassage;
     private Animator _minAnim;
-    
+
     [Header("Min Configuration")]
     [SerializeField]
     public List<string> _messagePile = new List<string>();
@@ -66,7 +66,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             //    }
             //    _messagePile = new List<string>(deleteList);
             //}
- 
+
             _messageAtive = true;
             SendMessage(_messagePile[0]);
             _messagePile.Remove(_messagePile[0]);
@@ -79,13 +79,23 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<TextMeshProUGUI>();
         _imageMassage = GameObject.FindGameObjectWithTag("OrderImage").GetComponent<Image>();
         _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
-
         StartCoroutine(FrogCoroutine(message));
     }
     private void MessageComplete(Wrapper wrapper)
     {
-        _minAnim.Play("MinIdle");
-        StartCoroutine(CloseMessage());
+        if (_minAnim != null)
+        {
+            _minAnim.Play("MinIdle");
+            StartCoroutine(CloseMessage());
+        }
+    }
+    private void MessageComplete()
+    {
+        if (_minAnim != null)
+        {
+            _minAnim.Play("MinIdle");
+            StartCoroutine(CloseMessage());
+        }
     }
     /// <summary>
     /// Start the messages process
@@ -130,10 +140,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
                 break;
         }
         _minAnim.Play(animName);
-
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
-        _imageMassage.color = new Color(0, 0, 0, 1);
+        _imageMassage.GetComponent<Animator>().Play("Appear");
 
         string currentMessage = "";
         char[] textSplit = message.ToCharArray();
@@ -143,9 +152,15 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         {
             currentMessage += textSplit[i];
             _textMessage.SetText(currentMessage);
-
             yield return new WaitForSeconds(waitTime);
         }
+        //if (!_isInGame)
+        //{
+        //    yield return new WaitForSeconds(3.0f);
+        //    MessageComplete();
+        //    StopFrogSpeaker();
+        //}
+
     }
     /// <summary>
     /// Repeat the last order gived by Min
@@ -154,7 +169,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if(_lastOrder == "")
         {
-            _lastOrder = "No hay órdenes";
+            _lastOrder = "No hay ï¿½rdenes";
         }
         NewFrogMessage(_lastOrder);
     }
@@ -166,7 +181,17 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         yield return new WaitForSeconds(_messageDuration);
         _textMessage.text = "";
-        _imageMassage.color = new Color(0, 0, 0, 0);
+        _imageMassage.GetComponent<Animator>().Play("Disappear");
         _messageAtive = false;
+    }
+
+    public void StopFrogSpeaker()
+    {
+        Speaker.Instance.Silence();
+    }
+
+    public bool GetMessageAtive()
+    {
+        return _messageAtive;
     }
 }
