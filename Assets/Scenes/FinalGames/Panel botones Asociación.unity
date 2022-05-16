@@ -290,6 +290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!1 &33541297
 GameObject:
@@ -359,6 +361,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!114 &33541301
 MonoBehaviour:
@@ -464,6 +468,78 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2092755307233629488, guid: f3c0236698413144ab459213746d3b06, type: 3}
   m_PrefabInstance: {fileID: 1479734416}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &407563884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 407563886}
+  - component: {fileID: 407563885}
+  m_Layer: 0
+  m_Name: Global Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &407563885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407563884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!4 &407563886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407563884}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.46119773, y: -1.0389547, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &474078398 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5984830479730025954, guid: bb1c66f4bdec20742a75df56bfe951b6, type: 3}
@@ -724,6 +800,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!1 &808244534
 GameObject:
@@ -793,6 +871,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!114 &808244538
 MonoBehaviour:
@@ -1011,6 +1091,7 @@ GameObject:
   - component: {fileID: 826281567}
   - component: {fileID: 826281566}
   - component: {fileID: 826281569}
+  - component: {fileID: 826281570}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1115,6 +1196,102 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!82 &826281570
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826281565}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: eaf4c849488fd35478fe7715063a777d, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!224 &1110142152 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5278733625776300547, guid: f14ac2a0beb219141899be658fa34512, type: 3}
@@ -1862,6 +2039,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!114 &1512212274
 MonoBehaviour:
@@ -2119,6 +2298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!1 &1563419479
 GameObject:
@@ -2223,6 +2404,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 1479734420}
 --- !u!114 &1949194001
 MonoBehaviour:
