@@ -40,7 +40,7 @@ public class Generate_CoverPanel : MonoBehaviour
         for (int i = 0; i < _column; i++)
         {
             GameObject newGear;
-            newGear = Instantiate(_currentDataDifficulty.possibleGeometry[1], new Vector3((i + _offsetX) * _gapX, 0, 0), Quaternion.identity);
+            newGear = Instantiate(_currentDataDifficulty.possibleGeometry[1], new Vector3(((i*0.25f) + _offsetX) * _gapX, 0, 0), Quaternion.identity);
             float scale = i * 0.25f;
             newGear.transform.localScale = new Vector3(newGear.transform.localScale.x * scale, newGear.transform.localScale.y * scale, newGear.transform.localScale.y * scale);
             if (random == 1)//increase
@@ -57,10 +57,12 @@ public class Generate_CoverPanel : MonoBehaviour
         }
         if (random == 1)//increase
         {
-            for (int i = _column; i == 0; i--)
+            int counter = _column - 1;
+            for (int i = 0; i < _column; i++)
             {
-                _referentList[i].transform.position = new Vector3((i + _offsetX) * _gapX, 0, 0);
-
+                _referentList[counter].transform.position = new Vector3((i + _offsetX) *_gapX, 0, 0);
+                counter--;
+                Debug.Log("for");
             }
             Debug.Log("decrease");
         }
