@@ -228,6 +228,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67127984}
   m_CullTransparentMesh: 1
+--- !u!1 &81717039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1465856459312010409, guid: 2069796dcdde46d49b00beb2929da525, type: 3}
+  m_PrefabInstance: {fileID: 848720393}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &130278863
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +550,8 @@ MonoBehaviour:
   _pentagonCounter: 0
   _hexagonCounter: 0
   _createPanel: {fileID: 0}
+  _bar: {fileID: 0}
+  _radar: {fileID: 0}
 --- !u!4 &279974413
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,6 +2114,16 @@ RectTransform:
   m_AnchoredPosition: {x: 1331, y: 0}
   m_SizeDelta: {x: 189, y: 189}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1395387448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3696331566173642887, guid: ad7f101080315d049ad5b73dda42e312, type: 3}
+  m_PrefabInstance: {fileID: 807919009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1404026780 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1359655221380936189, guid: 96824f6e2eced2f4a9050475e934b36a, type: 3}
+  m_PrefabInstance: {fileID: 274209496}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1472775684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,6 +2494,9 @@ MonoBehaviour:
   _calculatePuntuation: {fileID: 1482414466}
   _level: 1
   _completeThePanel: {fileID: 1635273613}
+  _spedometer: {fileID: 1395387448}
+  _spedometer2: {fileID: 1404026780}
+  _bar: {fileID: 81717039}
 --- !u!114 &1635273613
 MonoBehaviour:
   m_ObjectHideFlags: 0
