@@ -23,11 +23,15 @@ public class ButtonCounter_Prueba : MonoBehaviour
     public int _pentagonCounter;
     public int _hexagonCounter;
 
-    int _totalGeometry;
+   
     int _goodGeometry;
     int _badGeometry;
 
     private CreatePanel_Prueba _createPanel;
+
+    [Header("Animations")]
+    public GameObject _leveler;
+    public GameObject _wheel;
 
     // Update is called once per frame
     void Update()
@@ -70,54 +74,100 @@ public class ButtonCounter_Prueba : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        
-        CheckGeometry(_nCircle, _circleCounter);
-        CheckGeometry(_nSquare, _squareCounter);
-        CheckGeometry(_nDiamond, _diamondCounter);
-        CheckGeometry(_nRectangle, _rectangleCounter);
-        CheckGeometry(_nPentagon, _pentagonCounter);
-        CheckGeometry(_nHexagon, _hexagonCounter);
+        if (_squareCounter + _triangleCounter + _circleCounter + _diamondCounter + _rectangleCounter + _hexagonCounter + _pentagonCounter > 0)
+        {
+            List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
 
-        _badGeometry = _totalGeometry - _goodGeometry;
-        if (_badGeometry > 0)
-            ServiceLocator.Instance.GetService<IError>().GenerateError();
-        else
-            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+            foreach (GameObject currentButton in _createPanel._allList)
+            {
+                if (!geometryButtons.Contains(currentButton.GetComponent<Geometry>()._geometryType))
+                {
+                    geometryButtons.Add(currentButton.GetComponent<Geometry>()._geometryType);
+                }
+            }
+
+            foreach (Geometry.Geometry_Type currentGeometry in geometryButtons)
+            {
+                switch (currentGeometry)
+                {
+                    case Geometry.Geometry_Type.circle:
+                        CheckGeometry(_nCircle, _circleCounter);
+                        break;
+                    case Geometry.Geometry_Type.triangle:
+                        CheckGeometry(_nTriangle, _triangleCounter);
+                        break;
+                    case Geometry.Geometry_Type.square:
+                        CheckGeometry(_nSquare, _squareCounter);
+                        break;
+                    case Geometry.Geometry_Type.diamond:
+                        CheckGeometry(_nDiamond, _diamondCounter);
+                        break;
+                    case Geometry.Geometry_Type.rectangle:
+                        CheckGeometry(_nRectangle, _rectangleCounter);
+                        break;
+                    case Geometry.Geometry_Type.pentagon:
+                        CheckGeometry(_nPentagon, _pentagonCounter);
+                        break;
+                    case Geometry.Geometry_Type.hexagon:
+                        CheckGeometry(_nHexagon, _hexagonCounter);
+                        break;
+                    case Geometry.Geometry_Type.star:
+                        CheckGeometry(_nHexagon, _hexagonCounter);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+           
+            if (_badGeometry > 0)
+                ServiceLocator.Instance.GetService<IError>().GenerateError();
+            else
+                ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
 
 
-        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
-        _goodGeometry = 0;
-        _totalGeometry = 0;
-        _nSquare = 0;
-        _nTriangle = 0;
-        _nCircle = 0;
-        _nDiamond = 0;
-        _nRectangle = 0;
-        _nPentagon = 0;
-        _nHexagon = 0;
-        _squareCounter = 0;
-        _triangleCounter = 0;
-        _circleCounter = 0;
-        _diamondCounter = 0;
-        _rectangleCounter = 0;
-        _pentagonCounter = 0;
-        _hexagonCounter = 0;
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
 
-        _createPanel.Restart();
+            _leveler.GetComponent<Animator>().Play("Leveler_Animation");
+            _wheel.GetComponent<Animator>().Play("Wheel_Animation");
+
+            _goodGeometry = 0;
+            _badGeometry = 0;
+            _nSquare = 0;
+            _nTriangle = 0;
+            _nCircle = 0;
+            _nDiamond = 0;
+            _nRectangle = 0;
+            _nPentagon = 0;
+            _nHexagon = 0;
+            _squareCounter = 0;
+            _triangleCounter = 0;
+            _circleCounter = 0;
+            _diamondCounter = 0;
+            _rectangleCounter = 0;
+            _pentagonCounter = 0;
+            _hexagonCounter = 0;
+
+            _createPanel.Restart();
+        }
+          
     }
     /// <summary>Check how much geometry is ok.</summary> 
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="counter">The geometry of the player</param>
     public void CheckGeometry(int nGeometry, int counter)
     {
-        if (nGeometry > 0)
-        {
-            _totalGeometry += 1;
+       
             if (nGeometry == counter)
             {
                 _goodGeometry += 1;
             }
-        }
+            else
+            {
+                _badGeometry++;
+                Debug.Log("bad"+ _badGeometry);
+            }
+       
 
     }
     #region Button Counters

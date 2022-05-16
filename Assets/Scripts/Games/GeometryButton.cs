@@ -5,12 +5,17 @@ using UnityEngine;
 public class GeometryButton : Geometry
 {
     public bool _isSimon = false;
-    private bool _isPresed = false;
+    public bool _isPresed = false;
+    public bool _simonGame;
     public GameObject _light;
     // Start is called before the first frame update
     void Start()
     {
-        _light.SetActive(!_isSimon);
+        if (_simonGame==true)
+        {
+            _light.SetActive(!_isSimon);
+        }
+      
     }
 
     // Update is called once per frame
@@ -35,10 +40,6 @@ public class GeometryButton : Geometry
                 _light.SetActive(true);
                 GenerateSound();
             }
-        }
-        else
-        {
-            //TODO: ENCENDER Y APAGAR EN SIMON
         }
     }
     #endregion

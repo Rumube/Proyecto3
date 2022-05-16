@@ -139,6 +139,9 @@ public class CreatePanelAddSubs : MonoBehaviour
             GameObject newGeometry;
             newGeometry = Instantiate(button, new Vector3(0, 0, 0), Quaternion.identity);
             //newGeometry.transform.SetParent(_canvas.transform, false);
+            newGeometry.GetComponent<GeometryButton>()._isPresed = true;
+            newGeometry.GetComponent<GeometryButton>()._light.SetActive(false);
+            
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -166,7 +169,11 @@ public class CreatePanelAddSubs : MonoBehaviour
                 newGeometry.GetComponent<Image>().sprite = newGeometry.GetComponent<ObjectPanel>()._pressedSprite;
                 newGeometry.GetComponent<ObjectPanel>()._placed = false;
                 newGeometry.GetComponent<ObjectPanel>()._pressed = true;
-                _targetList.Add(newGeometry);
+
+            newGeometry.GetComponent<GeometryButton>()._isPresed = false;
+            newGeometry.GetComponent<GeometryButton>()._light.SetActive(true);
+
+            _targetList.Add(newGeometry);
                 _allList.Add(newGeometry);
                 //newGeometry.transform.SetParent(_canvas.transform, false);
             }
