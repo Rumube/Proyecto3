@@ -142,7 +142,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _minAnim.Play(animName);
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
-        _imageMassage.color = new Color(0, 0, 0, 1);
+        _imageMassage.GetComponent<Animator>().Play("Appear");
 
         string currentMessage = "";
         char[] textSplit = message.ToCharArray();
@@ -181,7 +181,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         yield return new WaitForSeconds(_messageDuration);
         _textMessage.text = "";
-        _imageMassage.color = new Color(0, 0, 0, 0);
+        _imageMassage.GetComponent<Animator>().Play("Disappear");
         _messageAtive = false;
     }
 

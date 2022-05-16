@@ -41,10 +41,6 @@ public class GeometryButton : Geometry
                 GenerateSound();
             }
         }
-        else
-        {
-            //TODO: ENCENDER Y APAGAR EN SIMON
-        }
     }
     #endregion
 }
