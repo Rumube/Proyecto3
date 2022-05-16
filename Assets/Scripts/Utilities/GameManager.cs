@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour,IGameManager
 {
+    [Header("Minigames scene names")]
+    public List<string> _minigamesNames = new List<string>();
+    public int _minigamesMaximumLevel = 5;
+    [Header("Minigame student client")]
+    public string _currentstudentName;
+    public string _currentgameName;
+    int _studentCounter = 0;
+    public bool _pause = false;
+    public bool _returnToCommonScene = false;
+    public bool _endSessionTablet = false;
     public enum GAME_STATE_SERVER
     {
         init = 0,
@@ -19,172 +29,88 @@ public class GameManager : MonoBehaviour
     }
     public GAME_STATE_SERVER _gameStateServer;
 
-    public enum GAME_STATE_CLIENT
+    //public enum GAME_STATE_CLIENT
+    //{
+    //    init = 0,
+    //    searching = 1,
+    //    selectStudent = 2,
+    //    playing = 3,
+    //    pause = 4,
+    //    gameOver = 5,
+    //    ranking = 6,
+    //    globalRanking = 7,
+
+    //}
+    public IGameManager.GAME_STATE_CLIENT _gameStateClient;
+
+    public static GameManager Instance;
+
+    private void Awake()
     {
-        init = 0,
-        searching = 1,
-        selectStudent = 2,
-        playing = 3,
-        pause = 4,
-        gameOver = 5,
-        ranking = 6,
-        globalRanking = 7,
-
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }       
     }
-    public GAME_STATE_CLIENT _gameStateClient;
 
-    [Header("Windows")]
-    public GameObject _initialScreen;
-    public GameObject _credits;
-    public GameObject _mainMenu;
-    public GameObject _popupAddClass;
-    public GameObject _popupDeleteClass;
-    public GameObject _popupAddStudent;
-    public GameObject _popupDeleteStudent;
-    public GameObject _class;
-    public GameObject _gameConnection;
-    public GameObject _addStudent;
-    public GameObject _gameTime;
-    public GameObject _stadistics;
-    public GameObject _finalScore;
-
-    //Testing 
-    public InputField _IPTest;
-    public InputField _portTest;
-
-    [Header("Game Configuration")]
-    public int _timeSessionMinutes;
-    public int _timeSessionSeconds;
-    public int _timeMinigamesMinutes;
-    public int _timeMinigamesSeconds;
-
-    [Header("Game Connection")]
-    public string _ip;
-    public string _port;
-    Server server;
-
-    Client client;
-    public Text _idText;
-
-
-    [Header("DatabaseUtilities")]
-    public string _classNamedb;
-    
-    [Header("DatabaseUtilitiesClass")]
-    public Text _classNameDeleting;
-    public GameObject _classPanel;
-    public GameObject _classButton;
-
-    [Header("DatabaseUtilitiesStudent")]
-    public Text _studentNameDeleting;
-    public GameObject _studentPanel;   
-    public Text _classNameStudents;
-    public GameObject _studentButton;
-
-    // Start is called before the first frame update
     void Start()
     {
         _gameStateServer = GAME_STATE_SERVER.init;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PreviousConfigurationState()
     {
-        if (Client._allPackages != null && Client._allPackages.Count > 0)
-        {
-            Client.DoUpdate();
-            _idText.text = Client._tablet._id.ToString();
-        }
+        _gameStateServer = GAME_STATE_SERVER.previousConfiguration;
     }
-
-    /// <summary>Starts a new server and provide the ip and port's device</summary>
-    public void StartServer()
+    public void ConnectionState()
     {
-        string[] connectionData = new string[2];
-
-        server = new Server();
-        connectionData = server.createServer();
-
-        _ip = connectionData[0];
-        _port = connectionData[1];
-
         _gameStateServer = GAME_STATE_SERVER.connection;
     }
 
-    /// <summary>Get the number of tablets that are connected</summary>
-    public int GetConnectedTablets()
+    public void RandomizeStudentsList()
     {
-        return Server._connectedTablets;
+        Shuffle(Client._tablet._students);
     }
 
-    /// <summary>Get if a new tablet is connected</summary>
-    public bool GetUpdateConnectedTablets()
+    public void Shuffle<T>(IList<T> list)
     {
-        return Server._updateConnectedTablets;
-    }
-
-    /// <summary>Rewrite the variable</summary>
-    /// <param name="state">The state of the variable</param>
-    public void SetUpdateConnectedTablets(bool state)
-    {
-        Server._updateConnectedTablets = state;
-    }
-
-    /// <summary>Starts a new client connecting to a server with specific IP and port </summary>
-    public void StartClient()
-    {
-        client = new Client();
-        client.CreateClient(_IPTest.text,_portTest.text);
-    }
-
-    /// <summary>Set the time for the whole session</summary>
-    /// <param name="minutes">The session's minutes</param>
-    /// <param name="seconds">The session's seconds</param>
-    public void SetTimeSession(string minutes, string seconds)
-    {
-        _timeSessionMinutes = int.Parse(minutes);
-        _timeSessionSeconds = int.Parse(seconds);
-        print("t "+ _timeSessionMinutes + " : "+ _timeSessionSeconds);
-    }
-
-    /// <summary>Set the time for all minigames</summary>
-    /// <param name="minutes">The minigames's minutes </param>
-    /// <param name="seconds">The minigames's seconds </param>
-    public void SetTimeMinigames(string minutes, string seconds)
-    {
-        _timeMinigamesMinutes = int.Parse(minutes);
-        _timeMinigamesSeconds = int.Parse(seconds);
-        print("t " + _timeMinigamesMinutes + " : " + _timeMinigamesSeconds);
-    }
-
-    /// <summary>Just start the timer when the configuration is done</summary>
-    public void StartGameSession()
-    {
-        _gameStateServer = GAME_STATE_SERVER.playing;
-        StartCoroutine(StartCountdown());
-    }
-
-    /// <summary>Countdown</summary>
-    public IEnumerator StartCountdown()
-    {
-        while((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))
+        System.Random random = new System.Random();
+        int n = list.Count;
+        while (n > 1)
         {
-            if (_timeSessionSeconds >= 1)
-            {
-                _timeSessionSeconds--;
-            }
-            if(_timeSessionMinutes > 0 &&_timeSessionSeconds == 0)
-            {
-                _timeSessionMinutes--;
-                _timeSessionSeconds = 59;
-            }
-            yield return new WaitForSeconds(1f);
+            n--;
+            int k = random.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
         }
-        //TODO: End session, send packages end
     }
-    private void OnDisable()
+    public void SelectStudentAndGame()
     {
-        Server.OnDisable();
-        Client.OnDisable();
+        if (_studentCounter == Client._tablet._students.Count)
+        {
+            _studentCounter = 0;
+        }
+        _currentstudentName = Client._tablet._students[_studentCounter]._name;
+        _currentgameName = _minigamesNames[Random.Range(0, _minigamesNames.Count)];
+        _studentCounter++;
+    }
+
+    public IGameManager.GAME_STATE_CLIENT GetClientState()
+    {
+        return _gameStateClient;
+    }
+    public void SetClientState(IGameManager.GAME_STATE_CLIENT gameStateClient)
+    {
+        _gameStateClient = gameStateClient;
+    }
+    public void SetReturnToCommonScene(bool value)
+    {
+        _returnToCommonScene = value;
     }
 }

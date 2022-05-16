@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Proyecto3
+  companyName: Maxinautas
+  productName: Profenautas
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -56,8 +56,8 @@ PlayerSettings:
   androidShowActivityIndicatorOnLoading: -1
   iosUseCustomAppBackgroundBehavior: 0
   iosAllowHTTPDownload: 1
-  allowedAutorotateToPortrait: 1
-  allowedAutorotateToPortraitUpsideDown: 1
+  allowedAutorotateToPortrait: 0
+  allowedAutorotateToPortraitUpsideDown: 0
   allowedAutorotateToLandscapeRight: 1
   allowedAutorotateToLandscapeLeft: 1
   useOSAutorotation: 1
@@ -258,7 +258,14 @@ PlayerSettings:
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 2800000, guid: d505f68a746fc7043ac18dc06f968690, type: 3}
+      m_Width: 128
+      m_Height: 128
+      m_Kind: 0
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
     m_Icons:
@@ -672,7 +679,21 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: CT_RTV;CT_PROC;CT_UI
+    4: CT_RTV;CT_PROC;CT_UI
+    7: CT_RTV;CT_PROC;CT_UI
+    13: CT_RTV;CT_PROC;CT_UI
+    14: CT_RTV;CT_PROC;CT_UI
+    19: CT_RTV;CT_PROC;CT_UI
+    21: CT_RTV;CT_PROC;CT_UI
+    25: CT_RTV;CT_PROC;CT_UI
+    27: CT_RTV;CT_PROC;CT_UI
+    28: CT_RTV;CT_PROC;CT_UI
+    29: CT_RTV;CT_PROC;CT_UI
+    30: CT_RTV;CT_PROC;CT_UI
+    32: CT_RTV;CT_PROC;CT_UI
+    33: CT_RTV;CT_PROC;CT_UI
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

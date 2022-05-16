@@ -5,18 +5,20 @@ using UnityEngine.UI;
 
 public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
 {
-    public Image _timeImage;
+    Image _timeImage;
     public float _currentTime;
-    [SerializeField]
-    public float _maxTime;
+    private float _maxTime;
+    [HideInInspector]
     public float _finishTime;
     private float _startTime;
-
+    private bool _canStartTime = false;
 
     private void Update()
     {
-        if(ServiceLocator.Instance.GetService<GameManager>()._gameStateClient == GameManager.GAME_STATE_CLIENT.playing)
+        if(_canStartTime && ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
+        {
             TimeProgress();
+        }
     }
 
     /// <summary>
@@ -24,7 +26,9 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     /// </summary>
     public void StartGameTime()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.playing;
+        _canStartTime = true;
+        _timeImage = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Image>();
+        _maxTime = (ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameMinutes() * 60) + ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameSeconds();
         _finishTime = Time.realtimeSinceStartup + _maxTime;
         _currentTime = Time.realtimeSinceStartup;
         _startTime = Time.realtimeSinceStartup;
@@ -38,6 +42,25 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _currentTime += Time.deltaTime;
         _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
         if (_currentTime >= _finishTime)
-            ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
+        {
+            ServiceLocator.Instance.GetService<IFrogMessage>().StopFrogSpeaker();
+            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.ranking);
+            _canStartTime = false;
+            ServiceLocator.Instance.GetService<INetworkManager>().SendMatchData();
+        }         
+    }
+    public void SetStartTime(bool state)
+    {
+        _canStartTime = state;
+    }
+
+    public float GetCurrentTime()
+    {
+        return _currentTime;
+    }
+
+    public float GetFinishTime()
+    {
+        return _finishTime;
     }
 }
