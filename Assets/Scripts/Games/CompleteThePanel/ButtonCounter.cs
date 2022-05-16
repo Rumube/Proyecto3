@@ -68,7 +68,7 @@ public class ButtonCounter : MonoBehaviour
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
     {
-        if (_squareCounter+_triangleCounter+_circleCounter+_diamondCounter+_rectangleCounter+_nHexagon+_nPentagon>0)
+        if (_squareCounter+_triangleCounter+_circleCounter+_diamondCounter+_rectangleCounter+_hexagonCounter+_pentagonCounter>0)
         {
             List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
 

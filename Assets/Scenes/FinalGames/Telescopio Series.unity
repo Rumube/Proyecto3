@@ -1583,6 +1583,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: MinigameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.11
+      objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameLevel
       value: 1
@@ -1661,7 +1677,7 @@ LineRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 341ce1b1053cacd49bc9071ec15c230b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1692,8 +1708,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.14511304
+        time: 0.055377863
+        value: 0.19714025
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1735,7 +1751,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
