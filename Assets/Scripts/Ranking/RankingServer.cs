@@ -178,7 +178,6 @@ public class RankingServer : MonoBehaviour
             positionYRelative = (Mathf.Round(positionYRelative * 10.0f) * 0.1f) * 10;
 
             int positionY = (int)positionYRelative;
-            print("Pos: " + positionY);
 
             Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _gridPositions[teamNumbers, positionY].transform.position.y);
             _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
@@ -190,10 +189,8 @@ public class RankingServer : MonoBehaviour
     IEnumerator setGrid()
     {
         yield return new WaitForSeconds(0.5f);
-        print("Count: " + _numTotalTeams);
         for (int i = 0; i < _numTotalTeams; i++)
         {
-            print("Pos: " + i);
             _rocketsTransforms[i].transform.position = _gridPositions[i, 0].GetComponent<RectTransform>().position;
         }
     }
