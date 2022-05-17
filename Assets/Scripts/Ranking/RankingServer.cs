@@ -46,7 +46,7 @@ public class RankingServer : MonoBehaviour
         _minPoints.text = 0.ToString();
         _maxPoints.text = 0.ToString();
 
-        _differenceBetweenLowerUpper = _upperLevel.position.y - _lowerLevel.position.y;
+        //_differenceBetweenLowerUpper = _upperLevel.position.y - _lowerLevel.position.y;
     }
 
     // Update is called once per frame
@@ -63,6 +63,8 @@ public class RankingServer : MonoBehaviour
             CreateGrid();
         }
 
+
+        //CHANGE VISUAL POINTS
         if (_currentMaxPoints < maxPoints && _rankingStarted)
         {
             _currentMaxPoints++;
@@ -84,6 +86,9 @@ public class RankingServer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Creates the ranking grid
+    /// </summary>
     public void CreateGrid()
     {
 
@@ -134,6 +139,9 @@ public class RankingServer : MonoBehaviour
         StartCoroutine(setGrid());
     }
 
+    /// <summary>
+    /// Update the teams points
+    /// </summary>
     void UpdateRankingPoints()
     {
 
@@ -168,6 +176,9 @@ public class RankingServer : MonoBehaviour
         CalculateRocketsPosition();
     }
 
+    /// <summary>
+    /// Calculates the position of the rockets
+    /// </summary>
     void CalculateRocketsPosition()
     {
         int teamNumbers = 0;
@@ -183,9 +194,11 @@ public class RankingServer : MonoBehaviour
             _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
             teamNumbers++;
         }
-        
     }
 
+    /// <summary>
+    /// Need waits to can create the grid
+    /// </summary>
     IEnumerator setGrid()
     {
         yield return new WaitForSeconds(0.5f);
