@@ -28,6 +28,10 @@ public class ButtonCounter : MonoBehaviour
     int _badGeometry;
     public CreatePanel _createPanel;
 
+    [Header("Animations")]
+    public GameObject _bar;
+    public GameObject _radar;
+
     // Update is called once per frame
     void Update()
     {
@@ -129,6 +133,9 @@ public class ButtonCounter : MonoBehaviour
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
 
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
+
+            _bar.GetComponent<Animator>().Play("Bar_Animation");
+            _radar.GetComponent<Animator>().Play("Radar_Animation");
 
             _goodGeometry = 0;
             _badGeometry = 0;
