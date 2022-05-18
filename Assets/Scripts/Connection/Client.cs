@@ -132,7 +132,7 @@ public class Client
         ClientPackage package = new ClientPackage();
 
         package._typePackageClient = ClientPackets.matchData;
-        package._matchData._studentName = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName();
+        package._matchData._studentName = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
         package._matchData._gameName = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName();
         package._matchData._team = _tablet._id;
         package._matchData._averageSuccess = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;

@@ -179,21 +179,30 @@ public class ServerUtility : MonoBehaviour
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
         print("Antes level" + level);
-        if (averagePoints < 33)
+        if (level > 0)
         {
-            if(level > 0)
+            if (averagePoints < 33)
             {
-                level--;
-            }               
-        }else if (averagePoints > 50)//Cambiar luego a 66
-        {
-            if(level < ServiceLocator.Instance.GetService<IGameManager>().GetMinigamesMaximumLevel())
+                if(level > 1)
+                {
+                    level--;
+                }
+            }
+            else if (averagePoints > 66)
             {
-                level++;
-            }          
+                if (level < ServiceLocator.Instance.GetService<IGameManager>().GetMinigamesMaximumLevel())
+                {
+                    level++;
+                }
+            }
         }
-        print("Despues level" + (level + 1));
-        _serverPackage._gameDifficulty._level = (level + 1);
+        else
+        {
+            level = 1;
+        }
+
+        print("Despues level" + level);
+        _serverPackage._gameDifficulty._level = level;
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }

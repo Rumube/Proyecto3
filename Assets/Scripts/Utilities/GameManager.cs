@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour, IGameManager
 
     void Start()
     {
-      _gameStateServer = GAME_STATE_SERVER.init;
+      _gameStateServer = IGameManager.GAME_STATE_SERVER.init;
       _teamPoints.Add(0,34);
       _teamPoints.Add(1,70);
       _teamPoints.Add(2,130);

@@ -177,7 +177,7 @@ public class NetworkManager : MonoBehaviour,INetworkManager
     /// <summary>It's called when a student and game has been selected to play</summary>
     public void SendStudentGame()
     {
-        client.StudentGameSelection(ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName(), ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName());
+        client.StudentGameSelection(ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName(), ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName());
     }
     #endregion
 
