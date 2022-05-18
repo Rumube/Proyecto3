@@ -22,8 +22,8 @@ public class ServerHandle {
         {
             if (_package._fromUser == ServiceLocator.Instance.GetService<ServerUtility>()._ids[i])
             {
-               ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i]._currentStudent = _package._selectStudentGame._studentName;
-               ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i]._currentGame = _package._selectStudentGame._gameName;
+               ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[i]._currentStudent = _package._selectStudentGame._studentName;
+               ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[i]._currentGame = _package._selectStudentGame._gameName;
             }      
         }
         Debug.Log("Entra paquete nino minijuego: " +_package._selectStudentGame._studentName + " g " + _package._selectStudentGame._gameName);

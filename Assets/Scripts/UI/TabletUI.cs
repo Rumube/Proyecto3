@@ -91,7 +91,7 @@ public class TabletUI : UI
         {
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
-            ServiceLocator.Instance.GetService<NetworkManager>().SendViewingFinalScore();
+            ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
 
         }
         //Active just the first one
@@ -182,7 +182,7 @@ public class TabletUI : UI
         yield return new WaitForSeconds(3.0f);
         _doorsClosedAudio.Play();
         yield return new WaitForSeconds(3.0f);
-        ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
+        ServiceLocator.Instance.GetService<INetworkManager>().SendEndCalling();
     }
 
     /// <summary>
@@ -219,9 +219,9 @@ public class TabletUI : UI
     /// </summary>
     void SelectStudentGame()
     {
-        ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = -1;
+        ServiceLocator.Instance.GetService<INetworkManager>().SetMinigamesLevel(-1);
         ServiceLocator.Instance.GetService<IGameManager>().SelectStudentAndGame();
-        ServiceLocator.Instance.GetService<NetworkManager>().SendStudentGame();
+        ServiceLocator.Instance.GetService<INetworkManager>().SendStudentGame();
     }
 
     /// <summary>
@@ -249,7 +249,7 @@ public class TabletUI : UI
     /// </summary>
     IEnumerator ShowGameSelected()
     {
-        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
+        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel() != -1);
         yield return new WaitForSeconds(3.0f);
         _blackTransition.SetActive(true);
 

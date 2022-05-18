@@ -151,7 +151,7 @@ public class ServerUtility : MonoBehaviour
 
         for (int i = 0; i < _ids.Count; ++i)
         {
-            Tablet specificTablet = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i];
+            Tablet specificTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[i];
             _serverPackage._toUser = _ids[i];
             _serverPackage._studentsInfo._studentsToTablets = specificTablet;
 

@@ -198,9 +198,60 @@ public class NetworkManager : MonoBehaviour,INetworkManager
 
     public void SetIp(string value)
     {
-
+        _ip = value;
     }
-
+    public string GetIp()
+    {
+        return _ip;
+    }
+    public void SetPort(string value)
+    {
+        _port = value;
+    }
+    public string GetPort()
+    {
+        return _port;
+    }
+    public void SetMinigamesMinutes(int minutes)
+    {
+        _minigameMinutes = minutes;
+    }
+    public int GetMinigamesMinutes()
+    {
+        return _minigameMinutes;
+    }
+    public void SetMinigamesSeconds(int seconds)
+    {
+        _minigameSeconds = seconds;
+    }
+    public int GetMinigamesSeconds()
+    {
+        return _minigameSeconds;
+    }
+    public void SetMinigamesLevel(int level)
+    {
+        _minigameLevel = level;
+    }
+    public int GetMinigamesLevel()
+    {
+        return _minigameLevel;
+    }
+    public void SetSelectedTablet(int selectedTablet)
+    {
+        _selectedTablet = selectedTablet;
+    }
+    public int GetSelectedTablet()
+    {
+        return _selectedTablet;
+    }
+    public void SetStudentToTablet(Tablet tablet)
+    {
+        _studentsToTablets.Add(tablet);
+    }
+    public List<Tablet> GetStudentsToTablets()
+    {
+        return _studentsToTablets;
+    }
     //[Header("Game Connection")]
     //public string _ip;
     //public string _port;
