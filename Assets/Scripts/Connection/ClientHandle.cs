@@ -28,7 +28,7 @@ public class ClientHandle
     {
         ServiceLocator.Instance.GetService<NetworkManager>()._minigameMinutes = package._minigameTime._minutes;
         ServiceLocator.Instance.GetService<NetworkManager>()._minigameSeconds = package._minigameTime._seconds;
-        ServiceLocator.Instance.GetService<GameManager>().RandomizeStudentsList();
+        ServiceLocator.Instance.GetService<IGameManager>().RandomizeStudentsList();
         ServiceLocator.Instance.GetService<TabletUI>().OpenNextWindow();
         ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
     }
@@ -59,7 +59,7 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void QuitGame()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = true;
+        ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(true);
        SceneManager.LoadScene("CristinaTest");
         //Poner que vaya a la ventana de puntuaciones finales
         EDebug.Log("Quitando el juego");

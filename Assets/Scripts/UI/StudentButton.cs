@@ -53,9 +53,9 @@ public class StudentButton : MonoBehaviour
              GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
 
         }
-        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        switch (ServiceLocator.Instance.GetService<IGameManager>().GetServerState())
         {
-            case GameManager.GAME_STATE_SERVER.teamConfiguration:
+            case IGameManager.GAME_STATE_SERVER.teamConfiguration:
                 _addingToTablet = true;
                 //Show the background button when adding student to tablet
                 if (GetComponent<Image>().color.a == 0)

@@ -41,18 +41,18 @@ public class Installer : MonoBehaviour
         //Register services to use globally
         //ServiceLocator.Instance.RegisterService(this);
         //ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
-         if (!ServiceLocator.Instance.Contains<GameManager>())
+         if (!ServiceLocator.Instance.Contains<IGameManager>())
         {
-            ServiceLocator.Instance.RegisterService(_gameManager);
+            ServiceLocator.Instance.RegisterService<IGameManager>(_gameManager);
         }
         //else if(ServiceLocator.Instance.GetService<GameManager>() == null)
         //{
         //    _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         //}
 
-        if (!ServiceLocator.Instance.Contains<NetworkManager>())
+        if (!ServiceLocator.Instance.Contains<INetworkManager>())
         {
-            ServiceLocator.Instance.RegisterService(_networkManager);
+            ServiceLocator.Instance.RegisterService<INetworkManager>(_networkManager);
         }
 
         if (ServiceLocator.Instance.Contains<UIManager>())

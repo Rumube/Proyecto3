@@ -187,7 +187,7 @@ public class ServerUtility : MonoBehaviour
             }               
         }else if (averagePoints > 50)//Cambiar luego a 66
         {
-            if(level < ServiceLocator.Instance.GetService<GameManager>()._minigamesMaximumLevel)
+            if(level < ServiceLocator.Instance.GetService<IGameManager>().GetMinigamesMaximumLevel())
             {
                 level++;
             }          
