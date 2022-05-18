@@ -22,6 +22,7 @@ public class Installer : MonoBehaviour
     public GameManager _gameManager;
     public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
+    public RankingServer _rankingServer;
 
     public ServerUtility _myServer;
 
@@ -74,6 +75,12 @@ public class Installer : MonoBehaviour
         {
             ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
         }
+        
+        if (!ServiceLocator.Instance.Contains<RankingServer>())
+        {
+            ServiceLocator.Instance.RegisterService(_rankingServer);
+        }
+
 
 
         if (!ServiceLocator.Instance.Contains<IUI>() &&_server && _canvasMobile != null)

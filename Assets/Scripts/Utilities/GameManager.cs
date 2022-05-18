@@ -40,9 +40,6 @@ public class GameManager : MonoBehaviour, IGameManager
     void Start()
     {
       _gameStateServer = IGameManager.GAME_STATE_SERVER.init;
-      _teamPoints.Add(0,34);
-      _teamPoints.Add(1,70);
-      _teamPoints.Add(2,130);
     }
 
     public void PreviousConfigurationState()
@@ -162,5 +159,20 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool GetReturnToCommonScene()
     {
         return _returnToCommonScene;
+    }
+
+    public void SetTeamPoints(int index, int points)
+    {
+        _teamPoints[index-1] += points;
+        ServiceLocator.Instance.GetService<RankingServer>().UpdateRankingPoints(_teamPoints);
+    }
+
+    public Dictionary<int, int> GetTeamPoints()
+    {
+        return _teamPoints;
+    }
+    public void AddTeam(int index)
+    {
+        _teamPoints.Add(index, 0);
     }
 }
