@@ -15,32 +15,11 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool _pause = false;
     public bool _returnToCommonScene = false;
     public bool _endSessionTablet = false;
-    //public enum GAME_STATE_SERVER
-    //{
-    //    init = 0,
-    //    previousConfiguration = 1,
-    //    connection = 2,
-    //    teamConfiguration = 3,
-    //    playing = 4,
-    //    pause = 5,
-    //    quit = 6,
-    //    disconnect = 7
 
-    //}
+
+    public Dictionary<int, int> _teamPoints = new Dictionary<int, int>();
+
     public IGameManager.GAME_STATE_SERVER _gameStateServer;
-
-    //public enum GAME_STATE_CLIENT
-    //{
-    //    init = 0,
-    //    searching = 1,
-    //    selectStudent = 2,
-    //    playing = 3,
-    //    pause = 4,
-    //    gameOver = 5,
-    //    ranking = 6,
-    //    globalRanking = 7,
-
-    //}
     public IGameManager.GAME_STATE_CLIENT _gameStateClient;
 
     public static GameManager Instance;
@@ -60,7 +39,10 @@ public class GameManager : MonoBehaviour, IGameManager
 
     void Start()
     {
-        _gameStateServer = IGameManager.GAME_STATE_SERVER.init;
+      _gameStateServer = GAME_STATE_SERVER.init;
+      _teamPoints.Add(0,34);
+      _teamPoints.Add(1,70);
+      _teamPoints.Add(2,130);
     }
 
     public void PreviousConfigurationState()
@@ -181,13 +163,4 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         return _returnToCommonScene;
     }
-    //public List<string> _minigamesNames = new List<string>();
-    //public int _minigamesMaximumLevel = 5;
-    //[Header("Minigame student client")]
-    //public string _currentstudentName;
-    //public string _currentgameName;
-    //int _studentCounter = 0;
-    //public bool _pause = false;
-    //public bool _returnToCommonScene = false;
-    //public bool _endSessionTablet = false;
 }

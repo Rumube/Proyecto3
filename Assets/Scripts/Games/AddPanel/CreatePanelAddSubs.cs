@@ -42,6 +42,7 @@ public class CreatePanelAddSubs : MonoBehaviour
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
        
         GeneratePanel();
+        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
 
     /// <summary>
@@ -94,7 +95,6 @@ public class CreatePanelAddSubs : MonoBehaviour
                
             }
         }
-        ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         Invoke("SendMessage", 1f);
     }
     static void randomize(List<GameObject> arr, int n)
