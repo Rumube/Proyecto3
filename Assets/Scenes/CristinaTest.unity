@@ -3391,11 +3391,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126308320}
   m_CullTransparentMesh: 1
---- !u!328 &127740025 stripped
-VideoPlayer:
-  m_CorrespondingSourceObject: {fileID: 4789129295677942379, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-  m_PrefabInstance: {fileID: 4789129294498624058}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136390857
 GameObject:
   m_ObjectHideFlags: 0
@@ -3606,11 +3601,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138570905}
   m_CullTransparentMesh: 1
---- !u!224 &139177199 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-  m_PrefabInstance: {fileID: 1169010852}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &141990367
 GameObject:
   m_ObjectHideFlags: 0
@@ -10781,7 +10771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &512837361
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12899,7 +12889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &606066021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21913,43 +21903,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160293531}
   m_CullTransparentMesh: 1
---- !u!1001 &1169010852
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1207306177}
-    m_Modifications:
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4789129295075794256, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
 --- !u!1 &1178429856
 GameObject:
   m_ObjectHideFlags: 0
@@ -22336,7 +22289,6 @@ Transform:
   - {fileID: 512837361}
   - {fileID: 1955386192}
   - {fileID: 48233087}
-  - {fileID: 139177199}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22362,8 +22314,8 @@ MonoBehaviour:
   _continueMainMenu: {fileID: 929299359}
   _adviceTextMainMenu: {fileID: 138570907}
   _textureVideoMainMenu: {fileID: 8400000, guid: a5d64f791c1472e4fb037e6546c8e769, type: 2}
-  _imageMainMenu: {fileID: 1846194914}
-  _videoMainMenu: {fileID: 127740025}
+  _imageMainMenu: {fileID: 0}
+  _videoMainMenu: {fileID: 0}
   _deletingClassName: {fileID: 88459392}
   _writingClassName: {fileID: 1942708275}
   _confirmDeleteClassButton: {fileID: 287352641}
@@ -33402,11 +33354,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840329017}
   m_CullTransparentMesh: 1
---- !u!95 &1846194914 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1846194914, guid: 95e160d96ba888c48ae6eaf45e18bf11, type: 3}
-  m_PrefabInstance: {fileID: 4789129294498624058}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1850364361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37139,7 +37086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2086308978
 RectTransform:
   m_ObjectHideFlags: 0
