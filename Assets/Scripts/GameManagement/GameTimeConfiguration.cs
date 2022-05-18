@@ -13,6 +13,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     private float _startTime;
     private bool _canStartTime = false;
     private bool _lastSeconds = false;
+    private bool _halfTime = false;
     private Animator _anim;
 
     private void Update()
@@ -36,6 +37,8 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _currentTime = Time.realtimeSinceStartup;
         _startTime = Time.realtimeSinceStartup;
         _lastSeconds = false;
+        _halfTime = false;
+        _anim.Play("Timer");
     }
 
     /// <summary>
@@ -46,18 +49,18 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _currentTime += Time.deltaTime;
         _timeImage.fillAmount -= 1.0f/_maxTime * Time.deltaTime;
 
-        _anim.Play("Timer");
+        
         //_startTime = 10;
         //_finishTime = 30;
 
-        if (_currentTime >= _startTime + _finishTime / 2)
+        if (_currentTime >= _startTime + _finishTime / 2 && !_halfTime)
         {
-            _anim.Play("Temporizador_Poco_Tiempo");
-            //_anim.Play("Temporizador_Mitad");
+            _halfTime = true;
+            _anim.Play("Temporizador_Mitad");
             
         }
 
-        if (_currentTime >= _finishTime - 3 && !_lastSeconds)
+        if (_currentTime >= _finishTime - 5 && !_lastSeconds)
         {
             //Activamos anim;
             _lastSeconds = true;
