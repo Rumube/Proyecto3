@@ -192,8 +192,8 @@ public class ServerUtility : MonoBehaviour
                 level++;
             }          
         }
-        print("Despues level" + level);
-        _serverPackage._gameDifficulty._level = level;
+        print("Despues level" + (level + 1));
+        _serverPackage._gameDifficulty._level = (level + 1);
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
