@@ -253,7 +253,7 @@ public class AlienGenerator : MonoBehaviour
     {
         if (!_isCheking)
         {
-            _hand.GetComponent<Animator>().Play("HandWritting_anim");
+            //_hand.GetComponent<Animator>().Play("HandWritting_anim");
 
             int numEye = 0; 
 

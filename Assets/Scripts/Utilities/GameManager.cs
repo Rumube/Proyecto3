@@ -163,8 +163,8 @@ public class GameManager : MonoBehaviour, IGameManager
 
     public void SetTeamPoints(int index, int points)
     {
-        _teamPoints[index-1] += points;
-        ServiceLocator.Instance.GetService<RankingServer>().UpdateRankingPoints(_teamPoints);
+        //_teamPoints[index-1] += points;
+        //ServiceLocator.Instance.GetService<RankingServer>().UpdateRankingPoints(_teamPoints);
     }
 
     public Dictionary<int, int> GetTeamPoints()
