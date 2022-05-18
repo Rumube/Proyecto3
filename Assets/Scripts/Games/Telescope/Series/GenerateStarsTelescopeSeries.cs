@@ -10,6 +10,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     public List<GameObject> _spikesStars;
     public GameObject _star;
     public GameObject _starsParent;
+    public GameObject _particles;
 
     [Header("Configuration")]
     private TelescopeSeriesDifficulty.dataDiffilcuty _dataDifficulty;
@@ -17,6 +18,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
     private bool _firstRound = true;
+
 
     private enum SERIES_TYPE
     {
@@ -191,7 +193,8 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         {            
             if (!_pressed)
             {
-                _pressed = true;
+                _pressed = true; 
+                _particles.SetActive(true);
             }
             else
             {
@@ -207,12 +210,17 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
                     currentCollider.gameObject.GetComponent<Star>().CollisionDetected();
                 }
             }
+            if (_particles.activeSelf)
+            {
+                _particles.transform.position = Camera.main.ScreenToWorldPoint(newInput.pos);
+            }
         }
         else
         {
             if (_pressed)
             {
-                _pressed = false;
+                _pressed = false; 
+                _particles.SetActive(false);
                 GetComponent<ConstelationGenerator>().ClearConstelation();
             }
         }
