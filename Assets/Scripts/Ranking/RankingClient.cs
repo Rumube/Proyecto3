@@ -8,8 +8,8 @@ public class RankingClient : MonoBehaviour
     public float minPoints = 99999;
 
     [Header("Transform References")]
-    public List<Transform> _rocketsTransforms;
-    public List<Transform> _rankingPositions;
+    public List<RectTransform> _rocketsTransforms;
+    public List<RectTransform> _rankingPositions;
 
     private TestingRankings _testingRankings;
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class RankingClient : MonoBehaviour
 
     public IEnumerator CreateGrid()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.1f);
         foreach (Transform team in _rocketsTransforms)
         {
             team.gameObject.SetActive(false);
@@ -53,8 +53,8 @@ public class RankingClient : MonoBehaviour
         foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
         {
             _rocketsTransforms[numTeam].gameObject.SetActive(true);
-            _rocketsTransforms[numTeam].gameObject.GetComponent<RectTransform>().position = _rankingPositions[numTeam].gameObject.GetComponent<RectTransform>().position;
-
+            _rocketsTransforms[numTeam].position = _rankingPositions[numTeam].position;
+            print("Pos: " + _rankingPositions[numTeam].position);
             numTeam++;
         }
     }
