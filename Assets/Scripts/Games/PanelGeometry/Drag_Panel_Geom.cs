@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Drag_Panel_Geom : MonoBehaviour
 {
+   
     [Header("Game Objects")]
     public static GameObject itemDraging;
     public GameObject selectedObject;
@@ -68,6 +69,7 @@ public class Drag_Panel_Geom : MonoBehaviour
             Debug.Log("He entrado"); 
             if (targetObject)
             {
+                
                 itemDraging = targetObject.transform.gameObject;
                 startPosition = transform.position;
                 startParent = transform.parent;
