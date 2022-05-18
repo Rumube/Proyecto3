@@ -32,6 +32,7 @@ public class SimonGameManager : MonoBehaviour
     private int _currentRounds = 0;
     private bool _canClick = false;
     public Animator _animTapa;
+    public AudioClip SimonSound;
 
     private void Start()
     {
@@ -143,6 +144,7 @@ public class SimonGameManager : MonoBehaviour
     public IEnumerator HighlightButton(GameObject simonButton)
     {
         simonButton.GetComponent<GeometryButton>()._light.SetActive(true);//Highlighted Color
+        SimonSound.Play();
         yield return new WaitForSeconds(_data.simonVelocity);
         simonButton.GetComponent<GeometryButton>()._light.SetActive(false);
         yield return new WaitForSeconds(_data.simonVelocity);
