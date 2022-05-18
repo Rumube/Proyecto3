@@ -29,6 +29,10 @@ public class ButtonCounter_Prueba : MonoBehaviour
 
     private CreatePanel_Prueba _createPanel;
 
+    [Header("Animations")]
+    public GameObject _leveler;
+    public GameObject _wheel;
+
     // Update is called once per frame
     void Update()
     {
@@ -123,6 +127,10 @@ public class ButtonCounter_Prueba : MonoBehaviour
 
 
             ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_goodGeometry, _badGeometry);
+
+            _leveler.GetComponent<Animator>().Play("Leveler_Animation");
+            _wheel.GetComponent<Animator>().Play("Wheel_Animation");
+
             _goodGeometry = 0;
             _badGeometry = 0;
             _nSquare = 0;
