@@ -56,7 +56,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         if (_currentTime >= _startTime + _finishTime / 2 && !_halfTime)
         {
             _halfTime = true;
-            _anim.Play("Temporizador_Mitad");
+            _anim.Play("Temporizador_Half_Time");
             
         }
 
