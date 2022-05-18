@@ -151,7 +151,7 @@ public class ServerUtility : MonoBehaviour
 
         for (int i = 0; i < _ids.Count; ++i)
         {
-            Tablet specificTablet = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i];
+            Tablet specificTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[i];
             _serverPackage._toUser = _ids[i];
             _serverPackage._studentsInfo._studentsToTablets = specificTablet;
 
@@ -179,19 +179,28 @@ public class ServerUtility : MonoBehaviour
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
         print("Antes level" + level);
-        if (averagePoints < 33)
+        if (level > 0)
         {
-            if(level > 0)
+            if (averagePoints < 33)
             {
-                level--;
-            }               
-        }else if (averagePoints > 50)//Cambiar luego a 66
-        {
-            if(level < ServiceLocator.Instance.GetService<GameManager>()._minigamesMaximumLevel)
+                if(level > 1)
+                {
+                    level--;
+                }
+            }
+            else if (averagePoints > 66)
             {
-                level++;
-            }          
+                if (level < ServiceLocator.Instance.GetService<IGameManager>().GetMinigamesMaximumLevel())
+                {
+                    level++;
+                }
+            }
         }
+        else
+        {
+            level = 1;
+        }
+
         print("Despues level" + level);
         _serverPackage._gameDifficulty._level = level;
 

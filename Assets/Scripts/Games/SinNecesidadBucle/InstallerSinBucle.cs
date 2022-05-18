@@ -31,7 +31,7 @@ public class InstallerSinBucle : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IError>(_error);
         ServiceLocator.Instance.RegisterService(_canvasGUI);
         ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
-        ServiceLocator.Instance.RegisterService<NetworkManager>(_networkSinBucle);
+        ServiceLocator.Instance.RegisterService<INetworkManager>(_networkSinBucle);
         ServiceLocator.Instance.RegisterService<GameManager>(_GameManager);
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
         ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePoints);

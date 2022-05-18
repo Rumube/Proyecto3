@@ -87,4 +87,89 @@ public class GMSinBucle : MonoBehaviour,IGameManager
     {
         _returnToCommonScene = value;
     }
+
+    public IGameManager.GAME_STATE_CLIENT GetServerState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetServerState(IGameManager.GAME_STATE_SERVER gameStateServer)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    IGameManager.GAME_STATE_SERVER IGameManager.GetServerState()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetMinigames(string _names)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public List<string> GetMinigames()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public GameObject GetGameObject()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetPause(bool value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool GetPause()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetEndSessionTablet(bool value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool GetEndSessionTablet()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetCurrentGameName(string name)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public string GetCurrentGameName()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetCurrentStudentName(string name)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public string GetCurrentStudentName()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetMinigamesMaximumLevel(int level)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public int GetMinigamesMaximumLevel()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool GetReturnToCommonScene()
+    {
+        throw new System.NotImplementedException();
+    }
 }

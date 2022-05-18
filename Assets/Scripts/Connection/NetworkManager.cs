@@ -60,7 +60,7 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         _ip = connectionData[0];
         _port = connectionData[1];
 
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.connection;
+        ServiceLocator.Instance.GetService<IGameManager>().SetServerState(IGameManager.GAME_STATE_SERVER.connection);
     }
 
     /// <summary>Get the number of tablets that are connected</summary>
@@ -177,7 +177,7 @@ public class NetworkManager : MonoBehaviour,INetworkManager
     /// <summary>It's called when a student and game has been selected to play</summary>
     public void SendStudentGame()
     {
-        client.StudentGameSelection(ServiceLocator.Instance.GetService<GameManager>()._currentstudentName, ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
+        client.StudentGameSelection(ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName(), ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName());
     }
     #endregion
 
@@ -194,4 +194,84 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         client.StudentScore();
     }
     #endregion
+
+
+    public void SetIp(string value)
+    {
+        _ip = value;
+    }
+    public string GetIp()
+    {
+        return _ip;
+    }
+    public void SetPort(string value)
+    {
+        _port = value;
+    }
+    public string GetPort()
+    {
+        return _port;
+    }
+    public void SetMinigamesMinutes(int minutes)
+    {
+        _minigameMinutes = minutes;
+    }
+    public int GetMinigamesMinutes()
+    {
+        return _minigameMinutes;
+    }
+    public void SetMinigamesSeconds(int seconds)
+    {
+        _minigameSeconds = seconds;
+    }
+    public int GetMinigamesSeconds()
+    {
+        return _minigameSeconds;
+    }
+    public void SetMinigamesLevel(int level)
+    {
+        _minigameLevel = level;
+    }
+    public int GetMinigamesLevel()
+    {
+        return _minigameLevel;
+    }
+    public void SetSelectedTablet(int selectedTablet)
+    {
+        _selectedTablet = selectedTablet;
+    }
+    public int GetSelectedTablet()
+    {
+        return _selectedTablet;
+    }
+    public void SetStudentToTablet(Tablet tablet)
+    {
+        _studentsToTablets.Add(tablet);
+    }
+    public List<Tablet> GetStudentsToTablets()
+    {
+        return _studentsToTablets;
+    }
+    //[Header("Game Connection")]
+    //public string _ip;
+    //public string _port;
+    //public static Server server = new Server();
+
+    //Client client = new Client();
+    //public TextMeshProUGUI _idText;
+    //public TMP_InputField _IPText;
+    //public TMP_InputField _portText;
+
+    //[Header("Students to tablets")]
+    //public List<Tablet> _studentsToTablets = new List<Tablet>();
+    //public int _selectedTablet = -10;
+
+    //[Header("Minigame timer client")]
+    //public int _minigameMinutes;
+    //public int _minigameSeconds;
+
+    //[Header("Minigame difficulty server")]
+    //public int _minigameLevel = -1;
+
+    //public static NetworkManager Instance;
 }

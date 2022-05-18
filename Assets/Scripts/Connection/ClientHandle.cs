@@ -26,9 +26,9 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void StartGame(ClientPackage package)
     {
-        ServiceLocator.Instance.GetService<NetworkManager>()._minigameMinutes = package._minigameTime._minutes;
-        ServiceLocator.Instance.GetService<NetworkManager>()._minigameSeconds = package._minigameTime._seconds;
-        ServiceLocator.Instance.GetService<GameManager>().RandomizeStudentsList();
+        ServiceLocator.Instance.GetService<INetworkManager>().SetMinigamesMinutes(package._minigameTime._minutes);
+        ServiceLocator.Instance.GetService<INetworkManager>().SetMinigamesSeconds(package._minigameTime._seconds);
+        ServiceLocator.Instance.GetService<IGameManager>().RandomizeStudentsList();
         ServiceLocator.Instance.GetService<TabletUI>().OpenNextWindow();
         ServiceLocator.Instance.GetService<TabletUI>().NewStudentGame();
     }
@@ -37,7 +37,7 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void SpecificGameDifficulty(ClientPackage package)
     {
-        ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = package._gameDifficulty._level;
+        ServiceLocator.Instance.GetService<INetworkManager>().SetMinigamesLevel(package._gameDifficulty._level);
     }
 
     /// <summary>Pause the session</summary>
@@ -59,7 +59,7 @@ public class ClientHandle
     /// <param name="package">The package that is received</param>
     public static void QuitGame()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = true;
+        ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(true);
        SceneManager.LoadScene("CristinaTest");
         //Poner que vaya a la ventana de puntuaciones finales
         EDebug.Log("Quitando el juego");
