@@ -24,6 +24,26 @@ public class RankingClient : MonoBehaviour
         
     }
 
+    void UpdateRankingPoints()
+    {
+
+        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
+        {
+            float value = team.Value;
+
+            if (value < minPoints)
+            {
+                minPoints = value;
+            }
+            if (value > maxPoints)
+            {
+                maxPoints = value;
+            }
+        }
+        CalculateRocketsPosition();
+    }
+
+
     void CalculateRocketsPosition()
     {
         int teamNumbers = 0;
@@ -36,6 +56,7 @@ public class RankingClient : MonoBehaviour
             int positionY = (int)positionYRelative;
 
             Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[positionY].transform.position.y);
+            print(newPos);
             _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
             teamNumbers++;
         }
@@ -43,7 +64,7 @@ public class RankingClient : MonoBehaviour
 
     public IEnumerator CreateGrid()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
         foreach (Transform team in _rocketsTransforms)
         {
             team.gameObject.SetActive(false);
@@ -53,9 +74,9 @@ public class RankingClient : MonoBehaviour
         foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
         {
             _rocketsTransforms[numTeam].gameObject.SetActive(true);
-            _rocketsTransforms[numTeam].position = _rankingPositions[numTeam].position;
-            print("Pos: " + _rankingPositions[numTeam].position);
+            _rocketsTransforms[numTeam].position = new Vector2(_rocketsTransforms[numTeam].position.x, _rankingPositions[numTeam].position.y);
             numTeam++;
         }
+        UpdateRankingPoints();
     }
 }
