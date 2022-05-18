@@ -3639,6 +3639,7 @@ MonoBehaviour:
   _gameManager: {fileID: 1930978592}
   _networkManager: {fileID: 380555983}
   _inputAndroid: {fileID: 0}
+  _rankingServer: {fileID: 1038897038}
   _myServer: {fileID: 231572107}
   _error: {fileID: 0}
   _frogMessage: {fileID: 268892294}
@@ -19510,6 +19511,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1955386192}
     m_Modifications:
+    - target: {fileID: 443855954, guid: e7642493776597048bb73530d5599fc2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -19547,8 +19552,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.60004
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19602,6 +19615,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatisticsPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7292334741690956853, guid: e7642493776597048bb73530d5599fc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7642493776597048bb73530d5599fc2, type: 3}
 --- !u!224 &1038897037 stripped
@@ -19609,6 +19626,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7292334741690956852, guid: e7642493776597048bb73530d5599fc2, type: 3}
   m_PrefabInstance: {fileID: 1038897036}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1038897038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 77686457, guid: e7642493776597048bb73530d5599fc2, type: 3}
+  m_PrefabInstance: {fileID: 1038897036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e88d835ef318442bb61e36ded129fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1039763945
 GameObject:
   m_ObjectHideFlags: 0
@@ -20326,6 +20354,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1095689884}
         m_TargetAssemblyTypeName: Android, Assembly-CSharp
         m_MethodName: InsertSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1038897038}
+        m_TargetAssemblyTypeName: RankingServer, Assembly-CSharp
+        m_MethodName: CreateGrid
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -31215,6 +31255,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 512837361}
     m_Modifications:
+    - target: {fileID: 1413065910, guid: c87cae886c23f9545b10707c8e925c34, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413065910, guid: c87cae886c23f9545b10707c8e925c34, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2496200210141017822, guid: c87cae886c23f9545b10707c8e925c34, type: 3}
       propertyPath: m_Name
       value: 02BPhone

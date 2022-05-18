@@ -172,4 +172,19 @@ public class GMSinBucle : MonoBehaviour,IGameManager
     {
         throw new System.NotImplementedException();
     }
+
+    public void SetTeamPoints(int index, int points)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Dictionary<int, int> GetTeamPoints()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AddTeam(int index)
+    {
+        throw new System.NotImplementedException();
+    }
 }

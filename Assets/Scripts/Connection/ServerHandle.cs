@@ -50,5 +50,6 @@ public class ServerHandle {
         int idSession = ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().GetIDSession();
 
         ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().InsertMatch(idSession,studentName, gameName,team, success, errors, time, points, level);
+        ServiceLocator.Instance.GetService<IGameManager>().SetTeamPoints(team, points);
     }
 }

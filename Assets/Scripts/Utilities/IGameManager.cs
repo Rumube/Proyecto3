@@ -52,4 +52,7 @@ public interface IGameManager
     public void SetMinigamesMaximumLevel(int level);
     public int GetMinigamesMaximumLevel();
     public bool GetReturnToCommonScene();
+    public void SetTeamPoints(int index, int points);
+    public void AddTeam(int index);
+    public Dictionary<int, int> GetTeamPoints();
 }

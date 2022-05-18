@@ -20,7 +20,6 @@ public class RankingServer : MonoBehaviour
     [Header("Test")]
     public bool _newDataFromClient;
     public bool _generateGrid;
-    public TestingRankings _testingRankings;
 
     [Header("References")]
     public Transform _lowerLevel;
@@ -52,37 +51,37 @@ public class RankingServer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_newDataFromClient)
-        {
-            _newDataFromClient = false;
-            UpdateRankingPoints();
-        }
-        if (_generateGrid)
-        {
-            _generateGrid = false;
-            CreateGrid();
-        }
+        //if (_newDataFromClient)
+        //{
+        //    _newDataFromClient = false;
+        //    UpdateRankingPoints();
+        //}
+        //if (_generateGrid)
+        //{
+        //    _generateGrid = false;
+        //    CreateGrid();
+        //}
 
 
         //CHANGE VISUAL POINTS
-        if (_currentMaxPoints < maxPoints && _rankingStarted)
-        {
-            _currentMaxPoints++;
-            _maxPoints.text = _currentMaxPoints.ToString();
-        }
-        else
-        {
-            _lastMaxPoints = maxPoints;
-        }
-        if (_currentMinPoints < minPoints && _rankingStarted)
-        {
-            _currentMinPoints++;
-            _minPoints.text = _currentMinPoints.ToString();
-        }
-        else
-        {
-            _lastMinPoints = minPoints;
-        }
+        //if (_currentMaxPoints < maxPoints && _rankingStarted)
+        //{
+        //    _currentMaxPoints++;
+        //    _maxPoints.text = _currentMaxPoints.ToString();
+        //}
+        //else
+        //{
+        //    _lastMaxPoints = maxPoints;
+        //}
+        //if (_currentMinPoints < minPoints && _rankingStarted)
+        //{
+        //    _currentMinPoints++;
+        //    _minPoints.text = _currentMinPoints.ToString();
+        //}
+        //else
+        //{
+        //    _lastMinPoints = minPoints;
+        //}
 
     }
 
@@ -91,98 +90,103 @@ public class RankingServer : MonoBehaviour
     /// </summary>
     public void CreateGrid()
     {
+        //for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); i++)
+        //{
+        //    ServiceLocator.Instance.GetService<IGameManager>().AddTeam(i);
+        //}
 
-        foreach (Transform team in _rocketsTransforms)
-        {
-            team.gameObject.SetActive(false);
-        }
+        //Dictionary<int, int> teamPoints = ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints();
+        //foreach (Transform team in _rocketsTransforms)
+        //{
+        //    team.gameObject.SetActive(false);
+        //}
 
-        List<GameObject> teamParentList = new List<GameObject>();
-        int numTeam = 1;
+        //List<GameObject> teamParentList = new List<GameObject>();
+        //int numTeam = teamPoints.Count;
 
-        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
-        {
-            GameObject teamParent = new GameObject();
-            teamParent.name = "Team_" + numTeam;
-            teamParentList.Add(teamParent);
-            _rocketsTransforms[numTeam - 1].gameObject.SetActive(true);
-            _rocketsTransforms[numTeam - 1].gameObject.transform.position = teamParent.GetComponentInChildren<Transform>().position;
-            numTeam++;
-            teamParent.transform.SetParent(_rankingGridParent.transform);
-            teamParent.AddComponent<VerticalLayoutGroup>();
-            teamParent.GetComponent<VerticalLayoutGroup>().spacing = 80;
-            teamParent.GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
-            teamParent.transform.localScale = new Vector3(1, 1, 1);
-        }
-        _numTotalTeams = numTeam - 1;
-        _gridPositions = new GameObject[numTeam-1, 11];   
-        for (int i = 0; i < teamParentList.Count; i++)
-        {
-            for (int j = 0; j < 11; j++)
-            {
-                GameObject cellInGrid = new GameObject();
-                cellInGrid.name = "Team" + i + "_Pos" + j;
-                cellInGrid.transform.SetParent(teamParentList[i].transform);
-                cellInGrid.AddComponent<RectTransform>();
-                _gridPositions[i, j] = cellInGrid;
-                print(_gridPositions[i, j].GetComponent<RectTransform>().position);
-            }
-        }
-        int currentTeam = 0;
+        //foreach (KeyValuePair<int, int> team in teamPoints)
+        //{
+        //    GameObject teamParent = new GameObject();
+        //    teamParent.name = "Team_" + numTeam;
+        //    teamParentList.Add(teamParent);
+        //    _rocketsTransforms[numTeam - 1].gameObject.SetActive(true);
+        //    _rocketsTransforms[numTeam - 1].gameObject.transform.position = teamParent.GetComponentInChildren<Transform>().position;
+        //    numTeam++;
+        //    teamParent.transform.SetParent(_rankingGridParent.transform);
+        //    teamParent.AddComponent<VerticalLayoutGroup>();
+        //    teamParent.GetComponent<VerticalLayoutGroup>().spacing = 80;
+        //    teamParent.GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
+        //    teamParent.transform.localScale = new Vector3(1, 1, 1);
+        //}
+        //_numTotalTeams = numTeam - 1;
+        //_gridPositions = new GameObject[numTeam-1, 11];   
+        //for (int i = 0; i < teamParentList.Count; i++)
+        //{
+        //    for (int j = 0; j < 11; j++)
+        //    {
+        //        GameObject cellInGrid = new GameObject();
+        //        cellInGrid.name = "Team" + i + "_Pos" + j;
+        //        cellInGrid.transform.SetParent(teamParentList[i].transform);
+        //        cellInGrid.AddComponent<RectTransform>();
+        //        _gridPositions[i, j] = cellInGrid;
+        //        print(_gridPositions[i, j].GetComponent<RectTransform>().position);
+        //    }
+        //}
+        //int currentTeam = 0;
 
-        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
-        {
-            print(_gridPositions[currentTeam, 0]);
-            _rocketsTransforms[team.Key].transform.position = _gridPositions[currentTeam, 0].transform.position;
-            currentTeam++;
-        }
-        StartCoroutine(setGrid());
+        //foreach (KeyValuePair<int, int> team in teamPoints)
+        //{
+        //    print(_gridPositions[currentTeam, 0]);
+        //    _rocketsTransforms[team.Key].transform.position = _gridPositions[currentTeam, 0].transform.position;
+        //    currentTeam++;
+        //}
+        //StartCoroutine(setGrid());
     }
 
     /// <summary>
     /// Update the teams points
     /// </summary>
-    void UpdateRankingPoints()
+    public void UpdateRankingPoints(Dictionary<int, int> teamPoints)
     {
 
-        if (!_rankingStarted)
-            _rankingStarted = true;
+        //if (!_rankingStarted)
+        //    _rankingStarted = true;
 
-        if (float.TryParse(_maxPoints.text,out maxPoints))
-        {
-            if (float.TryParse(_minPoints.text, out minPoints))
-            {
-                foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
-                {
-                    int key = team.Key;
-                    float value = team.Value;
+        //if (float.TryParse(_maxPoints.text,out maxPoints))
+        //{
+        //    if (float.TryParse(_minPoints.text, out minPoints))
+        //    {
+        //        foreach (KeyValuePair<int, int> team in teamPoints)
+        //        {
+        //            int key = team.Key;
+        //            float value = team.Value;
 
-                    if (value < _minPointsInt)
-                    {
-                        minPoints = value;
-                        _minPointsInt = value;
-                    }
-                    if (value > _maxPointsInt)
-                    {
-                        maxPoints = value;
-                        _maxPointsInt = value;
-                    }
-                }
-            }
-        }
-        _minPoints.text = minPoints.ToString();
-        _maxPoints.text = maxPoints.ToString();
+        //            if (value < _minPointsInt)
+        //            {
+        //                minPoints = value;
+        //                _minPointsInt = value;
+        //            }
+        //            if (value > _maxPointsInt)
+        //            {
+        //                maxPoints = value;
+        //                _maxPointsInt = value;
+        //            }
+        //        }
+        //    }
+        //}
+        //_minPoints.text = minPoints.ToString();
+        //_maxPoints.text = maxPoints.ToString();
 
-        CalculateRocketsPosition();
+        //CalculateRocketsPosition(teamPoints);
     }
 
     /// <summary>
     /// Calculates the position of the rockets
     /// </summary>
-    void CalculateRocketsPosition()
+    void CalculateRocketsPosition(Dictionary<int, int> teamPoints)
     {
         int teamNumbers = 0;
-        foreach(KeyValuePair<int, float> team in _testingRankings._teamPoints)
+        foreach(KeyValuePair<int, int> team in teamPoints)
         {
             float positionYRelative = (team.Value - minPoints) / (maxPoints - minPoints);
 
