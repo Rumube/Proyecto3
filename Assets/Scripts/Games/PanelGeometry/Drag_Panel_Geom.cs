@@ -27,13 +27,16 @@ public class Drag_Panel_Geom : MonoBehaviour
 
     public Vector3 pos;
     public float returnVelocity = 3;
+    public GameObject target; 
 
+    //Si pinchas el que no es Correct = false y si no a true
    
     // Start is called before the first frame update
 
     // Update is called once per frame
     void Start()
     {
+        target.GetComponent<DragParentPropieties>();
          pos = this.transform.position;
        // TiposEngra.AddRange(GameObject.FindGameObjectsWithTag("TagName3"));
     }
