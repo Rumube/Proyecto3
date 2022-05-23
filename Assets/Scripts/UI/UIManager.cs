@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
     /// <summary>Just start the timer when the configuration is done and show the number of tablets that are connected</summary>
     public void StartGameSession()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.playing;
+        ServiceLocator.Instance.GetService<IGameManager>().SetServerState(IGameManager.GAME_STATE_SERVER.playing);
         StartCoroutine(StartCountdown());
 
         //RectTransform rt = ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.GetComponent(typeof(RectTransform)) as RectTransform;
@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
         //        break;
         //}
 
-        for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
+        for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<MobileUI>()._tabletButtonPrefabStadistics.gameObject, ServiceLocator.Instance.GetService<MobileUI>()._tabletsPanelStadistics.gameObject.transform);
             newButton.transform.GetChild(1).GetComponentInChildren<Image>().sprite = newButton.GetComponent<TabletButton>()._rocketSprites[i];
@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
     {
         while ((_timeSessionMinutes > 0 && _timeSessionSeconds >= 0) || (_timeSessionMinutes == 0 && _timeSessionSeconds > 0))
         {
-            yield return new WaitUntil(() => ServiceLocator.Instance.GetService<GameManager>()._pause == false);
+            yield return new WaitUntil(() => ServiceLocator.Instance.GetService<IGameManager>().GetPause() == false);
             if (_timeSessionSeconds >= 1)
             {
                 _timeSessionSeconds--;
