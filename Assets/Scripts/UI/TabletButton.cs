@@ -16,7 +16,7 @@ public class TabletButton : MonoBehaviour
     {
         ServiceLocator.Instance.GetService<MobileUI>().QuitHighlightTablets();
         _highlighted.gameObject.SetActive(true);
-        ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet = index_rocket + 1;
+        ServiceLocator.Instance.GetService<INetworkManager>().SetSelectedTablet(index_rocket + 1);
         ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
     }
 

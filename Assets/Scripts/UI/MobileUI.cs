@@ -151,16 +151,16 @@ public class MobileUI : UI
     private void Update()
     {
         //Control the instructions deppending on the game state
-        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        switch (ServiceLocator.Instance.GetService<IGameManager>().GetServerState())
         {
-            case GameManager.GAME_STATE_SERVER.connection:
+            case IGameManager.GAME_STATE_SERVER.connection:
                 //Update the number of tablets that are connected just when something is new connected
-                if (ServiceLocator.Instance.GetService<NetworkManager>().GetUpdateConnectedTablets())
+                if (ServiceLocator.Instance.GetService<INetworkManager>().GetUpdateConnectedTablets())
                 {
-                    _connectedTablets.text = ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() + "/6";
-                    ServiceLocator.Instance.GetService<NetworkManager>().SetUpdateConnectedTablets(false);
+                    _connectedTablets.text = ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets() + "/6";
+                    ServiceLocator.Instance.GetService<INetworkManager>().SetUpdateConnectedTablets(false);
                 }
-                if (ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() > 0)
+                if (ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets() > 0)
                 {
                     ActivateContinueGameConnection();
                 }
@@ -169,11 +169,11 @@ public class MobileUI : UI
                     DesctivateContinueGameConnection();
                 }
                 break;
-            case GameManager.GAME_STATE_SERVER.teamConfiguration:
-                if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == true)
+            case IGameManager.GAME_STATE_SERVER.teamConfiguration:
+                if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == true)
                 {
                     StudentButtonDisableInteractuable();
-                } else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == false)
+                } else if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() != 0 && _studentsPanel.transform.childCount > 0 && _studentsPanel.transform.GetChild(0).GetComponent<Button>().interactable == false)
                 {
                     StudentButtonAbleInteractuable();
                 }
@@ -183,7 +183,7 @@ public class MobileUI : UI
                 }
                 break;
 
-            case GameManager.GAME_STATE_SERVER.playing:
+            case IGameManager.GAME_STATE_SERVER.playing:
                 ShowCountDown();
                 break;
         }
@@ -443,8 +443,8 @@ public class MobileUI : UI
     /// <summary>Show the IP and port from the device</summary>
     public void GetIpPort()
     {
-        _ip.text = "IP: " + ServiceLocator.Instance.GetService<NetworkManager>()._ip;
-        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<NetworkManager>()._port;
+        _ip.text = "IP: " + ServiceLocator.Instance.GetService<INetworkManager>().GetIp();
+        _port.text = "Puerto: " + ServiceLocator.Instance.GetService<INetworkManager>().GetPort();
     }
     /// <summary>Activates the continue button of Game connection</summary>
     public void ActivateContinueGameConnection()
@@ -471,15 +471,15 @@ public class MobileUI : UI
     /// </summary>
     public void InstantiateTabletsAddStudent()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._gameStateServer = GameManager.GAME_STATE_SERVER.teamConfiguration;
+        ServiceLocator.Instance.GetService<IGameManager>().SetServerState(IGameManager.GAME_STATE_SERVER.teamConfiguration);
 
-        for (int i = 0; i < ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets(); ++i)
+        for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); ++i)
         {
             GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
             newButton.GetComponent<TabletButton>().index_rocket = i;
             newButton.GetComponentInChildren<Image>().sprite = newButton.GetComponent<TabletButton>()._rocketSprites[i];
-            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));// a lo mejor no lo necesito
-            ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(i));
+            _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<INetworkManager>().GetTablets(i));// a lo mejor no lo necesito
+            ServiceLocator.Instance.GetService<INetworkManager>().SetStudentToTablet(ServiceLocator.Instance.GetService<INetworkManager>().GetTablets(i));
         }
     }
 
@@ -487,9 +487,9 @@ public class MobileUI : UI
     public void UpdateTabletsAddStudent()
     {
         GameObject newButton = Instantiate(_tabletButton, _tabletsPanel.transform);
-        newButton.GetComponentInChildren<TextMeshProUGUI>().text = ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() - 1)._id.ToString();
-        _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets()));// a lo mejor no lo necesito
-        ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Add(ServiceLocator.Instance.GetService<NetworkManager>().GetTablets(ServiceLocator.Instance.GetService<NetworkManager>().GetConnectedTablets() - 1));
+        newButton.GetComponentInChildren<TextMeshProUGUI>().text = ServiceLocator.Instance.GetService<INetworkManager>().GetTablets(ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets() - 1)._id.ToString();
+        _tabletButtonAssociation.Add(newButton, ServiceLocator.Instance.GetService<INetworkManager>().GetTablets(ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets()));// a lo mejor no lo necesito
+        ServiceLocator.Instance.GetService<INetworkManager>().SetStudentToTablet(ServiceLocator.Instance.GetService<INetworkManager>().GetTablets(ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets() - 1));
     }
 
     /// <summary>If we go back destroy all the tablets and clear the lists of the association between tablets and students </summary>
@@ -499,7 +499,7 @@ public class MobileUI : UI
         for (int i = 0; i < numTablets; ++i)
         {
             Destroy(_tabletsPanel.transform.GetChild(i).gameObject);
-            ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[i]._students.Clear();
+            ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[i]._students.Clear();
         }
 
         int numStudents = _studentsPanel.transform.childCount;
@@ -509,7 +509,7 @@ public class MobileUI : UI
         }
 
         _tabletButtonAssociation.Clear();
-        ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets.Clear();
+        ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets().Clear();
     }
 
     /// <summary>Quit the highlight for every tablet in add student</summary>
@@ -524,9 +524,9 @@ public class MobileUI : UI
     /// <summary>Shows the number of mininautas that ahas a specific tablet</summary>
     public void UpdateNumberMininautas()
     {
-        if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet > 0)
+        if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() > 0)
         {
-            _numMininautas.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count + "/12";
+            _numMininautas.text = ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() - 1]._students.Count + "/12";
 
         }
         else
@@ -719,8 +719,8 @@ public class MobileUI : UI
     /// <param name="gameName">game's name that played by the student</param>
     public void OpenInfoTabletStudentGamePanel(int index)
     {
-        _studentNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index - 1]._currentStudent;
-        _gameNameText.text = ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[index - 1]._currentGame;
+        _studentNameText.text = ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[index - 1]._currentStudent;
+        _gameNameText.text = ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[index - 1]._currentGame;
         _studentGamePanel.SetActive(true);
     }
 
@@ -740,9 +740,9 @@ public class MobileUI : UI
     /// <summary>Pause/unpause the session and change the button's sprite</summary>
     public void PauseGame()
     {
-        ServiceLocator.Instance.GetService<GameManager>()._pause = !ServiceLocator.Instance.GetService<GameManager>()._pause;
-        ServiceLocator.Instance.GetService<ServerUtility>().PauseSession(ServiceLocator.Instance.GetService<GameManager>()._pause);
-        if (ServiceLocator.Instance.GetService<GameManager>()._pause)
+        ServiceLocator.Instance.GetService<IGameManager>().SetPause(!ServiceLocator.Instance.GetService<IGameManager>().GetPause());
+        ServiceLocator.Instance.GetService<ServerUtility>().PauseSession(ServiceLocator.Instance.GetService<IGameManager>().GetPause());
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetPause())
         {
             _pauseButton.gameObject.GetComponent<Image>().sprite = _playSprite;
         }

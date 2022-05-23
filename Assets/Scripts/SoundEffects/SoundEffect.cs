@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class SoundEffect : MonoBehaviour
 {
-    public AudioClip shootSound; //add sound to be played
 
-    AudioSource sound;
+    public GameObject starSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        sound = GetComponent<AudioSource> ();
+        
     }
 
     // Update is called once per frame
@@ -19,8 +18,8 @@ public class SoundEffect : MonoBehaviour
     {
         if (Input.GetMouseButton(0)) 
         {
-            sound.clip = shootSound;
-            sound.Play();
+            Instantiate(starSound);
+            
         }
     }
 }

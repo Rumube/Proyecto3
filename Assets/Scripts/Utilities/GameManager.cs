@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour,IGameManager
+public class GameManager : MonoBehaviour, IGameManager
 {
     [Header("Minigames scene names")]
     public List<string> _minigamesNames = new List<string>();
@@ -15,32 +15,11 @@ public class GameManager : MonoBehaviour,IGameManager
     public bool _pause = false;
     public bool _returnToCommonScene = false;
     public bool _endSessionTablet = false;
-    public enum GAME_STATE_SERVER
-    {
-        init = 0,
-        previousConfiguration = 1,
-        connection = 2,
-        teamConfiguration = 3,
-        playing = 4,
-        pause = 5,
-        quit = 6,
-        disconnect = 7
 
-    }
-    public GAME_STATE_SERVER _gameStateServer;
 
-    //public enum GAME_STATE_CLIENT
-    //{
-    //    init = 0,
-    //    searching = 1,
-    //    selectStudent = 2,
-    //    playing = 3,
-    //    pause = 4,
-    //    gameOver = 5,
-    //    ranking = 6,
-    //    globalRanking = 7,
+    public Dictionary<int, int> _teamPoints = new Dictionary<int, int>();
 
-    //}
+    public IGameManager.GAME_STATE_SERVER _gameStateServer;
     public IGameManager.GAME_STATE_CLIENT _gameStateClient;
 
     public static GameManager Instance;
@@ -55,21 +34,21 @@ public class GameManager : MonoBehaviour,IGameManager
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-        }       
+        }
     }
 
     void Start()
     {
-        _gameStateServer = GAME_STATE_SERVER.init;
+      _gameStateServer = IGameManager.GAME_STATE_SERVER.init;
     }
 
     public void PreviousConfigurationState()
     {
-        _gameStateServer = GAME_STATE_SERVER.previousConfiguration;
+        _gameStateServer = IGameManager.GAME_STATE_SERVER.previousConfiguration;
     }
     public void ConnectionState()
     {
-        _gameStateServer = GAME_STATE_SERVER.connection;
+        _gameStateServer = IGameManager.GAME_STATE_SERVER.connection;
     }
 
     public void RandomizeStudentsList()
@@ -109,8 +88,91 @@ public class GameManager : MonoBehaviour,IGameManager
     {
         _gameStateClient = gameStateClient;
     }
+    public void SetServerState(IGameManager.GAME_STATE_SERVER gameStateServer)
+    {
+        _gameStateServer = gameStateServer;
+    }
     public void SetReturnToCommonScene(bool value)
     {
         _returnToCommonScene = value;
+    }
+
+    IGameManager.GAME_STATE_SERVER IGameManager.GetServerState()
+    {
+        return _gameStateServer;
+    }
+
+    public void SetMinigames(string _names)
+    {
+        _minigamesNames.Add(_names);
+    }
+
+    public List<string> GetMinigames()
+    {
+        return _minigamesNames;
+    }
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+    public void SetPause(bool value)
+    {
+        _pause = value;
+    }
+    public bool GetPause()
+    {
+        return _pause;
+    }
+    public void SetEndSessionTablet(bool value)
+    {
+        _endSessionTablet = value;
+    }
+    public bool GetEndSessionTablet()
+    {
+        return _endSessionTablet;
+    }
+    public void SetCurrentGameName(string name)
+    {
+        _currentgameName = name;
+    }
+    public string GetCurrentGameName()
+    {
+        return _currentgameName;
+    }
+    public void SetCurrentStudentName(string name)
+    {
+        _currentstudentName = name;
+    }
+    public string GetCurrentStudentName()
+    {
+        return _currentstudentName;
+    }
+    public void SetMinigamesMaximumLevel(int level)
+    {
+        _minigamesMaximumLevel = level;
+    }
+    public int GetMinigamesMaximumLevel()
+    {
+        return _minigamesMaximumLevel;
+    }
+
+    public bool GetReturnToCommonScene()
+    {
+        return _returnToCommonScene;
+    }
+
+    public void SetTeamPoints(int index, int points)
+    {
+        //_teamPoints[index-1] += points;
+        //ServiceLocator.Instance.GetService<RankingServer>().UpdateRankingPoints(_teamPoints);
+    }
+
+    public Dictionary<int, int> GetTeamPoints()
+    {
+        return _teamPoints;
+    }
+    public void AddTeam(int index)
+    {
+        _teamPoints.Add(index, 0);
     }
 }

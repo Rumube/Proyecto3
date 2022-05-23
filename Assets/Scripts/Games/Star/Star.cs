@@ -12,26 +12,40 @@ public class Star : Geometry
     private GameObject _gm;
     [Header("States")]
     private bool _touched;
+    [Header("References")]
+    private AudioSource _audio;
+    public AudioClip _clipStarSelected;
+    public GameObject _light;
+    public Animator _anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _audio = GetComponent<AudioSource>();
+        _anim.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        _needsHold = false;
+        if (_gm.GetComponent<ConstelationGenerator>().GetStarsSelecteds() > 0)
+            _needsHold = true;
+
         if (_needsHold)
         {
             if (_touched)
             {
                 _timePressed += Time.deltaTime;
-                if(_timePressed >= _timeToBePressed && !_isConnected)
+                if (_timePressed >= _timeToBePressed && !_isConnected)
                 {
+                    _light.SetActive(true);
                     _isConnected = true;
-                    //_gm.GetComponent<ConstelationGenerator>().AddNewPosition(transform.position);
                     _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
+                    _audio.clip = _clipStarSelected;
+                    _audio.Play();
+                    _anim.gameObject.SetActive(true);
+                    _anim.Play("Star_Slected_Rotation");
                 }
             }
             else
@@ -42,6 +56,21 @@ public class Star : Geometry
         else
         {
             //TODO: NO NEED HOLD
+            if (_touched)
+            {
+
+                _light.SetActive(true);
+                _isConnected = true;
+                _gm.GetComponent<ConstelationGenerator>().CheckIfIsCorrect(gameObject);
+                _audio.clip = _clipStarSelected;
+                _audio.Play();
+                _anim.gameObject.SetActive(true);
+                _anim.Play("Star_Slected_Rotation");
+            }
+            else
+            {
+                _timePressed = 0;
+            }
         }
         _touched = false;
     }
@@ -55,11 +84,15 @@ public class Star : Geometry
     public void InitStart(GameObject gm)
     {
         _gm = gm;
+        _timeToBePressed = 0.5f;
     }
 
     public void SetIsConnected(bool value)
     {
         _isConnected = value;
+        _light.SetActive(value);
+        _anim.Play("Static");
+        _anim.gameObject.SetActive(value);
     }
 
     public bool GetIsConnected()

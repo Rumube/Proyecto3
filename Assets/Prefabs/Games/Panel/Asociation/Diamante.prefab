@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4468716113136632512
 RectTransform:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1944529095532759705, guid: 45fe01094c20ca7428e8eeb033b1e6fe, type: 3}
+  m_Sprite: {fileID: 8632359831092636778, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 8868426237596374926, guid: 45fe01094c20ca7428e8eeb033b1e6fe, type: 3}
+    m_PressedSprite: {fileID: -8045160009028869489, guid: 49168c69d3f816d4298a17cbe230ec96, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: -8342586458111812675, guid: 405509bb91967db40a8d56ab97780f43, type: 3}
   m_AnimationTriggers:
@@ -303,6 +303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placed: 1
   _pressed: 0
+  _pressedSprite: {fileID: 0}
+  _restSprite: {fileID: 0}
   buttonCounter: {fileID: 0}
 --- !u!114 &3105265224847931298
 MonoBehaviour:
