@@ -90,7 +90,7 @@ public class AlienGenerator : MonoBehaviour
         GenerateNewValues();
         PartsSelection();
         GenerateAlien(_armInstructions, _legInstructions, _mouthInstructions, _eyeInstructions);
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Cuenta las partes del alien", true);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Cuenta las partes del alien que hay dibujados en la libreta", true);
 
         
         _eyeText.GetComponent<Text>().text = ""+0;
