@@ -125,7 +125,6 @@ public class RankingServer : MonoBehaviour
                 cellInGrid.name = "Team" + i + "_Pos" + j;
                 cellInGrid.transform.SetParent(teamParentList[i].transform);
                 cellInGrid.AddComponent<RectTransform>();
-                cellInGrid.AddComponent<Image>();
                 _gridPositions[i, j] = cellInGrid;
                 print(_gridPositions[i, j].GetComponent<RectTransform>().position);
             }
