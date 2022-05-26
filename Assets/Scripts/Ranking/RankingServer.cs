@@ -88,12 +88,16 @@ public class RankingServer : MonoBehaviour
     /// <summary>
     /// Creates the ranking grid
     /// </summary>
-    public void CreateGrid()
+    public void CreateGrid(bool finalScore = false)
     {
-        for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); i++)
-        {
-            ServiceLocator.Instance.GetService<IGameManager>().AddTeam(i);
-        }
+        //if (!finalScore)
+        //{
+            for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); i++)
+            {
+                ServiceLocator.Instance.GetService<IGameManager>().AddTeam(i);
+            }
+        //}
+        
 
         Dictionary<int, int> teamPoints = ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints();
         foreach (Transform team in _rocketsTransforms)
@@ -206,12 +210,13 @@ public class RankingServer : MonoBehaviour
     /// </summary>
     IEnumerator setGrid()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
             print(_gridPositions[team.Key, 0]);
             _rocketsTransforms[team.Key].transform.position = _gridPositions[team.Key, 0].transform.position;
         }
+        UpdateRankingPoints(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());
     }
 }
