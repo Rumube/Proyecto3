@@ -69,6 +69,8 @@ public class AlienGenerator : MonoBehaviour
     private int _level;
     private bool _isCheking = false;
 
+    private int _success;
+    private int _errors;
 
     // Start is called before the first frame update
     void Start()
@@ -285,10 +287,15 @@ public class AlienGenerator : MonoBehaviour
             {
                 _isCheking = true;
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+                _success++;
+                ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_success, _errors);
+                _success = 0;
+                _errors = 0;
                 StartCoroutine(cleanAlien());
             }
             else
             {
+                _errors++;
                 ServiceLocator.Instance.GetService<IError>().GenerateError();
             }
         }
