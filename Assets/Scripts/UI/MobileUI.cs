@@ -98,6 +98,7 @@ public class MobileUI : UI
 
     [Header("Final Score")]
     public TextMeshProUGUI _numTabletsViewingFinalScore;
+    public RankingServer _rankingServer;
     void Start()
     {
         //Adding root windows in order of appearance
@@ -734,6 +735,7 @@ public class MobileUI : UI
     public void ShownFinalScoreScreen()
     {
         ServiceLocator.Instance.GetService<ServerUtility>().FinishSession();
+        _rankingServer.CreateGrid(true);
         OpenNextWindow();
     }
 

@@ -74,7 +74,7 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
     {
         float finishTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetFinishTime();
 
-        _average.averagePoints = _points * 100.0f;
+        
 
         float sumTime = 0;
         for (int i = 0; i < _timeList.Count; i++)
@@ -93,6 +93,15 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
             _average.averageSuccess = 0;
             _average.averageFails = 0;
         }
+        if (_average.averageSuccess == _average.averageFails)
+        {
+            _average.averagePoints = 100;
+        }
+        else
+        {
+            _average.averagePoints = _points * 100.0f;
+        }
+        
     }
 
     public Average GetAverage()
