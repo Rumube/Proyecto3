@@ -21,10 +21,15 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            Instantiate(ClickSound);
-        }
+        //if (Input.GetMouseButton(0))
+        //{
+        //    Instantiate(ClickSound);
+        //}
+    }
+
+    public void MakeSound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 
     public void ShowScreen()
