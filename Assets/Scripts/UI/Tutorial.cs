@@ -2,46 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-public class CreditsButtons : MonoBehaviour
+public class Tutorial : MonoBehaviour
 {
-    public GameObject _creditPanel;
+    public GameObject _eachScreen;
     int _showingValue;
 
     public GameObject ClickSound;
 
-    public TMP_Text _panelText;
-    public string _eachText;
 
 
     void Start()
     {
-        _creditPanel.SetActive(false);
+        _eachScreen.SetActive(false);
         _showingValue = 0;
-       _panelText.text = _eachText;
+       
     }
 
     void Update()
     {
-     
+        //if (Input.GetMouseButton(0))
+        //{
+        //    Instantiate(ClickSound);
+        //}
     }
+
     public void MakeSound()
     {
         GetComponent<AudioSource>().Play();
     }
 
-    public void ShowMessage()
+    public void ShowScreen()
     {
         if (_showingValue == 0)
         {
-            _creditPanel.SetActive(true);
+            _eachScreen.SetActive(true);
             _showingValue = 1;
         }
-        else 
+        else
         {
-            _creditPanel.SetActive(false);
+            _eachScreen.SetActive(false);
             _showingValue = 0;
         }
+    }
+
+    public void BackScreen()
+    {
+        _eachScreen.SetActive(false);
+        _showingValue = 0;
     }
 }

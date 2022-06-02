@@ -31,6 +31,10 @@ public abstract class UI : MonoBehaviour,IUI
     {
         ServiceLocator.Instance.GetService<UIManager>()._credits.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._credits.activeSelf);
     }
+    public void TutorialMobile()
+    {
+        ServiceLocator.Instance.GetService<UIManager>()._tutorial.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._tutorial.activeSelf);
+    }
     public void CreditsTablet()
     {
         ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.activeSelf);

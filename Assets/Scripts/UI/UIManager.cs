@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [Header("MovileWindows")]
     public GameObject _initialScreen;
     public GameObject _credits;
+    public GameObject _tutorial;
     public GameObject _mainMenu;
     public GameObject _popupAddClass;
     public GameObject _popupDeleteClass;

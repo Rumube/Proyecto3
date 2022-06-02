@@ -10,7 +10,7 @@ public class MobileUI : UI
 {
     [Header("Initial screen")]
     public VideoPlayer _video;
-    public Animator[] _initialButtonAnims = new Animator[3];
+    public Animator[] _initialButtonAnims = new Animator[4];
     public Animator _fadeOutInitialScreen;
 
     [Header("Main Menu")]
@@ -118,6 +118,7 @@ public class MobileUI : UI
         }
         //Non root windows
         ServiceLocator.Instance.GetService<UIManager>()._credits.SetActive(false);
+        ServiceLocator.Instance.GetService<UIManager>()._tutorial.SetActive(false);
         ServiceLocator.Instance.GetService<UIManager>()._popupAddClass.SetActive(false);
         ServiceLocator.Instance.GetService<UIManager>()._popupDeleteClass.SetActive(false);
         ServiceLocator.Instance.GetService<UIManager>()._popupAddStudent.SetActive(false);
