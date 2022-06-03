@@ -155,7 +155,7 @@ public class GMSinBucle : MonoBehaviour,IGameManager
 
     public string GetCurrentStudentName()
     {
-        throw new System.NotImplementedException();
+        return _currentstudentName;
     }
 
     public void SetMinigamesMaximumLevel(int level)
@@ -180,7 +180,10 @@ public class GMSinBucle : MonoBehaviour,IGameManager
 
     public Dictionary<int, int> GetTeamPoints()
     {
-        throw new System.NotImplementedException();
+        Dictionary<int, int> points = new Dictionary<int, int>();
+        points.Add(0, 100);
+        points.Add(1, 50);
+        return points;
     }
 
     public void AddTeam(int index)

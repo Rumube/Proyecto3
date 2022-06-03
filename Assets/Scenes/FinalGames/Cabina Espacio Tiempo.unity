@@ -742,6 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentTime: 0
   _finishTime: 0
+  _miniGameRanking: {fileID: 0}
 --- !u!114 &549744164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2494,6 +2495,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2092755308462480925, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: _currentstudentName
+      value: "Rub\xE9n"
+      objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameLevel
       value: 1
@@ -2504,7 +2509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3917465416531648716, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _notGameLoop
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917465416531648716, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _rankingClient

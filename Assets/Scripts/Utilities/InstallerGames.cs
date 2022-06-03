@@ -71,7 +71,6 @@ public class InstallerGames : MonoBehaviour
         {
             ServiceLocator.Instance.RegisterService<IGameManager>(_gameManagerWithOutLoop);
             ServiceLocator.Instance.RegisterService<INetworkManager>(_netManagerWithOutLoop);
-            ServiceLocator.Instance.RegisterService(_rankingClient);
         }
     }
 }
