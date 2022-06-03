@@ -80,18 +80,18 @@ public class TabletUI : UI
             _windowsTree[i].SetActive(false);
         }
         //If a minigame is finished but not the session, it calls another student
-        if (ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetReturnToCommonScene())
         {
             _uiIndex = 2;
             NewStudentGame();
-            ServiceLocator.Instance.GetService<GameManager>()._returnToCommonScene = false;
+            ServiceLocator.Instance.GetService<IGameManager>().SetReturnToCommonScene(false);
         }
         //If the time session ends or the teacher decided it, the tablet opens the final score
-        if (ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetEndSessionTablet())
         {
             _uiIndex = 4;
-            ServiceLocator.Instance.GetService<GameManager>()._endSessionTablet = false;
-            ServiceLocator.Instance.GetService<NetworkManager>().SendViewingFinalScore();
+            ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
+            ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
 
         }
         //Active just the first one
@@ -182,7 +182,7 @@ public class TabletUI : UI
         yield return new WaitForSeconds(3.0f);
         _doorsClosedAudio.Play();
         yield return new WaitForSeconds(3.0f);
-        ServiceLocator.Instance.GetService<NetworkManager>().SendEndCalling();
+        ServiceLocator.Instance.GetService<INetworkManager>().SendEndCalling();
     }
 
     /// <summary>
@@ -219,9 +219,9 @@ public class TabletUI : UI
     /// </summary>
     void SelectStudentGame()
     {
-        ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel = -1;
-        ServiceLocator.Instance.GetService<GameManager>().SelectStudentAndGame();
-        ServiceLocator.Instance.GetService<NetworkManager>().SendStudentGame();
+        ServiceLocator.Instance.GetService<INetworkManager>().SetMinigamesLevel(-1);
+        ServiceLocator.Instance.GetService<IGameManager>().SelectStudentAndGame();
+        ServiceLocator.Instance.GetService<INetworkManager>().SendStudentGame();
     }
 
     /// <summary>
@@ -229,7 +229,7 @@ public class TabletUI : UI
     /// </summary>
     void ShowStudentSelectGame()
     {      
-        _studentName.text = ServiceLocator.Instance.GetService<GameManager>()._currentstudentName;
+        _studentName.text = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
         _teamColor = (TEAMCOLOR)(int)Client._tablet._id;
         _teamColorText.text = "EQUIPO " + _teamColor;
     }
@@ -249,34 +249,38 @@ public class TabletUI : UI
     /// </summary>
     IEnumerator ShowGameSelected()
     {
-        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel != -1);
+        yield return new WaitUntil(() => ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel() != -1);
         yield return new WaitForSeconds(3.0f);
         _blackTransition.SetActive(true);
 
-        switch (ServiceLocator.Instance.GetService<GameManager>()._currentgameName)
+        switch (ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName())
         {
             case "Cabina Geometría":
+            case "Cabina Series":
             case "Cabina Espacio Tiempo":
             case "Cabina Asociación":
-            case "Cabina Sumas Restas":
+            case "Cabina Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
                 break;
             case "Telescopio Geometría":
+            case "Telescopio Series":
             case "Telescopio Espacio Tiempo":
             case "Telescopio Asociación":
-            case "Telescopio Sumas Restas":
+            case "Telescopio Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
                 break;
             case "Panel botones Geometría":
+            case "Panel botones Series":
             case "Panel botones Espacio Tiempo":
             case "Panel botones Asociación":
-            case "Panel botones Sumas Restas":
+            case "Panel botones Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
                 break;
             case "Panel tapa Geometría":
+            case "Panel tapa Series":
             case "Panel tapa Espacio Tiempo":
             case "Panel tapa Asociación":
-            case "Panel tapa Sumas Restas":
+            case "Panel tapa Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("BlackScreen_Door");
                 break;
 
@@ -285,7 +289,7 @@ public class TabletUI : UI
         
         //SceneManager.LoadScene("RubenSpaceTimeCabin");
         //Cuando este listo es el de abajo, llamar a los minijuegos tal cual estan aqui
-        SceneManager.LoadScene(ServiceLocator.Instance.GetService<GameManager>()._currentgameName);
+        SceneManager.LoadScene(ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName());
         yield return null;
     }
 }

@@ -8,6 +8,7 @@ public class DragGameObject : MonoBehaviour
     public static GameObject itemDraging;
     public GameObject selectedObject;
 
+
     [Header("Positions")]
     Vector3 mousePosition;
     Vector3 startPosition;
@@ -23,24 +24,31 @@ public class DragGameObject : MonoBehaviour
 
 
     public float returnVelocity = 3;
-    // Start is called before the first frame update
+
    
+    // Start is called before the first frame update
+
     // Update is called once per frame
     void Start()
     {
         
+       // TiposEngra.AddRange(GameObject.FindGameObjectsWithTag("TagName3"));
     }
 
     // Update is called once per frame
     void Update()
     {
+        //foreach (GameObject gc in myListofGameObject)
+        //{
 
-        /** 
+        //    Debug.Log(gc.name);
 
-      * Calcula la posición del ratón en el mundo 
- 
-       */
-        mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
+            /** 
+
+          * Calcula la posición del ratón en el mundo 
+     
+           */
+            mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
                                         Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);
 
@@ -121,7 +129,16 @@ public class DragGameObject : MonoBehaviour
             dragParentPosition = collision.gameObject.transform;
             _collisionDetected = true;
             transform.position = dragParentPosition.position;
-            _isReturning = false;
+            if (collision.gameObject.GetComponent<DragParentPropieties>().correct==true)
+            {
+                
+                _isReturning = false;
+            }
+            else
+            {
+                _isReturning = transform;
+            }
+            
         }
     }
 
