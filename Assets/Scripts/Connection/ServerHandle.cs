@@ -51,5 +51,6 @@ public class ServerHandle {
 
         ServiceLocator.Instance.GetService<ServerUtility>().gameObject.GetComponent<Android>().InsertMatch(idSession,studentName, gameName,team, success, errors, time, points, level);
         ServiceLocator.Instance.GetService<IGameManager>().SetTeamPoints(team, points);
+        ServiceLocator.Instance.GetService<ServerUtility>().BroadcastTeamPoints();
     }
 }

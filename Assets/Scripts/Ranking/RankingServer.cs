@@ -90,13 +90,13 @@ public class RankingServer : MonoBehaviour
     /// </summary>
     public void CreateGrid(bool finalScore = false)
     {
-        //if (!finalScore)
-        //{
+        if (!finalScore)
+        {
             for (int i = 0; i < ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(); i++)
             {
                 ServiceLocator.Instance.GetService<IGameManager>().AddTeam(i);
             }
-        //}
+        }
         
 
         Dictionary<int, int> teamPoints = ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints();

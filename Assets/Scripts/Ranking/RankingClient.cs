@@ -11,11 +11,10 @@ public class RankingClient : MonoBehaviour
     public List<RectTransform> _rocketsTransforms;
     public List<RectTransform> _rankingPositions;
 
-    private TestingRankings _testingRankings;
     // Start is called before the first frame update
     void Start()
     {
-        _testingRankings = GetComponent<TestingRankings>();
+        StartCoroutine(CreateGrid());
     }
 
     // Update is called once per frame
@@ -24,10 +23,10 @@ public class RankingClient : MonoBehaviour
         
     }
 
-    void UpdateRankingPoints()
+    public void UpdateRankingPoints()
     {
 
-        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
+        foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
             float value = team.Value;
 
@@ -47,31 +46,40 @@ public class RankingClient : MonoBehaviour
     void CalculateRocketsPosition()
     {
         int teamNumbers = 0;
-        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
+        foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
-            float positionYRelative = (team.Value - minPoints) / (maxPoints - minPoints);
+            if (minPoints != maxPoints)
+            {
+                float positionYRelative = (team.Value - minPoints) / (maxPoints - minPoints);
 
-            positionYRelative = (Mathf.Round(positionYRelative * 10.0f) * 0.1f) * 10;
+                positionYRelative = (Mathf.Round(positionYRelative * 10.0f) * 0.1f) * 10;
 
-            int positionY = (int)positionYRelative;
+                int positionY = (int)positionYRelative;
 
-            Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[positionY].transform.position.y);
-            print(newPos);
-            _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
+                Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[positionY].transform.position.y);
+                print(newPos);
+                _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
+            }
+            else
+            {
+                Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[team.Key].transform.position.y);
+                print(newPos);
+                _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
+            }
             teamNumbers++;
         }
     }
 
     public IEnumerator CreateGrid()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         foreach (Transform team in _rocketsTransforms)
         {
             team.gameObject.SetActive(false);
         }
 
         int numTeam = 0;
-        foreach (KeyValuePair<int, float> team in _testingRankings._teamPoints)
+        foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
             _rocketsTransforms[numTeam].gameObject.SetActive(true);
             _rocketsTransforms[numTeam].position = new Vector2(_rocketsTransforms[numTeam].position.x, _rankingPositions[numTeam].position.y);

@@ -166,7 +166,10 @@ public class GameManager : MonoBehaviour, IGameManager
         _teamPoints[index-1] += points;
         ServiceLocator.Instance.GetService<RankingServer>().UpdateRankingPoints(_teamPoints);
     }
-
+    public void SetDictionaryPoints(Dictionary<int,int> teamsPoints)
+    {
+        _teamPoints = new Dictionary<int, int>(teamsPoints);
+    }
     public Dictionary<int, int> GetTeamPoints()
     {
         return _teamPoints;

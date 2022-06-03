@@ -150,8 +150,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1626635979}
   - {fileID: 173742491}
+  - {fileID: 1626635979}
   - {fileID: 302263934}
   m_Father: {fileID: 1575182579}
   m_RootOrder: 0
@@ -191,7 +191,7 @@ RectTransform:
   - {fileID: 779794326}
   - {fileID: 1497450241}
   m_Father: {fileID: 159839157}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1198,6 +1198,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+--- !u!114 &1113728358 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6930814787855435382, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+  m_PrefabInstance: {fileID: 1113728357}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cefe6ac7a5512d4582145f99df40242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1115344631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1877,10 @@ PrefabInstance:
       propertyPath: _minigameSeconds
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 3917465416531648716, guid: f3c0236698413144ab459213746d3b06, type: 3}
+      propertyPath: _rankingClient
+      value: 
+      objectReference: {fileID: 1113728358}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3c0236698413144ab459213746d3b06, type: 3}
 --- !u!1 &1757058964 stripped

@@ -85,8 +85,7 @@ namespace ClientPack
         public MatchData _matchData;
         public struct RankingPoints
         {
-            public int _team;
-            public int _points;
+            public Dictionary<int, int> _teamPoints;
         }
         public RankingPoints _rankingPoints;
 

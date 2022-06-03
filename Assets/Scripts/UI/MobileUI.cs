@@ -735,9 +735,9 @@ public class MobileUI : UI
     /// <summary>Shows the final score screen and send a package to do the same in clients</summary>
     public void ShownFinalScoreScreen()
     {
-        ServiceLocator.Instance.GetService<ServerUtility>().FinishSession();
-        _rankingServer.CreateGrid(true);
+        ServiceLocator.Instance.GetService<ServerUtility>().FinishSession();      
         OpenNextWindow();
+        _rankingServer.CreateGrid(true);
     }
 
     /// <summary>Pause/unpause the session and change the button's sprite</summary>
