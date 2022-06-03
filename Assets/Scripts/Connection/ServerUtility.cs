@@ -205,6 +205,8 @@ public class ServerUtility : MonoBehaviour
         _serverPackage._gameDifficulty._level = level;
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
+
+        BroadcastTeamPoints();
     }
 
     /// <summary>Finish the minigames</summary>
@@ -234,6 +236,17 @@ public class ServerUtility : MonoBehaviour
         _serverPackage = new ServerPackage();
 
         _serverPackage._typePackageServer = ServerPackets.Disconnect;
+
+        _ws.Send(JsonConvert.SerializeObject(_serverPackage));
+    }
+
+    public void BroadcastTeamPoints()
+    {
+        _serverPackage = new ServerPackage();
+
+        _serverPackage._typePackageServer = ServerPackets.UpdateTeamPoints;
+        _serverPackage._rankingPoints._teamPoints = new Dictionary<int, int>(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());
+        EDebug.Log(_serverPackage._rankingPoints._teamPoints[0]);
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
