@@ -97,7 +97,7 @@ public class TabletUI : UI
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
             ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
-            _fakeRankignServerInClient.CreateGridClient();
+            
         }
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
@@ -107,7 +107,10 @@ public class TabletUI : UI
         _fadeOutInitialScreen.Play("InitialScreenFadeOut");
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
-        
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetEndSessionTablet())
+        {
+            _fakeRankignServerInClient.CreateGridClient();
+        }
     }
     void InitialAnimEndReached(VideoPlayer vp)
     {
