@@ -37,6 +37,11 @@ public class Positive : MonoBehaviour, IPositive
     void Update()
     {
 
+        if(_scorePanelText == null)
+        {
+            _scorePanelText = GameObject.FindGameObjectWithTag("ScorePanel").GetComponent<Text>();
+        }
+
         if(Time.realtimeSinceStartup >= _finishCombo)
         {
             _pitchValue = 1;

@@ -53,6 +53,7 @@ public interface IGameManager
     public int GetMinigamesMaximumLevel();
     public bool GetReturnToCommonScene();
     public void SetTeamPoints(int index, int points);
+    public void SetDictionaryPoints(Dictionary<int, int> teamsPoints);
     public void AddTeam(int index);
     public Dictionary<int, int> GetTeamPoints();
 }

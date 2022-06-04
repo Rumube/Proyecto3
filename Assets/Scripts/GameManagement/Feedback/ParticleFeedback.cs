@@ -73,7 +73,7 @@ public class ParticleFeedback : MonoBehaviour
     private void MoveToTarget()
     {
         transform.position = Vector2.MoveTowards(transform.position, _target, _movementVelocity * Time.deltaTime);
-        if (Vector2.Distance(_target, transform.position) < 0.5f)
+        if (Vector2.Distance(_target, transform.position) < 0.5f && ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             _positiveScript.AddPoints();
             Destroy(gameObject);

@@ -82,4 +82,13 @@ public class ClientHandle
         ServiceLocator.Instance.GetService<TabletUI>()._cantConnectText.SetActive(false);
         ServiceLocator.Instance.GetService<TabletUI>()._continueNextScreen = true;
     }
+
+    public static void UpdateTeamPoints(ClientPackage package)
+    {
+        ServiceLocator.Instance.GetService<IGameManager>().SetDictionaryPoints(package._rankingPoints._teamPoints);
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
+        {
+            ServiceLocator.Instance.GetService<RankingClient>().UpdateRankingPoints();
+        } 
+    }
 }

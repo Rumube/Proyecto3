@@ -76,8 +76,8 @@ public class Client
                     ClientHandle.SpecificGameDifficulty(_allPackages[0]);
                 }
                 break;
-            case ServerPackets.UpdateTeamPoints: //TODO
-
+            case ServerPackets.UpdateTeamPoints: 
+                ClientHandle.UpdateTeamPoints(_allPackages[0]);
                 break;
             case ServerPackets.PauseGame:
                 ClientHandle.PauseGame(_allPackages[0]);
