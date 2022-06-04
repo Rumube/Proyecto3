@@ -56,6 +56,10 @@ public class TabletUI : UI
     [Header("Game selection")]
     public GameObject _blackTransition;
     public Animator _doorsOpen;
+
+    [Header("Final Score Screen")]
+    public RankingServer _fakeRankignServerInClient;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +88,7 @@ public class TabletUI : UI
         {
             _uiIndex = 2;
             NewStudentGame();
+            ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.selectStudent);
             ServiceLocator.Instance.GetService<IGameManager>().SetReturnToCommonScene(false);
         }
         //If the time session ends or the teacher decided it, the tablet opens the final score
@@ -92,7 +97,7 @@ public class TabletUI : UI
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
             ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
-
+            _fakeRankignServerInClient.CreateGridClient();
         }
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
@@ -212,6 +217,8 @@ public class TabletUI : UI
     {
         SelectStudentGame();
         ShowStudentSelectGame();
+        ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.selectStudent);
+
     }
 
     /// <summary>

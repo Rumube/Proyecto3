@@ -120,7 +120,7 @@ public class RankingServer : MonoBehaviour
             teamParent.GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
             teamParent.transform.localScale = new Vector3(1, 1, 1);
         }
-        _gridPositions = new GameObject[ServiceLocator.Instance.GetService<INetworkManager>().GetConnectedTablets(), 11];
+        _gridPositions = new GameObject[ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints().Count, 11];
         for (int i = 0; i < teamParentList.Count; i++)
         {
             for (int j = 0; j < 11; j++)
@@ -219,4 +219,11 @@ public class RankingServer : MonoBehaviour
         }
         UpdateRankingPoints(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());
     }
+
+    #region FakeServerInClient
+    public void CreateGridClient()
+    {
+        CreateGrid(true);
+    }
+    #endregion
 }

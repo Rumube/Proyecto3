@@ -11,6 +11,8 @@ public class RankingClient : MonoBehaviour
     public List<RectTransform> _rocketsTransforms;
     public List<RectTransform> _rankingPositions;
 
+
+    bool _gridCreated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,21 +27,23 @@ public class RankingClient : MonoBehaviour
 
     public void UpdateRankingPoints()
     {
-
-        foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
+        if (_gridCreated)
         {
-            float value = team.Value;
+            foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
+            {
+                float value = team.Value;
 
-            if (value < minPoints)
-            {
-                minPoints = value;
+                if (value < minPoints)
+                {
+                    minPoints = value;
+                }
+                if (value > maxPoints)
+                {
+                    maxPoints = value;
+                }
             }
-            if (value > maxPoints)
-            {
-                maxPoints = value;
-            }
+            CalculateRocketsPosition();
         }
-        CalculateRocketsPosition();
     }
 
 
@@ -85,6 +89,7 @@ public class RankingClient : MonoBehaviour
             _rocketsTransforms[numTeam].position = new Vector2(_rocketsTransforms[numTeam].position.x, _rankingPositions[numTeam].position.y);
             numTeam++;
         }
+        _gridCreated = true;
         UpdateRankingPoints();
     }
 }

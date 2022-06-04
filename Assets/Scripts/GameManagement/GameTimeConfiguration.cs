@@ -15,7 +15,6 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     private bool _lastSeconds = false;
     private bool _halfTime = false;
     private Animator _anim;
-    public FinalMinigameRanking _miniGameRanking;
     private AudioSource _timerSound;
     public AudioClip _tickTack;
 
