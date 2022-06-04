@@ -9,6 +9,7 @@ public class FinalMinigameRanking : MonoBehaviour
     public Text _scorePanel;
     public GameObject _panel;
     public TextMeshProUGUI _nameTxt;
+    public TextMeshProUGUI _muyBien;
     public TextMeshProUGUI _points;
     public List<GameObject> _starList;
     private int _totalPoints;
@@ -53,13 +54,22 @@ public class FinalMinigameRanking : MonoBehaviour
         _starPoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
         print("Points: " + _starPoints);
         _addPoints = Time.deltaTime * _totalPoints * 0.5f;
-        if(_starPoints < 33)
+        if (_starPoints < 33)
+        {
+            _muyBien.text = "La próxima vez mejor";
             _totalStars = 1;
-        else if(_starPoints > 66)
-            _totalStars= 3;
-        else
-            _totalStars = 2;
+        }
+        else if (_starPoints > 66)
+        {
+            _muyBien.text = "¡Qué fantástico!";
+            _totalStars = 3;
+        }
 
+        else
+        {
+            _muyBien.text = "¡Lo has hecho muy bien!";
+            _totalStars = 2;
+        }
         StartCoroutine(WaitToStart());
     }
 
@@ -78,7 +88,7 @@ public class FinalMinigameRanking : MonoBehaviour
 
     IEnumerator WaitToStart()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.5f);
         _isWait = false;
         ActiveStar();
     }
