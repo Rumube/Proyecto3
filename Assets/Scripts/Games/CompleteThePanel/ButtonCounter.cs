@@ -61,11 +61,30 @@ public class ButtonCounter : MonoBehaviour
         }
         else if (nGeometry>1)
         {
-            return nGeometry+" "+geometryName + "s ";
+            switch(nGeometry) {
+                case 2:
+                    return "dos " + geometryName + "s ";                  
+                case 3:
+                    return "tres " + geometryName + "s ";
+                case 4:
+                    return "cuatro " + geometryName + "s ";
+                case 5:
+                    return "cinco " + geometryName + "s ";
+                case 6:
+                    return "seis " + geometryName + "s ";
+                case 7:
+                    return "siete " + geometryName + "s ";
+                case 8:
+                    return "ocho " + geometryName + "s ";
+                case 9:
+                    return "nueve " + geometryName + "s ";
+                default:
+                    return "texto por defecto " + geometryName + "s ";
+            }            
         }
         else
         {
-            return nGeometry+" "+ geometryName+" ";
+            return "un " + geometryName+" ";
         }
     }
 
