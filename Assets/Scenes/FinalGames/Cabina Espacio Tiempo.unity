@@ -857,6 +857,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentTime: 0
   _finishTime: 0
+  _miniGameRanking: {fileID: 0}
+  _tickTack: {fileID: 0}
 --- !u!114 &549744164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1793,6 +1795,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5689544846636757969, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
+    - target: {fileID: 5689544846636757969, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_fontStyle
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689544846636757969, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 1895159792876159406, guid: 20f14a3f619f86f408e918365b68d735, type: 2}
     - target: {fileID: 7518683565730518258, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.0014648438
@@ -2028,17 +2042,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7518683566658128699, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
   m_PrefabInstance: {fileID: 1792356882}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1792356884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7518683566423643497, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
-  m_PrefabInstance: {fileID: 1792356882}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1806674681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2753,7 +2756,7 @@ PrefabInstance:
     - target: {fileID: 2092755307475918664, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _timeImage
       value: 
-      objectReference: {fileID: 1792356884}
+      objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480913, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: m_IsActive
       value: 1
