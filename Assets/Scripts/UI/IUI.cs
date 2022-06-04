@@ -8,6 +8,7 @@ public interface IUI
     public void QuitGame();
     /// <summary>Open/close the window credits</summary>
     public void CreditsMobile();
+    public void TutorialMobile();
     /// <summary>Open/close the window credits</summary>
     public void CreditsTablet();
     /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>

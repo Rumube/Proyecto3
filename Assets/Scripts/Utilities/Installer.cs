@@ -22,6 +22,7 @@ public class Installer : MonoBehaviour
     public GameManager _gameManager;
     public NetworkManager _networkManager;
     public AndroidInputAdapter _inputAndroid;
+    public RankingServer _rankingServer;
 
     public ServerUtility _myServer;
 
@@ -41,18 +42,18 @@ public class Installer : MonoBehaviour
         //Register services to use globally
         //ServiceLocator.Instance.RegisterService(this);
         //ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
-         if (!ServiceLocator.Instance.Contains<GameManager>())
+         if (!ServiceLocator.Instance.Contains<IGameManager>())
         {
-            ServiceLocator.Instance.RegisterService(_gameManager);
+            ServiceLocator.Instance.RegisterService<IGameManager>(_gameManager);
         }
         //else if(ServiceLocator.Instance.GetService<GameManager>() == null)
         //{
         //    _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         //}
 
-        if (!ServiceLocator.Instance.Contains<NetworkManager>())
+        if (!ServiceLocator.Instance.Contains<INetworkManager>())
         {
-            ServiceLocator.Instance.RegisterService(_networkManager);
+            ServiceLocator.Instance.RegisterService<INetworkManager>(_networkManager);
         }
 
         if (ServiceLocator.Instance.Contains<UIManager>())
@@ -65,16 +66,18 @@ public class Installer : MonoBehaviour
         {
             ServiceLocator.Instance.RegisterService(_myServer);
         }
-        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
 
-        //ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
-        //ServiceLocator.Instance.RegisterService<IError>(_error);
-        //ServiceLocator.Instance.RegisterService(_canvasGUI);
+
+
         if (!ServiceLocator.Instance.Contains<IFrogMessage>())
         {
             ServiceLocator.Instance.RegisterService<IFrogMessage>(_frogMessage);
         }
-
+        
+        if (!ServiceLocator.Instance.Contains<RankingServer>())
+        {
+            ServiceLocator.Instance.RegisterService(_rankingServer);
+        }
 
         if (!ServiceLocator.Instance.Contains<IUI>() &&_server && _canvasMobile != null)
         {

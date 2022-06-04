@@ -76,8 +76,8 @@ public class Client
                     ClientHandle.SpecificGameDifficulty(_allPackages[0]);
                 }
                 break;
-            case ServerPackets.UpdateTeamPoints: //TODO
-
+            case ServerPackets.UpdateTeamPoints: 
+                ClientHandle.UpdateTeamPoints(_allPackages[0]);
                 break;
             case ServerPackets.PauseGame:
                 ClientHandle.PauseGame(_allPackages[0]);
@@ -132,14 +132,14 @@ public class Client
         ClientPackage package = new ClientPackage();
 
         package._typePackageClient = ClientPackets.matchData;
-        package._matchData._studentName = ServiceLocator.Instance.GetService<GameManager>()._currentstudentName;
-        package._matchData._gameName = ServiceLocator.Instance.GetService<GameManager>()._currentgameName;
+        package._matchData._studentName = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
+        package._matchData._gameName = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName();
         package._matchData._team = _tablet._id;
-        package._matchData._averageSuccess = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess * 100;
-        package._matchData._averageErrors = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageFails * 100;
+        package._matchData._averageSuccess = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
+        package._matchData._averageErrors = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageFails;
         package._matchData._averageGameTime = ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageTime;
         package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averagePoints;
-        package._matchData._gameLevel = ServiceLocator.Instance.GetService<NetworkManager>()._minigameLevel;
+        package._matchData._gameLevel = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _ws.Send(JsonConvert.SerializeObject(package));
     }
     #endregion

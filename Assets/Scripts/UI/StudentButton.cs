@@ -53,19 +53,19 @@ public class StudentButton : MonoBehaviour
              GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
 
         }
-        switch (ServiceLocator.Instance.GetService<GameManager>()._gameStateServer)
+        switch (ServiceLocator.Instance.GetService<IGameManager>().GetServerState())
         {
-            case GameManager.GAME_STATE_SERVER.teamConfiguration:
+            case IGameManager.GAME_STATE_SERVER.teamConfiguration:
                 _addingToTablet = true;
                 //Show the background button when adding student to tablet
                 if (GetComponent<Image>().color.a == 0)
                 {
                     GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 100);
                 }
-                if(ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet && !_highlighted.gameObject.activeInHierarchy)
+                if(ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == _selectedTablet && !_highlighted.gameObject.activeInHierarchy)
                 {
                     _highlighted.gameObject.SetActive(true);
-                }else if (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet != _selectedTablet && _highlighted.gameObject.activeInHierarchy)
+                }else if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() != _selectedTablet && _highlighted.gameObject.activeInHierarchy)
                 {
                     _highlighted.gameObject.SetActive(false);
                 }
@@ -96,15 +96,15 @@ public class StudentButton : MonoBehaviour
     public void AddingToTablet()
     {
         //Check if she is on the correct screen in order to have different behaviours
-        if (_addingToTablet && (ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet == _selectedTablet || _selectedTablet == -1))
+        if (_addingToTablet && (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == _selectedTablet || _selectedTablet == -1))
         {          
             if (_add)
             {
                 //Don't do anything if the tablet already has 12 students
-                if (ServiceLocator.Instance.GetService<NetworkManager>()._studentsToTablets[ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet - 1]._students.Count < 12)
+                if (ServiceLocator.Instance.GetService<INetworkManager>().GetStudentsToTablets()[ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() - 1]._students.Count < 12)
                 {
-                    ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, true);
-                    _selectedTablet = ServiceLocator.Instance.GetService<NetworkManager>()._selectedTablet;
+                    ServiceLocator.Instance.GetService<INetworkManager>().AddRemoveChildrenToTablet(_student, true);
+                    _selectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet();
                     _highlighted.gameObject.SetActive(true);
                     _selected = true;
                     _add = !_add;
@@ -112,13 +112,13 @@ public class StudentButton : MonoBehaviour
             }
             else
             {
-                ServiceLocator.Instance.GetService<NetworkManager>().AddRemoveChildrenToTablet(_student, false);
+                ServiceLocator.Instance.GetService<INetworkManager>().AddRemoveChildrenToTablet(_student, false);
                 _add = !_add;
                 _selectedTablet = -1;
                 _highlighted.gameObject.SetActive(false);
                 _selected = false;
             }
-            ServiceLocator.Instance.GetService<MobileUI>().ContinueButtonAddStudent(ServiceLocator.Instance.GetService<NetworkManager>().CheckIfTabletsHasStudents());
+            ServiceLocator.Instance.GetService<MobileUI>().ContinueButtonAddStudent(ServiceLocator.Instance.GetService<INetworkManager>().CheckIfTabletsHasStudents());
             ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
             
         }  

@@ -33,12 +33,14 @@ public class GeometryButton : Geometry
             {
                 _light.SetActive(false);
                 GenerateSound();
+                
             }
             else if (!_isPresed && !_light.activeSelf)
             {
                 EDebug.Log("Luz");
                 _light.SetActive(true);
                 GenerateSound();
+                GetComponent<AudioSource>().Play();
             }
         }
     }

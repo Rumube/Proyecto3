@@ -1,0 +1,85 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class FinalMinigameRanking : MonoBehaviour
+{
+    public Text _scorePanel;
+    public GameObject _panel;
+    public TextMeshProUGUI _nameTxt;
+    public TextMeshProUGUI _points;
+    public List<GameObject> _starList;
+    private int _totalPoints;
+    private float _currentPoints;
+    private int _starPoints;
+    public int _totalStars;
+    private float _addPoints;
+    private float _nextStar;
+    private int _currentStar = 0;
+    private bool _newStar = true;
+    private bool _isWait = true;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!_isWait)
+        {
+            _currentPoints += _addPoints;
+            if (_currentPoints >= _nextStar && _newStar)
+                ActiveStar();
+
+            if (_currentPoints >= _totalPoints)
+            {
+                _currentPoints = _totalPoints;
+            }
+            _points.text = (Mathf.Round(_currentPoints * 10.0f) * 0.1f).ToString();
+        }
+
+    }
+
+    public void UpdateFinalPanel()
+    {
+        _panel.SetActive(true);
+        _nameTxt.text = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
+        _totalPoints = int.Parse(_scorePanel.text);
+        _starPoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
+        print("Points: " + _starPoints);
+        _addPoints = Time.deltaTime * _totalPoints * 0.5f;
+        if(_starPoints < 33)
+            _totalStars = 1;
+        else if(_starPoints > 66)
+            _totalStars= 3;
+        else
+            _totalStars = 2;
+
+        StartCoroutine(WaitToStart());
+    }
+
+    private void ActiveStar()
+    {
+        _starList[_currentStar].SetActive(true);
+        _newStar = false;
+
+        if (_currentStar < _totalStars - 1)
+        {
+            _newStar = true;
+            _nextStar = (_totalPoints / _totalStars) + _currentPoints;
+            _currentStar++;
+        }
+    }
+
+    IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(2.5f);
+        _isWait = false;
+        ActiveStar();
+    }
+}

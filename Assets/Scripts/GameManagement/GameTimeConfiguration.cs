@@ -15,6 +15,9 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     private bool _lastSeconds = false;
     private bool _halfTime = false;
     private Animator _anim;
+    public FinalMinigameRanking _miniGameRanking;
+    private AudioSource _timerSound;
+    public AudioClip _tickTack;
 
     private void Update()
     {
@@ -39,6 +42,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         _lastSeconds = false;
         _halfTime = false;
         _anim.Play("Timer");
+        _timerSound = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -65,6 +69,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             //Activamos anim;
             _lastSeconds = true;
             _anim.Play("Temporizador_Poco_Tiempo");
+            _timerSound.PlayOneShot(_tickTack, 5.0f);
 
         }
 
@@ -74,6 +79,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
             ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.ranking);
             _canStartTime = false;
             ServiceLocator.Instance.GetService<INetworkManager>().SendMatchData();
+            _timerSound.Stop();
         }         
     }
     public void SetStartTime(bool state)

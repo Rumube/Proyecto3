@@ -24,10 +24,11 @@ public class CreditsButtons : MonoBehaviour
 
     void Update()
     {
-      if (Input.GetMouseButton(0))
-      {
-            Instantiate(ClickSound);
-      }
+     
+    }
+    public void MakeSound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 
     public void ShowMessage()

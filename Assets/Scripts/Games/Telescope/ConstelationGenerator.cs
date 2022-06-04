@@ -7,7 +7,8 @@ public class ConstelationGenerator : MonoBehaviour
     private LineRenderer _line;
     List<Vector2> _constelationPositions = new List<Vector2>();
     List<GameObject> _playerStarList = new List<GameObject>();
-
+    int _success = 0;
+    int _errors = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,12 +95,17 @@ public class ConstelationGenerator : MonoBehaviour
 
             if (isCorrect)
             {
+                _success++;
                 ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
-
+                ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_success, _errors);
+                _success = 0;
+                _errors = 0;
                 StartCoroutine(GetComponent<GenerateStarsTelescopeSeries>().GenerateNewOrde());
+               
             }
             else
             {
+                _errors++;
                 ServiceLocator.Instance.GetService<IError>().GenerateError();
                 ClearConstelation();
             }

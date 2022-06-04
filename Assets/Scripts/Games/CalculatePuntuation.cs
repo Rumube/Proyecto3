@@ -13,7 +13,8 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
     //Lista con el tiempo que tarda por cada intento
     public List<float> _timeAttemptList = new List<float>();
     private int _total;
-    
+
+    float _lastAtemptTime = 0;
 
     [Header("Average")]
    // public List<Average> _averages;
@@ -41,42 +42,66 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
         float currentTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetCurrentTime();
         if (_attempt>0)
         {
-            EDebug.Log("operacion: time anterior "+ _timeList[_attempt - 1] +"Finish"+finishTime +"- Current"+ currentTime);
-            _timeAttemptList.Add( _timeList[_attempt - 1] - (finishTime - currentTime));
-            _timeList.Add(finishTime - currentTime);
+            if (finishTime - currentTime > 0)
+            {
+                _timeList.Add(currentTime - _lastAtemptTime);
+            }           
         }
         else
         {
-            _timeAttemptList.Add(currentTime);
-            _timeList.Add(finishTime - currentTime);
+            _timeList.Add(currentTime- _lastAtemptTime);
         }
         
         _total = success + fails;
         _success += success;
         _fails += fails;
-        EDebug.Log("tiempo" + (finishTime - currentTime) +"porcentaje "+ Mathf.Round(50 * ((finishTime - currentTime) / finishTime)));
         
         if (success >0)
         {
-            _points = Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / finishTime))+ _points);
-            EDebug.Log("puntos por Intento " + Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / finishTime))));
-           
-
+            _points += success / _total;
         }
         _attempt++;
 
         CalculateAverage();
-        //EDebug.Log("puntos por Intento "+Mathf.Round((50 * (success / _total)) + (50 * (_timeList[_attempt] / finishTime))));
-        EDebug.Log("Intento "+_attempt+"puntos "+_points);        
+
+        if (_lastAtemptTime < currentTime)
+        {
+            _lastAtemptTime = currentTime;
+        }
     }
     /// <summary>Calculates the average of the points , time, success fails</summary>
     public void CalculateAverage()
     {
         float finishTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetFinishTime();
-        _average.averagePoints = _points / _attempt;
-        _average.averageTime = finishTime / _attempt;
-        _average.averageSuccess = _success / (_success + _fails);
-        _average.averageFails = _fails / (_success + _fails);
+
+        
+
+        float sumTime = 0;
+        for (int i = 0; i < _timeList.Count; i++)
+        {
+            sumTime += _timeList[i];
+        }
+        _average.averageTime = sumTime / _attempt;
+
+        if (_success > 0 || _fails > 0)
+        {
+            _average.averageSuccess = (_success / (_success + _fails)) * 100;
+            _average.averageFails = (_fails / (_success + _fails)) * 100;
+        }
+        else
+        {
+            _average.averageSuccess = 0;
+            _average.averageFails = 0;
+        }
+        if (_average.averageSuccess == _average.averageFails)
+        {
+            _average.averagePoints = 100;
+        }
+        else
+        {
+            _average.averagePoints = _points * 100.0f;
+        }
+        
     }
 
     public Average GetAverage()
