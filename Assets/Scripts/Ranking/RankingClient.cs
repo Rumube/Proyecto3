@@ -59,14 +59,13 @@ public class RankingClient : MonoBehaviour
                 positionYRelative = (Mathf.Round(positionYRelative * 10.0f) * 0.1f) * 10;
 
                 int positionY = (int)positionYRelative;
-
-                Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[positionY].transform.position.y);
+                Vector2 newPos = new Vector2(150, _rankingPositions[positionY].transform.position.y);
                 print(newPos);
                 _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
             }
             else
             {
-                Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _rankingPositions[team.Key].transform.position.y);
+                Vector2 newPos = new Vector2(150, _rankingPositions[team.Key].transform.position.y);
                 print(newPos);
                 _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
             }
@@ -76,7 +75,7 @@ public class RankingClient : MonoBehaviour
 
     public IEnumerator CreateGrid()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         foreach (Transform team in _rocketsTransforms)
         {
             team.gameObject.SetActive(false);
@@ -86,7 +85,7 @@ public class RankingClient : MonoBehaviour
         foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
             _rocketsTransforms[numTeam].gameObject.SetActive(true);
-            _rocketsTransforms[numTeam].position = new Vector2(_rocketsTransforms[numTeam].position.x, _rankingPositions[numTeam].position.y);
+            _rocketsTransforms[numTeam].position = new Vector2(0, _rankingPositions[numTeam].position.y);
             numTeam++;
         }
         _gridCreated = true;
