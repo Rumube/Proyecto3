@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class AsteroidBlasterInput : MonoBehaviour
 {
     [Header("References")]
-    public GameObject _gunGo;
+    public List<GameObject> _gunGoList;
+    //public GameObject _gunGo;
     public GameObject _gunTarget;
     LineRenderer _lineRenderer;
     GameObject _asteroidManager;
