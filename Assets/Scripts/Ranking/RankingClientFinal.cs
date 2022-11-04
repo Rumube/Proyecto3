@@ -103,27 +103,30 @@ public class RankingClientFinal : MonoBehaviour
             }
         }
 
+         _currentMaxPoints = (int)Mathf.Lerp(0, _maxPointsInt, 1);
+        _currentMinPoints = (int)Mathf.Lerp(0, _minPointsInt, 1);
+        _maxPoints.text = _currentMaxPoints.ToString();
+        _minPoints.text = _currentMinPoints.ToString();
 
-
-        //CHANGE VISUAL POINTS
-        if (_currentMaxPoints < maxPoints && _rankingStarted)
-        {
-            _currentMaxPoints++;
-            _maxPoints.text = _currentMaxPoints.ToString();
-        }
-        else
-        {
-            _lastMaxPoints = maxPoints;
-        }
-        if (_currentMinPoints < minPoints && _rankingStarted)
-        {
-            _currentMinPoints++;
-            _minPoints.text = _currentMinPoints.ToString();
-        }
-        else
-        {
-            _lastMinPoints = minPoints;
-        }
+        ////CHANGE VISUAL POINTS
+        //if (_currentMaxPoints < maxPoints && _rankingStarted)
+        //{
+        //    _currentMaxPoints++;
+        //    _maxPoints.text = _currentMaxPoints.ToString();
+        //}
+        //else
+        //{
+        //    _lastMaxPoints = maxPoints;
+        //}
+        //if (_currentMinPoints < minPoints && _rankingStarted)
+        //{
+        //    _currentMinPoints++;
+        //    _minPoints.text = _currentMinPoints.ToString();
+        //}
+        //else
+        //{
+        //    _lastMinPoints = minPoints;
+        //}
 
     }
 
@@ -204,9 +207,6 @@ public class RankingClientFinal : MonoBehaviour
                 }
             }
         }
-        _minPoints.text = minPoints.ToString();
-        _maxPoints.text = maxPoints.ToString();
-
         CalculateRocketsPosition(teamPoints);
     }
 
