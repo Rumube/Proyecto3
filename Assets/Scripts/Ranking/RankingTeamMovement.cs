@@ -33,7 +33,7 @@ public class RankingTeamMovement : MonoBehaviour
     public void InitMove(Vector2 newPos)
     {
         _time = 0;
-        _startPos = transform.localPosition;
+        _startPos = transform.position;
         _newTargetPos = newPos;
         _inMovement = true;
     }
