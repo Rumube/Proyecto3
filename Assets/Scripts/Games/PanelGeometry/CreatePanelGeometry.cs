@@ -65,7 +65,7 @@ public class CreatePanelGeometry : MonoBehaviour
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
-    private void GenerateNoTargetGeometry()//AQUÍ SE GENERA LA GEOMETRÍA SEGÚN NIVEL
+    private void GenerateNoTargetGeometry()
     {
         for (int i = 0; i < (_row * _column) - _currentDataDifficulty.numTargets; i++)
         {
