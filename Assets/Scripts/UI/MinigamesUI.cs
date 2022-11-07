@@ -58,7 +58,7 @@ public class MinigamesUI : MonoBehaviour
     public void ContinueButtonMinigamesRanking()
     {
         ServiceLocator.Instance.GetService<IGameManager>().SetReturnToCommonScene(true);
-        SceneManager.LoadScene("CristinaTest");
+        SceneManager.LoadScene("MainMenu");
     }
     /// <summary>
     /// Repeat the last order gived by Min.
