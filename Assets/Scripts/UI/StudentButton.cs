@@ -14,7 +14,8 @@ public class StudentButton : MonoBehaviour
     public bool _animating = false;
     Animator _animator;
 
-    [Header("Add student")]   
+    [Header("Add student")]
+    public GameObject _background;
     public Student _student;
     public Sprite _backgroundButton;
     public Sprite _backgroundButtonSelected;
@@ -37,6 +38,7 @@ public class StudentButton : MonoBehaviour
         {
             if (!_animating)
             {
+                _background.SetActive(false);
                 _animating = true;
                 _animator.SetBool("StartAnim", true);
             }
@@ -47,6 +49,7 @@ public class StudentButton : MonoBehaviour
         {
             if (_animating)
             {
+                _background.SetActive(true);
                 _animating = false;
                 _animator.SetBool("StartAnim", false);
             }
