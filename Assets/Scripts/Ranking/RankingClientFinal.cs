@@ -37,7 +37,7 @@ public class RankingClientFinal : MonoBehaviour
     public List<Transform> _rankingPositions;
 
     private float _maxPointsInt = 0;
-    private float _minPointsInt = 99999;
+    private float _minPointsInt = 0;
 
     public GameObject[,] _gridPositions;
     private int _numTotalTeams;
@@ -46,17 +46,19 @@ public class RankingClientFinal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _minPoints.text = 0.ToString();
-        _maxPoints.text = 0.ToString();
+        _minPoints.text = 0.ToString("0000");
+        _maxPoints.text = 0.ToString("0000");
 
         _differenceBetweenLowerUpper = _upperLevel.position.y - _lowerLevel.position.y;
-        _testTeamPoints.Add(0,0);
-        _testTeamPoints.Add(1,0);
-        _testTeamPoints.Add(2,0);
-        _testTeamPoints.Add(3,0);
-        _testTeamPoints.Add(4,0);
-        _testTeamPoints.Add(5,0);
-}
+        _testTeamPoints.Add(0, 0);
+        _testTeamPoints.Add(1, 0);
+        _testTeamPoints.Add(2, 0);
+        _testTeamPoints.Add(3, 0);
+        _testTeamPoints.Add(4, 0);
+        _testTeamPoints.Add(5, 0);
+
+        CreateGrid(true);
+    }
 
     // Update is called once per frame
     void Update()
@@ -88,7 +90,7 @@ public class RankingClientFinal : MonoBehaviour
             {
                 _testTeamPoints.Clear();
                 _testTeamPoints.Add(0, 150);
-                _testTeamPoints.Add(1, 450);
+                _testTeamPoints.Add(1, 3450);
                 _testTeamPoints.Add(2, 50);
                 _testTeamPoints.Add(3, 300);
                 _testTeamPoints.Add(4, 250);
@@ -103,30 +105,12 @@ public class RankingClientFinal : MonoBehaviour
             }
         }
 
-         _currentMaxPoints = (int)Mathf.Lerp(0, _maxPointsInt, 1);
-        _currentMinPoints = (int)Mathf.Lerp(0, _minPointsInt, 1);
-        _maxPoints.text = _currentMaxPoints.ToString();
-        _minPoints.text = _currentMinPoints.ToString();
+        _currentMaxPoints = Mathf.Lerp(_currentMaxPoints, _maxPointsInt, 5 * Time.deltaTime);
+        _maxPoints.text = _currentMaxPoints.ToString("0000");
 
-        ////CHANGE VISUAL POINTS
-        //if (_currentMaxPoints < maxPoints && _rankingStarted)
-        //{
-        //    _currentMaxPoints++;
-        //    _maxPoints.text = _currentMaxPoints.ToString();
-        //}
-        //else
-        //{
-        //    _lastMaxPoints = maxPoints;
-        //}
-        //if (_currentMinPoints < minPoints && _rankingStarted)
-        //{
-        //    _currentMinPoints++;
-        //    _minPoints.text = _currentMinPoints.ToString();
-        //}
-        //else
-        //{
-        //    _lastMinPoints = minPoints;
-        //}
+        _currentMinPoints = Mathf.Lerp(_currentMinPoints, _minPointsInt, 5 * Time.deltaTime);
+        _minPoints.text = _currentMinPoints.ToString("0000");
+
 
     }
 
