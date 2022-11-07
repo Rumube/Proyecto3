@@ -67,13 +67,7 @@ public class RankingClientFinal : MonoBehaviour
         {
             if (_newDataFromClient)
             {
-                _testTeamPoints.Clear();
-                _testTeamPoints.Add(0, 150);
-                _testTeamPoints.Add(1, 450);
-                _testTeamPoints.Add(2, 50);
-                _testTeamPoints.Add(3, 300);
-                _testTeamPoints.Add(4, 250);
-                _testTeamPoints.Add(5, 25);
+                _testTeamPoints = ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints();
 
                 _newDataFromClient = false;
                 UpdateRankingPoints(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());
