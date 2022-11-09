@@ -329,7 +329,7 @@ public class Android : MonoBehaviour
                 Namereaders = reader.GetString(1);
 
                // _infoText.text += idreaders + Namereaders + " " + "\n";
-                EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
+                //EDebug.Log("Value=" + idreaders + " name =" + Namereaders);
                 GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
                 newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
             }
@@ -501,7 +501,7 @@ public class Android : MonoBehaviour
                 id_Classroom_readers = reader.GetInt32(2);
               //  _infoText.text += id_Student_readers + Namereaders + id_Classroom_readers + " " + "\n";
 
-                EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
+                //EDebug.Log("Value=" + id_Student_readers + " name =" + Namereaders + " Clase =" + id_Classroom_readers);
                 GameObject newButton = Instantiate(prefab, location);
 
                 newButton.GetComponentInChildren<TextMeshProUGUI>().text = Namereaders;
