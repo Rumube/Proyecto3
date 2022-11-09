@@ -3187,7 +3187,6 @@ MonoBehaviour:
   _allList: []
   _typeTargetGeometry: 
   _buttomCounter: {fileID: 1604733440}
-  _level: 1
 --- !u!114 &1604733438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3202,39 +3201,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataDifficulty:
   - possibleGeometry:
+    - {fileID: 1949193997}
+    - {fileID: 1512212270}
+    - {fileID: 33541297}
+    targetGeometry:
+    - {fileID: 781645544}
+    - {fileID: 30599328}
+    - {fileID: 1557274001}
+    numTargets: 3
+    numGeometryTargets: 2
+  - possibleGeometry:
+    - {fileID: 781645544}
+    - {fileID: 1512212270}
+    - {fileID: 1949193997}
+    targetGeometry:
+    - {fileID: 30599328}
+    - {fileID: 1557274001}
+    - {fileID: 33541297}
+    numTargets: 4
+    numGeometryTargets: 2
+  - possibleGeometry:
     - {fileID: 30599328}
     - {fileID: 1557274001}
     targetGeometry:
     - {fileID: 781645544}
     - {fileID: 1949193997}
-    numTargets: 2
-    numGeometryTargets: 1
-  - possibleGeometry:
-    - {fileID: 30599328}
-    - {fileID: 1557274001}
-    - {fileID: 781645544}
-    targetGeometry:
-    - {fileID: 30599328}
-    - {fileID: 1557274001}
-    - {fileID: 781645544}
-    numTargets: 5
+    - {fileID: 1512212270}
+    numTargets: 4
     numGeometryTargets: 3
   - possibleGeometry:
-    - {fileID: 30599328}
     - {fileID: 1557274001}
-    targetGeometry:
-    - {fileID: 781645544}
-    numTargets: 5
-    numGeometryTargets: 1
-  - possibleGeometry:
-    - {fileID: 1557274001}
+    - {fileID: 33541297}
     targetGeometry:
     - {fileID: 781645544}
     - {fileID: 1949193997}
     - {fileID: 1512212270}
     - {fileID: 30599328}
     numTargets: 5
-    numGeometryTargets: 2
+    numGeometryTargets: 3
 --- !u!114 &1604733440
 MonoBehaviour:
   m_ObjectHideFlags: 0
