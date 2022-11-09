@@ -25,7 +25,6 @@ public class CreatePanel_Prueba : MonoBehaviour
     public List<Geometry.Geometry_Type> _typeTargetGeometry = new List<Geometry.Geometry_Type>();
     public ButtonCounter_Prueba _buttomCounter;
     //Game Configuration
-    [SerializeField]
     private int _level;
 
     private Button _checkButton;
@@ -33,6 +32,7 @@ public class CreatePanel_Prueba : MonoBehaviour
 
     void Start()
     {
+        _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _currentDataDifficulty = GetComponent<CompleteThePanelDifficulty>().GenerateDataDifficulty(_level);
         GeneratePanel();
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
