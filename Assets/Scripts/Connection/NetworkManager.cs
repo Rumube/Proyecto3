@@ -252,6 +252,26 @@ public class NetworkManager : MonoBehaviour,INetworkManager
     {
         return _studentsToTablets;
     }
+
+    public void RandomizeStudents()
+    {
+        //Utilizar shuffle para barajar los alumnos y luego añadirlos :)
+
+        GameObject[] PresentStudents =  GameObject.FindGameObjectsWithTag("StudentButton");
+        int currentTablet = 0;
+        int maxStudentforTablet = ((int)PresentStudents.Length/ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length) +1;
+        foreach (GameObject currentStudent in PresentStudents)
+        {
+            do
+            {
+                currentTablet = Random.Range(0,ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length +1);
+            } while (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[currentTablet]._students.Count >= maxStudentforTablet);
+
+            AddRemoveChildrenToTablet(currentStudent.GetComponent<StudentButton>()._student,true);
+            currentTablet++;
+        }
+
+    }
     //[Header("Game Connection")]
     //public string _ip;
     //public string _port;
