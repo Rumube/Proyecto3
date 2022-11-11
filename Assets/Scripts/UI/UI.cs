@@ -45,8 +45,10 @@ public abstract class UI : MonoBehaviour,IUI
     {
         if (_continueNextScreen)
         {
+            //Add scene
             _uiIndex++;
 
+            //if is not the final scene, load the next scene 
             if (_uiIndex < 9)
             {
                
@@ -55,8 +57,7 @@ public abstract class UI : MonoBehaviour,IUI
                 
             }
                
-           
-
+           //if is the final scene, load the animation and the first scene
             if (_uiIndex == 9)
             {
                 _windowsTree[0].SetActive(true);
@@ -65,7 +66,7 @@ public abstract class UI : MonoBehaviour,IUI
                 //Initial animations
                 ServiceLocator.Instance.GetService<MobileUI>()._fadeOutInitialScreen.Play("InitialScreenFadeOut");
                 ServiceLocator.Instance.GetService<MobileUI>()._video.Play();
-                ServiceLocator.Instance.GetService<MobileUI>()._video.loopPointReached += ServiceLocator.Instance.GetService<MobileUI>().InitialAnimEndReached;
+                //ServiceLocator.Instance.GetService<MobileUI>()._video.loopPointReached += ServiceLocator.Instance.GetService<MobileUI>().InitialAnimEndReached;
                 _uiIndex = 0;
             }
           
