@@ -111,6 +111,7 @@ public class MobileUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._startButton);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._stadistics);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScore);
+        
 
         //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
@@ -136,7 +137,7 @@ public class MobileUI : UI
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
     }
-    void InitialAnimEndReached(VideoPlayer vp)
+    public void InitialAnimEndReached(VideoPlayer vp)
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)
         {

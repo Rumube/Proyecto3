@@ -46,8 +46,29 @@ public abstract class UI : MonoBehaviour,IUI
         if (_continueNextScreen)
         {
             _uiIndex++;
-            _windowsTree[_uiIndex].SetActive(true);
-            _windowsTree[_uiIndex - 1].SetActive(false);
+
+            if (_uiIndex < 9)
+            {
+               
+                _windowsTree[_uiIndex].SetActive(true);
+                _windowsTree[_uiIndex - 1].SetActive(false);
+                
+            }
+               
+           
+
+            if (_uiIndex == 9)
+            {
+                _windowsTree[0].SetActive(true);
+                _windowsTree[_uiIndex - 1].SetActive(false);
+                _continueNextScreen = true;
+                //Initial animations
+                ServiceLocator.Instance.GetService<MobileUI>()._fadeOutInitialScreen.Play("InitialScreenFadeOut");
+                ServiceLocator.Instance.GetService<MobileUI>()._video.Play();
+                ServiceLocator.Instance.GetService<MobileUI>()._video.loopPointReached += ServiceLocator.Instance.GetService<MobileUI>().InitialAnimEndReached;
+                _uiIndex = 0;
+            }
+          
         }      
     }
 
