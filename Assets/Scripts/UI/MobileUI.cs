@@ -108,6 +108,7 @@ public class MobileUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameConnection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._addStudent);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameTime);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._startButton);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._stadistics);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScore);
 
