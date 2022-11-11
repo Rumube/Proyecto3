@@ -109,6 +109,8 @@ public class CreatePanelGeometry : MonoBehaviour
     /// <summary>
     /// Generates the geometry type of the target.
     /// </summary>
+   
+    
     private void GenerateTypeTargetGeometry()
     {
         _typeTargetGeometry.Clear();
@@ -119,7 +121,7 @@ public class CreatePanelGeometry : MonoBehaviour
             do
             {
                 isCorrect = false;
-                Geometry.Geometry_Type newGeometry = _currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType;
+                Geometry.Geometry_Type newGeometry = (_currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType);
                 if (!_typeTargetGeometry.Contains(newGeometry))
                 {
                     _typeTargetGeometry.Add(newGeometry);
@@ -157,6 +159,8 @@ public class CreatePanelGeometry : MonoBehaviour
         }
         return result;
     }
+
+
     // Update is called once per frame
     void Update()
     {
