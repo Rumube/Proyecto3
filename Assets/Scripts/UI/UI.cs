@@ -65,7 +65,8 @@ public abstract class UI : MonoBehaviour,IUI
                 RawImage.SetActive(false);
                 _windowsTree[_uiIndex - 1].SetActive(false);
                 ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
-               _continueNextScreen = true;
+                ServiceLocator.Instance.GetService<ServerUtility>().InitializeData();
+                _continueNextScreen = true;
                 _uiIndex = 0;
             }
           
