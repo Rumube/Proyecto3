@@ -60,13 +60,13 @@ public abstract class UI : MonoBehaviour,IUI
            //if is the final scene, load the animation and the first scene
             if (_uiIndex == 9)
             {
+                //Initial animations
+                ServiceLocator.Instance.GetService<MobileUI>()._video.Play();
+                ServiceLocator.Instance.GetService<MobileUI>()._fadeOutInitialScreen.Play("InitialScreenFadeOut");
+                ServiceLocator.Instance.GetService<MobileUI>()._video.loopPointReached += ServiceLocator.Instance.GetService<MobileUI>().InitialAnimEndReached;
                 _windowsTree[0].SetActive(true);
                 _windowsTree[_uiIndex - 1].SetActive(false);
                 _continueNextScreen = true;
-                //Initial animations
-                ServiceLocator.Instance.GetService<MobileUI>()._fadeOutInitialScreen.Play("InitialScreenFadeOut");
-                ServiceLocator.Instance.GetService<MobileUI>()._video.Play();
-                //ServiceLocator.Instance.GetService<MobileUI>()._video.loopPointReached += ServiceLocator.Instance.GetService<MobileUI>().InitialAnimEndReached;
                 _uiIndex = 0;
             }
           
