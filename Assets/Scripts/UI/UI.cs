@@ -8,6 +8,7 @@ public abstract class UI : MonoBehaviour,IUI
     protected int _uiIndex;
     protected List<GameObject> _windowsTree;
     public bool _continueNextScreen;
+    public GameObject RawImage;
     private void Awake()
     {
         _windowsTree = new List<GameObject>();
@@ -61,6 +62,7 @@ public abstract class UI : MonoBehaviour,IUI
             if (_uiIndex == 9)
             {
                 _windowsTree[0].SetActive(true);
+                RawImage.SetActive(false);
                 _windowsTree[_uiIndex - 1].SetActive(false);
                 ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
                _continueNextScreen = true;
