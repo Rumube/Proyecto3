@@ -25,7 +25,9 @@ public class BlinkButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetServerState() == IGameManager.GAME_STATE_SERVER.teamConfiguration){
+            gameObject.SetActive(false);
+        }
     }
 
     public void btnPressed()
