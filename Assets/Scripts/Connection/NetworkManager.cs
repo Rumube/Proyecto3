@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkManager : MonoBehaviour,INetworkManager
+public class NetworkManager : MonoBehaviour, INetworkManager
 {
     [Header("Game Connection")]
     public string _ip;
@@ -47,7 +47,7 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-        }      
+        }
     }
 
     /// <summary>Starts a new server and saves the ip and port</summary>
@@ -257,18 +257,31 @@ public class NetworkManager : MonoBehaviour,INetworkManager
     {
         //Utilizar shuffle para barajar los alumnos y luego añadirlos :)
 
-        GameObject[] PresentStudents =  GameObject.FindGameObjectsWithTag("StudentButton");
+        GameObject[] PresentStudents = GameObject.FindGameObjectsWithTag("StudentButton");
+        List<GameObject> studentsList = new List<GameObject>(PresentStudents);
+
+
+        System.Random random = new System.Random();
+        int n = studentsList.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            GameObject value = studentsList[k];
+            studentsList[k] = studentsList[n];
+            studentsList[n] = value;
+        }
+
         int currentTablet = 0;
-        int maxStudentforTablet = ((int)PresentStudents.Length/ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length) +1;
         foreach (GameObject currentStudent in PresentStudents)
         {
-            do
-            {
-                currentTablet = Random.Range(0,ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length +1);
-            } while (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[currentTablet]._students.Count >= maxStudentforTablet);
-
-            AddRemoveChildrenToTablet(currentStudent.GetComponent<StudentButton>()._student,true);
+            _selectedTablet = currentTablet;
+            AddRemoveChildrenToTablet(currentStudent.GetComponent<StudentButton>()._student, true);
             currentTablet++;
+            if(currentTablet >= ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length)
+            {
+                currentTablet = 0;
+            }
         }
 
     }
