@@ -24,6 +24,8 @@ public class StudentButton : MonoBehaviour
     public bool _add = true;
     public int _selectedTablet = -1;
     bool _selected = false;
+    public Image _sprite;
+    public List<Sprite> _colorTeams;
     
     void Start()
     {
@@ -81,6 +83,13 @@ public class StudentButton : MonoBehaviour
                     GetComponent<Image>().sprite = _backgroundButton;
                 }
                 break;
+        }
+
+        if(_selectedTablet != -1){
+            _sprite.sprite = _colorTeams[_selectedTablet-1];
+        }
+        else{
+            _sprite.sprite = _colorTeams[6];
         }
 
     }
