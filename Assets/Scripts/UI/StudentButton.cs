@@ -21,8 +21,8 @@ public class StudentButton : MonoBehaviour
     public Sprite _backgroundButtonSelected;
     public Image _highlighted;
     bool _addingToTablet = false;
-    bool _add = true;
-    int _selectedTablet = -1;
+    public bool _add = true;
+    public int _selectedTablet = -1;
     bool _selected = false;
     
     void Start()

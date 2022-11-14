@@ -257,9 +257,13 @@ public class NetworkManager : MonoBehaviour, INetworkManager
     {
         //Utilizar shuffle para barajar los alumnos y luego añadirlos :)
 
+        foreach (Tablet currentTable in _studentsToTablets)
+        {
+            currentTable._students.Clear();
+        }
+
         GameObject[] PresentStudents = GameObject.FindGameObjectsWithTag("StudentButton");
         List<GameObject> studentsList = new List<GameObject>(PresentStudents);
-
 
         System.Random random = new System.Random();
         int n = studentsList.Count;
@@ -272,18 +276,23 @@ public class NetworkManager : MonoBehaviour, INetworkManager
             studentsList[n] = value;
         }
 
-        int currentTablet = 0;
-        foreach (GameObject currentStudent in PresentStudents)
+        int currentTablet = 1;
+        foreach (GameObject currentStudent in studentsList)
         {
+
+            currentStudent.GetComponent<StudentButton>()._add = true;
+            currentStudent.GetComponent<StudentButton>()._selectedTablet = -1;
             _selectedTablet = currentTablet;
+            currentStudent.GetComponent<StudentButton>().AddingToTablet();
             AddRemoveChildrenToTablet(currentStudent.GetComponent<StudentButton>()._student, true);
             currentTablet++;
-            if(currentTablet >= ServiceLocator.Instance.GetService<ServerUtility>()._tablets.Length)
+            if(currentTablet > _studentsToTablets.Count)
             {
-                currentTablet = 0;
+                currentTablet = 1;
             }
         }
-
+        GameObject[] tabletButton = GameObject.FindGameObjectsWithTag("TabletButton");
+        tabletButton[0].GetComponent<TabletButton>().SelectTabletAddingStudents();
     }
     //[Header("Game Connection")]
     //public string _ip;
