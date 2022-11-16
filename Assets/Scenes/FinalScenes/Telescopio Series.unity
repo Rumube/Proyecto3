@@ -1988,11 +1988,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.81
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2092755307233629503, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480925, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _currentstudentName
@@ -2070,7 +2070,21 @@ MonoBehaviour:
     canBeDiscontinuous: 0
   - maxSerie: 8
     canBeDiscontinuous: 0
---- !u!120 &1757058968
+--- !u!114 &1757058969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757058964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a99207d7f65b2e46860a99a77f728d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  point: {x: 0, y: 0}
+  radius: 0
+--- !u!120 &1757058971
 LineRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2113,16 +2127,16 @@ LineRenderer:
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: -5, y: 0.5, z: 0}
+  - {x: -0.35, y: 0.5, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 1.0290674
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.030177973
-        value: 0.26527074
+        time: 0
+        value: 0.1907244
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2130,8 +2144,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9935484
-        value: 0.26682842
+        time: 1
+        value: 0.18556404
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2170,26 +2184,14 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 3
       m_NumAlphaKeys: 2
-    numCornerVertices: 2
-    numCapVertices: 1
+    numCornerVertices: 30
+    numCapVertices: 15
     alignment: 0
-    textureMode: 2
+    textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &1757058969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757058964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a99207d7f65b2e46860a99a77f728d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1843837478
 GameObject:
   m_ObjectHideFlags: 0
