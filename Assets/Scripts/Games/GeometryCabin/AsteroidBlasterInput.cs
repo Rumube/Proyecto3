@@ -142,10 +142,10 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         LineRendererController(_lastShotPostion);
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
-       
+
 
         StartCoroutine(WaitShot());
-
+        print(hit.transform.gameObject.name);
         switch (_shotType)
         {
             case ShotType.Move:
