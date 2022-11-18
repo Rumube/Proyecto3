@@ -142,10 +142,10 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         LineRendererController(_lastShotPostion);
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
-
+       
 
         StartCoroutine(WaitShot());
-      
+
         switch (_shotType)
         {
             case ShotType.Move:
@@ -153,7 +153,7 @@ public class AsteroidBlasterInput : MonoBehaviour
                 if (hit.collider != null && (hit.collider.tag == "Border" || hit.collider.tag == "Min"))
                 {
                     _lineRenderer.enabled = false;
-                    _canShot = false;
+                    
                 }
                 else if (hit.collider != null && hit.collider.tag == "Asteroid" && _canVibrate)
                 {
