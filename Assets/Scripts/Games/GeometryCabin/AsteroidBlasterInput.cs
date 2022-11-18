@@ -112,7 +112,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void InputController()
     {
-        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
+        if(ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
             if (newInput.result && _canShot)
@@ -142,24 +142,15 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         LineRendererController(_lastShotPostion);
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
-
+        _gunGo.GetComponent<Animator>().SetTrigger("Shot");
 
         StartCoroutine(WaitShot());
-      
+
         switch (_shotType)
         {
             case ShotType.Move:
-
-                if (hit.collider != null && (hit.collider.tag == "Border" || hit.collider.tag == "Min"))
-                {
-                    _lineRenderer.enabled = false;
-                    _canShot = false;
-                }
-                else if (hit.collider != null && hit.collider.tag == "Asteroid" && _canVibrate)
-                {
+                if (hit.collider != null && hit.collider.tag == "Asteroid" && _canVibrate)
                     AsteroidHit(hit.collider);
-                    _gunGo.GetComponent<Animator>().SetTrigger("Shot");
-                }
                 break;
             case ShotType.Static:
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(_lastShotPostion, 1f);
@@ -170,7 +161,7 @@ public class AsteroidBlasterInput : MonoBehaviour
                     GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(currentCollider);
                 }
 
-
+                
                 break;
             default:
                 break;
