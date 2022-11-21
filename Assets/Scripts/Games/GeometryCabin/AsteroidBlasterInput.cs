@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,14 +7,14 @@ using UnityEngine.UI;
 public class AsteroidBlasterInput : MonoBehaviour
 {
     [Header("References")]
-    public GameObject _gunGo;
+
     public GameObject _gunTarget;
-    LineRenderer _lineRenderer;
+
+
+
     GameObject _asteroidManager;
 
     private Vector2 _lastShotPostion;
-    private float _newAngle;
-    private Vector3 _newDir;
 
     //Configuration
     private float _shotCooldown = 0.1f;
@@ -27,12 +28,30 @@ public class AsteroidBlasterInput : MonoBehaviour
     //Flags
     bool _canShot = true;
     bool _canVibrate = true;
+    [Serializable]
+    public struct LaserGun
+    {
+        public GameObject gun;
+        public LineRenderer line;
+        public float newAngle;
+        public Vector3 newDir;
 
+        public void SetNewAngle(float value)
+        {
+            newAngle += value;
+        }
+
+        public void SetNewDir(Vector3 value)
+        {
+            newDir = value;
+        }
+    }
+    public List<LaserGun> laserList = new List<LaserGun>();
     // Start is called before the first frame update
     void Start()
     {
-        _lineRenderer = GetComponent<LineRenderer>();
-        _newAngle = 0;
+            
+
         _lastShotPostion = Vector2.zero;
         //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
         if (GetComponent<AsteroidBlaster>())
@@ -73,7 +92,10 @@ public class AsteroidBlasterInput : MonoBehaviour
     {
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
         {
-            _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
+            foreach (LaserGun currentGun in laserList)
+            {
+                currentGun.gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
+            }
             InputController();
         }
     }
@@ -95,16 +117,23 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="targetPos">Last point of the laser</param>
     private void LineRendererController(Vector2 targetPos)
     {
-        _lineRenderer.enabled = true;
-        _lineRenderer.SetPosition(0, _gunGo.transform.position);
-        _lineRenderer.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
+        foreach (LaserGun currentGun in laserList)
+        {
+            currentGun.line.enabled = true;
+            currentGun.line.SetPosition(0, currentGun.gun.transform.position);
+            currentGun.line.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
+        }
+
         StartCoroutine(StopLaser());
     }
 
     IEnumerator StopLaser()
     {
         yield return new WaitForSeconds(0.1f);
-        _lineRenderer.enabled = false;
+        foreach (LaserGun currentGun in laserList)
+        {
+            currentGun.line.enabled = false;
+        }
     }
 
     /// <summary>
@@ -142,7 +171,10 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         LineRendererController(_lastShotPostion);
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
-        _gunGo.GetComponent<Animator>().SetTrigger("Shot");
+        foreach (LaserGun currentGun in laserList)
+        {
+            currentGun.gun.GetComponent<Animator>().SetTrigger("Shot"); 
+        }
         print(hit.transform.gameObject.name);
 
         StartCoroutine(WaitShot());
@@ -153,13 +185,15 @@ public class AsteroidBlasterInput : MonoBehaviour
 
                 if (hit.collider != null && hit.collider.tag == "Border")
                 {
-                    _lineRenderer.enabled = false;
-                    
+                    foreach (LaserGun currentGun in laserList)
+                    {
+                        currentGun.line.enabled = false;
+                    }
                 }
                 else if (hit.collider != null && hit.collider.tag == "Asteroid" && _canVibrate)
                 {
                     AsteroidHit(hit.collider);
-                    
+
                 }
                 break;
             case ShotType.Static:
@@ -213,9 +247,14 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="pos">Position to rotate</param>
     public void MoveGun(Vector2 pos)
     {
-        _newDir = (new Vector3(pos.x, pos.y, 0) - _gunGo.transform.position).normalized;
-        _newAngle = Mathf.Atan2(_newDir.y, _newDir.x) * Mathf.Rad2Deg;
-        _newAngle -= 90;
-        _gunGo.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(_newAngle, Vector3.forward), 1f);
+        List<LaserGun> auxList = laserList;
+        int i = 0;
+        foreach (LaserGun currentGun in auxList)
+        {
+            laserList[i].SetNewDir((new Vector3(pos.x, pos.y, 0) - currentGun.gun.transform.position).normalized);
+            laserList[i].SetNewAngle(Mathf.Atan2(currentGun.newDir.y, currentGun.newDir.x) * Mathf.Rad2Deg);
+            laserList[i].SetNewAngle(-90);
+            laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
+        }
     }
 }
