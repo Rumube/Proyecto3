@@ -38,7 +38,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         if (GetComponent<AsteroidBlaster>())
         {
             _shotType = ShotType.Move;
-            _shotCooldown = 1f;
+            _shotCooldown = 0.5f;
         }
         else if (GetComponent<SpaceTimeCabin>())
         {
@@ -141,8 +141,9 @@ public class AsteroidBlasterInput : MonoBehaviour
         }
 
         LineRendererController(_lastShotPostion);
-        RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up);
+        RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
         _gunGo.GetComponent<Animator>().SetTrigger("Shot");
+        print(hit.transform.gameObject.name);
 
         StartCoroutine(WaitShot());
         //print(hit.transform.gameObject.name);
