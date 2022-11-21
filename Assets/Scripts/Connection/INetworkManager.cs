@@ -31,4 +31,6 @@ public interface INetworkManager
     public void SendEndCalling();
     public void SendStudentGame();
     public Tablet GetTablets(int i);
+    public void RandomizeStudents();
+
 }

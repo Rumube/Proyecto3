@@ -56,4 +56,7 @@ public interface IGameManager
     public void SetDictionaryPoints(Dictionary<int, int> teamsPoints);
     public void AddTeam(int index);
     public Dictionary<int, int> GetTeamPoints();
+    public List<string> GetNotPresentsStudents();
+    public void SetNotPresentsStudents(string name);
+    public void DeleteNotPresentsStudent(string name);
 }
