@@ -26,6 +26,8 @@ public class AsteroidBlaster : MonoBehaviour
     private int _successes = 0;
     private int _errors = 0;
 
+    public Transform _asteroidSpawn;
+
     bool _firstGame = true;
     bool _pointsCalculated = false;
     AsteroidBalsterDifficulty.dataDiffilcuty _currentDataDifficulty;
@@ -90,6 +92,7 @@ public class AsteroidBlaster : MonoBehaviour
                 {
                     created = true;
                     GameObject newAsteroid = Instantiate(prefab);
+                    newAsteroid.transform.SetParent(_asteroidSpawn);
                     newAsteroid.SetActive(false);
                     newAsteroid.GetComponent<Asteroid>().InitAsteroid(_currentDataDifficulty.speedMovement, _currentDataDifficulty.speedRotation, gameObject);
                     _asteroids.Add(newAsteroid);
