@@ -38,7 +38,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         if (GetComponent<AsteroidBlaster>())
         {
             _shotType = ShotType.Move;
-            _shotCooldown = 0.1f;
+            _shotCooldown = 1f;
         }
         else if (GetComponent<SpaceTimeCabin>())
         {
