@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 //References
-using Mono.Data.Sqlite;
 using System;
 using System.Data;
 using System.IO;
@@ -12,7 +11,8 @@ using TMPro;
 
 public class Android : MonoBehaviour
 {
-    [Header("Envia a la base")]
+    [Header("Database")]
+    public DataService _dataService;
     public Text _tName;
     public TMP_InputField _tInputNamePro;
     public InputField _tInputName;
@@ -37,89 +37,10 @@ public class Android : MonoBehaviour
     int level;
     int averagePoints;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-        
-    #if UNITY_EDITOR
-
-        string filepath = Application.dataPath + "/Plugins/" + _DatabaseName;
-
-        //open db connection
-        _conn = "URI=file:" + filepath;
-
-        EDebug.Log("Stablishing connection to: " + _conn);
-        _dbconn = new SqliteConnection(_conn);
-        _dbconn.Open();
-
-#elif UNITY_ANDROID
-
-        string filepath = Application.persistentDataPath + "/" + _DatabaseName;
-            if (!File.Exists(filepath))
-            {
-                // If not found on android will create Tables and database
-
-                EDebug.LogWarning("File \"" + filepath + "\" does not exist. Attempting to create from \"" +
-                                 Application.dataPath + "!/assets/Employers");
-
-
-
-                // UNITY_ANDROID
-                WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/Employers.s3db");
-                while (!loadDB.isDone) { }
-                // then save to Application.persistentDataPath
-                File.WriteAllBytes(filepath, loadDB.bytes);
-            }
-
-#endif
-        //Application database Path android
-
-        _conn = "URI=file:" + filepath;
-
-        EDebug.Log("Stablishing connection to: " + _conn);
-        _dbconn = new SqliteConnection(_conn);
-        _dbconn.Open();
-
-#if UNITY_ANDROID
-
-        string query;
-        query = "create table if not exists Classroom (idClassroom INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), UNIQUE(Name));"+
-
-        " create table if not exists Student(idStudent INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), idClassroom INTEGER, UNIQUE(Name), foreign key(idClassroom) references Classroom(idClassroom));"+
-
-        " create table if not exists Session(idSession INTEGER PRIMARY KEY   AUTOINCREMENT, DateSession Date);"+
-        
-        "create table if not exists Game(idGame INTEGER PRIMARY KEY   AUTOINCREMENT, Name varchar(100), UNIQUE(Name));"+
-
-        "create table if not exists Match("+
-         "idMatch INTEGER PRIMARY KEY   AUTOINCREMENT, "+
-         "idStudent INTEGER, idSession INTEGER, idGame INTEGER, "+
-         "team INTEGER, level INTEGER, averageSuccess INTEGER, averageErrors INTEGER, averagePoints INTEGER, averageTime FLOAT, " +
-         "foreign key(idStudent) references Student(idStudent), " +
-         "foreign key(idSession) references Session(idSession), "+
-         "foreign key(idGame) references Game(idGame)); "
-         ;
-        try
-        {
-            _dbcmd = _dbconn.CreateCommand(); // create empty command
-            _dbcmd.CommandText = query; // fill the command
-            _reader = _dbcmd.ExecuteReader(); // execute command which returns a reader
-        }
-        catch (Exception e)
-        {
-
-            EDebug.Log(e);
-
-        }
-       
-
-#endif
-        //EDebug.Log (SearchMatchInfo("Lara", "JUEGO1"));
-       
-    }
     #region Buttons
-
-
+    /// <summary>
+    /// Starts the process to create a new Classroom
+    /// </summary>
     public void InsertClassButton()
     {
         if (!string.IsNullOrEmpty(_tInputNamePro.text))
@@ -136,23 +57,41 @@ public class Android : MonoBehaviour
             {
                 _tInputNamePro.text = _tInputNamePro.text.Replace("  "," ");
             }
+            //Inser new classroom
+            ClassroomDB newClassroom = _dataService.InsertClass(_tInputNamePro.text);
 
-            InsertClass(_tInputNamePro.text.ToUpper());
+            if(newClassroom != null)
+            {
+                DestroyClassesPanel();
+                IEnumerable<ClassroomDB> classroomTable = _dataService.GetAllClassrooms();
+
+                foreach (ClassroomDB classroom in classroomTable)
+                {
+                    GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
+                    newButton.GetComponentInChildren<TextMeshProUGUI>().text = classroom.name;
+                }
+            }
         }
-            
     }
-    public void prueba()
+    /// <summary>
+    /// Destroy the ClassesPanel's elements
+    /// </summary>
+    private void DestroyClassesPanel()
     {
-        Debug.Log(GetDifficulty("pepe", "JUEGO1"));
+        //Destroy all buttons
+        foreach (Transform child in ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
+    /// <summary>
+    /// Starts the process to Delete a Classroom
+    /// </summary>
     public void DeleteClassButton()
     {
-        DeleteClass(_tInputNamePro.text.ToUpper());
+        _dataService.DeleteClass(_tInputNamePro.text);
     }
-    public void UpdateClassButton()
-    {
-        UpdateClass(_tId.text,_tName.text.ToUpper());
-    }
+
     public void ReadClassData()
     {
         ReaderClass();
@@ -193,115 +132,11 @@ public class Android : MonoBehaviour
     #endregion
 
     #region Table Classroom
-    /** 
-    * @desc inserta una clase en la base de datos
 
-    * @param string name - el nombre de la clase 
-
-    */
-    private void InsertClass(string name)
-    {
-        using (_dbconn = new SqliteConnection(_conn))
-        {
-            _dbconn.Open(); //Open connection to the database.
-            _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("insert into Classroom (Name) values (\"{0}\")", name);// table name
-            _dbcmd.CommandText = _sqlQuery;
-
-            try
-            {
-                _dbcmd.ExecuteScalar();
-                ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
-            }
-            catch (Exception ex)
-            {
-                ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
-            }
-            _dbconn.Close();
-        }
-        //_infoText.text = "";
-
-        ReaderClass();
-    }
-    /** 
-
-    * @desc Borra una clase
-
-    * @param string deleteById - El id de la clase que va a ser elimimada 
-
-    */
-    private void DeleteClass(string name)
-    {
-        using (_dbconn = new SqliteConnection(_conn))
-        {
-
-            _dbconn.Open(); //Open connection to the database.
-
-            EDebug.Log("NAme: "+name);
-            IDbCommand dbcmd2 = _dbconn.CreateCommand();
-            string deleteById = "SELECT idClassroom FROM Classroom where Name = \"" + name  + "\"";
-            EDebug.Log("sql: " + deleteById);
-            dbcmd2.CommandText = deleteById;
-            IDataReader reader2 = dbcmd2.ExecuteReader();
-            EDebug.Log("Reader: "+reader2.Read());
-            EDebug.Log("Reader: " + reader2.GetValue(0));
-
-
-            IDbCommand dbcmd = _dbconn.CreateCommand();
-            string sqlQuery = "DELETE FROM Classroom where idClassroom = " + reader2.GetValue(0);// table name
-            EDebug.Log("sql1: " + sqlQuery);
-            dbcmd.CommandText = sqlQuery;
-            IDataReader reader = dbcmd.ExecuteReader();
-            EDebug.Log("Reader1: " + reader);
-
-            dbcmd.Dispose();
-            dbcmd = null;
-
-            dbcmd2.Dispose();
-            dbcmd2 = null;
-            _dbconn.Close();
-            //_stateText.text = deleteById + " Delete  Done ";
-
-        }
-        //_infoText.text = "";
-        ReaderClass();
-
-    }
-    /** 
-
-    * @desc Cambia el nombre de una clase de la base
-
-    * @param string updateId - El id de la clase que va a ser modificada 
-    * @param string updateName- El nombre nuevo de la clase
-    */
-    private void UpdateClass(string updateId, string updateName)
-    {
-        using (_dbconn = new SqliteConnection(_conn))
-        {
-            _dbconn.Open(); //Open connection to the database.
-            _dbcmd = _dbconn.CreateCommand();
-            _sqlQuery = string.Format("UPDATE Classroom set Name = @name where idClassroom = @id ");
-
-            SqliteParameter P_update_name = new SqliteParameter("@name", updateName);
-           
-            SqliteParameter P_update_id = new SqliteParameter("@id", updateId);
-
-            _dbcmd.Parameters.Add(P_update_name);
-           
-            _dbcmd.Parameters.Add(P_update_id);
-
-            _dbcmd.CommandText = _sqlQuery;
-            _dbcmd.ExecuteScalar();
-            _dbconn.Close();
-            //Search_function(t_id_class.text);
-            ReaderClass();
-        }
-    }
-
-    /** 
-
-    * @desc Lee toda la tabla Classroom de la base
-    */
+    /// <summary>
+    /// Get all Classroom table, use new Versión 
+    /// </summary>
+    /// <returns></returns>
     private void ReaderClass()
     {
         int idreaders;
