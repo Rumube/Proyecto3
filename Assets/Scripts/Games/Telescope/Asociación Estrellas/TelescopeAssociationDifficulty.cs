@@ -11,11 +11,10 @@ public class TelescopeAssociationDifficulty : MonoBehaviour
     [Serializable]
     public struct dataDiffilcuty
     {
-        [Range(1, 8)]
+        [Range(1, 15)]
         [Tooltip("Number of maximum values of the series")]
         public int maxSerie;
-        [Tooltip("The series can have non-continuous values, e.g. 2,3,5")]
-        public bool canBeDiscontinuous;
+      
     }
 
     /// <summary>

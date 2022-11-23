@@ -5,10 +5,10 @@ using UnityEngine;
 public class GenerateStarsTelescopeAssociation : MonoBehaviour
 {
     [Header("Prefabs references")]
-    public List<GameObject> _spikesStars;
     public GameObject _star;
     public GameObject _starsParent;
     public GameObject _particles;
+   
 
     [Header("Configuration")]
     private TelescopeAssociationDifficulty.dataDiffilcuty _dataDifficulty;
@@ -23,9 +23,17 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<TelescopeAssociationDifficulty>().GenerateDataDifficulty(_level);
-        StartCoroutine(GenerateNewOrde());
+        //StartCoroutine(GenerateNewOrde());
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
+        StartCoroutine(StartGenerate());
+    }
 
+    /// <summary>
+    /// Starts the generation process
+    /// </summary>
+    public IEnumerator StartGenerate()
+    {
+        yield return new WaitForSeconds(0.3f);
         GenerateSize();
     }
 
@@ -59,7 +67,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     }
 
     /// <summary>
-    /// Generates the stars in the <see cref="SERIES_TYPE.highToLow"/> game.
+    /// Generates the stars in the scene/> game.
     /// </summary>
     private void GenerateSize()
     {
@@ -70,14 +78,10 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
         for (int i = 0; i < maxSerie; i++)
         {
             GameObject newStar = Instantiate(_star, _starsParent.transform);
-            //Generate star scale
-            Vector2 newScale = new Vector2(transform.localScale.x + (i * 0.3f), transform.localScale.x + (i * 0.3f));
-            newStar.transform.localScale = newScale;
+
 
             //Generate star position
-            int randomIndex = Random.Range(0, spawnsList.Count);
-            newStar.transform.position = spawnsList[randomIndex].transform.position;
-            spawnsList.RemoveAt(randomIndex);
+            newStar.transform.position = spawnsList[i].transform.position;
             _starList.Add(newStar);
 
             newStar.GetComponent<Star>().InitStart(gameObject);
