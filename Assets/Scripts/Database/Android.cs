@@ -96,6 +96,10 @@ public class Android : MonoBehaviour
     {
         ReaderClass();
     }
+
+    /// <summary>
+    /// Checks the student are rigth writte and calls <see cref="DataService.InsertStudent(string)"/>
+    /// </summary>
     public void InsertStudentButton()
     {
         if (!string.IsNullOrEmpty(_tInputNamePro.text))
@@ -112,13 +116,12 @@ public class Android : MonoBehaviour
             {
                 _tInputNamePro.text = _tInputNamePro.text.Replace("  ", " ");
             }
-
-            InsertStudent(_tInputNamePro.text.ToUpper());
+            _dataService.InsertStudent(_tInputNamePro.text.ToUpper());
         }
     }
     public void DeleteStudentButton()
     {
-        DeleteStudent(_tInputNamePro.text.ToUpper());
+        _dataService.DeleteStudent(_tInputNamePro.text.ToUpper());
     }
     public void UpdateStudentButton()
     {

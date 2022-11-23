@@ -124,7 +124,7 @@ public class DataService
     /// <summary>
     /// Create a Classroom in thedatabase
     /// </summary>
-    /// <param name="name">The Classroom name</param>
+    /// <param name="name">The Classroom's name</param>
     /// <returns>The created Classroom</returns>
     public ClassroomDB InsertClass(string name)
     {
@@ -177,6 +177,62 @@ public class DataService
     public IEnumerable<ClassroomDB> GetAllClassrooms()
     {
         return _connection.Table<ClassroomDB>();
+    }
+    #endregion
+    #region Student
+    /// <summary>
+    /// Create a Student in thedatabase
+    /// </summary>
+    /// <param name="name">The Student's name</param>
+    /// <returns>The created Student</returns>
+    public StudentDB InsertStudent(string name)
+    {
+        //GET CURRENT CLASSROOM
+        ClassroomDB currentClassroom  = (ClassroomDB)GetClassName(ServiceLocator.Instance.GetService<UIManager>()._classNamedb);
+        int idClassroom = currentClassroom.GetIDClassroom();
+
+        StudentDB newStudent = new StudentDB
+        {
+            name = name.ToUpper(),
+            idClassroom = idClassroom
+        };
+
+        try
+        {
+            _connection.Insert(newStudent);
+            ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
+            return newStudent;
+        }
+        catch (System.Exception)
+        {
+            ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            return null;
+        }
+    }
+    /// <summary>
+    /// Get all Student table
+    /// </summary>
+    /// <returns>All Classrooms rows <see cref="IEnumerable{StudentDB}"/></returns>
+    public IEnumerable<StudentDB> GetAllStudent()
+    {
+        return _connection.Table<StudentDB>();
+    }
+    /// <summary>
+    /// Returns the student using the name
+    /// </summary>
+    /// <param name="name">The student's name</param>
+    /// <returns><see cref="IEnumerable{StudentDB}"/></returns>
+    public IEnumerable<StudentDB> GetStudentName(string name)
+    {
+        return _connection.Table<StudentDB>().Where(x => x.name == name.ToUpper());
+    }
+    /// <summary>
+    /// Delete student using the name
+    /// </summary>
+    /// <param name="name">The student's name</param>
+    public void DeleteStudent(string name)
+    {
+        _connection.Delete(GetStudentName(name.ToUpper()));
     }
     #endregion
 }

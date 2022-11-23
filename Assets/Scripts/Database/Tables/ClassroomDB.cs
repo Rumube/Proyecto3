@@ -10,4 +10,9 @@ public class ClassroomDB
 	{
 		return string.Format("[Classroom: Id={0}, Name={1}]", idClassroom, name);
 	}
+
+	public int GetIDClassroom()
+    {
+		return idClassroom;
+    }
 }
