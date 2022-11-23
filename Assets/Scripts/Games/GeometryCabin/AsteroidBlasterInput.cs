@@ -7,13 +7,7 @@ using UnityEngine.UI;
 public class AsteroidBlasterInput : MonoBehaviour
 {
     [Header("References")]
-
     public GameObject _gunTarget;
-
-
-
-    GameObject _asteroidManager;
-
     private Vector2 _lastShotPostion;
 
     //Configuration
@@ -144,7 +138,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         if (_shotType == ShotType.Move)
         {
             _lastShotPostion = Camera.main.ScreenToWorldPoint(input.pos);
-            _gunTarget.transform.position = input.pos;
+            _gunTarget.transform.position = _lastShotPostion;
             MoveGun(_lastShotPostion);
         }
         else
@@ -232,7 +226,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     {
         for (int i = 0; i < laserList.Count; i++)
         {
-            laserList[i].newDir = ((new Vector3(pos.x, pos.y, 0) - laserList[i].gun.transform.position).normalized);
+            laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
             laserList[i].newAngle =  (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
             laserList[i].newAngle -= 90;
             laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);

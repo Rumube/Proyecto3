@@ -7,5 +7,5 @@ public class GunClass : MonoBehaviour
     public GameObject gun;
     public LineRenderer line;
     public float newAngle;
-    public Vector3 newDir;
+    public Vector2 newDir;
 }
