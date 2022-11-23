@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GenerateStarsTelescopeAssociation : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
     private bool _firstRound = true;
-
+  
 
     // Start is called before the first frame update
     void Start()
@@ -67,75 +68,46 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     }
 
     /// <summary>
-    /// Generates the stars in the scene/> game.
+    /// Generate the stars in the scene.
     /// </summary>
     private void GenerateSize()
     {
-        int maxSerie = _dataDifficulty.maxSerie;
+        //int rnadomNum = Random.r
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
         List<GameObject> spawnsList = new List<GameObject>(spawns);
 
-        for (int i = 0; i < maxSerie; i++)
-        {
-            GameObject newStar = Instantiate(_star, _starsParent.transform);
+        //for (int i = 0; i < maxSerie; i++)
+        //{
+        //    GameObject newStar = Instantiate(_star, _starsParent.transform);
 
 
-            //Generate star position
-            newStar.transform.position = spawnsList[i].transform.position;
-            _starList.Add(newStar);
-
-            newStar.GetComponent<Star>().InitStart(gameObject);
-        }
+        //    //Generate star position
+        //    newStar.transform.position = spawnsList[i].transform.position;
+        //    _starList.Add(newStar);
+        //    if (_starList = )
+        //    {
+            
+        //    }
+        //    newStar.GetComponent<Star>().InitStart(gameObject);
+        //}
 
         string _textOrder = "";
 
         if (_firstRound)
         {
             _firstRound = false;
-            _textOrder += "Forma una constelación con ";
+            _textOrder += "Forma una constelación con 5 estrellas";
         }
         else
         {
-            _textOrder += "Ahora un ";
+            _textOrder += "Ahora con ";
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
 
     }
 
-    //private void GenerateSpikes()
-    //{
-    //    int maxSerie = _dataDifficulty.maxSerie;
-    //    GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
-    //    List<GameObject> spawnsList = new List<GameObject>(spawns);
-
-    //    for (int i = 0; i < maxSerie; i++)
-    //    {
-    //        GameObject newStar = Instantiate(_spikesStars[i], _starsParent.transform);
-
-    //        //Generate star position
-    //        int randomIndex = Random.Range(0, spawnsList.Count);
-    //        newStar.transform.position = spawnsList[randomIndex].transform.position;
-    //        spawnsList.RemoveAt(randomIndex);
-    //        _starList.Add(newStar);
-
-    //        newStar.GetComponent<Star>().InitStart(gameObject);
-    //    }
-
-
-    //    string _textOrder = "";
-
-    //    if (_firstRound)
-    //    {
-    //        _firstRound = false;
-    //        _textOrder += "Une las estrellas de ";
-    //    }
-    //    else
-    //    {
-    //        _textOrder += "Ahora de ";
-    //    }
-    //    ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-    //}
+    
 
     /// <summary>
     /// Controlls the input of the game

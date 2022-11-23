@@ -11,10 +11,11 @@ public class TelescopeAssociationDifficulty : MonoBehaviour
     [Serializable]
     public struct dataDiffilcuty
     {
-        [Range(1, 15)]
-        [Tooltip("Number of maximum values of the series")]
-        public int maxSerie;
-      
+        [Tooltip("Max Stars to connect")]
+        public int maxStars;
+        [Tooltip("Min Stars to connect")]
+        public int minStars;
+
     }
 
     /// <summary>
