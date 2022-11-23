@@ -150,14 +150,14 @@ public class DataService
     /// <param name="name">The classroom's name</param>
     public void DeleteClass(string name)
     {
-        _connection.Delete(GetClassName(name.ToUpper()));
+        _connection.Delete(GetClass(name.ToUpper()));
     }
     /// <summary>
     /// Returns the classroom using the name
     /// </summary>
     /// <param name="name">The classroom's name</param>
     /// <returns><see cref="IEnumerable{ClassroomDB}"/></returns>
-    public IEnumerable<ClassroomDB> GetClassName(string name)
+    public IEnumerable<ClassroomDB> GetClass(string name)
     {
         return _connection.Table<ClassroomDB>().Where(x => x.name == name.ToUpper());
     }
@@ -166,9 +166,9 @@ public class DataService
     /// </summary>
     /// <param name="id">The classroom's id</param>
     /// <returns><see cref="IEnumerable{ClassroomDB}"/></returns>
-    public IEnumerable<ClassroomDB> GetClassID(string id)
+    public IEnumerable<ClassroomDB> GetClass(int id)
     {
-        return _connection.Table<ClassroomDB>().Where(x => x.idClassroom == int.Parse(id));
+        return _connection.Table<ClassroomDB>().Where(x => x.idClassroom == id);
     }
     /// <summary>
     /// Get all Classroom table
@@ -188,15 +188,14 @@ public class DataService
     public StudentDB InsertStudent(string name)
     {
         //GET CURRENT CLASSROOM
-        ClassroomDB currentClassroom  = (ClassroomDB)GetClassName(ServiceLocator.Instance.GetService<UIManager>()._classNamedb);
-        int idClassroom = currentClassroom.GetIDClassroom();
+        ClassroomDB currentClassroom  = (ClassroomDB)GetClass(ServiceLocator.Instance.GetService<UIManager>()._classNamedb);
+        int idClassroom = currentClassroom.idClassroom;
 
         StudentDB newStudent = new StudentDB
         {
             name = name.ToUpper(),
             idClassroom = idClassroom
         };
-
         try
         {
             _connection.Insert(newStudent);
@@ -222,9 +221,36 @@ public class DataService
     /// </summary>
     /// <param name="name">The student's name</param>
     /// <returns><see cref="IEnumerable{StudentDB}"/></returns>
-    public IEnumerable<StudentDB> GetStudentName(string name)
+    public IEnumerable<StudentDB> GetStudent(string name)
     {
         return _connection.Table<StudentDB>().Where(x => x.name == name.ToUpper());
+    }
+    /// <summary>
+    /// Returns the student using the idClassroom
+    /// </summary>
+    /// <param name="idClassroom">The student's idClassroom</param>
+    /// <returns><see cref="IEnumerable{StudentDB}"/></returns>
+    public IEnumerable<StudentDB> GetStudent(int idClassroom)
+    {
+        return _connection.Table<StudentDB>().Where(x => x.idClassroom == idClassroom);
+    }
+    /// <summary>
+    /// Returns the student using the idStudent, needs the bool
+    /// </summary>
+    /// <param name="idStudent">The student's id</param>
+    /// <param name="isId">Needs the bool true or false</param>
+    /// <returns></returns>
+    public IEnumerable<StudentDB> GetStudent(int idStudent, bool isId)
+    {
+        return _connection.Table<StudentDB>().Where(x => x.idStudent == idStudent);
+    }
+    /// <summary>
+    /// Get All students from the same classroom
+    /// </summary>
+    /// <param name="idClassroom">id's classroom</param>
+    public IEnumerable<StudentDB> SeachStudent(string idClassroom)
+    {
+        return _connection.Table<StudentDB>().Where(x => x.idClassroom == int.Parse(idClassroom));
     }
     /// <summary>
     /// Delete student using the name
@@ -232,7 +258,41 @@ public class DataService
     /// <param name="name">The student's name</param>
     public void DeleteStudent(string name)
     {
-        _connection.Delete(GetStudentName(name.ToUpper()));
+        _connection.Delete(GetStudent(name.ToUpper()));
+    }
+    /// <summary>
+    /// Delete student using the idStudent
+    /// </summary>
+    /// <param name="idStudent">The student's id</param>
+    public void DeleteStudent(int idStudent)
+    {
+        _connection.Delete(GetStudent(idStudent, true));
+    }
+    #endregion
+    #region Session
+    /// <summary>
+    /// Create a Session in the database
+    /// </summary>
+    /// <returns>The session created</returns>
+    public SessionDB InsertSession()
+    {
+        string dateNow = System.DateTime.Now.ToString();
+        SessionDB newSession = new SessionDB
+        {
+            dateSession = dateNow
+        };
+
+        try
+        {
+            _connection.Insert(newSession);
+            ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
+            return newSession;
+        }
+        catch (System.Exception)
+        {
+            ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            return null;
+        }
     }
     #endregion
 }
