@@ -215,7 +215,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 716864837}
+  - {fileID: 3444404726265372824}
   - {fileID: 1960960239}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -411,11 +411,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &716864837 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3444404725548785106, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
-  m_PrefabInstance: {fileID: 3444404726265372823}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1847287178
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,8 +626,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 4319849293831063717, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f84152cc6bbbcac43bc222e21426ad16, type: 3}
+    - target: {fileID: 4319849295033376813, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cbbf9c368ff635141bc35fcc6f91b14d, type: 3}
+    - target: {fileID: 4319849295204207994, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cbbf9c368ff635141bc35fcc6f91b14d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
+--- !u!224 &3444404726265372824 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4319849294589951772, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
+  m_PrefabInstance: {fileID: 3444404726265372823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6166098263974517495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -675,6 +687,14 @@ PrefabInstance:
     - target: {fileID: 6166098264853281304, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166098264853281304, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166098264853281304, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 6166098264853281304, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -727,6 +747,10 @@ PrefabInstance:
     - target: {fileID: 6166098264853281305, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
       propertyPath: m_Name
       value: Timer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6166098264853281305, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e05c67aa905cc01499e5a7fa49783a1f, type: 3}
