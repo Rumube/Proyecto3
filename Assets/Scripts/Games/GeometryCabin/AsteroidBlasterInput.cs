@@ -50,7 +50,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            
+
 
         _lastShotPostion = Vector2.zero;
         //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
@@ -173,7 +173,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
         foreach (LaserGun currentGun in laserList)
         {
-            currentGun.gun.GetComponent<Animator>().SetTrigger("Shot"); 
+            currentGun.gun.GetComponent<Animator>().SetTrigger("Shot");
         }
         print(hit.transform.gameObject.name);
 
@@ -245,16 +245,17 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// Rotate the gun using a Vector2
     /// </summary>
     /// <param name="pos">Position to rotate</param>
-    public void MoveGun(Vector2 pos)
+    public void MoveGun(Vector2 pos, Vector3 newDir)
     {
-        List<LaserGun> auxList = laserList;
-        int i = 0;
-        foreach (LaserGun currentGun in auxList)
-        {
-            laserList[i].SetNewDir((new Vector3(pos.x, pos.y, 0) - currentGun.gun.transform.position).normalized);
-            laserList[i].SetNewAngle(Mathf.Atan2(currentGun.newDir.y, currentGun.newDir.x) * Mathf.Rad2Deg);
-            laserList[i].SetNewAngle(-90);
-            laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
-        }
+       
+
+        //for (int i = 0; i < laserList.Count; i++)
+        //{
+        //    laserList[i].SetNewDir((new Vector3(pos.x, pos.y, 0) - laserList[i].gun.transform.position).normalized);
+        //    laserList[i].SetNewAngle(Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
+        //    laserList[i].SetNewAngle(-90);
+        //    laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
+
+        //}
     }
 }
