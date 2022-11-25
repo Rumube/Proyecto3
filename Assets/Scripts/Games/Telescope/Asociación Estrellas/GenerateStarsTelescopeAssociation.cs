@@ -71,8 +71,15 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     /// </summary>
     private void NumberConstelationStars()
     {
+        List<GameObject> starsConstelation = new List<GameObject>();
         int ConstelationStars = UnityEngine.Random.Range(_dataDifficulty.minStars, randomNum);
-        print("Este " + ConstelationStars);
+        int starListPosition = 0;
+        for (int i = 0; i < ConstelationStars; i++)
+        {
+            starsConstelation.Add(_starList[starListPosition]);
+            starListPosition++;
+        }
+        //print("Este " + ConstelationStars);
     }
 
     /// <summary>
@@ -93,7 +100,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
 
             if (posRepeated.Contains(posRandom))
             {
-              
+
             }
             //Generate star position
             else
@@ -104,7 +111,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
                 newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
                 print("Position " + posRandom);
             }
-
+            //NumberConstelationStars();
 
         }
 
