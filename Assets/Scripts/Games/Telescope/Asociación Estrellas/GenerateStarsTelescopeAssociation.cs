@@ -18,6 +18,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     public bool _pressed = false;
     private bool _firstRound = true;
     int randomNum;
+    public List<GameObject> starsConstelation = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -71,13 +72,21 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     /// </summary>
     private void NumberConstelationStars()
     {
-        List<GameObject> starsConstelation = new List<GameObject>();
         int ConstelationStars = UnityEngine.Random.Range(_dataDifficulty.minStars, randomNum);
         int starListPosition = 0;
         for (int i = 0; i < ConstelationStars; i++)
         {
-            starsConstelation.Add(_starList[starListPosition]);
-            starListPosition++;
+            
+            if (starListPosition == 0)
+            {
+                starsConstelation.Add(_starList[starListPosition]);
+            }
+            else
+            {
+                starsConstelation.Add(_starList[starListPosition]);
+                starListPosition++;
+            }
+            
         }
         //print("Este " + ConstelationStars);
     }
@@ -111,7 +120,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
                 newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
                 print("Position " + posRandom);
             }
-            //NumberConstelationStars();
+            NumberConstelationStars();
 
         }
 

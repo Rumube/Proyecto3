@@ -93,8 +93,9 @@ public class TelescopeAssociationConstelationGenerator : MonoBehaviour
         _playerStarList.Add(star);
         AddNewPosition(star.transform.position);
         List<GameObject> gameStarList = new List<GameObject>(GetComponent<GenerateStarsTelescopeAssociation>()._starList);
+        List<GameObject> gameStarsConstelations = new List<GameObject>(GetComponent<GenerateStarsTelescopeAssociation>().starsConstelation);
 
-        if (_playerStarList.Count == gameStarList.Count) //NO TIENE QUE SER IGUAL A LA gameStarList, sino al número de estrellas que da la IA. CAMBIAR ESTE VALOR
+        if (_playerStarList.Count == gameStarsConstelations.Count) 
         {
             bool isCorrect = true;
             for (int i = 0; i < _playerStarList.Count; i++)
