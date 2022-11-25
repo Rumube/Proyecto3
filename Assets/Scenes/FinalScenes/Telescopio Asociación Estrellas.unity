@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1265,6 +1265,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1757058975}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CheckIfIsCorrect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TelescopeAssociationConstelationGenerator, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 52880522041165891, guid: 63cee1330db051544be52c755ed1f083, type: 3}
+    - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7601654017250776151, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -2021,20 +2053,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2092755307233629488, guid: f3c0236698413144ab459213746d3b06, type: 3}
   m_PrefabInstance: {fileID: 1757058963}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1757058969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757058964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a99207d7f65b2e46860a99a77f728d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point: {x: 0, y: 0}
-  radius: 0
 --- !u!120 &1757058971
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2156,7 +2174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - maxSerie: 15
+  - maxStars: 15
+    minStars: 3
 --- !u!114 &1757058973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,12 +2188,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178a7801eb5de8f42a95b3fefa700ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spikesStars: []
-  _star: {fileID: 52880522041165891, guid: 63cee1330db051544be52c755ed1f083, type: 3}
+  _star: {fileID: 52880522041165891, guid: 969cb4e4ce9b7454f9f911df3c087279, type: 3}
   _starsParent: {fileID: 1910990291}
   _particles: {fileID: 1672574124}
   _starList: []
   _pressed: 0
+--- !u!114 &1757058975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757058964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f4ae9a07317ff64a84a77e108b8f532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  point: {x: 0, y: 0}
+  radius: 0
 --- !u!1 &1843837478
 GameObject:
   m_ObjectHideFlags: 0
