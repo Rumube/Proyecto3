@@ -32,8 +32,23 @@ public class Android : MonoBehaviour
     public void ConnectToDataBase()
     {
         _dataService = new DataService(_DatabaseName);
+    }
+    /// <summary>
+    /// Starts the process to close the database connection
+    /// </summary>
+    public void CloseDataBase()
+    {
+        _dataService.CloaseDatabase();
+    }
+    /// <summary>
+     /// Only the first time connect to the database and add value to <see cref="_dataService"/>
+     /// </summary>
+    public void NewConnectToDataBase()
+    {
+        _dataService = new DataService(_DatabaseName);
         _dataService.CreateDB();
         ReadClassData();
+
     }
     /// <summary>
     /// Starts the process to create a new Classroom
@@ -63,12 +78,14 @@ public class Android : MonoBehaviour
                 UpdateClassPanel();
             }
         }
+        CloseDataBase();
     }
     /// <summary>
     /// Starts the process to delete and create the table in classPanel
     /// </summary>
     private void UpdateClassPanel()
     {
+        ConnectToDataBase();
         DestroyClassesPanel();
         IEnumerable<ClassroomDB> classroomTable = _dataService.GetAllClassrooms();
 
@@ -77,6 +94,7 @@ public class Android : MonoBehaviour
             GameObject newButton = Instantiate(ServiceLocator.Instance.GetService<UIManager>()._classButton, ServiceLocator.Instance.GetService<UIManager>()._classPanel.transform);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = classroom.name;
         }
+        CloseDataBase();
     }
     /// <summary>
     /// Destroy the ClassesPanel's elements
@@ -94,7 +112,9 @@ public class Android : MonoBehaviour
     /// </summary>
     public void DeleteClassButton()
     {
+        ConnectToDataBase();
         _dataService.DeleteClass(_tInputNamePro.text);
+        CloseDataBase();
     }
     /// <summary>
     /// Calls <see cref="UpdateClassPanel"/>
@@ -109,6 +129,7 @@ public class Android : MonoBehaviour
     /// </summary>
     public void InsertStudentButton()
     {
+        ConnectToDataBase();
         if (!string.IsNullOrEmpty(_tInputNamePro.text))
         {
             while (_tInputNamePro.text.StartsWith(" ") || _tInputNamePro.text.StartsWith("\t"))
@@ -125,10 +146,13 @@ public class Android : MonoBehaviour
             }
             _dataService.InsertStudent(_tInputNamePro.text.ToUpper());
         }
+        CloseDataBase();
     }
     public void DeleteStudentButton()
     {
+        ConnectToDataBase();
         _dataService.DeleteStudent(_tInputNamePro.text.ToUpper());
+        CloseDataBase();
     }
     public void UpdateStudentButton()
     {
@@ -152,8 +176,10 @@ public class Android : MonoBehaviour
     /// <param name="name"></param>
     private void InsertStudent(string name)
     {
+        ConnectToDataBase();
         _dataService.InsertStudent(name);
         ReaderStudent(_buttonPrefab, _location);
+        CloseDataBase();
     }
 
     /// <summary>
@@ -162,12 +188,14 @@ public class Android : MonoBehaviour
     /// <param name="name">Student's name</param>
     private void DeleteStudent(string name)
     {
+        ConnectToDataBase();
         string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
-        ClassroomDB currentClassroom = (ClassroomDB)_dataService.GetClass(className);
+        ClassroomDB currentClassroom = _dataService.GetClass(className);
 
         _dataService.DeleteStudent(name);
 
         ReaderStudent(_buttonPrefab, _location);
+        CloseDataBase();
     }
     /// <summary>
     /// Starts the process to destroy and create new student panel
@@ -176,9 +204,10 @@ public class Android : MonoBehaviour
     /// <param name="location"></param>
     public void ReaderStudent(GameObject prefab, Transform location)
     {
+        ConnectToDataBase();
         //Get Classroom Data
         string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
-        ClassroomDB currentClassroom = (ClassroomDB)_dataService.GetClass(className);
+        ClassroomDB currentClassroom = _dataService.GetClass(className);
 
         //Get StudentData
         IEnumerable<StudentDB> students = _dataService.GetStudent(currentClassroom.idClassroom);
@@ -196,6 +225,7 @@ public class Android : MonoBehaviour
             newButton.GetComponentInChildren<StudentButton>()._student._name = studentDB.name;
             newButton.GetComponentInChildren<StudentButton>()._student._idClass = studentDB.idClassroom;
         }
+        CloseDataBase();
     }
     /// <summary>
     /// Destroy the child's parent
@@ -215,8 +245,10 @@ public class Android : MonoBehaviour
     /// <param name="idClassroom"></param>
     private void SearchStudent(string idClassroom)
     {
+        ConnectToDataBase();
         print("Use?!?!");
         IEnumerable<StudentDB> students = _dataService.GetStudent(int.Parse(idClassroom));
+        CloseDataBase();
     }
     #endregion
     #region Table Session
@@ -225,6 +257,7 @@ public class Android : MonoBehaviour
     /// </summary>
     public void InsertSession()
     {
+        ConnectToDataBase();
         SessionDB newSession = null;
         newSession = (SessionDB)_dataService.InsertSession();
 
@@ -232,14 +265,17 @@ public class Android : MonoBehaviour
         {
             ReaderDate();
         }
+        CloseDataBase();
     }
     /// <summary>
     /// Only call's <see cref="DataService.GetAllSessions"/>
     /// </summary>
     private void ReaderDate()
     {
+        ConnectToDataBase();
         IEnumerable<SessionDB> sessions = null;
         sessions = _dataService.GetAllSessions();
+        CloseDataBase();
     }
     /// <summary>
     /// Returns the last session's ID
@@ -247,12 +283,14 @@ public class Android : MonoBehaviour
     /// <returns><see cref="SessionDB.idSession"/></returns>
     public int GetIDSession()
     {
+        ConnectToDataBase();
         int id = -1;
         SessionDB session = _dataService.GetSessionOrderBy();
         if(session != null)
         {
             id = session.idSession;
         }
+        CloseDataBase();
         return id;
     }
     #endregion
@@ -263,6 +301,7 @@ public class Android : MonoBehaviour
     ///<returns>The number of difficulty, if there is not record returns 0.</returns>
     public int[] GetDifficulty(string nameStudent, string nameGame)
     {
+        ConnectToDataBase();
         int idGame = _dataService.GetGame(nameGame).idGame;
         int idStudent = _dataService.GetStudent(nameStudent).idStudent;
 
@@ -274,7 +313,7 @@ public class Android : MonoBehaviour
             data[0] = currentMatch.level;
             data[1] = currentMatch.averagePoints;
         }
-
+        CloseDataBase();
         return data;
     }
     /// <summary>
@@ -291,6 +330,7 @@ public class Android : MonoBehaviour
     /// <param name="level">Level's game</param>
     public void InsertMatch(int idSession, string nameStudent, string nameGame, int team, int success, int errors, float gameTime, int points, int level)
     {
+        ConnectToDataBase();
         int idGame = _dataService.GetGame(nameGame).idGame;
         int idStudent = _dataService.GetStudent(nameStudent).idStudent;
 
@@ -304,6 +344,7 @@ public class Android : MonoBehaviour
         {
             EDebug.Log("Ocurrión un error");
         }
+        CloseDataBase();
     }
     #endregion
 }

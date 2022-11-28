@@ -64,7 +64,16 @@ public class DataService
         Debug.Log("Final PATH: " + dbPath);
 
     }
-
+    /// <summary>
+    /// Close the database connection
+    /// </summary>
+    public void CloaseDatabase()
+    {
+        _connection.Close();
+    }
+    /// <summary>
+    /// Create the database if not exist
+    /// </summary>
     public void CreateDB()
     {
         _connection.CreateTable<StudentDB>();
@@ -103,16 +112,22 @@ public class DataService
     /// <param name="name">The classroom's name</param>
     public void DeleteClass(string name)
     {
-        _connection.Delete(GetClass(name.ToUpper()));
+        _connection.Delete(GetClass(name.ToUpper()).idClassroom);
     }
     /// <summary>
     /// Returns the classroom using the name
     /// </summary>
     /// <param name="name">The classroom's name</param>
     /// <returns><see cref="IEnumerable{ClassroomDB}"/></returns>
-    public IEnumerable<ClassroomDB> GetClass(string name)
+    public ClassroomDB GetClass(string name)
     {
-        return _connection.Table<ClassroomDB>().Where(x => x.name == name.ToUpper());
+        ClassroomDB value = null;
+        IEnumerable<ClassroomDB> classrooms = _connection.Table<ClassroomDB>().Where(x => x.name == name.ToUpper());
+        foreach (ClassroomDB classroom in classrooms)
+        {
+            value = classroom;
+        }
+        return value;
     }
     /// <summary>
     /// Returns the classroom using the id
@@ -141,7 +156,7 @@ public class DataService
     public StudentDB InsertStudent(string name)
     {
         //GET CURRENT CLASSROOM
-        ClassroomDB currentClassroom  = (ClassroomDB)GetClass(ServiceLocator.Instance.GetService<UIManager>()._classNamedb);
+        ClassroomDB currentClassroom  = GetClass(ServiceLocator.Instance.GetService<UIManager>()._classNamedb);
         int idClassroom = currentClassroom.idClassroom;
 
         StudentDB newStudent = new StudentDB
