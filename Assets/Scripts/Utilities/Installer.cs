@@ -119,7 +119,7 @@ public class Installer : MonoBehaviour
 #endif
     }
 
-    /// <summary>Set the database method deppending on the platform</summary>
+    // <summary>Set the database method deppending on the platform</summary>
     private void SetDatabase()
     {
 #if UNITY_EDITOR

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 
 public class DataService
 {
-
     private SQLiteConnection _connection;
 
     public DataService(string DatabaseName)
@@ -73,53 +72,7 @@ public class DataService
         _connection.CreateTable<SessionDB>();
         _connection.CreateTable<GameDB>();
         _connection.CreateTable<MatchDB>();
-
-        _connection.InsertAll(new[]{
-            new StudentDB{
-                name = "Tom",
-                idClassroom = 1,
-            },
-            new StudentDB{
-                name = "Juan",
-                idClassroom = 1,
-            },
-            new StudentDB{
-                name = "Marta",
-                idClassroom = 1,
-            },
-            new StudentDB{
-                name = "Lola",
-                idClassroom = 1,
-            }
-        });
     }
-    #region examples
-    public IEnumerable<StudentDB> GetPersons()
-    {
-        return _connection.Table<StudentDB>();
-    }
-
-    public IEnumerable<StudentDB> GetPersonsNamedRoberto()
-    {
-        return _connection.Table<StudentDB>().Where(x => x.name == "Roberto");
-    }
-
-    public StudentDB GetJohnny()
-    {
-        return _connection.Table<StudentDB>().Where(x => x.name == "Johnny").FirstOrDefault();
-    }
-
-    public StudentDB CreatePerson()
-    {
-        var p = new StudentDB
-        {
-            name = "Olivia",
-            idClassroom = 10,
-        };
-        _connection.Insert(p);
-        return p;
-    }
-    #endregion
     #region Classroom
     /// <summary>
     /// Create a Classroom in thedatabase
@@ -199,12 +152,12 @@ public class DataService
         try
         {
             _connection.Insert(newStudent);
-            ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
+            ServiceLocator.Instance.GetService<MobileUI>().PopupAddStudent();
             return newStudent;
         }
         catch (System.Exception)
         {
-            ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            ServiceLocator.Instance.GetService<MobileUI>().AddingTwoStudentsWithSameName();
             return null;
         }
     }
@@ -220,10 +173,18 @@ public class DataService
     /// Returns the student using the name
     /// </summary>
     /// <param name="name">The student's name</param>
-    /// <returns><see cref="IEnumerable{StudentDB}"/></returns>
-    public IEnumerable<StudentDB> GetStudent(string name)
+    /// <returns><see cref="StudentDB"/></returns>
+    public StudentDB GetStudent(string name)
     {
-        return _connection.Table<StudentDB>().Where(x => x.name == name.ToUpper());
+        StudentDB result = null;
+
+        IEnumerable<StudentDB> students = _connection.Table<StudentDB>().Where(x => x.name == name.ToUpper());
+
+        foreach (StudentDB student in students)
+        {
+            result = student;
+        }
+        return result;
     }
     /// <summary>
     /// Returns the student using the idClassroom
@@ -240,9 +201,17 @@ public class DataService
     /// <param name="idStudent">The student's id</param>
     /// <param name="isId">Needs the bool true or false</param>
     /// <returns></returns>
-    public IEnumerable<StudentDB> GetStudent(int idStudent, bool isId)
+    public StudentDB GetStudent(int idStudent, bool isId)
     {
-        return _connection.Table<StudentDB>().Where(x => x.idStudent == idStudent);
+        StudentDB result = null;
+
+        IEnumerable<StudentDB> students = _connection.Table<StudentDB>().Where(x => x.idStudent == idStudent);
+
+        foreach (StudentDB student in students)
+        {
+            result = student;
+        }
+        return result;
     }
     /// <summary>
     /// Get All students from the same classroom
@@ -285,14 +254,108 @@ public class DataService
         try
         {
             _connection.Insert(newSession);
-            ServiceLocator.Instance.GetService<MobileUI>().PopupAddClass();
             return newSession;
         }
         catch (System.Exception)
         {
-            ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
+            //ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
             return null;
         }
+    }
+    /// <summary>
+    /// Returns all the sessions
+    /// </summary>
+    /// <returns>All Sessions rows <see cref="IEnumerable{SessionDB}"/></returns>
+    public IEnumerable<SessionDB> GetAllSessions()
+    {
+        return _connection.Table<SessionDB>();
+    }
+    /// <summary>
+    /// Returns the last <see cref="SessionDB"/> order by the idSession
+    /// </summary>
+    /// <returns><see cref="SessionDB"/></returns>
+    public SessionDB GetSessionOrderBy()
+    {
+        SessionDB result = null;
+        IEnumerable<SessionDB> sessions = _connection.Query<SessionDB>("SELECT idSession FROM Session ORDER BY idSession DESC LIMIT 1");
+        foreach (SessionDB session in sessions)
+        {
+            result = session;
+        }
+        return result;
+    }
+    #endregion
+    #region Game
+    /// <summary>
+    /// Returns the game info using the <see cref="GameDB.name"/>
+    /// </summary>
+    /// <param name="nameGame"></param>
+    /// <returns><see cref="GameDB"/></returns>
+    public GameDB GetGame(string nameGame)
+    {
+        GameDB result = null;
+        IEnumerable<GameDB> games = _connection.Query<GameDB>("SELECT idGame FROM Game where Name = ?", nameGame);
+        foreach (GameDB game in games)
+        {
+            result = game;
+        }
+        return result;
+    }
+    #endregion
+    #region Match
+    /// <summary>
+    /// Inserts a new Match in the table
+    /// </summary>
+    /// <param name="idStudent">Student's ID</param>
+    /// <param name="idSession">Session's ID</param>
+    /// <param name="idGame">Game's ID</param>
+    /// <param name="team">Number's team</param>
+    /// <param name="level">Level's game</param>
+    /// <param name="averageSuccess">Average of success in the match</param>
+    /// <param name="averageErrors">Average of errors in the match</param>
+    /// <param name="averagePoints">Average of points int the match</param>
+    /// <param name="averageTime">Time to complet the game</param>
+    /// <returns>The created match <see cref="MatchDB"/></returns>
+    public MatchDB InsertMatch(int idStudent, int idSession, int idGame, int team, int level, int averageSuccess, int averageErrors, int averagePoints, float averageTime)
+    {
+        MatchDB newMatch = new MatchDB
+        {
+            idStudent = idStudent,
+            idSession = idSession,
+            idGame = idGame,
+            team = team,
+            level = level,
+            averageSuccess = averageSuccess,
+            averageErrors = averageErrors,
+            averagePoints = averagePoints,
+            averageTime = averageTime
+        };
+
+        try
+        {
+            _connection.Insert(newMatch);
+            return newMatch;
+        }
+        catch (System.Exception)
+        {
+            return null;
+        }
+    }
+    /// <summary>
+    /// Returns the last <see cref="MatchDB"/> using the <see cref="MatchDB.idStudent"/> and the <see cref="MatchDB.idGame"/>
+    /// </summary>
+    /// <param name="idStudent">The student's id</param>
+    /// <param name="idGame">The game's id</param>
+    /// <returns><see cref="MatchDB"/></returns>
+    public MatchDB GetMatchDifficultyData(int idStudent, int idGame)
+    {
+        MatchDB result = null;
+        IEnumerable<MatchDB> matches = _connection.Query<MatchDB>("SELECT * FROM Match where idStudent = ? AND idGame = ? LIMIT 1", idStudent, idGame);
+        foreach (MatchDB match in matches)
+        {
+            result = match;
+        }
+        return result;
     }
     #endregion
 }

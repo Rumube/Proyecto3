@@ -4,13 +4,13 @@ public class MatchDB
 {
     [PrimaryKey, AutoIncrement]
     public int idMatch { get; set; }
-    public string idStudent { get; set; }
-    public string idSession { get; set; }
-    public string idGame { get; set; }
-    public string team { get; set; }
-    public string level { get; set; }
-    public string averageSuccess { get; set; }
-    public string averageErrors { get; set; }
-    public string averagePoints { get; set; }
-    public string averageTime { get; set; }
+    public int idStudent { get; set; }
+    public int idSession { get; set; }
+    public int idGame { get; set; }
+    public int team { get; set; }
+    public int level { get; set; }
+    public int averageSuccess { get; set; }
+    public int averageErrors { get; set; }
+    public int averagePoints { get; set; }
+    public float averageTime { get; set; }
 }
