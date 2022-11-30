@@ -115,6 +115,7 @@ public class Android : MonoBehaviour
         ConnectToDataBase();
         _dataService.DeleteClass(_tInputNamePro.text);
         CloseDataBase();
+        UpdateClassPanel();
     }
     /// <summary>
     /// Calls <see cref="UpdateClassPanel"/>
@@ -145,6 +146,7 @@ public class Android : MonoBehaviour
                 _tInputNamePro.text = _tInputNamePro.text.Replace("  ", " ");
             }
             _dataService.InsertStudent(_tInputNamePro.text.ToUpper());
+            ReaderStudent(_buttonPrefab, _location);
         }
         CloseDataBase();
     }

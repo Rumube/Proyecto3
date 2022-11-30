@@ -112,7 +112,7 @@ public class DataService
     /// <param name="name">The classroom's name</param>
     public void DeleteClass(string name)
     {
-        _connection.Delete(GetClass(name.ToUpper()).idClassroom);
+        _connection.Delete(GetClass(name.ToLower()));
     }
     /// <summary>
     /// Returns the classroom using the name
