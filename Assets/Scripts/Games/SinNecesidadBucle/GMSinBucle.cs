@@ -195,4 +195,19 @@ public class GMSinBucle : MonoBehaviour,IGameManager
     {
         throw new System.NotImplementedException();
     }
+
+    public List<string> GetNotPresentsStudents()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetNotPresentsStudents(string name)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void DeleteNotPresentsStudent(string name)
+    {
+        throw new System.NotImplementedException();
+    }
 }

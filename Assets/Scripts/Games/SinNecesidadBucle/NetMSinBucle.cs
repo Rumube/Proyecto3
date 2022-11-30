@@ -145,4 +145,9 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
     {
         throw new System.NotImplementedException();
     }
+
+    public void RandomizeStudents()
+    {
+        throw new System.NotImplementedException();
+    }
 }

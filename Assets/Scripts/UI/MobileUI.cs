@@ -108,8 +108,10 @@ public class MobileUI : UI
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameConnection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._addStudent);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameTime);
+        _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._startButton);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._stadistics);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScore);
+        
 
         //Desactive all windows
         for (int i = 0; i < _windowsTree.Count; ++i)
@@ -135,7 +137,7 @@ public class MobileUI : UI
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
     }
-    void InitialAnimEndReached(VideoPlayer vp)
+    public void InitialAnimEndReached(VideoPlayer vp)
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)
         {
@@ -685,7 +687,7 @@ public class MobileUI : UI
     public void UpdateReadyRockets(int id)
     {
         id -= 1;
-        _rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 1);
+        //_rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 1);
     }
     #endregion
 

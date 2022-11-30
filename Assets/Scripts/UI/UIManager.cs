@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject _gameConnection;
     public GameObject _addStudent;
     public GameObject _gameTime;
+    public GameObject _startButton;
     public GameObject _stadistics;
     public GameObject _finalScore;
 

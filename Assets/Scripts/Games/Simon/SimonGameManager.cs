@@ -143,7 +143,7 @@ public class SimonGameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _animTapa.Play("PanelOpen");
+        _animTapa.Play("LidClose");
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
 
         foreach (GameObject currentButton in findButtons)
@@ -180,7 +180,7 @@ public class SimonGameManager : MonoBehaviour
     public IEnumerator StartNextRound()
     {
         yield return new WaitForSeconds(_data.simonVelocity);
-        _animTapa.Play("PanelClose");
+        _animTapa.Play("LidOpen");
         _playerSequenceList.Clear();
         _canClick = false;
         yield return new WaitForSeconds(_data.simonVelocity);
