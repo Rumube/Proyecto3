@@ -150,11 +150,15 @@ public class Android : MonoBehaviour
         }
         CloseDataBase();
     }
+    /// <summary>
+    /// Start's the process to delete the selected student
+    /// </summary>
     public void DeleteStudentButton()
     {
         ConnectToDataBase();
         _dataService.DeleteStudent(_tInputNamePro.text.ToUpper());
         CloseDataBase();
+        ReaderStudent(_buttonPrefab, _location);
     }
     public void UpdateStudentButton()
     {
@@ -170,7 +174,6 @@ public class Android : MonoBehaviour
     }
 
     #endregion
-
     #region Table Student
     /// <summary>
     /// Starts the process to create a student
@@ -191,9 +194,6 @@ public class Android : MonoBehaviour
     private void DeleteStudent(string name)
     {
         ConnectToDataBase();
-        string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
-        ClassroomDB currentClassroom = _dataService.GetClass(className);
-
         _dataService.DeleteStudent(name);
 
         ReaderStudent(_buttonPrefab, _location);
