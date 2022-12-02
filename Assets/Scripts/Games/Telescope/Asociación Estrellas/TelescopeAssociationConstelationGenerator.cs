@@ -84,46 +84,43 @@ public class TelescopeAssociationConstelationGenerator : MonoBehaviour
         }
     }
 
+
     /// <summary>
-    /// Check's if the player list of stars is correct, and add the last star pressed
+    /// Add the last star pressed
     /// </summary>
-    /// <param name="star">The star pressed</param>
-    public void CheckIfIsCorrect(GameObject star)
+    /// <param name="star"></param>
+    public void AddStars(GameObject star)
     {
         _playerStarList.Add(star);
         AddNewPosition(star.transform.position);
-        List<GameObject> gameStarList = new List<GameObject>(GetComponent<GenerateStarsTelescopeAssociation>()._starList);
-        List<GameObject> gameStarsConstelations = new List<GameObject>(GetComponent<GenerateStarsTelescopeAssociation>().starsConstelation);
 
-        if (_playerStarList.Count == gameStarsConstelations.Count) 
-        {
-            bool isCorrect = true;
-            for (int i = 0; i < _playerStarList.Count; i++)
-            {
-                if (_playerStarList[i] != gameStarList[i])
-                {
-                    isCorrect = false;
-                }
-            }
-
-            if (isCorrect)
-            {
-                _success++;
-                ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
-                ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_success, _errors);
-                _success = 0;
-                _errors = 0;
-                StartCoroutine(GetComponent<GenerateStarsTelescopeAssociation>().GenerateNewOrde());
-
-            }
-            else
-            {
-                _errors++;
-                ServiceLocator.Instance.GetService<IError>().GenerateError();
-                ClearConstelation();
-            }
-        }
     }
+    /// <summary>
+    /// Check's if the player list of stars is correct
+    /// </summary>
+    public void CheckIfIsCorrect()
+    {
+        List<GameObject> gameStarsConstelations = new List<GameObject>(GetComponent<GenerateStarsTelescopeAssociation>()._starsConstelation);
+
+        if (_playerStarList.Count == gameStarsConstelations.Count)
+        {
+            _success++;
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_success, _errors);
+            _success = 0;
+            _errors = 0;
+            StartCoroutine(GetComponent<GenerateStarsTelescopeAssociation>().GenerateNewOrde());
+            
+        }
+        else
+        {
+            _errors++;
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+            ClearConstelation();
+        }
+
+    }
+
 
     /// <summary>
     /// Returns the number of star selecteds for the player

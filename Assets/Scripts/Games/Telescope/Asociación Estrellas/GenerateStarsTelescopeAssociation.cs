@@ -17,8 +17,9 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
     private bool _firstRound = true;
-    int randomNum;
-    public List<GameObject> starsConstelation = new List<GameObject>();
+    int _randomNum;
+    public List<GameObject> _starsConstelation = new List<GameObject>();
+    private int _constelationStars;
 
     // Start is called before the first frame update
     void Start()
@@ -54,8 +55,11 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         DestroyStars();
+        GenerateStars();
     }
-
+    /// <summary>
+    /// Clear the lists of stars and destroy the stars in the scene
+    /// </summary>
     private void DestroyStars()
     {
         GetComponent<TelescopeAssociationConstelationGenerator>().ClearConstelation();
@@ -65,30 +69,22 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
             Destroy(_starList[i]);
         }
         _starList.Clear();
+        _starsConstelation.Clear();
     }
 
     /// <summary>
     /// Generate the number of stars in the constelation.
     /// </summary>
+    
     private void NumberConstelationStars()
     {
-        int ConstelationStars = UnityEngine.Random.Range(_dataDifficulty.minStars, randomNum);
+        _constelationStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
         int starListPosition = 0;
-        for (int i = 0; i < ConstelationStars; i++)
+        for (int i = 0; i < _constelationStars; i++)
         {
-            
-            if (starListPosition == 0)
-            {
-                starsConstelation.Add(_starList[starListPosition]);
-            }
-            else
-            {
-                starsConstelation.Add(_starList[starListPosition]);
+                _starsConstelation.Add(_starList[starListPosition]);
                 starListPosition++;
-            }
-            
         }
-        //print("Este " + ConstelationStars);
     }
 
     /// <summary>
@@ -96,15 +92,14 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     /// </summary>
     private void GenerateStars()
     {
-        randomNum = UnityEngine.Random.Range(_dataDifficulty.minStars, _dataDifficulty.maxStars);
-        Debug.Log("Estrellas random" + randomNum);
+        _randomNum = UnityEngine.Random.Range(_dataDifficulty.minStars, _dataDifficulty.maxStars);
+        Debug.Log("Estrellas random" + _randomNum);
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
         List<GameObject> spawnsList = new List<GameObject>(spawns);
         List<int> posRepeated = new List<int>();
 
         do
         {
-
             int posRandom = UnityEngine.Random.Range(0, 14);
 
             if (!posRepeated.Contains(posRandom))
@@ -115,49 +110,25 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
                 _starList.Add(newStar);
                 newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
                 print("Position " + posRandom);
-            }
-            //Generate star position
-                     
-            //NumberConstelationStars();
+            }               
 
-        } while (_starList.Count < randomNum);
+        } while (_starList.Count < _randomNum);
 
-        //for (int i = 0; i < randomNum; i++)
-        //{
-        //    GameObject newStar = Instantiate(_star, _starsParent.transform);
-        //    int posRandom = UnityEngine.Random.Range(0, 14);
-
-        //    if (posRepeated.Contains(posRandom))
-        //    {
-        //        i--;
-        //    }
-        //    //Generate star position
-        //    else
-        //    {
-        //        posRepeated.Add(posRandom);
-        //        newStar.transform.position = spawnsList[posRandom].transform.position;
-        //        _starList.Add(newStar);
-        //        newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
-        //        print("Position " + posRandom);
-        //    }
-        //    NumberConstelationStars();
-
-        //}
-
+        NumberConstelationStars();
         string _textOrder = "";
 
         if (_firstRound)
         {
             _firstRound = false;
-            _textOrder += "Forma una constelación con x estrellas";
+            _textOrder += "Forma una constelación con "+ (_constelationStars) +" estrellas";
         }
         else
         {
-            _textOrder += "Ahora con ";
+            _textOrder += "Ahora con " + (_constelationStars) +" estrellas";
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-        // NumberConstelationStars();
+        
     }
 
 
@@ -174,6 +145,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
             {
                 _pressed = true;
                 _particles.SetActive(true);
+                
             }
             else
             {
@@ -200,7 +172,8 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
             {
                 _pressed = false;
                 _particles.SetActive(false);
-                GetComponent<TelescopeAssociationConstelationGenerator>().ClearConstelation();
+                //GetComponent<TelescopeAssociationConstelationGenerator>().ClearConstelation();
+                GetComponent<TelescopeAssociationConstelationGenerator>().CheckIfIsCorrect();
             }
         }
     }

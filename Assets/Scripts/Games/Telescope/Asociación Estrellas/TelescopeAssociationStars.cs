@@ -46,7 +46,7 @@ public class TelescopeAssociationStars : MonoBehaviour
                     _isConnected = true;
 
                     
-                    _gm.GetComponent<TelescopeAssociationConstelationGenerator>().CheckIfIsCorrect(gameObject);
+                    _gm.GetComponent<TelescopeAssociationConstelationGenerator>().AddStars(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();
                     _anim.gameObject.SetActive(true);
@@ -67,7 +67,7 @@ public class TelescopeAssociationStars : MonoBehaviour
                 _light.SetActive(true);
                 //_isConnected = true;
                 //PRUEBA
-                _gm.GetComponent<TelescopeAssociationConstelationGenerator>().CheckIfIsCorrect(gameObject);
+                _gm.GetComponent<TelescopeAssociationConstelationGenerator>().AddStars(gameObject);
                 _audio.clip = _clipStarSelected;
                 _audio.Play();
                 _anim.gameObject.SetActive(true);
