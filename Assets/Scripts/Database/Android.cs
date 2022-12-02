@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using UnityEngine.UI;
 using TMPro;
+using SQLite4Unity3d;
 
 public class Android : MonoBehaviour
 {
@@ -41,8 +42,8 @@ public class Android : MonoBehaviour
         _dataService.CloaseDatabase();
     }
     /// <summary>
-     /// Only the first time connect to the database and add value to <see cref="_dataService"/>
-     /// </summary>
+    /// Only the first time connect to the database and add value to <see cref="_dataService"/>
+    /// </summary>
     public void NewConnectToDataBase()
     {
         _dataService = new DataService(_DatabaseName);
@@ -252,6 +253,41 @@ public class Android : MonoBehaviour
         IEnumerable<StudentDB> students = _dataService.GetStudent(int.Parse(idClassroom));
         CloseDataBase();
     }
+    public void ReadStudentsPresentDate()
+    {
+        ReaderStudentPresent(_buttonPrefab, _location, ServiceLocator.Instance.GetService<IGameManager>().GetNotPresentsStudents());
+    }
+
+    public void ReaderStudentPresent(GameObject prefab, Transform location, List<String> notPresentStudents)
+    {
+
+        ConnectToDataBase();
+        //Get Classroom Data
+        string className = ServiceLocator.Instance.GetService<UIManager>()._classNamedb;
+        ClassroomDB currentClassroom = _dataService.GetClass(className);
+
+        //Get StudentData
+        IEnumerable<StudentDB> students = _dataService.GetStudent(currentClassroom.idClassroom);
+
+        //Destroy buttons
+        DestroyChild(location);
+
+        foreach (StudentDB studentDB in students)
+        {
+            if (!notPresentStudents.Contains(studentDB.name))
+            {
+                GameObject newButton = Instantiate(prefab, location);
+
+                newButton.GetComponentInChildren<TextMeshProUGUI>().text = studentDB.name;
+                newButton.GetComponentInChildren<StudentButton>()._student = new Student();
+                newButton.GetComponentInChildren<StudentButton>()._student._id = studentDB.idStudent;
+                newButton.GetComponentInChildren<StudentButton>()._student._name = studentDB.name;
+                newButton.GetComponentInChildren<StudentButton>()._student._idClass = studentDB.idClassroom;
+            }
+        }
+        CloseDataBase();
+    }
+
     #endregion
     #region Table Session
     /// <summary>
@@ -263,7 +299,7 @@ public class Android : MonoBehaviour
         SessionDB newSession = null;
         newSession = (SessionDB)_dataService.InsertSession();
 
-        if(newSession != null)
+        if (newSession != null)
         {
             ReaderDate();
         }
@@ -288,7 +324,7 @@ public class Android : MonoBehaviour
         ConnectToDataBase();
         int id = -1;
         SessionDB session = _dataService.GetSessionOrderBy();
-        if(session != null)
+        if (session != null)
         {
             id = session.idSession;
         }
@@ -338,7 +374,7 @@ public class Android : MonoBehaviour
 
         MatchDB newMatch = _dataService.InsertMatch(idStudent, idSession, idGame, team, level, success, errors, points, gameTime);
 
-        if(newMatch != null)
+        if (newMatch != null)
         {
             EDebug.Log("Insert Done: InsertMatch");
         }
