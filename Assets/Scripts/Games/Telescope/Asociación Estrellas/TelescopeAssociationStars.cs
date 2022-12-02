@@ -29,7 +29,7 @@ public class TelescopeAssociationStars : MonoBehaviour
     void Update()
     {
         _needsHold = false;
-        //PRUEBAS
+        
         if (_gm.GetComponent<TelescopeAssociationConstelationGenerator>().GetStarsSelecteds() > 0)
         {
             _needsHold = true;
@@ -45,7 +45,7 @@ public class TelescopeAssociationStars : MonoBehaviour
                     _light.SetActive(true);
                     _isConnected = true;
 
-                    //PRUEBA
+                    
                     _gm.GetComponent<TelescopeAssociationConstelationGenerator>().CheckIfIsCorrect(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();

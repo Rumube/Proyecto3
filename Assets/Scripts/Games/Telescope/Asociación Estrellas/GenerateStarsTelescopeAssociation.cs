@@ -102,27 +102,47 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
         List<GameObject> spawnsList = new List<GameObject>(spawns);
         List<int> posRepeated = new List<int>();
 
-        for (int i = 0; i < randomNum; i++)
+        do
         {
-            GameObject newStar = Instantiate(_star, _starsParent.transform);
+
             int posRandom = UnityEngine.Random.Range(0, 14);
 
-            if (posRepeated.Contains(posRandom))
+            if (!posRepeated.Contains(posRandom))
             {
-
-            }
-            //Generate star position
-            else
-            {
+                GameObject newStar = Instantiate(_star, _starsParent.transform);
                 posRepeated.Add(posRandom);
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
                 newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
                 print("Position " + posRandom);
             }
-            NumberConstelationStars();
+            //Generate star position
+                     
+            //NumberConstelationStars();
 
-        }
+        } while (_starList.Count < randomNum);
+
+        //for (int i = 0; i < randomNum; i++)
+        //{
+        //    GameObject newStar = Instantiate(_star, _starsParent.transform);
+        //    int posRandom = UnityEngine.Random.Range(0, 14);
+
+        //    if (posRepeated.Contains(posRandom))
+        //    {
+        //        i--;
+        //    }
+        //    //Generate star position
+        //    else
+        //    {
+        //        posRepeated.Add(posRandom);
+        //        newStar.transform.position = spawnsList[posRandom].transform.position;
+        //        _starList.Add(newStar);
+        //        newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
+        //        print("Position " + posRandom);
+        //    }
+        //    NumberConstelationStars();
+
+        //}
 
         string _textOrder = "";
 
