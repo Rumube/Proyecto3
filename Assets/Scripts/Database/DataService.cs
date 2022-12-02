@@ -292,7 +292,7 @@ public class DataService
     public SessionDB GetSessionOrderBy()
     {
         SessionDB result = null;
-        IEnumerable<SessionDB> sessions = _connection.Query<SessionDB>("SELECT idSession FROM Session ORDER BY idSession DESC LIMIT 1");
+        IEnumerable<SessionDB> sessions = _connection.Query<SessionDB>("SELECT idSession FROM SessionDB ORDER BY idSession DESC LIMIT 1");
         foreach (SessionDB session in sessions)
         {
             result = session;
@@ -309,7 +309,7 @@ public class DataService
     public GameDB GetGame(string nameGame)
     {
         GameDB result = null;
-        IEnumerable<GameDB> games = _connection.Query<GameDB>("SELECT idGame FROM Game where Name = ?", nameGame);
+        IEnumerable<GameDB> games = _connection.Query<GameDB>("SELECT * FROM GameDB where Name = '?'", nameGame);
         foreach (GameDB game in games)
         {
             result = game;
@@ -365,7 +365,7 @@ public class DataService
     public MatchDB GetMatchDifficultyData(int idStudent, int idGame)
     {
         MatchDB result = null;
-        IEnumerable<MatchDB> matches = _connection.Query<MatchDB>("SELECT * FROM Match where idStudent = ? AND idGame = ? LIMIT 1", idStudent, idGame);
+        IEnumerable<MatchDB> matches = _connection.Query<MatchDB>("SELECT * FROM MatchDB where idStudent = ? AND idGame = ? LIMIT 1", idStudent, idGame);
         foreach (MatchDB match in matches)
         {
             result = match;

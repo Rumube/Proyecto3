@@ -253,6 +253,9 @@ public class Android : MonoBehaviour
         IEnumerable<StudentDB> students = _dataService.GetStudent(int.Parse(idClassroom));
         CloseDataBase();
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public void ReadStudentsPresentDate()
     {
         ReaderStudentPresent(_buttonPrefab, _location, ServiceLocator.Instance.GetService<IGameManager>().GetNotPresentsStudents());
