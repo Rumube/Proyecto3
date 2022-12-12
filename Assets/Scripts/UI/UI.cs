@@ -8,6 +8,7 @@ public abstract class UI : MonoBehaviour,IUI
     protected int _uiIndex;
     protected List<GameObject> _windowsTree;
     public bool _continueNextScreen;
+    public GameObject RawImage;
     private void Awake()
     {
         _windowsTree = new List<GameObject>();
@@ -45,9 +46,30 @@ public abstract class UI : MonoBehaviour,IUI
     {
         if (_continueNextScreen)
         {
+            //Add scene
             _uiIndex++;
-            _windowsTree[_uiIndex].SetActive(true);
-            _windowsTree[_uiIndex - 1].SetActive(false);
+
+            //if is not the final scene, load the next scene 
+            if (_uiIndex < 9)
+            {
+               
+                _windowsTree[_uiIndex].SetActive(true);
+                _windowsTree[_uiIndex - 1].SetActive(false);
+                
+            }
+               
+           //if is the final scene, load the animation and the first scene
+            if (_uiIndex == 9)
+            {
+                _windowsTree[0].SetActive(true);
+                RawImage.SetActive(false);
+                _windowsTree[_uiIndex - 1].SetActive(false);
+                ServiceLocator.Instance.GetService<ServerUtility>().ResetConnections();
+                ServiceLocator.Instance.GetService<ServerUtility>().InitializeData();
+                _continueNextScreen = true;
+                _uiIndex = 0;
+            }
+          
         }      
     }
 

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool _pause = false;
     public bool _returnToCommonScene = false;
     public bool _endSessionTablet = false;
+    private List<string> _notPresentStudents = new List<string>();
+
 
 
     public Dictionary<int, int> _teamPoints = new Dictionary<int, int>();
@@ -177,5 +179,20 @@ public class GameManager : MonoBehaviour, IGameManager
     public void AddTeam(int index)
     {
         _teamPoints.Add(index, 0);
+    }
+
+    public List<string> GetNotPresentsStudents()
+    {
+        return _notPresentStudents;
+    }
+
+    public void SetNotPresentsStudents(string name)
+    {
+        _notPresentStudents.Add(name);
+    }
+
+    public void DeleteNotPresentsStudent(string name)
+    {
+        _notPresentStudents.Remove(name);
     }
 }

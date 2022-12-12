@@ -9,6 +9,8 @@ public class ConstelationGenerator : MonoBehaviour
     List<GameObject> _playerStarList = new List<GameObject>();
     int _success = 0;
     int _errors = 0;
+    public Vector2 point;
+    public float radius;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +41,18 @@ public class ConstelationGenerator : MonoBehaviour
     /// <param name="newPos">Position</param>
     public void AddNewPosition(Vector2 newPos)
     {
-        Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
-        _constelationPositions.Add(posFormat);
-        _constelationPositions.Add(posFormat);
+        if (_playerStarList.Count == 1)
+        {
+            Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
+            _constelationPositions.Add(posFormat);
+            _constelationPositions.Add(posFormat);
+        }
+        else
+        {
+            Vector2 posFormat = Camera.main.ScreenToWorldPoint(newPos);
+            _constelationPositions.Add(posFormat);
+        }
+    
     }
     /// <summary>
     /// Draw the constelation
@@ -54,6 +65,7 @@ public class ConstelationGenerator : MonoBehaviour
             for (int i = 0; i < _constelationPositions.Count; i++)
             {
                 _line.SetPosition(i, _constelationPositions[i]);
+               // Debug.Log();
             }
         }
     }

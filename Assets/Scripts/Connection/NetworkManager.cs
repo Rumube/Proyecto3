@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NetworkManager : MonoBehaviour,INetworkManager
+public class NetworkManager : MonoBehaviour, INetworkManager
 {
     [Header("Game Connection")]
     public string _ip;
@@ -47,7 +47,7 @@ public class NetworkManager : MonoBehaviour,INetworkManager
         if (Client._allPackages != null && Client._allPackages.Count > 0)
         {
             Client.DoUpdate();
-        }      
+        }
     }
 
     /// <summary>Starts a new server and saves the ip and port</summary>
@@ -251,6 +251,48 @@ public class NetworkManager : MonoBehaviour,INetworkManager
     public List<Tablet> GetStudentsToTablets()
     {
         return _studentsToTablets;
+    }
+
+    public void RandomizeStudents()
+    {
+        //Utilizar shuffle para barajar los alumnos y luego añadirlos :)
+
+        foreach (Tablet currentTable in _studentsToTablets)
+        {
+            currentTable._students.Clear();
+        }
+
+        GameObject[] PresentStudents = GameObject.FindGameObjectsWithTag("StudentButton");
+        List<GameObject> studentsList = new List<GameObject>(PresentStudents);
+
+        System.Random random = new System.Random();
+        int n = studentsList.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            GameObject value = studentsList[k];
+            studentsList[k] = studentsList[n];
+            studentsList[n] = value;
+        }
+
+        int currentTablet = 1;
+        foreach (GameObject currentStudent in studentsList)
+        {
+
+            currentStudent.GetComponent<StudentButton>()._add = true;
+            currentStudent.GetComponent<StudentButton>()._selectedTablet = -1;
+            _selectedTablet = currentTablet;
+            currentStudent.GetComponent<StudentButton>().AddingToTablet();
+            AddRemoveChildrenToTablet(currentStudent.GetComponent<StudentButton>()._student, true);
+            currentTablet++;
+            if(currentTablet > _studentsToTablets.Count)
+            {
+                currentTablet = 1;
+            }
+        }
+        GameObject[] tabletButton = GameObject.FindGameObjectsWithTag("TabletButton");
+        tabletButton[0].GetComponent<TabletButton>().SelectTabletAddingStudents();
     }
     //[Header("Game Connection")]
     //public string _ip;

@@ -14,15 +14,18 @@ public class StudentButton : MonoBehaviour
     public bool _animating = false;
     Animator _animator;
 
-    [Header("Add student")]   
+    [Header("Add student")]
+    public GameObject _background;
     public Student _student;
     public Sprite _backgroundButton;
     public Sprite _backgroundButtonSelected;
     public Image _highlighted;
     bool _addingToTablet = false;
-    bool _add = true;
-    int _selectedTablet = -1;
+    public bool _add = true;
+    public int _selectedTablet = -1;
     bool _selected = false;
+    public Image _sprite;
+    public List<Sprite> _colorTeams;
     
     void Start()
     {
@@ -37,6 +40,7 @@ public class StudentButton : MonoBehaviour
         {
             if (!_animating)
             {
+                _background.SetActive(false);
                 _animating = true;
                 _animator.SetBool("StartAnim", true);
             }
@@ -47,6 +51,7 @@ public class StudentButton : MonoBehaviour
         {
             if (_animating)
             {
+                _background.SetActive(true);
                 _animating = false;
                 _animator.SetBool("StartAnim", false);
             }
@@ -78,6 +83,13 @@ public class StudentButton : MonoBehaviour
                     GetComponent<Image>().sprite = _backgroundButton;
                 }
                 break;
+        }
+
+        if(_selectedTablet != -1){
+            _sprite.sprite = _colorTeams[_selectedTablet-1];
+        }
+        else{
+            _sprite.sprite = _colorTeams[6];
         }
 
     }
