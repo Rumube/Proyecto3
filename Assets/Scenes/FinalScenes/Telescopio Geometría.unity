@@ -1276,7 +1276,7 @@ PrefabInstance:
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1757058975}
+      objectReference: {fileID: 0}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1909,11 +1909,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea0293521eebd10449d529311e2b089d, type: 3}
---- !u!1 &1672574124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2856965519223799931, guid: ea0293521eebd10449d529311e2b089d, type: 3}
-  m_PrefabInstance: {fileID: 1672574122}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1672574127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2856965519223799932, guid: ea0293521eebd10449d529311e2b089d, type: 3}
@@ -2161,7 +2156,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &1757058972
+--- !u!114 &1757058976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2170,13 +2165,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757058964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f43b010604a146e4eb52327635900bae, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cbd9592e3cadc745851f7bb6e1c76bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - maxStars: 15
-    minStars: 3
---- !u!114 &1757058973
+  - maxStars: 3
+    minStars: 15
+--- !u!114 &1757058977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2185,15 +2180,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757058964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 178a7801eb5de8f42a95b3fefa700ec4, type: 3}
+  m_Script: {fileID: 11500000, guid: fa45505978eba8d4590dccd07ccda313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _star: {fileID: 52880522041165891, guid: 969cb4e4ce9b7454f9f911df3c087279, type: 3}
-  _starsParent: {fileID: 1910990291}
-  _particles: {fileID: 1672574124}
+  _star: {fileID: 0}
+  _starsParent: {fileID: 0}
+  _particles: {fileID: 0}
   _starList: []
   _pressed: 0
---- !u!114 &1757058975
+  _starsConstelation: []
+--- !u!114 &1757058978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2202,7 +2198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757058964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f4ae9a07317ff64a84a77e108b8f532, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f695dda51fd041428d7041f09c860e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0}
