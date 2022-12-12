@@ -150,7 +150,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
         foreach (GunClass currentGun in laserList)
         {
-            currentGun.gun.GetComponent<Animator>().SetTrigger("Shot");
+            currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");
         }
         print(hit.transform.gameObject.name);
 
