@@ -9,7 +9,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     public GameObject _star;
     public GameObject _starsParent;
     public GameObject _particles;
-
+    public GameObject Square, Pentagon, Hexagon;
 
     [Header("Configuration")]
     private TelescopeGeometryDifficulty.dataDiffilcuty _dataDifficulty;
@@ -20,6 +20,8 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     int _randomNum;
     public List<GameObject> _starsConstelation = new List<GameObject>();
     private int _constelationStars;
+    private int _Constelations = UnityEngine.Random.Range(1, 4);
+
 
     // Start is called before the first frame update
     void Start()
@@ -75,15 +77,38 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     /// <summary>
     /// Generate the number of stars in the constelation.
     /// </summary>
-    
+
     private void NumberConstelationStars()
     {
+        switch (_Constelations)
+        {
+            case 1:
+                print("Dibuja una constelación con forma de triángulo");
+
+                break;
+            case 2:
+                print("Dibuja una constelación con forma de cuadrado");
+                GameObject newSquare = Instantiate(Square, _starsParent.transform);    
+                break;
+            case 3:
+                print("Dibuja una constelación con forma de pentágono");
+                GameObject newPentagon = Instantiate(Pentagon, _starsParent.transform);
+                break;
+            case 4:
+                print("Dibuja una constelación con forma de hexágono");
+                GameObject newHexagon = Instantiate(Hexagon, _starsParent.transform);
+                break;
+
+            default:
+                break;
+        }
+
         _constelationStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
         int starListPosition = 0;
         for (int i = 0; i < _constelationStars; i++)
         {
-                _starsConstelation.Add(_starList[starListPosition]);
-                starListPosition++;
+            _starsConstelation.Add(_starList[starListPosition]);
+            starListPosition++;
         }
     }
 
@@ -109,8 +134,8 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
                 newStar.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
-                print("Position " + posRandom);
-            }               
+                //print("Position " + posRandom);
+            }
 
         } while (_starList.Count < _randomNum);
 
@@ -120,15 +145,15 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
         if (_firstRound)
         {
             _firstRound = false;
-            _textOrder += "Forma una constelación con "+ (_constelationStars) +" estrellas";
+            _textOrder += "Forma una constelación con " + (_constelationStars) + " estrellas";
         }
         else
         {
-            _textOrder += "Ahora con " + (_constelationStars) +" estrellas";
+            _textOrder += "Ahora con " + (_constelationStars) + " estrellas";
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-        
+
     }
 
 
@@ -145,7 +170,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             {
                 _pressed = true;
                 _particles.SetActive(true);
-                
+
             }
             else
             {
