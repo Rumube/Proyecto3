@@ -100,9 +100,27 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
-        List<GameObject> gameStarsConstelations = new List<GameObject>(GetComponent<GenerateStarsTelescopeGeometry>()._starsConstelation);
+        GenerateStarsTelescopeGeometry.ConstelationType constelationType = GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType();
+        int numStars = 0;
+        switch (constelationType)
+        {
+            case GenerateStarsTelescopeGeometry.ConstelationType.triángulo:
+                numStars = 4;
+                break;
+            case GenerateStarsTelescopeGeometry.ConstelationType.cuadrado:
+                numStars = 5;
+                break;
+            case GenerateStarsTelescopeGeometry.ConstelationType.pentágono:
+                numStars = 6;
+                break;
+            case GenerateStarsTelescopeGeometry.ConstelationType.hexágono:
+                numStars = 7;
+                break;
+            default:
+                break;
+        }
 
-        if (_playerStarList.Count == gameStarsConstelations.Count)
+        if (_playerStarList.Count == numStars)
         {
             _success++;
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
