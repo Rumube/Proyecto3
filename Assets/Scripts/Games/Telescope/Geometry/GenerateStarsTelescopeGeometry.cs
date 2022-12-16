@@ -19,7 +19,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private bool _firstRound = true;
     int _randomNum;
     private GameObject _constelationGo;
-
+    public List<GameObject> _gameStarList = new List<GameObject>();
 
     public enum ConstelationType
     {
@@ -105,16 +105,21 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 foreach (Transform child in _constelationGo.transform)
                 {
                     child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    _gameStarList.Add(child.gameObject);
+                    
                 }
+                _gameStarList.Add(_gameStarList[0]);
                 break;
-
+                
             case ConstelationType.pentágono:
                 print("Dibuja una constelación con forma de pentágono");
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
                 foreach (Transform child in _constelationGo.transform)
                 {
                     child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    _gameStarList.Add(child.gameObject);
                 }
+                _gameStarList.Add(_gameStarList[0]);
                 break;
 
             case ConstelationType.hexágono:
@@ -123,7 +128,9 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 foreach (Transform child in _constelationGo.transform)
                 {
                     child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    _gameStarList.Add(child.gameObject);
                 }
+                _gameStarList.Add(_gameStarList[0]);
                 break;
 
             default:

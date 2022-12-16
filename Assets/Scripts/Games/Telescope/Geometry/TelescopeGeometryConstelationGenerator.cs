@@ -12,6 +12,8 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     int _errors = 0;
     public Vector2 point;
     public float radius;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,7 +122,49 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
                 break;
         }
 
-        if (_playerStarList.Count == numStars)
+        List<GameObject> auxList = new List<GameObject>(GetComponent<GenerateStarsTelescopeGeometry>()._gameStarList);//Esta lista ya tiene que la última posición sea la misma que la primera.
+
+       int orden = _playerStarList[0];
+
+
+    /*
+        if (auxList[0] == _playerStarList[0])
+        {
+            if (_playerStarList[1] == (auxList[1] || auxList[0 - 1]))
+            {
+                if (_playerStarList[1] == auxList[1])
+                {
+                    _playerStarList[2] = auxList[2];
+                    _playerStarList[3] = auxList[3];
+                }
+                else
+                {
+                    _playerStarList[2] = auxList[0 - 2];
+                }
+            }
+            else
+            {
+                _errors++;
+                ServiceLocator.Instance.GetService<IError>().GenerateError();
+                ClearConstelation();
+            }
+
+
+        }*/
+
+        _playerStarList.Sort();
+        auxList.Sort();
+
+        bool correct = true;
+        for (int i = 0; i < _playerStarList.Count; i++)
+        {
+            if (_playerStarList[i] != auxList[i])
+            {
+                correct = false;
+            }
+        }
+
+        if (correct)
         {
             _success++;
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector3.zero);
@@ -128,7 +172,6 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             _success = 0;
             _errors = 0;
             StartCoroutine(GetComponent<GenerateStarsTelescopeGeometry>().GenerateNewOrde());
-            
         }
         else
         {
