@@ -91,7 +91,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private void NumberConstelationStars()
     {
         _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
-
+        int count = 1;
         switch (_constelationType)
         {
             case ConstelationType.triángulo:
@@ -104,7 +104,8 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
 
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                    count++;
                     _gameStarList.Add(child.gameObject);
                     
                 }
@@ -116,7 +117,8 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                    count++;
                     _gameStarList.Add(child.gameObject);
                 }
                 _gameStarList.Add(_gameStarList[0]);
@@ -127,7 +129,8 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                  _constelationGo = Instantiate(Hexagon, _starsParent.transform);
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                    count++;
                     _gameStarList.Add(child.gameObject);
                 }
                 _gameStarList.Add(_gameStarList[0]);
@@ -160,7 +163,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 posRepeated.Add(posRandom);
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
-                newStar.GetComponent<TelescopeGeometryStars>().InitStart(gameObject);
+                newStar.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, 0);
             }
 
         } while (_starList.Count < _randomNum);

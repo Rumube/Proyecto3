@@ -12,6 +12,8 @@ public class TelescopeGeometryStars : MonoBehaviour
     private GameObject _gm;
     [Header("States")]
     private bool _touched;
+    [SerializeField]
+    private int _order = 0;
     [Header("References")]
     private AudioSource _audio;
     public AudioClip _clipStarSelected;
@@ -29,11 +31,11 @@ public class TelescopeGeometryStars : MonoBehaviour
     void Update()
     {
         _needsHold = false;
-        
+
         if (_gm.GetComponent<TelescopeGeometryConstelationGenerator>().GetStarsSelecteds() > 0)
         {
             _needsHold = true;
-        }       
+        }
 
         if (_needsHold)
         {
@@ -45,7 +47,7 @@ public class TelescopeGeometryStars : MonoBehaviour
                     _light.SetActive(true);
                     _isConnected = true;
 
-                    
+
                     _gm.GetComponent<TelescopeGeometryConstelationGenerator>().AddStars(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();
@@ -87,10 +89,11 @@ public class TelescopeGeometryStars : MonoBehaviour
         _touched = true;
     }
 
-    public void InitStart(GameObject gm)
+    public void InitStart(GameObject gm, int order)
     {
         _gm = gm;
         _timeToBePressed = 0.5f;
+        _order = order;
     }
 
     public void SetIsConnected(bool value)
@@ -104,5 +107,10 @@ public class TelescopeGeometryStars : MonoBehaviour
     public bool GetIsConnected()
     {
         return _isConnected;
+    }
+
+    public int GetOrder() 
+    { 
+        return _order;
     }
 }

@@ -102,65 +102,54 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
-        GenerateStarsTelescopeGeometry.ConstelationType constelationType = GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType();
-        int numStars = 0;
-        switch (constelationType)
+        bool correct = true;
+
+        if (_playerStarList[0].GetComponent<TelescopeGeometryStars>().GetOrder() != _playerStarList[_playerStarList.Count - 1].GetComponent<TelescopeGeometryStars>().GetOrder())
         {
-            case GenerateStarsTelescopeGeometry.ConstelationType.triángulo:
-                numStars = 4;
-                break;
-            case GenerateStarsTelescopeGeometry.ConstelationType.cuadrado:
-                numStars = 5;
-                break;
-            case GenerateStarsTelescopeGeometry.ConstelationType.pentágono:
-                numStars = 6;
-                break;
-            case GenerateStarsTelescopeGeometry.ConstelationType.hexágono:
-                numStars = 7;
-                break;
-            default:
-                break;
+            correct = false;
         }
-
-        List<GameObject> auxList = new List<GameObject>(GetComponent<GenerateStarsTelescopeGeometry>()._gameStarList);//Esta lista ya tiene que la última posición sea la misma que la primera.
-
-       int orden = _playerStarList[0];
-
-
-    /*
-        if (auxList[0] == _playerStarList[0])
+        else
         {
-            if (_playerStarList[1] == (auxList[1] || auxList[0 - 1]))
+            for (int i = 0; i < _playerStarList.Count; i++)
             {
-                if (_playerStarList[1] == auxList[1])
+                int orderValue = _playerStarList[i].GetComponent<TelescopeGeometryStars>().GetOrder();
+
+                int orderUp = 0;
+                int orderDown = 0;
+
+                int postUp = 0;
+                int postDown = 0;
+
+                if (orderValue == 1)
                 {
-                    _playerStarList[2] = auxList[2];
-                    _playerStarList[3] = auxList[3];
+                    orderUp = 2;
+                    postUp = 1;
+
+                    orderDown = _playerStarList.Count - 1;
+                    postDown = _playerStarList.Count - 2;
+                }
+                else if (orderValue == _playerStarList.Count - 1)
+                {
+                    orderUp = 1;
+                    postUp = 0;
+
+                    orderDown = orderValue - 1;
+                    postDown = orderValue - 2;
                 }
                 else
                 {
-                    _playerStarList[2] = auxList[0 - 2];
+                    orderUp = orderValue + 1;
+                    postUp = i + 1;
+
+                    orderDown = orderValue - 1;
+                    postDown = i - 1;
                 }
-            }
-            else
-            {
-                _errors++;
-                ServiceLocator.Instance.GetService<IError>().GenerateError();
-                ClearConstelation();
-            }
 
-
-        }*/
-
-        _playerStarList.Sort();
-        auxList.Sort();
-
-        bool correct = true;
-        for (int i = 0; i < _playerStarList.Count; i++)
-        {
-            if (_playerStarList[i] != auxList[i])
-            {
-                correct = false;
+                if (_playerStarList[postUp].GetComponent<TelescopeGeometryStars>().GetOrder() != orderUp ||
+                    _playerStarList[postDown].GetComponent<TelescopeGeometryStars>().GetOrder() != orderDown)
+                {
+                    correct = false;
+                }
             }
         }
 
@@ -179,7 +168,6 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
             ClearConstelation();
         }
-
     }
 
 
