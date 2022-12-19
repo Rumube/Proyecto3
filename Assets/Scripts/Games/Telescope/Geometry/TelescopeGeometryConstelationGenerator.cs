@@ -12,7 +12,8 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     int _errors = 0;
     public Vector2 point;
     public float radius;
-
+    [SerializeField]
+    List<GameObject> prefabList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -102,7 +103,11 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
+        prefabList.Clear();
+        prefabList = GetComponent<GenerateStarsTelescopeGeometry>()._gameStarList;
+        //prefabList.Add(prefabList[0]);
         bool correct = true;
+        int upDirection = 0;//0 = null - 1 = up - 2 = down
 
         if (_playerStarList[0].GetComponent<TelescopeGeometryStars>().GetOrder() != _playerStarList[_playerStarList.Count - 1].GetComponent<TelescopeGeometryStars>().GetOrder())
         {
@@ -110,45 +115,74 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < _playerStarList.Count; i++)
+            for (int i = 0; i < _playerStarList.Count - 1; i++)
             {
                 int orderValue = _playerStarList[i].GetComponent<TelescopeGeometryStars>().GetOrder();
 
-                int orderUp = 0;
-                int orderDown = 0;
+                if (upDirection == 0)
+                {
+                    upDirection = setDirection(upDirection, orderValue, i);
+                }
 
                 int postUp = 0;
+                int postUpPlayer = 0;
                 int postDown = 0;
+                int postDownPlayer = 0;
 
                 if (orderValue == 1)
                 {
-                    orderUp = 2;
-                    postUp = 1;
-
-                    orderDown = _playerStarList.Count - 1;
-                    postDown = _playerStarList.Count - 2;
+                    if (upDirection == 1)
+                    {
+                        postUp = 1;
+                        postUpPlayer = 2;
+                    }
+                    else
+                    {
+                        postDown = prefabList.Count - 2;
+                        postDownPlayer = prefabList.Count - 2;
+                    }
                 }
                 else if (orderValue == _playerStarList.Count - 1)
                 {
-                    orderUp = 1;
-                    postUp = 0;
-
-                    orderDown = orderValue - 1;
-                    postDown = orderValue - 2;
+                    if (upDirection == 1)
+                    {
+                        postUp = 0;
+                        postUpPlayer = 0;
+                    }
+                    else
+                    {
+                        postDown = orderValue - 2;
+                        postDownPlayer = orderValue - 2;
+                    }
                 }
                 else
                 {
-                    orderUp = orderValue + 1;
-                    postUp = i + 1;
-
-                    orderDown = orderValue - 1;
-                    postDown = i - 1;
+                    if (upDirection == 1)
+                    {
+                        postUp = orderValue;
+                        postUpPlayer = orderValue;
+                    }
+                    else
+                    {
+                        postDown = orderValue - 2;
+                        postDownPlayer = orderValue - 1;
+                    }
                 }
 
-                if (_playerStarList[postUp].GetComponent<TelescopeGeometryStars>().GetOrder() != orderUp ||
-                    _playerStarList[postDown].GetComponent<TelescopeGeometryStars>().GetOrder() != orderDown)
+
+                if (upDirection == 1)
                 {
-                    correct = false;
+                    if (prefabList[postUp].GetComponent<TelescopeGeometryStars>().GetOrder() != _playerStarList[postUp].GetComponent<TelescopeGeometryStars>().GetOrder())
+                    {
+                        correct = false;
+                    }
+                }
+                else
+                {
+                    if (prefabList[postDown].GetComponent<TelescopeGeometryStars>().GetOrder() != _playerStarList[postDownPlayer].GetComponent<TelescopeGeometryStars>().GetOrder())
+                    {
+                        correct = false;
+                    }
                 }
             }
         }
@@ -170,6 +204,41 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
         }
     }
 
+    private int setDirection(int upDirection, int orderValue, int i)
+    {
+        int value = 0;
+        if (orderValue < _playerStarList[1].GetComponent<TelescopeGeometryStars>().GetOrder() && orderValue != _playerStarList.Count - 1 && orderValue != 1)//ASCENDENTE != 1 != ultimo
+        {
+            value = 1;
+        }
+        else if (orderValue > _playerStarList[1].GetComponent<TelescopeGeometryStars>().GetOrder() && orderValue != 1 && orderValue != _playerStarList.Count - 1)//DESCENDENTE =! ULTIMO != 1
+        {
+            value = 2;
+        }
+        else if (orderValue == 1)
+        {
+            if (_playerStarList[1].GetComponent<TelescopeGeometryStars>().GetOrder() == 2)
+            {
+                value = 1;
+            }
+            else if (_playerStarList[_playerStarList.Count - 1].GetComponent<TelescopeGeometryStars>().GetOrder() == _playerStarList[0].GetComponent<TelescopeGeometryStars>().GetOrder())
+            {
+                value = 2;
+            }
+        }
+        else if (orderValue == _playerStarList.Count - 1)
+        {
+            if (orderValue == _playerStarList[0].GetComponent<TelescopeGeometryStars>().GetOrder())
+            {
+                value = 1;
+            }
+            else if (orderValue == _playerStarList[orderValue - 1].GetComponent<TelescopeGeometryStars>().GetOrder())
+            {
+                value = 2;
+            }
+        }
+        return value;
+    }
 
     /// <summary>
     /// Returns the number of star selecteds for the player

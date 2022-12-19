@@ -90,6 +90,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
 
     private void NumberConstelationStars()
     {
+        _gameStarList.Clear();
         _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
         int count = 1;
         switch (_constelationType)
