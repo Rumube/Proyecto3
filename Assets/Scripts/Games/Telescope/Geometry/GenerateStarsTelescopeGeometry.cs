@@ -8,6 +8,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     [Header("Prefabs references")]
     public GameObject _star;
     public GameObject _starsParent;
+    public List<Transform> _constelationPos = new List<Transform>();
     public GameObject _particles;
     public GameObject Square, Pentagon, Hexagon;
 
@@ -96,6 +97,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     {
         _gameStarList.Clear();
         _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
+        int randomPos = UnityEngine.Random.Range(0, _constelationPos.Count);
         int count = 1;
         switch (_constelationType)
         {
@@ -107,6 +109,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             case ConstelationType.cuadrado:
                 print("Dibuja una constelación con forma de cuadrado");
                 _constelationGo = Instantiate(Square, _starsParent.transform);
+                _constelationGo.transform.position = _constelationPos[randomPos].position;
 
                 foreach (Transform child in _constelationGo.transform)
                 {
@@ -121,6 +124,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             case ConstelationType.pentágono:
                 print("Dibuja una constelación con forma de pentágono");
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
+                _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
                 {
                     child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
@@ -133,6 +137,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             case ConstelationType.hexágono:
                 print("Dibuja una constelación con forma de hexágono");
                  _constelationGo = Instantiate(Hexagon, _starsParent.transform);
+                _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
                 {
                     child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);

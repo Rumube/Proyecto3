@@ -2176,6 +2176,7 @@ MonoBehaviour:
   _dataDifficulty:
   - minStars: 3
     maxStars: 15
+    maxSize: 9
 --- !u!114 &1757058977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2190,13 +2191,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _star: {fileID: 52880522041165891, guid: dbd8e5aced5baee40a595372caca7ecd, type: 3}
   _starsParent: {fileID: 1910990291}
+  _constelationPos:
+  - {fileID: 1296338028}
+  - {fileID: 1747284368}
+  - {fileID: 1869656067}
+  - {fileID: 181406703}
+  - {fileID: 1464990582}
+  - {fileID: 885684382}
+  - {fileID: 1976219224}
+  - {fileID: 243565426}
+  - {fileID: 1115344632}
+  - {fileID: 1263186583}
   _particles: {fileID: 1672574124}
   Square: {fileID: 6212001753099835598, guid: af5562c431edd474e9af80df07008b40, type: 3}
   Pentagon: {fileID: 6212001753099835598, guid: 149625ab68aae9840842d219a3990b95, type: 3}
   Hexagon: {fileID: 6212001753099835598, guid: 47e0a137540ef8240a66ed127bc82d13, type: 3}
   _starList: []
   _pressed: 0
-  _gameStarList: []
 --- !u!114 &1757058978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,7 +2222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point: {x: 0, y: 0}
   radius: 0
-  prefabList: []
 --- !u!1 &1843837478
 GameObject:
   m_ObjectHideFlags: 0

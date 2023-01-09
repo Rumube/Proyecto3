@@ -15,6 +15,9 @@ public class TelescopeGeometryDifficulty : MonoBehaviour
         public int minStars;
         [Tooltip("Max Stars to connect")]
         public int maxStars;
+        [Tooltip("Size variation")]
+        [Range(1, 9)]
+        public int maxSize;
     }
 
     /// <summary>
