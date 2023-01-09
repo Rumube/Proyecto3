@@ -19,7 +19,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private bool _firstRound = true;
     int _randomNum;
     private GameObject _constelationGo;
-    public List<GameObject> _gameStarList = new List<GameObject>();
+    private List<GameObject> _gameStarList = new List<GameObject>();
 
     public enum ConstelationType
     {
@@ -53,6 +53,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print("----------------"+_gameStarList.Count+ "----------------");
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputManager();
@@ -67,7 +68,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
         yield return new WaitForSeconds(1f);
         DestroyStars();
         GenerateStars();
-        _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
+        //_constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
     }
     /// <summary>
     /// Clear the lists of stars and destroy the stars in the scene
@@ -81,7 +82,10 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             Destroy(_starList[i]);
         }
         _starList.Clear();
-        Destroy(_constelationGo);
+        GameObject aux = _constelationGo;
+        _constelationGo = null;
+        Destroy(aux);
+        _constelationGo = new GameObject();
     }
 
     /// <summary>
@@ -96,6 +100,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
         switch (_constelationType)
         {
             case ConstelationType.triángulo:
+                _constelationGo = new GameObject();
                 print("Dibuja una constelación con forma de triángulo");
                 break;
 
@@ -228,12 +233,22 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _pressed = false;
                 _particles.SetActive(false);
                 GetComponent<TelescopeGeometryConstelationGenerator>().CheckIfIsCorrect();
+
+                foreach (GameObject star in _gameStarList)
+                {
+                    star.GetComponent<TelescopeGeometryStars>().SetCorrectConnection(false);
+                }
             }
         }
     }
     public ConstelationType getConstelationType()
     {
         return _constelationType;
+    }
+
+    public List<GameObject> GetGameStarsList()
+    {
+        return _gameStarList;
     }
 }
 

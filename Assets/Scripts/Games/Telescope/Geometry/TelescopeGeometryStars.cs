@@ -19,6 +19,10 @@ public class TelescopeGeometryStars : MonoBehaviour
     public AudioClip _clipStarSelected;
     public GameObject _light;
     public Animator _anim;
+    public GameObject _nextStar;
+    public GameObject _prevStar;
+    public GameObject _starConnected;
+    private bool _correctConection = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +51,26 @@ public class TelescopeGeometryStars : MonoBehaviour
                     _light.SetActive(true);
                     _isConnected = true;
 
+                    List<GameObject> playerStarList = _gm.GetComponent<TelescopeGeometryConstelationGenerator>().GetplayerStarList();
+                    
+                    if (playerStarList.Count != 0)
+                    {
+                        print("Entra otros");
+                        int lastPos = playerStarList.Count - 1;
+                        GameObject lastStar = playerStarList[lastPos];
+                        _starConnected = lastStar;
+                        if (lastStar == _prevStar || lastStar == _nextStar)
+                        {
+                            _correctConection = true;
+                        }
+                        else
+                        {
+                            _correctConection = false;
+                        }
+                    }
 
+
+                    print("Siempre");
                     _gm.GetComponent<TelescopeGeometryConstelationGenerator>().AddStars(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();
@@ -74,6 +97,7 @@ public class TelescopeGeometryStars : MonoBehaviour
                 _audio.Play();
                 _anim.gameObject.SetActive(true);
                 _anim.Play("Star_Slected_Rotation");
+                _correctConection = true;
             }
             else
             {
@@ -109,8 +133,18 @@ public class TelescopeGeometryStars : MonoBehaviour
         return _isConnected;
     }
 
-    public int GetOrder() 
-    { 
+    public int GetOrder()
+    {
         return _order;
+    }
+
+    public bool GetCorrectConnection()
+    {
+        return _correctConection;
+    }
+
+    public void SetCorrectConnection(bool value)
+    {
+        _correctConection = false;
     }
 }
