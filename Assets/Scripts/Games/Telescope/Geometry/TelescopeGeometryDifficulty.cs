@@ -12,12 +12,11 @@ public class TelescopeGeometryDifficulty : MonoBehaviour
     public struct dataDiffilcuty
     {
         [Tooltip("Min Stars to connect")]
+        [Min(3)]
         public int minStars;
         [Tooltip("Max Stars to connect")]
+        [Range(3, 15)]
         public int maxStars;
-        [Tooltip("Size variation")]
-        [Range(1, 9)]
-        public int maxSize;
     }
 
     /// <summary>
