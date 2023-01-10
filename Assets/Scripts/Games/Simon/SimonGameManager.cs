@@ -53,6 +53,30 @@ public class SimonGameManager : MonoBehaviour
         {
             _buttons.interactable = false;
         }
+
+       
+        
+           
+        
+    }
+    public void _RepeatSequence()
+    {
+        StartCoroutine(RepeatSequence());
+    }
+    public IEnumerator RepeatSequence()
+    {
+        _playerSequenceList.Clear();
+        foreach (GameObject currentButton in _orderListButtons)
+            {               
+                _canClick = false;
+
+            if (currentButton.activeSelf)
+                currentButton.SetActive(true);
+
+            yield return StartCoroutine(HighlightButton(currentButton));
+            }
+        _canClick = true;
+        yield return new WaitForSeconds(_data.simonVelocity);
     }
 
     #region Buttom
@@ -70,7 +94,7 @@ public class SimonGameManager : MonoBehaviour
                 _buttons.interactable = false;
                 _canClick = false;
             }
-            StartCoroutine(HighlightButton(button.gameObject));
+          
 
             for (int i = 0; i < _playerSequenceList.Count; i++)
             {
@@ -119,7 +143,7 @@ public class SimonGameManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        _animTapa.Play("PanelOpen");
+        _animTapa.Play("LidClose");
         GameObject[] findButtons = GameObject.FindGameObjectsWithTag("GameButton");
 
         foreach (GameObject currentButton in findButtons)
@@ -156,7 +180,7 @@ public class SimonGameManager : MonoBehaviour
     public IEnumerator StartNextRound()
     {
         yield return new WaitForSeconds(_data.simonVelocity);
-        _animTapa.Play("PanelClose");
+        _animTapa.Play("LidOpen");
         _playerSequenceList.Clear();
         _canClick = false;
         yield return new WaitForSeconds(_data.simonVelocity);
@@ -201,6 +225,16 @@ public class SimonGameManager : MonoBehaviour
         }
 
     }
+
+    //Pruebas
+
+    
+    /*public void RepeatLastOrder()
+    {
+        StartCoroutine(RepeatSequence());
+     
+    }*/
+    
 }
 
 
