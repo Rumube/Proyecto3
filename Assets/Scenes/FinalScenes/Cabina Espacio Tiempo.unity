@@ -238,6 +238,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!120 &119194074 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+  m_PrefabInstance: {fileID: 2125888345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &178777001
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,8 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d755adfa91cc945913d1c15f6368fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunGo: {fileID: 2125888347}
   _gunTarget: {fileID: 1975917257}
+  laserList: []
 --- !u!114 &549744159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1187,6 +1192,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &692802037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5607469987175810927, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+  m_PrefabInstance: {fileID: 2125888345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &949829685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2244,8 +2254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d755adfa91cc945913d1c15f6368fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gunGo: {fileID: 2125888347}
   _gunTarget: {fileID: 1975917257}
+  laserList:
+  - {fileID: 2125888350}
 --- !u!120 &1821690042
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -2781,6 +2792,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 478016584}
     m_Modifications:
+    - target: {fileID: 5197386876635126131, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 692802037}
+    - target: {fileID: 5197386876635126131, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: line
+      value: 
+      objectReference: {fileID: 119194074}
     - target: {fileID: 5607469987175810924, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2829,6 +2848,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime1
+      value: 17540
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime2
+      value: 46453
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime3
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.18445575
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.5337906
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.g
+      value: 0.42834565
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key3.b
+      value: 0.042452812
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key3.g
+      value: 0.042452812
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.key3.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098374501348318824, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_NumColorKeys
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
 --- !u!4 &2125888346 stripped
@@ -2836,11 +2915,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5607469987175810924, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
   m_PrefabInstance: {fileID: 2125888345}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2125888347 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5607469986326014309, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+--- !u!114 &2125888350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5197386876635126131, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
   m_PrefabInstance: {fileID: 2125888345}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692802037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5aaee988d5ead34fa9954b5d51f17b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2092755307979447687
 PrefabInstance:
   m_ObjectHideFlags: 0
