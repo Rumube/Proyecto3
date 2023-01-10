@@ -182,7 +182,8 @@ public class GMSinBucle : MonoBehaviour,IGameManager
     {
         Dictionary<int, int> points = new Dictionary<int, int>();
         points.Add(0, 100);
-        points.Add(1, 50);
+        points.Add(1, 450);
+        points.Add(2, 400);
         return points;
     }
 

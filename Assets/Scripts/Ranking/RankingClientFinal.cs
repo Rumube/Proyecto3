@@ -86,8 +86,8 @@ public class RankingClientFinal : MonoBehaviour
                 _testTeamPoints.Add(0, 150);
                 _testTeamPoints.Add(1, 3450);
                 _testTeamPoints.Add(2, 50);
-                _testTeamPoints.Add(3, 300);
-                _testTeamPoints.Add(4, 250);
+                _testTeamPoints.Add(3, 3200);
+                _testTeamPoints.Add(4, 1250);
                 _testTeamPoints.Add(5, 25);
                 _newDataFromClient = false;
                 UpdateRankingPoints(_testTeamPoints);

@@ -11,8 +11,9 @@ public class RankingClient : MonoBehaviour
     public List<RectTransform> _rocketsTransforms;
     public List<RectTransform> _rankingPositions;
 
-
-    bool _gridCreated = false;
+    [Header("Test")]
+    public bool _update = false;
+    public bool _gridCreated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,11 @@ public class RankingClient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(_update)
+        {
+            _update= false;
+            UpdateRankingPoints();
+        }
     }
 
     public void UpdateRankingPoints()
