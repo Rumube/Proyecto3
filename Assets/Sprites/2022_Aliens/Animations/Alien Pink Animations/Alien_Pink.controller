@@ -10,14 +10,14 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: 8256599342313522166}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_State: {fileID: -2506334408210144855}
+    m_Position: {x: 302.98907, y: 44.17798, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -165122397556366223}
-    m_Position: {x: 235, y: 65, z: 0}
+    m_State: {fileID: 480471229679162926}
+    m_Position: {x: 310, y: 120, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -4203244547511009765}
-    m_Position: {x: 270, y: 130, z: 0}
+    m_State: {fileID: -3098917136048578412}
+    m_Position: {x: 310, y: 180, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -27,15 +27,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 8256599342313522166}
---- !u!1102 &-4203244547511009765
+  m_DefaultState: {fileID: -2506334408210144855}
+--- !u!1102 &-3098917136048578412
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pink_Surprised_Anim
+  m_Name: Surprised
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -54,14 +54,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &-165122397556366223
+--- !u!1102 &-2506334408210144855
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pink_Talking_Anim
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -74,7 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: aea61176bdcdea945b0cf8c479f924f5, type: 2}
+  m_Motion: {fileID: 7400000, guid: 27b341a02b161aa40869b83406fa22dc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -102,14 +102,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &8256599342313522166
+--- !u!1102 &480471229679162926
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pink_Idle_Anim
+  m_Name: Talking
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -122,7 +122,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 27b341a02b161aa40869b83406fa22dc, type: 2}
+  m_Motion: {fileID: 7400000, guid: aea61176bdcdea945b0cf8c479f924f5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
