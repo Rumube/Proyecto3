@@ -33,7 +33,7 @@ public class Error : MonoBehaviour, IError
         AudioManagement();
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
         _panelAnim.Play("Vibration");
-        _minAnim.Play("MinFail");
+        _minAnim.Play("Surprised");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
         StartCoroutine(FinishFail());
     }
