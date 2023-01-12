@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
 {
+    //Hacer público el Line Renderer y setear las posiciones, para editarlas al hacer click en ellas, nada más. Si coincide con el número aleatorio (randomNum) debemos de decir que es correcto.
+    //Ajustar el line renderer por código, haciendo que sea de hacer click en vez de mantener.
     private LineRenderer _line;
 
     List<Vector2> _constelationPositions = new List<Vector2>();
