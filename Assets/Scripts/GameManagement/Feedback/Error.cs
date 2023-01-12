@@ -33,7 +33,7 @@ public class Error : MonoBehaviour, IError
         AudioManagement();
         GetComponent<CameraShake>().StartShake(_failDuration, _shakeAmount);
         _panelAnim.Play("Vibration");
-        _minAnim.Play("MinFail");
+        _minAnim.Play("Surprised");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_errorMessages[Random.Range(0, _errorMessages.Count)]);
         StartCoroutine(FinishFail());
     }
@@ -56,23 +56,7 @@ public class Error : MonoBehaviour, IError
         _panelAnim.Play("Static");
         if (ServiceLocator.Instance.GetService<IFrogMessage>().GetMessageAtive())
         {
-            int randomAnim = Random.Range(0, 3);
-            string animName = "";
-            switch (randomAnim)
-            {
-                case 0:
-                    animName = "MinTalk1";
-                    break;
-                case 1:
-                    animName = "MinTalk2";
-                    break;
-                case 2:
-                    animName = "MinTalk3";
-                    break;
-                default:
-                    break;
-            }
-            _minAnim.Play(animName);
+            _minAnim.Play("Talking");
         }
         else
         {
