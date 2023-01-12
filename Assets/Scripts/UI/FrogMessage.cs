@@ -32,7 +32,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _messageAtive = false;
         Speaker.Instance.OnSpeakComplete += MessageComplete;
         _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
-        _minAnim.Play("MinIdle");
+        _minAnim.Play("Idle");
     }
 
     // Update is called once per frame
@@ -85,7 +85,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if (_minAnim != null)
         {
-            _minAnim.Play("MinIdle");
+            _minAnim.Play("Idle");
             StartCoroutine(CloseMessage());
         }
     }
@@ -93,7 +93,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     {
         if (_minAnim != null)
         {
-            _minAnim.Play("MinIdle");
+            _minAnim.Play("Idle");
             StartCoroutine(CloseMessage());
         }
     }
@@ -123,23 +123,8 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
     /// <param name="message">The message text</param>
     private IEnumerator FrogCoroutine(string message)
     {
-        int randomAnim = Random.Range(0, 3);
-        string animName = "";
-        switch (randomAnim)
-        {
-            case 0:
-                animName = "MinTalk1";
-                break;
-            case 1:
-                animName = "MinTalk2";
-                break;
-            case 2:
-                animName = "MinTalk3";
-                break;
-            default:
-                break;
-        }
-        _minAnim.Play(animName);
+        
+        _minAnim.Play("Talking");
         Speaker.Instance.Speak(message, _audio, Speaker.Instance.VoiceForCulture("es-Es"), true, 0.9f, 1f, 1f, "", true);
         _textMessage.SetText("");
         _imageMassage.GetComponent<Animator>().Play("Appear");
