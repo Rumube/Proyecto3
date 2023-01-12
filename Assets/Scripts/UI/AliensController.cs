@@ -11,6 +11,7 @@ public class AliensController : MonoBehaviour
     private void Awake()
     {
        _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet();
+        HideAllAliens();
         _teamAliensGO[_conectedTablet].SetActive(true);
     }
 
@@ -24,5 +25,16 @@ public class AliensController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// Hide all Aliens in the scene
+    /// </summary>
+    private void HideAllAliens()
+    {
+        foreach (GameObject alien in _teamAliensGO)
+        {
+            alien.SetActive(false);
+        }
     }
 }
