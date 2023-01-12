@@ -101,7 +101,7 @@ public class Positive : MonoBehaviour, IPositive
 
         GameObject[] scoreEffectSpawners = GameObject.FindGameObjectsWithTag("ScoreEffectSpawner");
         int randomPos = Random.Range(0, scoreEffectSpawners.Length);
-        newEffect.transform.parent = scoreEffectSpawners[0].transform.parent;
+        newEffect.transform.SetParent(scoreEffectSpawners[0].transform.parent);
         newEffect.transform.position = scoreEffectSpawners[randomPos].transform.position;
         _totalPoints += _pointsPerParticle;
     }
