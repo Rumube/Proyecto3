@@ -10,7 +10,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public GameObject _starsParent;
     public List<Transform> _constelationPos = new List<Transform>();
     public GameObject _particles;
-    public GameObject Square, Pentagon, Hexagon;
+    //public GameObject Square, Pentagon, Hexagon;
 
     [Header("Configuration")]
     private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
@@ -19,17 +19,10 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public bool _pressed = false;
     private bool _firstRound = true;
     int _randomNum;
-    private GameObject _constelationGo;
     private List<GameObject> _gameStarList = new List<GameObject>();
 
-    public enum ConstelationType
-    {
-        triángulo = 0,
-        cuadrado = 1,
-        pentágono = 2,
-        hexágono = 3
-    }
-    private ConstelationType _constelationType;
+
+    //public int _constelationPoints = UnityEngine.Random.Range(2, 15);
 
 
 
@@ -54,7 +47,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("----------------"+_gameStarList.Count+ "----------------");
+        print("----------------" + _gameStarList.Count + "----------------");
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputManager();
@@ -83,10 +76,6 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
             Destroy(_starList[i]);
         }
         _starList.Clear();
-        GameObject aux = _constelationGo;
-        _constelationGo = null;
-        Destroy(aux);
-        _constelationGo = new GameObject();
     }
 
     /// <summary>
@@ -96,62 +85,8 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     private void NumberConstelationStars()
     {
         _gameStarList.Clear();
-        _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
+
         int randomPos = UnityEngine.Random.Range(0, _constelationPos.Count);
-        int count = 1;
-        switch (_constelationType)
-        {
-            case ConstelationType.triángulo:
-                _constelationGo = new GameObject();
-                print("Dibuja una constelación con forma de triángulo");
-                break;
-
-            case ConstelationType.cuadrado:
-                print("Dibuja una constelación con forma de cuadrado");
-                _constelationGo = Instantiate(Square, _starsParent.transform);
-                _constelationGo.transform.position = _constelationPos[randomPos].position;
-
-                foreach (Transform child in _constelationGo.transform)
-                {
-                    child.GetComponent<TelescopeAddAndSubstractStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
-                    
-                }
-                _gameStarList.Add(_gameStarList[0]);
-                break;
-                
-            case ConstelationType.pentágono:
-                print("Dibuja una constelación con forma de pentágono");
-                _constelationGo = Instantiate(Pentagon, _starsParent.transform);
-                _constelationGo.transform.position = _constelationPos[randomPos].position;
-                foreach (Transform child in _constelationGo.transform)
-                {
-                    child.GetComponent<TelescopeAddAndSubstractStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
-                }
-                _gameStarList.Add(_gameStarList[0]);
-                break;
-
-            case ConstelationType.hexágono:
-                print("Dibuja una constelación con forma de hexágono");
-                 _constelationGo = Instantiate(Hexagon, _starsParent.transform);
-                _constelationGo.transform.position = _constelationPos[randomPos].position;
-                foreach (Transform child in _constelationGo.transform)
-                {
-                    child.GetComponent<TelescopeAddAndSubstractStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
-                }
-                _gameStarList.Add(_gameStarList[0]);
-                break;
-
-            default:
-                print("Dibuja una constelación con forma de triángulo");
-
-                break;
-        }
     }
 
     /// <summary>
@@ -185,15 +120,15 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         if (_firstRound)
         {
             _firstRound = false;
-            _textOrder += "Forma una constelación con forma de " + (_constelationType);
+            _textOrder += "Forma una constelación de " + (_randomNum) + " estrellas";
         }
         else
         {
-            _textOrder += "Ahora con forma de " + (_constelationType);
+            _textOrder += "Ahora con " + (_randomNum) + " estrellas";
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-
+        
     }
 
 
@@ -210,7 +145,6 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
             {
                 _pressed = true;
                 _particles.SetActive(true);
-
             }
             else
             {
@@ -238,19 +172,9 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
                 _pressed = false;
                 _particles.SetActive(false);
                 GetComponent<TelescopeAddAndSubstractConstelationGenerator>().CheckIfIsCorrect();
-
-                foreach (GameObject star in _gameStarList)
-                {
-                    star.GetComponent<TelescopeAddAndSubstractStars>().SetCorrectConnection(false);
-                }
             }
         }
     }
-    public ConstelationType getConstelationType()
-    {
-        return _constelationType;
-    }
-
     public List<GameObject> GetGameStarsList()
     {
         return _gameStarList;

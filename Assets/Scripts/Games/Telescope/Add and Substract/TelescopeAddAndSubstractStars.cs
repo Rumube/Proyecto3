@@ -19,10 +19,7 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
     public AudioClip _clipStarSelected;
     public GameObject _light;
     public Animator _anim;
-    public GameObject _nextStar;
-    public GameObject _prevStar;
-    public GameObject _starConnected;
-    private bool _correctConection = false;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -58,15 +55,6 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
                         print("Entra otros");
                         int lastPos = playerStarList.Count - 1;
                         GameObject lastStar = playerStarList[lastPos];
-                        _starConnected = lastStar;
-                        if (lastStar == _prevStar || lastStar == _nextStar)
-                        {
-                            _correctConection = true;
-                        }
-                        else
-                        {
-                            _correctConection = false;
-                        }
                     }
 
 
@@ -96,7 +84,6 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
                 _audio.Play();
                 _anim.gameObject.SetActive(true);
                 _anim.Play("Star_Slected_Rotation");
-                _correctConection = true;
             }
             else
             {
@@ -137,13 +124,4 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
         return _order;
     }
 
-    public bool GetCorrectConnection()
-    {
-        return _correctConection;
-    }
-
-    public void SetCorrectConnection(bool value)
-    {
-        _correctConection = false;
-    }
 }

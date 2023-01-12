@@ -104,40 +104,6 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
         List<GameObject> prefabList = GetComponent<GenerateStarsTelescopeAddAndSubstract>().GetGameStarsList();
         bool correct = true;
 
-        if(_playerStarList[_playerStarList.Count-1] == _playerStarList[0])
-        {
-            if (GetComponent<GenerateStarsTelescopeAddAndSubstract>().getConstelationType() == GenerateStarsTelescopeAddAndSubstract.ConstelationType.triángulo)
-            {
-                if (_playerStarList.Count != 4)
-                {
-                    correct = false;
-                }
-            }
-            else
-            {
-                if (prefabList.Count == _playerStarList.Count)
-                {
-                    foreach (GameObject star in prefabList)
-                    {
-                        if (!star.GetComponent<TelescopeAddAndSubstractStars>().GetCorrectConnection())
-                        {
-                            correct = false;
-                        }
-                    }
-                }
-                else
-                {
-                    correct = false;
-                }
-            }
-        }
-        else
-        {
-            correct = false;
-        }
-
-
-
         FinishGame(correct);
     }
 
