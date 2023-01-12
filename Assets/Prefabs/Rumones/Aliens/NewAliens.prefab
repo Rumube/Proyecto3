@@ -169,6 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5767567882400784034}
+  - component: {fileID: 4625149825449963791}
   m_Layer: 5
   m_Name: NewAliens
   m_TagString: Untagged
@@ -202,6 +203,25 @@ RectTransform:
   m_AnchoredPosition: {x: 758, y: 343}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4625149825449963791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313931182702887728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade69923d0144db4d95912faaf36e511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _teamAliensGO:
+  - {fileID: 3659621219526655846}
+  - {fileID: 5881716197181342291}
+  - {fileID: 3775245112854898913}
+  - {fileID: 8243291099176363448}
+  - {fileID: 6113318400100385859}
+  - {fileID: 494255632036952271}
 --- !u!1 &4851241298028035280
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +590,10 @@ PrefabInstance:
       value: Alien_Blue
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: b1cd509180d17154f863326898f61664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319849294589951773, guid: b1cd509180d17154f863326898f61664, type: 3}
       propertyPath: m_TagString
       value: Min
       objectReference: {fileID: 0}
@@ -781,7 +805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: afa3eb2b804fe1742b60c1b4531af2d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: afa3eb2b804fe1742b60c1b4531af2d4, type: 3}
       propertyPath: m_TagString
@@ -980,7 +1004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: ec503c3fc3447f044b59b58774a2e154, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: ec503c3fc3447f044b59b58774a2e154, type: 3}
       propertyPath: m_TagString
@@ -1179,7 +1203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 8c8ddc90e7a82d94a948ca09d419eca0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 8c8ddc90e7a82d94a948ca09d419eca0, type: 3}
       propertyPath: m_TagString
@@ -1378,7 +1402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 8a97289c569b8c948b980f810fee5c7f, type: 3}
       propertyPath: m_TagString
@@ -1577,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 2ccb9998121899946abf8fc93786c8a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4319849294589951773, guid: 2ccb9998121899946abf8fc93786c8a5, type: 3}
       propertyPath: m_TagString
