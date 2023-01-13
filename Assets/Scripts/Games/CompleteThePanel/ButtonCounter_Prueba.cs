@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class ButtonCounter_Prueba : MonoBehaviour
 {
@@ -63,45 +64,25 @@ public class ButtonCounter_Prueba : MonoBehaviour
             message = "Ahora con forma de " ;
         }
         Geometry geometry_aux = new Geometry();
+        geometryButtons.Clear();
         foreach (GameObject currentGeometry in _createPanel._targetList)
         {
             geometryButtons.Add(currentGeometry.GetComponent<Geometry>()._geometryType);
         }
-        
+        geometryButtons = geometryButtons.Distinct().ToList();
         for (int i = 0; i < geometryButtons.Count; i++)
         {
-            //if(geometryButtons[i])
-            /*
-            if (i == _createPanel._targetList.Count - 1 && _createPanel._targetList.Count != 1)
+            if(i != 0)
+            {
                 message += "y de " + (geometry_aux.getGeometryString(geometryButtons[i]));
+            }
             else
+            {
                 message += (geometry_aux.getGeometryString(geometryButtons[i])) + " ";
-            */
+            }
         }      
-        /*
-        message = "Selecciona "+(geometryButtons(_nCircle, "círculo") + GeometryNumberText(_nTriangle, "triángulo") + GeometryNumberText(_nSquare, "cuadrado") +
-        GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono"));*/
         return message;
     }
-   
-    /// <summary>Show the geometry name in plural or singular.</summary> 
-
-    /// <param name="nGeometry">The quantity of a geometry</param> 
-    /// <param name="geometryName">The name of the geometry</param>
-
-    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
-   /* public string GeometryNumberText(int nGeometry, string geometryName)
-    {
-        if (nGeometry == 0)
-        {
-            return "";
-        }
-        else
-        { 
-            return geometryName + "s ";
-        }
-    
-    }*/
 
     /// <summary>Check the quantity of success.</summary> 
     public void Compare()
