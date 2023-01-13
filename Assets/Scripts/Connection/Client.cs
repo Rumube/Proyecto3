@@ -138,7 +138,9 @@ public class Client
         package._matchData._averageSuccess = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
         package._matchData._averageErrors = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageFails;
         package._matchData._averageGameTime = ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageTime;
-        package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averagePoints;
+        //NEW POINTS SYSTEM
+        package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
+        //package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averagePoints;
         package._matchData._gameLevel = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _ws.Send(JsonConvert.SerializeObject(package));
     }
