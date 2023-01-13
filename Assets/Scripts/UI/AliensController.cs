@@ -13,13 +13,9 @@ public class AliensController : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet();
-        HideAllAliens();
-        _teamAliensGO[_conectedTablet].SetActive(true);
-
+        StartAliens();
     }
 
     // Update is called once per frame
@@ -36,6 +32,16 @@ public class AliensController : MonoBehaviour
         foreach (GameObject alien in _teamAliensGO)
         {
             alien.SetActive(false);
+        }
+    }
+
+    public void StartAliens()
+    {
+        _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetTeamColor();
+        HideAllAliens();
+        if(_conectedTablet >= 0)
+        {
+            _teamAliensGO[_conectedTablet-1].SetActive(true);
         }
     }
 }

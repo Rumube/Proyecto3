@@ -150,4 +150,9 @@ public class Client
         if (_ws != null)
             _ws.Close();
     }
+
+    public int GetTabletID()
+    {
+        return _tablet._id;
+    }
 }

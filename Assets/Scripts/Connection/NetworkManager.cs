@@ -19,6 +19,8 @@ public class NetworkManager : MonoBehaviour, INetworkManager
     [Header("Students to tablets")]
     public List<Tablet> _studentsToTablets = new List<Tablet>();
     public int _selectedTablet = -10;
+    private int _teamColor = -10;
+
 
     [Header("Minigame timer client")]
     public int _minigameMinutes;
@@ -294,26 +296,14 @@ public class NetworkManager : MonoBehaviour, INetworkManager
         GameObject[] tabletButton = GameObject.FindGameObjectsWithTag("TabletButton");
         tabletButton[0].GetComponent<TabletButton>().SelectTabletAddingStudents();
     }
-    //[Header("Game Connection")]
-    //public string _ip;
-    //public string _port;
-    //public static Server server = new Server();
 
-    //Client client = new Client();
-    //public TextMeshProUGUI _idText;
-    //public TMP_InputField _IPText;
-    //public TMP_InputField _portText;
+    public void SetTeamColor(int teamColor)
+    {
+        _teamColor = teamColor;
+    }
 
-    //[Header("Students to tablets")]
-    //public List<Tablet> _studentsToTablets = new List<Tablet>();
-    //public int _selectedTablet = -10;
-
-    //[Header("Minigame timer client")]
-    //public int _minigameMinutes;
-    //public int _minigameSeconds;
-
-    //[Header("Minigame difficulty server")]
-    //public int _minigameLevel = -1;
-
-    //public static NetworkManager Instance;
+    public int GetTeamColor()
+    {
+        return client.GetTabletID();
+    }
 }

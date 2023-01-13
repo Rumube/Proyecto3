@@ -150,4 +150,14 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
     {
         throw new System.NotImplementedException();
     }
+
+    public void SetTeamColor(int teamColor)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public int GetTeamColor()
+    {
+        return Random.Range(0, 6);
+    }
 }

@@ -47,6 +47,7 @@ public class TabletUI : UI
     public AudioSource _astronautAudio;
     public AudioSource _doorsClosedAudio;
     public AudioSource _spaceShipAudio;
+    public GameObject _aliensController;
 
     [Header("Student selection")]
     public TextMeshProUGUI _studentName;
@@ -163,6 +164,8 @@ public class TabletUI : UI
     {
         _idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
         _rocket.sprite = _rocketColors[Client._tablet._id - 1];
+        ServiceLocator.Instance.GetService<INetworkManager>().SetTeamColor(Client._tablet._id-1);
+        _aliensController.GetComponent<AliensController>().StartAliens();
     }
 
     /// <summary>
