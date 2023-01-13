@@ -10,15 +10,16 @@ public class AliensController : MonoBehaviour
 
     private void Awake()
     {
-       _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet();
-        HideAllAliens();
-        _teamAliensGO[_conectedTablet].SetActive(true);
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet();
+        HideAllAliens();
+        _teamAliensGO[_conectedTablet].SetActive(true);
+
     }
 
     // Update is called once per frame

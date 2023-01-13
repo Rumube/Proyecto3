@@ -88,7 +88,7 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
 
     public int GetSelectedTablet()
     {
-        throw new System.NotImplementedException();
+        return Random.Range(0, 6);
     }
 
     public void SetStudentToTablet(Tablet tablet)
