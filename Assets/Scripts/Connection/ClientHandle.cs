@@ -60,7 +60,7 @@ public class ClientHandle
     public static void QuitGame()
     {
         ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(true);
-       SceneManager.LoadScene("CristinaTest");
+       SceneManager.LoadScene("MainMenu");
         //Poner que vaya a la ventana de puntuaciones finales
         EDebug.Log("Quitando el juego");
     }

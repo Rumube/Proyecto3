@@ -79,6 +79,7 @@ public class Positive : MonoBehaviour, IPositive
     /// </summary>
     private void GenerateVisualFeedback(Vector2 initPosition)
     {
+        _scorePanelText = GameObject.FindGameObjectWithTag("ScorePanel").GetComponent<Text>();
         float radialPart = 360 / _numberOfParticles;
         float degrees = Random.Range(0, 360);
         for (int i = 0; i < _numberOfParticles; i++)

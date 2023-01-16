@@ -88,7 +88,7 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
 
     public int GetSelectedTablet()
     {
-        throw new System.NotImplementedException();
+        return Random.Range(0, 6);
     }
 
     public void SetStudentToTablet(Tablet tablet)
@@ -149,5 +149,15 @@ public class NetMSinBucle : MonoBehaviour,INetworkManager
     public void RandomizeStudents()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void SetTeamColor(int teamColor)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public int GetTeamColor()
+    {
+        return Random.Range(0, 6);
     }
 }
