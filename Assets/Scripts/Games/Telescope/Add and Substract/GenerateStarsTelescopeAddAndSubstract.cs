@@ -18,7 +18,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
     private bool _firstRound = true;
-    int _randomNum;
+    private int _randomNum;
     private List<GameObject> _gameStarList = new List<GameObject>();
 
 
@@ -137,7 +137,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     /// Controlls the input of the game
     /// </summary>
     private void InputManager()
-    {
+    {/*
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
         if (newInput.result)
         {
@@ -173,11 +173,15 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
                 _particles.SetActive(false);
                 GetComponent<TelescopeAddAndSubstractConstelationGenerator>().CheckIfIsCorrect();
             }
-        }
+        }*/
     }
     public List<GameObject> GetGameStarsList()
     {
         return _gameStarList;
+    }
+    public int GetRandomNum()
+    {
+        return _randomNum;
     }
 }
 

@@ -6,7 +6,7 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
 {
     //Hacer público el Line Renderer y setear las posiciones, para editarlas al hacer click en ellas, nada más. Si coincide con el número aleatorio (randomNum) debemos de decir que es correcto.
     //Ajustar el line renderer por código, haciendo que sea de hacer click en vez de mantener.
-    private LineRenderer _line;
+    public LineRenderer _line;
 
     List<Vector2> _constelationPositions = new List<Vector2>();
     List<GameObject> _playerStarList = new List<GameObject>();
@@ -64,12 +64,10 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
     private void DrawConstelation()
     {
         _line.positionCount = _constelationPositions.Count;
-        if (_constelationPositions.Count > 0)
+
+        for (int i = 0; i < _constelationPositions.Count; i++)
         {
-            for (int i = 0; i < _constelationPositions.Count; i++)
-            {
-                _line.SetPosition(i, _constelationPositions[i]);
-            }
+            _line.SetPosition(i, _constelationPositions[i]);
         }
     }
 

@@ -25,13 +25,13 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
     void Start()
     {
         _audio = GetComponent<AudioSource>();
-        _anim.gameObject.SetActive(false);
+        _anim.gameObject.SetActive(false);      
     }
 
     // Update is called once per frame
     void Update()
     {
-        _needsHold = false;
+       /* _needsHold = false;
 
         if (_gm.GetComponent<TelescopeAddAndSubstractConstelationGenerator>().GetStarsSelecteds() > 0)
         {
@@ -90,7 +90,7 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
                 _timePressed = 0;
             }
         }
-        _touched = false;
+        _touched = false;*/
     }
 
 
@@ -102,7 +102,7 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
     public void InitStart(GameObject gm, int order)
     {
         _gm = gm;
-        _timeToBePressed = 0.5f;
+        _timeToBePressed = 0.2f;
         _order = order;
     }
 

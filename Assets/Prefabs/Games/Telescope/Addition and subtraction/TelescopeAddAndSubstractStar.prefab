@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7175120109599091436}
   - component: {fileID: 6780933500134489592}
   - component: {fileID: 3243892840202353509}
-  - component: {fileID: 475886626435851363}
   - component: {fileID: 4386732484864057728}
   m_Layer: 0
   m_Name: TelescopeAddAndSubstractStar
@@ -215,28 +214,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &475886626435851363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52880522041165891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9910510e6f0ee74496a042469be412d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _needsHold: 1
-  _timePressed: 0
-  _timeToBePressed: 1
-  _order: 0
-  _clipStarSelected: {fileID: 8300000, guid: 791464566d445f342b6bb043c007546c, type: 3}
-  _light: {fileID: 7519288355901579230}
-  _anim: {fileID: 7875253627281988047}
-  _nextStar: {fileID: 0}
-  _prevStar: {fileID: 0}
-  _starConnected: {fileID: 0}
 --- !u!114 &4386732484864057728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,9 +233,6 @@ MonoBehaviour:
   _clipStarSelected: {fileID: 8300000, guid: 791464566d445f342b6bb043c007546c, type: 3}
   _light: {fileID: 7519288355901579230}
   _anim: {fileID: 7875253627281988047}
-  _nextStar: {fileID: 0}
-  _prevStar: {fileID: 0}
-  _starConnected: {fileID: 0}
 --- !u!1 &7519288355901579230
 GameObject:
   m_ObjectHideFlags: 0
