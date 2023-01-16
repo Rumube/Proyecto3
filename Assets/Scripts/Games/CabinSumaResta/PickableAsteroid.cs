@@ -46,7 +46,7 @@ public class PickableAsteroid : MonoBehaviour
     }
     private IEnumerator DeselectAnimController()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         _selectIcon.SetActive(false);
     }
     public bool GetSelected()

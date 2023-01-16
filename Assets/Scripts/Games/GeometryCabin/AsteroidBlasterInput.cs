@@ -109,14 +109,17 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="targetPos">Last point of the laser</param>
     private void LineRendererController(Vector2 targetPos)
     {
-        foreach (GunClass currentGun in laserList)
+        if (!GetComponent<CabinSumaResta>())
         {
-            currentGun.line.enabled = true;
-            currentGun.line.SetPosition(0, currentGun.gun.transform.position);
-            currentGun.line.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
-        }
+            foreach (GunClass currentGun in laserList)
+            {
+                currentGun.line.enabled = true;
+                currentGun.line.SetPosition(0, currentGun.gun.transform.position);
+                currentGun.line.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
+            }
 
-        StartCoroutine(StopLaser());
+            StartCoroutine(StopLaser());
+        }
     }
 
     IEnumerator StopLaser()
@@ -247,12 +250,15 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="pos">Position to rotate</param>
     public void MoveGun(Vector2 pos)
     {
-        for (int i = 0; i < laserList.Count; i++)
+        if (!GetComponent<CabinSumaResta>())
         {
-            laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
-            laserList[i].newAngle = (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
-            laserList[i].newAngle -= 90;
-            laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
+            for (int i = 0; i < laserList.Count; i++)
+            {
+                laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
+                laserList[i].newAngle = (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
+                laserList[i].newAngle -= 90;
+                laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
+            }
         }
     }
 }
