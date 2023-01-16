@@ -167,6 +167,10 @@ public class AsteroidBlasterInput : MonoBehaviour
         {
             currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");
         }
+        if (GetComponent<CabinSumaResta>())
+        {
+            hit.transform.gameObject.GetComponent<PickableAsteroid>().SelectAsteroid();
+        }
         print(hit.transform.gameObject.name);
 
         StartCoroutine(WaitShot());

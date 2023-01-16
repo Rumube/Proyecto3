@@ -14,6 +14,9 @@ public class CabinSumaResta : MonoBehaviour
     private int _targetAsteroids = 0;
     private int _initialSelecteds = 0;
 
+    private int _successes = 0;
+    private int _errors = 0;
+
     [Header("Configuration")]
     private int _level;
     private CabinSumaRestaDifficulty.dataDiffilcuty _currentDataDifficulty;
@@ -37,16 +40,19 @@ public class CabinSumaResta : MonoBehaviour
 
     private void RestartGame()
     {
-        //Borrar Asteroides
         DestroyAsteroids();
-        //Generar nuevo target
         GenerateTarget();
-        //Generar Ateroides
         GenerateAsteroids();
+        GenerateOrder();
     }
     private void DestroyAsteroids()
     {
         _generatedAsteroids.Clear();
+        List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
+        //for (int i = 0; i < _generatedAsteroids; i++)
+        //{
+
+        //}
     }
     private void GenerateTarget()
     {
@@ -120,9 +126,40 @@ public class CabinSumaResta : MonoBehaviour
             asteroidListAux[i].GetComponent<PickableAsteroid>().SelectAsteroid();
         }
     }
-    private void CheckIfIsCorrect()
+    /// <summary>
+    /// Generates the order for the player
+    /// </summary>
+    private void GenerateOrder()
     {
+        string order = "¡Destruye los asteroides para que solo queden " + _targetAsteroids + " !";
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(order, true);
+    }
+    /// <summary>
+    /// Checks if the game is correct
+    /// </summary>
+    public void CheckIfIsCorrect()
+    {
+        int selectedAsteroids = 0;
+        foreach (GameObject currentAsteroid in _generatedAsteroids)
+        {
+            if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
+            {
+                selectedAsteroids++;
+            }
+        }
 
+        if(selectedAsteroids == _targetAsteroids)
+        {
+            _successes++;
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
+            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
+            RestartGame();
+        }
+        else
+        {
+            _errors++; 
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        }
 
     }
 
