@@ -41,7 +41,7 @@ public class AliensController : MonoBehaviour
         HideAllAliens();
         if(_conectedTablet >= 0)
         {
-            _teamAliensGO[_conectedTablet-1].SetActive(true);
+            _teamAliensGO[_conectedTablet].SetActive(true);
         }
     }
 }

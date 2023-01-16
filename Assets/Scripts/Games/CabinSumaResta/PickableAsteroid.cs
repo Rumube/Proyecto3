@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickableAsteroid : MonoBehaviour
 {
+    [Header("State")]
+    private bool _selected = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +21,10 @@ public class PickableAsteroid : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         print("Seleccionado");
+    }
+
+    public void SelectAsteroid()
+    {
+        _selected = !_selected;
     }
 }
