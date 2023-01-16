@@ -167,11 +167,15 @@ public class AsteroidBlasterInput : MonoBehaviour
         {
             currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");
         }
+        print(hit.transform.gameObject.name);
+
         if (GetComponent<CabinSumaResta>())
         {
-            hit.transform.gameObject.GetComponent<PickableAsteroid>().SelectAsteroid();
+            if(hit.transform.gameObject.name == "Asteroid")
+            {
+                hit.transform.gameObject.GetComponent<PickableAsteroid>().SelectAsteroid();
+            }
         }
-        print(hit.transform.gameObject.name);
 
         StartCoroutine(WaitShot());
         //print(hit.transform.gameObject.name);

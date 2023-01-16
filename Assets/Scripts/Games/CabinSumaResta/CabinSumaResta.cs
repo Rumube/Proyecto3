@@ -29,7 +29,6 @@ public class CabinSumaResta : MonoBehaviour
         RestartGame();
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Prueba", true);
     }
 
     // Update is called once per frame
@@ -47,12 +46,12 @@ public class CabinSumaResta : MonoBehaviour
     }
     private void DestroyAsteroids()
     {
-        _generatedAsteroids.Clear();
         List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
-        //for (int i = 0; i < _generatedAsteroids; i++)
-        //{
-
-        //}
+        for (int i = 0; i < _generatedAsteroids.Count; i++)
+        {
+            Destroy(auxList[i]);
+        }
+        _generatedAsteroids.Clear();
     }
     private void GenerateTarget()
     {
@@ -100,6 +99,7 @@ public class CabinSumaResta : MonoBehaviour
         for (int i = 0; i < _asteroidsInScene; i++)
         {
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
+            newAsteroid.name = "Asteroid";
             _generatedAsteroids.Add(newAsteroid);
         }
     }
@@ -139,12 +139,12 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
-        int selectedAsteroids = 0;
+        int selectedAsteroids = _generatedAsteroids.Count;
         foreach (GameObject currentAsteroid in _generatedAsteroids)
         {
             if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
-                selectedAsteroids++;
+                selectedAsteroids--;
             }
         }
 
