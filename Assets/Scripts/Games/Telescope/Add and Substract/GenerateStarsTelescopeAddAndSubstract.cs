@@ -18,9 +18,8 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     private bool _firstRound = true;
     private int _randomNum;
-    private bool starConnected = false;
     private int _randomNumStars;
-
+    private int _randomStars;
 
     //public int _constelationPoints = UnityEngine.Random.Range(2, 15);
 
@@ -110,8 +109,8 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
                 posRepeated.Add(posRandom);
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
-                starConnected = true;
-                newStar.GetComponent<TelescopeAddAndSubstractStars>().InitStart(gameObject, 0);
+                newStar.GetComponent<TelescopeAddAndSubstractStars>().SetStarConnected(true);
+            
             }
 
         } while (_starList.Count < _randomNum);
@@ -119,15 +118,16 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         NumberConstelationStars();
         string _textOrder = "";
 
+        _randomStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
+
         if (_firstRound)
         {
             _firstRound = false;
-            starConnected = false;
-            _textOrder += "Forma una constelación de " + (_randomNum) + " estrellas";
+            _textOrder += "Forma una constelación de " + (_randomStars) + " estrellas";
         }
         else
         {
-            _textOrder += "Ahora con " + (_randomNum) + " estrellas";
+            _textOrder += "Ahora con " + (_randomStars) + " estrellas";
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
@@ -138,7 +138,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         _randomNumStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
         List<int> _posRepeated = new List<int>();
 
-        List<GameObject> auxList = new List<GameObject>(_starList);  
+        List<GameObject> auxList = new List<GameObject>(_starList);
         System.Random random = new System.Random();
         int n = auxList.Count;
         while (n > 1)
@@ -155,71 +155,22 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
             GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(auxList[i]);
         }
 
-        //int _posRandom = UnityEngine.Random.Range(0, 14);
-
-        //    if (!_posRepeated.Contains(_posRandom))
-        //    {
-        //        for (int i = 0; i < (GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Count < _starList.Count); i++)
-        //        {
-        //            GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(_starList[_starList.Count - 1]);
-        //        }
-                
-        //    }
-  
-
     }
-    public void AddStars(GameObject star)//no interactúan las estrellas al clickar (no entra aquí)
+    public void AddStars(GameObject star)
     {
-        print("Pulsado");
-        if (!starConnected)
+        if (!star.GetComponent<TelescopeAddAndSubstractStars>().GetStarConnected())
         {
+            star.GetComponent<TelescopeAddAndSubstractStars>().SetStarConnected(true);
             GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(star);
-            GetComponent<TelescopeAddAndSubstractConstelationGenerator>().AddNewPosition(star.transform.position);
+
         }
         else
         {
+            star.GetComponent<TelescopeAddAndSubstractStars>().SetStarConnected(false);
             GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Remove(star);
         }
 
     }
-
-
-    /*
-    /// <summary>
-    /// Controlls the input of the game
-    /// </summary>
-    private void InputManager()
-    {
-        AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
-        if (newInput.result)
-        {
-            
-            
-
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(newInput.pos, 1f);
-
-            foreach (Collider2D currentCollider in colliders)
-            {
-                if (currentCollider.gameObject.tag == "Star" && !currentCollider.GetComponent<TelescopeAddAndSubstractStars>().GetIsConnected())
-                {
-                    currentCollider.gameObject.GetComponent<TelescopeAddAndSubstractStars>().CollisionDetected();
-                }
-            }
-            if (_particles.activeSelf)
-            {
-                _particles.transform.position = Camera.main.ScreenToWorldPoint(newInput.pos);
-            }
-        }
-        else
-        {
-            if (_pressed)
-            {
-                _pressed = false;
-                _particles.SetActive(false);
-                GetComponent<TelescopeAddAndSubstractConstelationGenerator>().CheckIfIsCorrect();
-            }
-        }
-    }*/
 
     public int GetRandomNum()
     {
