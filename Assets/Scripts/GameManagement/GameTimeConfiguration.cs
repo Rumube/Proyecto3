@@ -59,7 +59,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         if (_currentTime >= _startTime + _finishTime / 2 && !_halfTime)
         {
             _halfTime = true;
-            _anim.Play("Temporizador_Half_Time");
+            _anim.Play("TimeLimit_Anim");
             
         }
 
@@ -67,7 +67,7 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         {
             //Activamos anim;
             _lastSeconds = true;
-            _anim.Play("Temporizador_Poco_Tiempo");
+            _anim.Play("TTimeLimit_Anim");
             _timerSound.PlayOneShot(_tickTack, 5.0f);
 
         }

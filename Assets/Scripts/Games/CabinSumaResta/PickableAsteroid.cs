@@ -8,11 +8,15 @@ public class PickableAsteroid : MonoBehaviour
     public List<Sprite> _spriteLsit = new List<Sprite>();
     public GameObject _selectIcon;
     public Animator _anim;
+    public Animator _asteroidAnim;
     [Header("State")]
     private bool _selected = false;
     // Start is called before the first frame update
     void Start()
     {
+        _asteroidAnim = GetComponent<Animator>();
+        AnimatorStateInfo state = _asteroidAnim.GetCurrentAnimatorStateInfo(0);
+        _asteroidAnim.Play(state.fullPathHash, -1, Random.Range(0f,1f));
         SetSprite();
         transform.Rotate(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         transform.localScale = Vector3.one * Random.Range(0.7f, 1f);
