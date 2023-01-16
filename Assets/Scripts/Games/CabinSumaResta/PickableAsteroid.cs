@@ -13,7 +13,6 @@ public class PickableAsteroid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _anim.GetComponent<Animator>();
         SetSprite();
         transform.Rotate(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
         transform.localScale = Vector3.one * Random.Range(0.7f, 1f);
