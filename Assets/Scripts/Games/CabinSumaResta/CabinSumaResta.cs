@@ -7,6 +7,7 @@ public class CabinSumaResta : MonoBehaviour
     [Header("References")]
     public GameObject _asteroid;
     public List<GameObject> _spawnsList = new List<GameObject>();
+    public List<GameObject> _gunList = new List<GameObject>();
     private List<GameObject> _generatedAsteroids = new List<GameObject>();
 
     [Header("Game Values")]
@@ -139,6 +140,12 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
+
+        foreach (GameObject currentGun in _gunList)
+        {
+            currentGun.GetComponent<Animator>().SetTrigger("Shot");
+        }
+
         int selectedAsteroids = _generatedAsteroids.Count;
         foreach (GameObject currentAsteroid in _generatedAsteroids)
         {
