@@ -30,8 +30,8 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-       /* _needsHold = false;
+    {/*
+       _needsHold = false;
 
         if (_gm.GetComponent<TelescopeAddAndSubstractConstelationGenerator>().GetStarsSelecteds() > 0)
         {
@@ -92,12 +92,12 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
         }
         _touched = false;*/
     }
-
+    /*
 
     public void CollisionDetected()
     {
         _touched = true;
-    }
+    }*/
 
     public void InitStart(GameObject gm, int order)
     {

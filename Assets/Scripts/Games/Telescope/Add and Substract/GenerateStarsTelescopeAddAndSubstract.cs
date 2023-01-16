@@ -16,10 +16,10 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
     private int _level;
     public List<GameObject> _starList = new List<GameObject>();
-    public bool _pressed = false;
     private bool _firstRound = true;
     private int _randomNum;
-    private List<GameObject> _gameStarList = new List<GameObject>();
+    private bool starConnected = false;
+    private int _randomNumStars;
 
 
     //public int _constelationPoints = UnityEngine.Random.Range(2, 15);
@@ -42,16 +42,17 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         GenerateStars();
+        GenerateSelectedStars();
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         print("----------------" + _gameStarList.Count + "----------------");
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputManager();
-        }
+        }*/
     }
 
     /// <summary>
@@ -62,6 +63,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         yield return new WaitForSeconds(1f);
         DestroyStars();
         GenerateStars();
+        GenerateSelectedStars();
         //_constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
     }
     /// <summary>
@@ -76,6 +78,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
             Destroy(_starList[i]);
         }
         _starList.Clear();
+        GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Clear();
     }
 
     /// <summary>
@@ -84,8 +87,6 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
 
     private void NumberConstelationStars()
     {
-        _gameStarList.Clear();
-
         int randomPos = UnityEngine.Random.Range(0, _constelationPos.Count);
     }
 
@@ -109,6 +110,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
                 posRepeated.Add(posRandom);
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
+                starConnected = true;
                 newStar.GetComponent<TelescopeAddAndSubstractStars>().InitStart(gameObject, 0);
             }
 
@@ -120,6 +122,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         if (_firstRound)
         {
             _firstRound = false;
+            starConnected = false;
             _textOrder += "Forma una constelación de " + (_randomNum) + " estrellas";
         }
         else
@@ -128,28 +131,70 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-        
+
+    }
+    private void GenerateSelectedStars()
+    {
+        _randomNumStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
+        List<int> _posRepeated = new List<int>();
+
+        List<GameObject> auxList = new List<GameObject>(_starList);  
+        System.Random random = new System.Random();
+        int n = auxList.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            GameObject value = auxList[k];
+            auxList[k] = auxList[n];
+            auxList[n] = value;
+        }
+
+        for (int i = 0; i < _randomNumStars; i++)
+        {
+            GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(auxList[i]);
+        }
+
+        //int _posRandom = UnityEngine.Random.Range(0, 14);
+
+        //    if (!_posRepeated.Contains(_posRandom))
+        //    {
+        //        for (int i = 0; i < (GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Count < _starList.Count); i++)
+        //        {
+        //            GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(_starList[_starList.Count - 1]);
+        //        }
+                
+        //    }
+  
+
+    }
+    public void AddStars(GameObject star)//no interactúan las estrellas al clickar (no entra aquí)
+    {
+        print("Pulsado");
+        if (!starConnected)
+        {
+            GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(star);
+            GetComponent<TelescopeAddAndSubstractConstelationGenerator>().AddNewPosition(star.transform.position);
+        }
+        else
+        {
+            GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Remove(star);
+        }
+
     }
 
 
-
+    /*
     /// <summary>
     /// Controlls the input of the game
     /// </summary>
     private void InputManager()
-    {/*
+    {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
         if (newInput.result)
         {
-            if (!_pressed)
-            {
-                _pressed = true;
-                _particles.SetActive(true);
-            }
-            else
-            {
-                GetComponent<TelescopeAddAndSubstractConstelationGenerator>().UpdateLastPosition(newInput.pos);
-            }
+            
+            
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(newInput.pos, 1f);
 
@@ -173,12 +218,9 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
                 _particles.SetActive(false);
                 GetComponent<TelescopeAddAndSubstractConstelationGenerator>().CheckIfIsCorrect();
             }
-        }*/
-    }
-    public List<GameObject> GetGameStarsList()
-    {
-        return _gameStarList;
-    }
+        }
+    }*/
+
     public int GetRandomNum()
     {
         return _randomNum;
