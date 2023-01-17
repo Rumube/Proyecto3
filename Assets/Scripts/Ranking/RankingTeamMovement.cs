@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RankingTeamMovement : MonoBehaviour
 {
+    private RectTransform _rectTransform;
     private Vector2 _newTargetPos;
     private Vector2 _startPos;
     private bool _inMovement = false;
@@ -13,7 +14,7 @@ public class RankingTeamMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _rectTransform = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame

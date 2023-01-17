@@ -32,5 +32,6 @@ public interface INetworkManager
     public void SendStudentGame();
     public Tablet GetTablets(int i);
     public void RandomizeStudents();
-
+    public void SetTeamColor(int teamColor);
+    public int GetTeamColor();
 }
