@@ -155,6 +155,12 @@ public class Client
 
     public int GetTabletID()
     {
-        return _tablet._id;
+        if (_tablet != null)
+        {
+            return _tablet._id;
+        }
+        else{
+            return Random.Range(0, 6);
+        }
     }
 }
