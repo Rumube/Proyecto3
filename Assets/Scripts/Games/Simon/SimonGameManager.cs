@@ -33,9 +33,12 @@ public class SimonGameManager : MonoBehaviour
     private bool _canClick = false;
     public Animator _animTapa;
     public AudioClip SimonSound;
+    public GameObject _panelAppear;
 
     private void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
+
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _data = GetComponent<SimonGameDifficulty>().GenerateDataDifficulty(_level);
         _rounds = _data.roundList;

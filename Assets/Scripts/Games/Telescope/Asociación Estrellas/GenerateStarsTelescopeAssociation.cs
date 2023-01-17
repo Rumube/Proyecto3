@@ -9,7 +9,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     public GameObject _star;
     public GameObject _starsParent;
     public GameObject _particles;
-
+    public GameObject _panelAppear;
 
     [Header("Configuration")]
     private TelescopeAssociationDifficulty.dataDiffilcuty _dataDifficulty;
@@ -24,6 +24,7 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<TelescopeAssociationDifficulty>().GenerateDataDifficulty(_level);
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();

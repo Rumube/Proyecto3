@@ -9,6 +9,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     [Header("References")]
     public GameObject _gunTarget;
     private Vector2 _lastShotPostion;
+    public GameObject _panelAppear;
 
     //Configuration
     private float _shotCooldown = 0.1f;
@@ -28,7 +29,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     void Start()
     {
 
-
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _lastShotPostion = Vector2.zero;
         //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
         if (GetComponent<AsteroidBlaster>() || GetComponent<CabinSumaResta>())
