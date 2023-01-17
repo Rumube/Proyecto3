@@ -26,11 +26,11 @@ public class SpaceTimeCabin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GetComponent<AsteroidBlasterInput>().SetGameMode(AsteroidBlasterInput.GAME_MODE.spaceTime);
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         _dataDifficulty = GetComponent<SpaceTimeCabinDifficulty>().GenerateDataDifficulty(_level);
         _target = GameObject.FindGameObjectWithTag("GunTarget");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira", true);
-
         RestartGame();
     }
 

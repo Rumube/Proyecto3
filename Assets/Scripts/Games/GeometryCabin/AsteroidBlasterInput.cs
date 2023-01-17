@@ -33,24 +33,6 @@ public class AsteroidBlasterInput : MonoBehaviour
     bool _canVibrate = true;
 
     public List<GunClass> laserList = new List<GunClass>();
-    // Start is called before the first frame update
-    void Start()
-    {
-
-
-        //_lastShotPostion = Vector2.zero;
-        ////_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
-        //if (GetComponent<AsteroidBlaster>() || GetComponent<CabinSumaResta>() || GetComponent<CabinSeries>())
-        //{
-        //    _shotType = ShotType.Move;
-        //    _shotCooldown = 0.5f;
-        //}
-        //else if (GetComponent<SpaceTimeCabin>())
-        //{
-        //    _shotType = ShotType.Static;
-        //    _shotCooldown = 1f;
-        //}
-    }
 
     // Update is called once per frame
     void Update()
@@ -162,10 +144,13 @@ public class AsteroidBlasterInput : MonoBehaviour
         _canShot = false;
         _lastShotPostion = _gunTarget.transform.position;
 
-        if (_shotType == ShotType.Move)
+        if (_shotType != ShotType.Static)
         {
             _lastShotPostion = Camera.main.ScreenToWorldPoint(input.pos);
             _gunTarget.transform.position = _lastShotPostion;
+        }
+        if (_shotType == ShotType.Move || _shotType == ShotType.Static)
+        {
             MoveGun(_lastShotPostion);
         }
 
@@ -221,8 +206,6 @@ public class AsteroidBlasterInput : MonoBehaviour
                         AsteroidHit(currentCollider);
                     GetComponent<SpaceTimeCabin>().CheckIfIsCorrect(currentCollider);
                 }
-
-
                 break;
             default:
                 break;
@@ -264,15 +247,13 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="pos">Position to rotate</param>
     public void MoveGun(Vector2 pos)
     {
-        if (_gameMode == GAME_MODE.geometry || _gameMode == GAME_MODE.spaceTime)
+
+        for (int i = 0; i < laserList.Count; i++)
         {
-            for (int i = 0; i < laserList.Count; i++)
-            {
-                laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
-                laserList[i].newAngle = (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
-                laserList[i].newAngle -= 90;
-                laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
-            }
+            laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
+            laserList[i].newAngle = (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
+            laserList[i].newAngle -= 90;
+            laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
         }
     }
     /// <summary>
