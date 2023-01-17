@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CabinSumaResta : MonoBehaviour
+public class CabinSeries : MonoBehaviour
 {
     [Header("References")]
     public GameObject _asteroid;
@@ -20,13 +20,13 @@ public class CabinSumaResta : MonoBehaviour
 
     [Header("Configuration")]
     private int _level;
-    private CabinSumaRestaDifficulty.dataDiffilcuty _currentDataDifficulty;
+    private CabinaSeriesDifficulty.dataDiffilcuty _currentDataDifficulty;
     // Start is called before the first frame update
     void Start()
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
-        _currentDataDifficulty = GetComponent<CabinSumaRestaDifficulty>().GenerateDataDifficulty(_level);
-        GetComponent<AsteroidBlasterInput>().SetGameMode(AsteroidBlasterInput.GAME_MODE.addSubtraction);
+        _currentDataDifficulty = GetComponent<CabinaSeriesDifficulty>().GenerateDataDifficulty(_level);
+
         RestartGame();
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
