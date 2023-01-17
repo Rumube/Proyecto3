@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ObjectPanel_1 : MonoBehaviour
 {
-    public bool _placed=true;
+    public bool _placed = true;
     public bool _pressed = false;
     public Sprite _pressedSprite;
     public Sprite _restSprite;
     public ButtonCounter buttonCounter;
     void Start()
-    {   
+    {
         if (_placed == false)
         {
             if (GetComponent<Geometry>().getGeometryString() == "círculo")
@@ -43,19 +43,11 @@ public class ObjectPanel_1 : MonoBehaviour
             }
 
         }
-        //if (_pressed==true)
-        //{
-        //    GetComponent<GeometryButton>()._light.SetActive(false);
-        //}
-        //else
-        //{
-        //    GetComponent<GeometryButton>()._light.SetActive(true);
-        //}
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 }

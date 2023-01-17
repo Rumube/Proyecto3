@@ -29,12 +29,12 @@ public class CreatePanel_1 : MonoBehaviour
     private int _level;
 
     [SerializeField]
-    CompleteThePanelDifficulty _completeThePanel;
-    CompleteThePanelDifficulty.dataDiffilcuty _currentDataDifficulty;
+    CompleteThePanelDifficulty_1 _completeThePanel;
+    CompleteThePanelDifficulty_1.dataDiffilcuty _currentDataDifficulty;
 
     void Start()
     {
-        _completeThePanel = GetComponent<CompleteThePanelDifficulty>();
+        _completeThePanel = GetComponent<CompleteThePanelDifficulty_1>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         _buttomCounter = GetComponent<ButtonCounter>();
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
@@ -63,13 +63,13 @@ public class CreatePanel_1 : MonoBehaviour
                 _count++;
             }
         }
-        Invoke("SendMessage", 1f);
+        Invoke("SendMessage", 1f); //cambiar mensaje por apuntadp en block de notas
     }
     static void randomize(List<GameObject> arr, int n)
     {
         // Creating a object
         // for Random class
-        var rand = new System.Random(UnityEngine.Random.Range(0,n));
+        var rand = new System.Random(UnityEngine.Random.Range(0, n));
 
         // Start from the last element and
         // swap one by one. We don't need to
@@ -77,7 +77,6 @@ public class CreatePanel_1 : MonoBehaviour
         // that's why i > 0
         for (int i = n - 1; i > 0; i--)
         {
-
             // Pick a random index
             // from 0 to i
             int j = rand.Next(0, i + 1);
@@ -100,9 +99,9 @@ public class CreatePanel_1 : MonoBehaviour
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
-    private void GenerateNoTargetGeometry()
+    private void GenerateNoTargetGeometry() //REVISAR
     {
-        for (int i = 0; i < (_row*_column) - _currentDataDifficulty.numTargets; i++)
+        for (int i = 0; i < (_row * _column) - _currentDataDifficulty.numTargets; i++)
         {
             int geometryID = UnityEngine.Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
             if (geometryID >= 7)
@@ -110,7 +109,7 @@ public class CreatePanel_1 : MonoBehaviour
 
             GameObject newGeometry;
             newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
-            //newGeometry.transform.SetParent(_canvas.transform, false);
+
             _geometryList.Add(newGeometry);
             _allList.Add(newGeometry);
         }
@@ -137,7 +136,7 @@ public class CreatePanel_1 : MonoBehaviour
                 do
                 {
                     isCorrect = false;
-                   
+
                     if (!_typeTargetGeometry.Contains(_currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType))
                     {
                         EDebug.Log("discart");
@@ -165,9 +164,9 @@ public class CreatePanel_1 : MonoBehaviour
     /// </summary>
     private void GenerateTypeTargetGeometry()
     {
-         _typeTargetGeometry.Clear();
-         for (int i = 0; i < _currentDataDifficulty.numGeometryTargets; i++)
-         {
+        _typeTargetGeometry.Clear();
+        for (int i = 0; i < _currentDataDifficulty.numGeometryTargets; i++)
+        {
             bool isCorrect = false;
             int idGeometry = UnityEngine.Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
             do
@@ -182,13 +181,13 @@ public class CreatePanel_1 : MonoBehaviour
                 else
                 {
                     idGeometry++;
-                    if(idGeometry >= _currentDataDifficulty.targetGeometry.Count)
+                    if (idGeometry >= _currentDataDifficulty.targetGeometry.Count)
                     {
                         idGeometry = 0;
                     }
                 }
             } while (!isCorrect);
-         }
+        }
 
     }
     /// <summary>
@@ -214,11 +213,11 @@ public class CreatePanel_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_allList.Count==_row*_column)
+        if (_allList.Count == _row * _column)
         {
             if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
             {
-                for (int i = 0; i <_allList.Count; i++)
+                for (int i = 0; i < _allList.Count; i++)
                 {
                     _allList[i].GetComponent<Button>().interactable = false;
                 }
@@ -231,21 +230,21 @@ public class CreatePanel_1 : MonoBehaviour
                 }
             }
         }
-       
+
     }
 
     /// <summary>
     /// Restarts the minigame.
     /// </summary>
     public void Restart()
-     {
+    {
         foreach (GameObject geometry in _allList)
         {
             Destroy(geometry);
         }
         _count = 0;
         GeneratePanel();
-     }
+    }
 }
 
 
