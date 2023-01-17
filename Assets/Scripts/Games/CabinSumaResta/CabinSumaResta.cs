@@ -7,6 +7,7 @@ public class CabinSumaResta : MonoBehaviour
     [Header("References")]
     public GameObject _asteroid;
     public List<GameObject> _spawnsList = new List<GameObject>();
+    public List<GameObject> _gunList = new List<GameObject>();
     private List<GameObject> _generatedAsteroids = new List<GameObject>();
 
     [Header("Game Values")]
@@ -29,7 +30,6 @@ public class CabinSumaResta : MonoBehaviour
         RestartGame();
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("Prueba", true);
     }
 
     // Update is called once per frame
@@ -47,12 +47,12 @@ public class CabinSumaResta : MonoBehaviour
     }
     private void DestroyAsteroids()
     {
-        _generatedAsteroids.Clear();
         List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
-        //for (int i = 0; i < _generatedAsteroids; i++)
-        //{
-
-        //}
+        for (int i = 0; i < _generatedAsteroids.Count; i++)
+        {
+            Destroy(auxList[i]);
+        }
+        _generatedAsteroids.Clear();
     }
     private void GenerateTarget()
     {
@@ -100,6 +100,7 @@ public class CabinSumaResta : MonoBehaviour
         for (int i = 0; i < _asteroidsInScene; i++)
         {
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
+            newAsteroid.name = "Asteroid";
             _generatedAsteroids.Add(newAsteroid);
         }
     }
@@ -139,28 +140,46 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
-        int selectedAsteroids = 0;
+
+        foreach (GameObject currentGun in _gunList)
+        {
+            currentGun.GetComponent<Animator>().SetTrigger("Shot");
+        }
+
+        int selectedAsteroids = _generatedAsteroids.Count;
         foreach (GameObject currentAsteroid in _generatedAsteroids)
         {
             if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
-                selectedAsteroids++;
+                selectedAsteroids--;
             }
         }
 
         if(selectedAsteroids == _targetAsteroids)
         {
             _successes++;
-            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
-            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
-            RestartGame();
+            StartCoroutine(FinishAnimation());
         }
         else
         {
             _errors++; 
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
-
+    }
+    public IEnumerator FinishAnimation()
+    {
+        foreach (GameObject currentAteroid in _generatedAsteroids)
+        {
+            if (currentAteroid.GetComponent<PickableAsteroid>().GetSelected())
+            {
+                currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
+                currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
+            }
+        }
+        yield return new WaitForSeconds(1f);
+        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
+        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
+        RestartGame();
     }
 
 }
