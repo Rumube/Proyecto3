@@ -52,6 +52,7 @@ public class PickableAsteroid : MonoBehaviour
     public void BrokenAsteroid()
     {
         _brokenAsteroid.SetActive(true);
+        _anim.Play("RedFrameShoot_animation");
     }
     private IEnumerator DeselectAnimController()
     {
