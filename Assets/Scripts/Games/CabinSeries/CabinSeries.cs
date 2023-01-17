@@ -43,7 +43,7 @@ public class CabinSeries : MonoBehaviour
     private void RestartGame()
     {
         DestroyAsteroids();
-        _serieType = SERIES_TYPE.lessSpikesToMore;
+        _serieType = SERIES_TYPE.moreSpikesToLess;
         GenerateTarget();
         GenerateAsteroids();
         GenerateOrder();
@@ -75,8 +75,8 @@ public class CabinSeries : MonoBehaviour
     {
         //SpawnAteroidsHighToLow();
         //SpawnAteroidsLowToHigh();
-        //SpawnAteroidsMoreToLess();
-        SpawnAteroidsLessToMore();
+        SpawnAteroidsMoreToLess();
+        //SpawnAteroidsLessToMore();
         //switch (_serieType)
         //{
         //    case SERIES_TYPE.highToLow:
