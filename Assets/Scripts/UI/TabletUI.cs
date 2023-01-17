@@ -162,9 +162,10 @@ public class TabletUI : UI
     /// </summary>
     public void AssingTeamColor()
     {
-        _idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
+        //_idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
         _rocket.sprite = _rocketColors[Client._tablet._id - 1];
         ServiceLocator.Instance.GetService<INetworkManager>().SetTeamColor(Client._tablet._id - 1);
+        _aliensController = GameObject.FindGameObjectWithTag("Min");
         _aliensController.GetComponent<AliensController>().StartAliens();
     }
 
@@ -244,7 +245,6 @@ public class TabletUI : UI
     {
         _studentName.text = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
         _teamColor = (TEAMCOLOR)(int)Client._tablet._id;
-        _teamColorText.text = "EQUIPO " + _teamColor;
     }
 
     /// <summary>
