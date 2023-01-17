@@ -18,22 +18,6 @@ public class CabinaSeriesDifficulty : MonoBehaviour
         [Tooltip("Number of min asteroids in scene, never less than maxAteroidesinScene value")]
         [Range(3, 12)]
         public int minAteroidesinScene;
-
-        [Header("Target")]
-        [Tooltip("Number of max target asteroids")]
-        [Range(3, 12)]
-        public int maxTargetAsteroids;
-        [Tooltip("Number of min target asteroids, never less than maxTargetAsteroids value")]
-        [Range(3, 12)]
-        public int minTargetAsteroids;
-
-        [Header("Init Value")]
-        [Tooltip("Number max of initial taget selectes")]
-        [Range(3, 12)]
-        public int maxInitialSelecteds;
-        [Tooltip("Number min of initial taget selectes, neves less than maxInitialSelecteds value")]
-        [Range(0, 12)]
-        public int minInitialSelecteds;
     }
 
     /// <summary>

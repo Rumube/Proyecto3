@@ -14,6 +14,14 @@ public class CabinSeries : MonoBehaviour
     private int _asteroidsInScene = 0;
     private int _targetAsteroids = 0;
     private int _initialSelecteds = 0;
+    private enum SERIES_TYPE
+    {
+        highToLow = 0,
+        lowToHigh = 1,
+        moreSpikesToLess = 2,
+        lessSpikesToMore = 3
+    }
+    private SERIES_TYPE _serieType;
 
     private int _successes = 0;
     private int _errors = 0;
@@ -26,16 +34,10 @@ public class CabinSeries : MonoBehaviour
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _currentDataDifficulty = GetComponent<CabinaSeriesDifficulty>().GenerateDataDifficulty(_level);
-
+        GetComponent<AsteroidBlasterInput>().SetGameMode(AsteroidBlasterInput.GAME_MODE.series);
         RestartGame();
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void RestartGame()
@@ -57,8 +59,8 @@ public class CabinSeries : MonoBehaviour
     private void GenerateTarget()
     {
         _asteroidsInScene = Random.Range(_currentDataDifficulty.minAteroidesinScene, _currentDataDifficulty.maxAteroidesinScene - 1);
-        _targetAsteroids = Random.Range(_currentDataDifficulty.minTargetAsteroids, _currentDataDifficulty.maxTargetAsteroids - 1);
-        _initialSelecteds = Random.Range(_currentDataDifficulty.minInitialSelecteds, _currentDataDifficulty.maxInitialSelecteds - 1);
+        //_targetAsteroids = Random.Range(_currentDataDifficulty.minTargetAsteroids, _currentDataDifficulty.maxTargetAsteroids - 1);
+        //_initialSelecteds = Random.Range(_currentDataDifficulty.minInitialSelecteds, _currentDataDifficulty.maxInitialSelecteds - 1);
 
         if (_targetAsteroids > _asteroidsInScene)
         {

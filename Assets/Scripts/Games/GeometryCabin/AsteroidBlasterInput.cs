@@ -59,7 +59,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     private void UpdateSelectInput()
     {
         IGameManager.GAME_STATE_CLIENT gameState = ServiceLocator.Instance.GetService<IGameManager>().GetClientState();
-        if (gameState == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<CabinSumaResta>())//FALTA DISTINTO GAME FINISHED
+        if (gameState == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputController();
         }

@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &27942555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5607469986326014309, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+  m_PrefabInstance: {fileID: 417173527}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &53165058
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,7 +480,7 @@ PrefabInstance:
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1071243618}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -486,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CabinSumaResta, Assembly-CSharp
+      value: CabinSeries, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -799,6 +804,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273451538}
   m_CullTransparentMesh: 1
+--- !u!1 &297825714 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5607469986326014309, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+  m_PrefabInstance: {fileID: 349307959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &302491104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,6 +1148,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &619887408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5607469986326014309, guid: dbd6920aeb5b4f44a8f7282c558b7a86, type: 3}
+  m_PrefabInstance: {fileID: 1459830646}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &621740700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,12 +2000,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - maxAteroidesinScene: 12
-    minAteroidesinScene: 7
-    maxTargetAsteroids: 8
-    minTargetAsteroids: 4
-    maxInitialSelecteds: 3
-    minInitialSelecteds: 4
+  - maxAteroidesinScene: 0
+    minAteroidesinScene: 0
+    maxTargetAsteroids: 0
+    minTargetAsteroids: 0
+    maxInitialSelecteds: 0
+    minInitialSelecteds: 0
 --- !u!114 &1071243618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,9 +2033,9 @@ MonoBehaviour:
   - {fileID: 897664120}
   - {fileID: 651393788}
   _gunList:
-  - {fileID: 1951505160}
-  - {fileID: 1227159830}
-  - {fileID: 417173531}
+  - {fileID: 619887408}
+  - {fileID: 297825714}
+  - {fileID: 27942555}
 --- !u!1 &1121230071
 GameObject:
   m_ObjectHideFlags: 0
