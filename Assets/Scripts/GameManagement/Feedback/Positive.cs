@@ -15,6 +15,7 @@ public class Positive : MonoBehaviour, IPositive
     public int _totalPoints;
     private float _pitchValue = 1;
     private float _finishCombo;
+    public float _particleSize = 1;
     [Header("References")]
     public GameObject _goodParticle;
     public GameObject _scoreEffect;
@@ -87,7 +88,7 @@ public class Positive : MonoBehaviour, IPositive
             Vector2 dir = (Vector2)(Quaternion.Euler(0, 0, degrees) * Vector2.right);
             GameObject newParticle = Instantiate(_goodParticle);
             newParticle.transform.position = initPosition;
-            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, _targetFeedback, _floatingTime, _floatingVelocity, _particleVelocity, this);
+            newParticle.GetComponent<ParticleFeedback>().SetStartValues(dir, _targetFeedback, _floatingTime, _floatingVelocity, _particleVelocity, _particleSize, this);
             degrees += radialPart;
         }
     }

@@ -47,13 +47,14 @@ public class ParticleFeedback : MonoBehaviour
     /// <param name="timeFloating">Time the particle is floating</param>
     /// <param name="velocityFloating">Velocity of the particle in floating state</param>
     /// <param name="movementFloating">Velocity of the particle in movement state</param>
-    public void SetStartValues(Vector2 direction, Vector2 target, float timeFloating, float velocityFloating, float movementFloating, Positive feedback)
+    public void SetStartValues(Vector2 direction, Vector2 target, float timeFloating, float velocityFloating, float movementFloating, float particleSize, Positive feedback)
     {
         _direction = direction;
         _target = target;
         _finishFloating = Time.realtimeSinceStartup + timeFloating;
         _floatingVelocity = velocityFloating;
         _movementVelocity = movementFloating;
+        transform.localScale = Vector3.one * particleSize;
         _state = ParticleState.floating;
         _positiveScript = feedback;
     }
