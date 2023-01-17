@@ -87,8 +87,8 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
         {
             _errors++;
             ServiceLocator.Instance.GetService<IError>().GenerateError();
-            ClearConstelation();
-            StartCoroutine(GetComponent<GenerateStarsTelescopeAddAndSubstract>().GenerateNewOrde());
+      
+            
         }
     }
 
