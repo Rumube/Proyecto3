@@ -18,6 +18,8 @@ public class CabinaSeriesDifficulty : MonoBehaviour
         [Tooltip("Number of min asteroids in scene, never less than maxAteroidesinScene value")]
         [Range(3, 12)]
         public int minAteroidesinScene;
+        [Tooltip("Geometry used")]
+        public List<Geometry.Geometry_Type> geometryUsed;
     }
 
     /// <summary>

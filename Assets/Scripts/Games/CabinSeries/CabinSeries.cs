@@ -14,14 +14,14 @@ public class CabinSeries : MonoBehaviour
     private int _asteroidsInScene = 0;
     private int _targetAsteroids = 0;
     private int _initialSelecteds = 0;
-    private enum SERIES_TYPE
+    public enum SERIES_TYPE
     {
         highToLow = 0,
         lowToHigh = 1,
         moreSpikesToLess = 2,
         lessSpikesToMore = 3
     }
-    private SERIES_TYPE _serieType;
+    public SERIES_TYPE _serieType;
 
     private int _successes = 0;
     private int _errors = 0;
@@ -43,6 +43,7 @@ public class CabinSeries : MonoBehaviour
     private void RestartGame()
     {
         DestroyAsteroids();
+        _serieType = SERIES_TYPE.lessSpikesToMore;
         GenerateTarget();
         GenerateAsteroids();
         GenerateOrder();
@@ -58,17 +59,12 @@ public class CabinSeries : MonoBehaviour
     }
     private void GenerateTarget()
     {
+        _serieType = (SERIES_TYPE)(Random.Range(0, 4));
         _asteroidsInScene = Random.Range(_currentDataDifficulty.minAteroidesinScene, _currentDataDifficulty.maxAteroidesinScene - 1);
-        //_targetAsteroids = Random.Range(_currentDataDifficulty.minTargetAsteroids, _currentDataDifficulty.maxTargetAsteroids - 1);
-        //_initialSelecteds = Random.Range(_currentDataDifficulty.minInitialSelecteds, _currentDataDifficulty.maxInitialSelecteds - 1);
 
-        if (_targetAsteroids > _asteroidsInScene)
+        if((_serieType == SERIES_TYPE.lessSpikesToMore || _serieType == SERIES_TYPE.moreSpikesToLess) && _asteroidsInScene >= 5)
         {
-            _targetAsteroids = _asteroidsInScene;
-        }
-        if(_initialSelecteds > _asteroidsInScene)
-        {
-            _initialSelecteds = _asteroidsInScene;
+            _asteroidsInScene = 5;
         }
     }
     /// <summary>
@@ -77,15 +73,31 @@ public class CabinSeries : MonoBehaviour
     /// </summary>
     private void GenerateAsteroids()
     {
-        SpawnAsteroids();
-        SetSelectedAsteroids();
+        //SpawnAteroidsHighToLow();
+        //SpawnAteroidsLowToHigh();
+        //SpawnAteroidsMoreToLess();
+        SpawnAteroidsLessToMore();
+        //switch (_serieType)
+        //{
+        //    case SERIES_TYPE.highToLow:
+        //        break;
+        //    case SERIES_TYPE.lowToHigh:
+        //        break;
+        //    case SERIES_TYPE.moreSpikesToLess:
+        //        break;
+        //    case SERIES_TYPE.lessSpikesToMore:
+        //        break;
+        //    default:
+        //        break;
+        //}
+        //SpawnAsteroids();
+        //SetSelectedAsteroids();
     }
-
     /// <summary>
-    /// Spawns in the scene asteroids in random positions
-    /// and save them in the <see cref="_generatedAsteroids"/> list.
+    /// Generate asteroids and asing the value
+    /// in the correct order. Low to high mode
     /// </summary>
-    private void SpawnAsteroids()
+    private void SpawnAteroidsLowToHigh()
     {
         List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
         System.Random random = new System.Random();
@@ -98,35 +110,85 @@ public class CabinSeries : MonoBehaviour
             spawnAux[k] = spawnAux[n];
             spawnAux[n] = value;
         }
-
+        float scale = 0.8f;
         for (int i = 0; i < _asteroidsInScene; i++)
         {
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
             newAsteroid.name = "Asteroid";
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(scale, 0, i, this);
             _generatedAsteroids.Add(newAsteroid);
+            scale += 0.1f;
         }
     }
-    /// <summary>
-    /// Select a random asteroids using
-    /// the <see cref="_initialSelecteds"/> value
-    /// </summary>
-    private void SetSelectedAsteroids()
+
+    private void SpawnAteroidsLessToMore()
     {
-        List<GameObject> asteroidListAux = new List<GameObject>(_generatedAsteroids);
+        List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
         System.Random random = new System.Random();
-        int n = asteroidListAux.Count;
+        int n = spawnAux.Count;
         while (n > 1)
         {
             n--;
             int k = random.Next(n + 1);
-            GameObject value = asteroidListAux[k];
-            asteroidListAux[k] = asteroidListAux[n];
-            asteroidListAux[n] = value;
+            GameObject value = spawnAux[k];
+            spawnAux[k] = spawnAux[n];
+            spawnAux[n] = value;
         }
-
-        for (int i = 0; i < _initialSelecteds; i++)
+        for (int i = 0; i < _asteroidsInScene; i++)
         {
-            asteroidListAux[i].GetComponent<PickableAsteroid>().SelectAsteroid();
+            GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
+            newAsteroid.name = "Asteroid";
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(1, i, i, this);
+            _generatedAsteroids.Add(newAsteroid);
+        }
+    }
+
+    /// <summary>
+    /// Generate asteroids and asing the value
+    /// in the correct order. High to low mode
+    /// </summary>
+    private void SpawnAteroidsHighToLow()
+    {
+        List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
+        System.Random random = new System.Random();
+        int n = spawnAux.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            GameObject value = spawnAux[k];
+            spawnAux[k] = spawnAux[n];
+            spawnAux[n] = value;
+        }
+        float scale = 1.2f;
+        for (int i = 0; i < _asteroidsInScene; i++)
+        {
+            GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
+            newAsteroid.name = "Asteroid";
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(scale, 0, i,this);
+            _generatedAsteroids.Add(newAsteroid);
+            scale -= 0.1f;
+        }
+    }
+    private void SpawnAteroidsMoreToLess()
+    {
+        List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
+        System.Random random = new System.Random();
+        int n = spawnAux.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            GameObject value = spawnAux[k];
+            spawnAux[k] = spawnAux[n];
+            spawnAux[n] = value;
+        }
+        for (int i = 0; i < _asteroidsInScene; i++)
+        {
+            GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
+            newAsteroid.name = "Asteroid";
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(1, i, _asteroidsInScene - i, this);
+            _generatedAsteroids.Add(newAsteroid);
         }
     }
     /// <summary>
@@ -183,5 +245,8 @@ public class CabinSeries : MonoBehaviour
         ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
         RestartGame();
     }
-
+    public SERIES_TYPE GetSeriesType()
+    {
+        return _serieType;
+    }
 }
