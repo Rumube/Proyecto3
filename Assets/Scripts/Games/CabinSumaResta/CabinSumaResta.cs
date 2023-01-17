@@ -158,16 +158,28 @@ public class CabinSumaResta : MonoBehaviour
         if(selectedAsteroids == _targetAsteroids)
         {
             _successes++;
-            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
-            ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
-            RestartGame();
+            StartCoroutine(FinishAnimation());
         }
         else
         {
             _errors++; 
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
-
+    }
+    public IEnumerator FinishAnimation()
+    {
+        foreach (GameObject currentAteroid in _generatedAsteroids)
+        {
+            if (currentAteroid.GetComponent<PickableAsteroid>().GetSelected())
+            {
+                currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
+                currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
+            }
+        }
+        yield return new WaitForSeconds(1f);
+        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
+        ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
+        RestartGame();
     }
 
 }

@@ -6,6 +6,7 @@ public class PickableAsteroid : MonoBehaviour
 {
     [Header("References")]
     public List<Sprite> _spriteLsit = new List<Sprite>();
+    public GameObject _brokenAsteroid;
     public GameObject _selectIcon;
     public Animator _anim;
     public Animator _asteroidAnim;
@@ -46,6 +47,11 @@ public class PickableAsteroid : MonoBehaviour
             _anim.Play("RedFrameDeselect_animation");
             StartCoroutine(DeselectAnimController());
         }
+    }
+
+    public void BrokenAsteroid()
+    {
+        _brokenAsteroid.SetActive(true);
     }
     private IEnumerator DeselectAnimController()
     {
