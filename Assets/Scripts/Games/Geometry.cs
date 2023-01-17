@@ -93,8 +93,13 @@ public class Geometry: MonoBehaviour
             default:
                 return "error";
         }
-    }
-
+    } /// <summary>
+      /// Returns the geometry name in spanish
+      /// by the geometry given
+      /// </summary>
+      /// <param name="geometry">Given geometry</param>
+      /// <returns>Gemometry name</returns>
+   
     public void GenerateSound()
     {
         switch (_geometryType)

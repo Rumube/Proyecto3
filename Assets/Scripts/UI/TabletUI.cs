@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class TabletUI : UI
-{   
+{
     public enum TEAMCOLOR
     {
         ROSA = 1,
@@ -47,11 +47,12 @@ public class TabletUI : UI
     public AudioSource _astronautAudio;
     public AudioSource _doorsClosedAudio;
     public AudioSource _spaceShipAudio;
+    public GameObject _aliensController;
 
     [Header("Student selection")]
     public TextMeshProUGUI _studentName;
     public TextMeshProUGUI _teamColorText;
-    public GameObject _panelInfo;   
+    public GameObject _panelInfo;
 
     [Header("Game selection")]
     public GameObject _blackTransition;
@@ -97,7 +98,7 @@ public class TabletUI : UI
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
             ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
-            
+
         }
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
@@ -134,14 +135,14 @@ public class TabletUI : UI
     /// </summary>
     public void SaveIPPortInfo()
     {
-        if(_ipServer.text != PlayerPrefs.GetString("IPServer"))
+        if (_ipServer.text != PlayerPrefs.GetString("IPServer"))
         {
             PlayerPrefs.SetString("IPServer", _ipServer.text);
         }
         if (_portServer.text != PlayerPrefs.GetString("PortServer"))
         {
             PlayerPrefs.SetString("PortServer", _portServer.text);
-        }      
+        }
     }
 
     /// <summary>
@@ -163,6 +164,8 @@ public class TabletUI : UI
     {
         _idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
         _rocket.sprite = _rocketColors[Client._tablet._id - 1];
+        ServiceLocator.Instance.GetService<INetworkManager>().SetTeamColor(Client._tablet._id - 1);
+        _aliensController.GetComponent<AliensController>().StartAliens();
     }
 
     /// <summary>
@@ -182,7 +185,7 @@ public class TabletUI : UI
             yield return new WaitUntil(() => _continuecallingStudent == true);
             _continueCallingButton.gameObject.SetActive(false);
             yield return AstronautAnimation(Client._tablet._students[i]._name);
-        }     
+        }
         _rocketAnimator.Play("NaveDespegue");
         _spaceShipAudio.Play();
         _doorsClosed.gameObject.SetActive(true);
@@ -238,7 +241,7 @@ public class TabletUI : UI
     /// Shows the info of who is going to play 
     /// </summary>
     void ShowStudentSelectGame()
-    {      
+    {
         _studentName.text = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
         _teamColor = (TEAMCOLOR)(int)Client._tablet._id;
         _teamColorText.text = "EQUIPO " + _teamColor;
@@ -270,33 +273,35 @@ public class TabletUI : UI
             case "Cabina Espacio Tiempo":
             case "Cabina Asociación":
             case "Cabina Sumas y Restas":
-                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Cabin");
+                _blackTransition.GetComponent<Animator>().Play("CabinGamePreview_Animation");
+
                 break;
             case "Telescopio Geometría":
             case "Telescopio Series":
             case "Telescopio Espacio Tiempo":
             case "Telescopio Asociación":
             case "Telescopio Sumas y Restas":
-                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Telescope");
+                _blackTransition.GetComponent<Animator>().Play("TelescopioGamePreview_Animation");
                 break;
             case "Panel botones Geometría":
             case "Panel botones Series":
             case "Panel botones Espacio Tiempo":
             case "Panel botones Asociación":
             case "Panel botones Sumas y Restas":
-                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Button");
+                _blackTransition.GetComponent<Animator>().Play("BotonesGamePreview_Animation");
+
+
                 break;
             case "Panel tapa Geometría":
             case "Panel tapa Series":
             case "Panel tapa Espacio Tiempo":
             case "Panel tapa Asociación":
             case "Panel tapa Sumas y Restas":
-                _blackTransition.GetComponent<Animator>().Play("BlackScreen_Door");
-                break;
 
+                break;
         }
         yield return new WaitForSeconds(3.0f);
-        
+
         //SceneManager.LoadScene("RubenSpaceTimeCabin");
         //Cuando este listo es el de abajo, llamar a los minijuegos tal cual estan aqui
         SceneManager.LoadScene(ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName());

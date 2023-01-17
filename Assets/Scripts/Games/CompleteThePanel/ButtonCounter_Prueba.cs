@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class ButtonCounter_Prueba : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class ButtonCounter_Prueba : MonoBehaviour
     public int _pentagonCounter;
     public int _hexagonCounter;
 
-   
+
     int _goodGeometry;
     int _badGeometry;
 
@@ -32,10 +33,14 @@ public class ButtonCounter_Prueba : MonoBehaviour
     [Header("Animations")]
     public GameObject _leveler;
     public GameObject _wheel;
+    private bool _newGame = true;
+    List<Geometry.Geometry_Type> geometryButtonsSelected = new List<Geometry.Geometry_Type>();
+    List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
 
     // Update is called once per frame
     void Update()
     {
+
         //_gameText= GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
         //GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
     }
@@ -43,32 +48,40 @@ public class ButtonCounter_Prueba : MonoBehaviour
     private void Start()
     {
         _createPanel = GetComponent<CreatePanel_Prueba>();
+        
     }
-
+   
     public string GetTextGame()
     {
-        string message = (GeometryNumberText(_nCircle, "círculo") + GeometryNumberText(_nTriangle, "triángulo") + GeometryNumberText(_nSquare, "cuadrado") +
-        GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono"));
-        return "Selecciona " + message;
-    }
-
-    /// <summary>Show the geometry name in plural or singular.</summary> 
-
-    /// <param name="nGeometry">The quantity of a geometry</param> 
-    /// <param name="geometryName">The name of the geometry</param>
-
-    /// <returns>Empty or the name of the geometry in singular or plural</returns> 
-    public string GeometryNumberText(int nGeometry, string geometryName)
-    {
-        if (nGeometry == 0)
+        string message = "";
+        if (_newGame)
         {
-            return "";
+            _newGame = false;
+            message = "Pulsa los botones con forma de ";
         }
         else
-        { 
-            return geometryName + "s ";
+        {
+            message = "Ahora con forma de " ;
         }
-    
+        Geometry geometry_aux = new Geometry();
+        geometryButtons.Clear();
+        foreach (GameObject currentGeometry in _createPanel._targetList)
+        {
+            geometryButtons.Add(currentGeometry.GetComponent<Geometry>()._geometryType);
+        }
+        geometryButtons = geometryButtons.Distinct().ToList();
+        for (int i = 0; i < geometryButtons.Count; i++)
+        {
+            if(i != 0)
+            {
+                message += "y de " + (geometry_aux.getGeometryString(geometryButtons[i]));
+            }
+            else
+            {
+                message += (geometry_aux.getGeometryString(geometryButtons[i])) + " ";
+            }
+        }      
+        return message;
     }
 
     /// <summary>Check the quantity of success.</summary> 
@@ -76,17 +89,17 @@ public class ButtonCounter_Prueba : MonoBehaviour
     {
         if (_squareCounter + _triangleCounter + _circleCounter + _diamondCounter + _rectangleCounter + _hexagonCounter + _pentagonCounter > 0)
         {
-            List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
+           
 
             foreach (GameObject currentButton in _createPanel._allList)
             {
-                if (!geometryButtons.Contains(currentButton.GetComponent<Geometry>()._geometryType))
+                if (!geometryButtonsSelected.Contains(currentButton.GetComponent<Geometry>()._geometryType))
                 {
-                    geometryButtons.Add(currentButton.GetComponent<Geometry>()._geometryType);
+                    geometryButtonsSelected.Add(currentButton.GetComponent<Geometry>()._geometryType);
                 }
             }
 
-            foreach (Geometry.Geometry_Type currentGeometry in geometryButtons)
+            foreach (Geometry.Geometry_Type currentGeometry in geometryButtonsSelected)
             {
                 switch (currentGeometry)
                 {
@@ -149,6 +162,7 @@ public class ButtonCounter_Prueba : MonoBehaviour
             _hexagonCounter = 0;
 
             _createPanel.Restart();
+            
         }
           
     }
@@ -168,7 +182,6 @@ public class ButtonCounter_Prueba : MonoBehaviour
                 Debug.Log("bad"+ _badGeometry);
             }
        
-
     }
     #region Button Counters
     public void CounterSquare(GameObject button)

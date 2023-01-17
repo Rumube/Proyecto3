@@ -22,7 +22,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     //Flags
     bool _canShot = true;
     bool _canVibrate = true;
-    
+
     public List<GunClass> laserList = new List<GunClass>();
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         _lastShotPostion = Vector2.zero;
         //_asteroidManager = GameObject.FindGameObjectWithTag("AsteroidManager");
-        if (GetComponent<AsteroidBlaster>())
+        if (GetComponent<AsteroidBlaster>() || GetComponent<CabinSumaResta>())
         {
             _shotType = ShotType.Move;
             _shotCooldown = 0.5f;
@@ -67,13 +67,28 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// </summary>
     private void UpdateMoveInput()
     {
-        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+        IGameManager.GAME_STATE_CLIENT gameState = ServiceLocator.Instance.GetService<IGameManager>().GetClientState();
+
+        if (GetComponent<AsteroidBlaster>())
         {
-            foreach (GunClass currentGun in laserList)
-            {
-                currentGun.gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
+            if (gameState == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<AsteroidBlaster>()._finishCreateAsteroids && !GetComponent<AsteroidBlaster>()._gameFinished)
+            {//GEOMETRIA
+                foreach (GunClass currentGun in laserList)
+                {
+                    currentGun.gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
+                }
+                InputController();
             }
-            InputController();
+        }else if (GetComponent<CabinSumaResta>())
+        {
+            if (gameState == IGameManager.GAME_STATE_CLIENT.playing && GetComponent<CabinSumaResta>())//FALTA DISTINTO GAME FINISHED
+            {//SUMAS Y RESTAS
+             //foreach (GunClass currentGun in laserList)
+             //{
+             //    currentGun.gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(currentGun.newAngle, Vector3.forward), 1f);
+             //}
+                InputController();
+            }
         }
     }
 
@@ -94,14 +109,17 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="targetPos">Last point of the laser</param>
     private void LineRendererController(Vector2 targetPos)
     {
-        foreach (GunClass currentGun in laserList)
+        if (!GetComponent<CabinSumaResta>())
         {
-            currentGun.line.enabled = true;
-            currentGun.line.SetPosition(0, currentGun.gun.transform.position);
-            currentGun.line.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
-        }
+            foreach (GunClass currentGun in laserList)
+            {
+                currentGun.line.enabled = true;
+                currentGun.line.SetPosition(0, currentGun.gun.transform.position);
+                currentGun.line.SetPosition(1, new Vector3(targetPos.x, targetPos.y, -1f));
+            }
 
-        StartCoroutine(StopLaser());
+            StartCoroutine(StopLaser());
+        }
     }
 
     IEnumerator StopLaser()
@@ -150,9 +168,20 @@ public class AsteroidBlasterInput : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
         foreach (GunClass currentGun in laserList)
         {
-            currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");
+            if (!GetComponent<CabinSumaResta>())
+            {
+                currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");
+            }
         }
         print(hit.transform.gameObject.name);
+
+        if (GetComponent<CabinSumaResta>())
+        {
+            if(hit.transform.gameObject.name == "Asteroid")
+            {
+                hit.transform.gameObject.GetComponent<PickableAsteroid>().SelectAsteroid();
+            }
+        }
 
         StartCoroutine(WaitShot());
         //print(hit.transform.gameObject.name);
@@ -224,12 +253,15 @@ public class AsteroidBlasterInput : MonoBehaviour
     /// <param name="pos">Position to rotate</param>
     public void MoveGun(Vector2 pos)
     {
-        for (int i = 0; i < laserList.Count; i++)
+        if (!GetComponent<CabinSumaResta>())
         {
-            laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
-            laserList[i].newAngle =  (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
-            laserList[i].newAngle -= 90;
-            laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
+            for (int i = 0; i < laserList.Count; i++)
+            {
+                laserList[i].newDir = ((new Vector2(pos.x, pos.y) - (Vector2)laserList[i].gun.transform.position).normalized);
+                laserList[i].newAngle = (Mathf.Atan2(laserList[i].newDir.y, laserList[i].newDir.x) * Mathf.Rad2Deg);
+                laserList[i].newAngle -= 90;
+                laserList[i].gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(laserList[i].newAngle, Vector3.forward), 1f);
+            }
         }
     }
 }
