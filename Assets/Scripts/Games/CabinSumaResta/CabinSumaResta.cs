@@ -140,18 +140,23 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
-
-        foreach (GameObject currentGun in _gunList)
-        {
-            currentGun.GetComponent<Animator>().SetTrigger("Shot");
-        }
-
+        int shootedAsteroids = 0;
         int selectedAsteroids = _generatedAsteroids.Count;
+
         foreach (GameObject currentAsteroid in _generatedAsteroids)
         {
             if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
+                shootedAsteroids++;
                 selectedAsteroids--;
+            }
+        }
+
+        if(shootedAsteroids != 0)
+        {
+            foreach (GameObject currentGun in _gunList)
+            {
+                currentGun.GetComponent<Animator>().SetTrigger("Shot");
             }
         }
 
