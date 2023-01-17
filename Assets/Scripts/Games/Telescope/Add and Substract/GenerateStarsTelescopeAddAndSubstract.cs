@@ -10,7 +10,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public GameObject _starsParent;
     public List<Transform> _constelationPos = new List<Transform>();
     public GameObject _particles;
-    //public GameObject Square, Pentagon, Hexagon;
+    
 
     [Header("Configuration")]
     private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
@@ -21,9 +21,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     private int _randomNumStars;
     private int _randomStars;
 
-    //public int _constelationPoints = UnityEngine.Random.Range(2, 15);
-
-
+   
 
     // Start is called before the first frame update
     void Start()
@@ -46,12 +44,8 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
-        print("----------------" + _gameStarList.Count + "----------------");
-        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
-        {
-            InputManager();
-        }*/
+    {
+
     }
 
     /// <summary>
@@ -63,7 +57,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         DestroyStars();
         GenerateStars();
         GenerateSelectedStars();
-        //_constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
+        
     }
     /// <summary>
     /// Clear the lists of stars and destroy the stars in the scene
@@ -137,7 +131,6 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     {
         _randomNumStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
         List<int> _posRepeated = new List<int>();
-
         List<GameObject> auxList = new List<GameObject>(_starList);
         System.Random random = new System.Random();
         int n = auxList.Count;
@@ -175,6 +168,10 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public int GetRandomNum()
     {
         return _randomNum;
+    }
+    public int GetRandomStars()
+    {
+        return _randomStars;
     }
 }
 

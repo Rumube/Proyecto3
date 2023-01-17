@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
 {
-    //Hacer público el Line Renderer y setear las posiciones, para editarlas al hacer click en ellas, nada más. Si coincide con el número aleatorio (randomNum) debemos de decir que es correcto.
-    //Ajustar el line renderer por código, haciendo que sea de hacer click en vez de mantener.
     public LineRenderer _line;
 
 
@@ -14,7 +12,7 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
     int _errors = 0;
     public Vector2 point;
     public float radius;
-    private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +47,11 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
     public void ClearConstelation()
     {
         _playerStarList.Clear();
+        GameObject[] starsInScene = GameObject.FindGameObjectsWithTag("Star");
+        for (int i = 0; i < starsInScene.Length; i++)
+        {
+            starsInScene[i].GetComponent<TelescopeAddAndSubstractStars>().SetStarConnected(false);
+        }
     }
 
     /// <summary>
@@ -57,7 +60,7 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
     public void CheckIfIsCorrect()
     {
         bool correct = false;
-        if (_playerStarList.Count == GetComponent<GenerateStarsTelescopeAddAndSubstract>()._starList.Count)
+        if (_playerStarList.Count == GetComponent<GenerateStarsTelescopeAddAndSubstract>().GetRandomStars())
         {
             correct = true;
         }
@@ -85,6 +88,7 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
             _errors++;
             ServiceLocator.Instance.GetService<IError>().GenerateError();
             ClearConstelation();
+            StartCoroutine(GetComponent<GenerateStarsTelescopeAddAndSubstract>().GenerateNewOrde());
         }
     }
 
