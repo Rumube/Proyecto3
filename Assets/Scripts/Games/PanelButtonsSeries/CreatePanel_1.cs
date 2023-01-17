@@ -19,7 +19,7 @@ public class CreatePanel_1 : MonoBehaviour
     public GameObject _canvas;
     [Header("Geometry")]
     public GameObject[] _geometryForms;
-    public List<GameObject> _geometryList= new List<GameObject>();
+    public List<GameObject> _geometryList = new List<GameObject>();
     public List<GameObject> _targetList = new List<GameObject>();
     public List<GameObject> _allList = new List<GameObject>();
     public List<Geometry.Geometry_Type> _typeTargetGeometry = new List<Geometry.Geometry_Type>();
