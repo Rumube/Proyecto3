@@ -17,6 +17,7 @@ public class CreatePanelAddSubs : MonoBehaviour
     int _count;
 
     public GameObject _canvas;
+    public GameObject _panelAppear;
     [Header("Geometry")]
     public GameObject button;
     public GameObject[] _geometryForms;
@@ -38,6 +39,8 @@ public class CreatePanelAddSubs : MonoBehaviour
     public ButtonManager _buttonManager;
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
+
         _completeThePanel = GetComponent<AddPanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
        
