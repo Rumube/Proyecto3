@@ -13,16 +13,16 @@ public class PickableAsteroid : MonoBehaviour
     public Animator _asteroidAnim;
     private CabinSeries _gm;
     [Header("Text")]
-    public TMP_Text _orderText;
-    public Canvas _canvas;
+    //public TMP_Text _orderText;
+    //public Canvas _canvas;
 
     [Header("State")]
     private bool _selected = false;
     public int _positionInOrder = -10;
+    public int _playerOrder = -10;
     // Start is called before the first frame update
     void Start()
     {
-        _canvas.worldCamera = Camera.main;
         _asteroidAnim = GetComponent<Animator>();
         AnimatorStateInfo state = _asteroidAnim.GetCurrentAnimatorStateInfo(0);
         _asteroidAnim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
@@ -91,7 +91,9 @@ public class PickableAsteroid : MonoBehaviour
     /// <param name="position">The new position</param>
     public void UpdateOrderText(int position)
     {
-        _orderText.text = position.ToString();
+        print("New Position: " + position);
+        _playerOrder = position;
+        //_orderText.text = position.ToString();
     }
     /// <summary>
     /// Activates the RedFrameShoot_animation
@@ -115,9 +117,9 @@ public class PickableAsteroid : MonoBehaviour
     {
         return _positionInOrder;
     }
-    public void SetPositionInOrder(int i)
+    public int GetPlayerPositionOrder()
     {
-        _positionInOrder = i;
+        return _playerOrder;
     }
     public void SetCabinSeries(CabinSeries gm)
     {

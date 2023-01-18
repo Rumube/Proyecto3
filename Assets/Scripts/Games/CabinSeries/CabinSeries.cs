@@ -12,9 +12,8 @@ public class CabinSeries : MonoBehaviour
 
     [Header("Game Values")]
     private int _asteroidsInScene = 0;
-    private int _targetAsteroids = 0;
     private bool _firstGame = true;
-    private List<GameObject> _playerOrder = new List<GameObject>();
+    public List<GameObject> _playerOrder = new List<GameObject>();
     public enum SERIES_TYPE
     {
         highToLow = 0,
@@ -56,6 +55,7 @@ public class CabinSeries : MonoBehaviour
             Destroy(auxList[i]);
         }
         _generatedAsteroids.Clear();
+        _playerOrder.Clear();
     }
     private void GenerateTarget()
     {
@@ -136,7 +136,7 @@ public class CabinSeries : MonoBehaviour
         {
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
             newAsteroid.name = "Asteroid";
-            newAsteroid.GetComponent<PickableAsteroid>().SetValues(1, i, i, this);
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(0.8f, i, i, this);
             _generatedAsteroids.Add(newAsteroid);
         }
     }
@@ -185,7 +185,7 @@ public class CabinSeries : MonoBehaviour
         {
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
             newAsteroid.name = "Asteroid";
-            newAsteroid.GetComponent<PickableAsteroid>().SetValues(1, i, _asteroidsInScene - i, this);
+            newAsteroid.GetComponent<PickableAsteroid>().SetValues(0.8f, i, _asteroidsInScene - i - 1, this);
             _generatedAsteroids.Add(newAsteroid);
         }
     }
@@ -198,6 +198,7 @@ public class CabinSeries : MonoBehaviour
         if (_firstGame)
         {
             order = "¡Destruye los asteroides de ";
+            _firstGame = false;
         }else
         {
             order = "¡Ahora de ";
@@ -226,22 +227,23 @@ public class CabinSeries : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
+        bool correct = true;
+
+        foreach (GameObject currentAsteroid in _generatedAsteroids)
+        {
+            if(currentAsteroid.GetComponent<PickableAsteroid>().GetPositionInOrder() != currentAsteroid.GetComponent<PickableAsteroid>().GetPlayerPositionOrder())
+            {
+                correct = false;
+            }
+        }
 
         foreach (GameObject currentGun in _gunList)
         {
             currentGun.GetComponent<Animator>().SetTrigger("Shot");
         }
+        
 
-        int selectedAsteroids = _generatedAsteroids.Count;
-        foreach (GameObject currentAsteroid in _generatedAsteroids)
-        {
-            if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
-            {
-                selectedAsteroids--;
-            }
-        }
-
-        if(selectedAsteroids == _targetAsteroids)
+        if(correct)
         {
             _successes++;
             StartCoroutine(FinishAnimation());
@@ -282,9 +284,11 @@ public class CabinSeries : MonoBehaviour
     public void AddAsteroidToPlayerOrder(GameObject newAteroid)
     {
         _playerOrder.Add(newAteroid);
+        UpdatePositions();
     }
     public void RemoveAsteroidToPlayerOrder(GameObject newAsteroid)
     {
         _playerOrder.Remove(newAsteroid);
+        UpdatePositions();
     }
 }
