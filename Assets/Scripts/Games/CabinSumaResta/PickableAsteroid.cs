@@ -22,17 +22,27 @@ public class PickableAsteroid : MonoBehaviour
     private bool _selected = false;
     public int _positionInOrder = -10;
     public int _playerOrder = -10;
+    private Geometry.Geometry_Type _geometry;
+    private enum GAME{
+        add,
+        series,
+        asociacion
+    }
+    private GAME _game = GAME.add;
     // Start is called before the first frame update
     void Start()
     {
         _asteroidAnim = GetComponent<Animator>();
         AnimatorStateInfo state = _asteroidAnim.GetCurrentAnimatorStateInfo(0);
         _asteroidAnim.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
-        if(!_gm)
+        if(_game == GAME.add || _game == GAME.asociacion)
         {
-            SetSprite();
             transform.localScale = Vector3.one * Random.Range(0.7f, 1f);
             transform.Rotate(0.0f, 0.0f, Random.Range(0.0f, 360.0f));
+            if (_game == GAME.add)
+            {
+                SetSprite();
+            }
         }
 
 
@@ -65,6 +75,32 @@ public class PickableAsteroid : MonoBehaviour
         transform.localScale = Vector3.one * scale;
         GetComponent<SpriteRenderer>().sprite = _spriteLsit[sprite];
         _positionInOrder = position;
+        _game = GAME.series;
+    }
+    public void SetAsociacionValue(Geometry.Geometry_Type geometry)
+    {
+        _geometry = geometry;
+        switch (geometry)
+        {
+            case Geometry.Geometry_Type.circle:
+                GetComponent<SpriteRenderer>().sprite = _spriteLsit[0];
+                break;
+            case Geometry.Geometry_Type.triangle:
+                GetComponent<SpriteRenderer>().sprite = _spriteLsit[1];
+                break;
+            case Geometry.Geometry_Type.square:
+                GetComponent<SpriteRenderer>().sprite = _spriteLsit[2];
+                break;
+            case Geometry.Geometry_Type.pentagon:
+                GetComponent<SpriteRenderer>().sprite = _spriteLsit[3];
+                break;
+            case Geometry.Geometry_Type.hexagon:
+                GetComponent<SpriteRenderer>().sprite = _spriteLsit[4];
+                break;
+            default:
+                break;
+        }
+        _game = GAME.asociacion;
     }
     /// <summary>
     /// Activates or deactivates the asteroids and
@@ -78,7 +114,7 @@ public class PickableAsteroid : MonoBehaviour
         {
             _selectIcon.SetActive(true);
             _anim.Play("RedFrameSelect_animation");
-            if (_gm)
+            if (_game == GAME.series)
             {
                 _gm.AddAsteroidToPlayerOrder(gameObject);
             }
@@ -87,7 +123,7 @@ public class PickableAsteroid : MonoBehaviour
         {
             _anim.Play("RedFrameDeselect_animation");
             StartCoroutine(DeselectAnimController());
-            if (_gm)
+            if (_game == GAME.series)
             {
                 _gm.RemoveAsteroidToPlayerOrder(gameObject);
             }
@@ -101,7 +137,6 @@ public class PickableAsteroid : MonoBehaviour
     {
         _iconSprite.sprite = _spriteOrderList[position];
         _playerOrder = position;
-        //_orderText.text = position.ToString();
     }
     /// <summary>
     /// Activates the RedFrameShoot_animation
@@ -134,5 +169,9 @@ public class PickableAsteroid : MonoBehaviour
     public void SetCabinSeries(CabinSeries gm)
     {
         _gm = gm;
+    }
+    public Geometry.Geometry_Type GetGeometry()
+    {
+        return _geometry;
     }
 }
