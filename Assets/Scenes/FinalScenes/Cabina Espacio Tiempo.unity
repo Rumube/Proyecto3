@@ -468,6 +468,11 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 8}
   m_EdgeRadius: 0
+--- !u!1 &541566209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7518683566129628816, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+  m_PrefabInstance: {fileID: 1792356882}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &549744150
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +524,7 @@ MonoBehaviour:
   _pointsPerParticle: 0
   _currentPoints: 0
   _totalPoints: 0
+  _particleSize: 1
   _goodParticle: {fileID: 5408174780371598402, guid: b252830ee012e4244ae1a934e119a179, type: 3}
   _scoreEffect: {fileID: 0}
   _targetFeedback: {x: 6, y: 4}
@@ -808,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunTarget: {fileID: 1975917257}
+  _panelAppear: {fileID: 0}
   laserList: []
 --- !u!114 &549744159
 MonoBehaviour:
@@ -2259,6 +2266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunTarget: {fileID: 1975917257}
+  _panelAppear: {fileID: 541566209}
   laserList:
   - {fileID: 2125888350}
 --- !u!120 &1821690042

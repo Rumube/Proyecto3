@@ -17,6 +17,7 @@ public class CreatePanel_Prueba : MonoBehaviour
     int _count;
 
     public GameObject _canvas;
+    public GameObject _panelAppear;
     [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList = new List<GameObject>();
@@ -32,6 +33,7 @@ public class CreatePanel_Prueba : MonoBehaviour
 
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _currentDataDifficulty = GetComponent<CompleteThePanelDifficulty>().GenerateDataDifficulty(_level);
         GeneratePanel();

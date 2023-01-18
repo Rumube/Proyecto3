@@ -21,6 +21,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     int _randomNum;
     private GameObject _constelationGo;
     private List<GameObject> _gameStarList = new List<GameObject>();
+    public GameObject _panelAppear;
 
     public enum ConstelationType
     {
@@ -36,6 +37,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<TelescopeGeometryDifficulty>().GenerateDataDifficulty(_level);
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
