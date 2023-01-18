@@ -178,7 +178,7 @@ public class CabinSumaResta : MonoBehaviour
             if (currentAteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
                 currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
-                currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
+                StartCoroutine(currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid());
             }
         }
         yield return new WaitForSeconds(1f);

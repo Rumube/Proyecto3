@@ -263,7 +263,7 @@ public class CabinSeries : MonoBehaviour
             if (currentAteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
                 currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
-                currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
+                StartCoroutine(currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid());
             }
             foreach (GameObject currentGun in _gunList)
             {
