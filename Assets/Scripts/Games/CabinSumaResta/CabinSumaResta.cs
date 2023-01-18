@@ -181,7 +181,7 @@ public class CabinSumaResta : MonoBehaviour
                 StartCoroutine(currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid());
             }
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.3f);
         ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
         ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
         RestartGame();

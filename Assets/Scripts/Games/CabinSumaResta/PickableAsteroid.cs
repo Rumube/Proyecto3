@@ -116,13 +116,13 @@ public class PickableAsteroid : MonoBehaviour
             switch (_game)
             {
                 case GAME.add:
-                    _iconSprite.sprite = _spriteLsit[0];
+                    _iconSprite.sprite = _iconSpriteList[0];
                     break;
                 case GAME.series:
                     _gm.AddAsteroidToPlayerOrder(gameObject);
                     break;
                 case GAME.asociacion:
-                    _iconSprite.sprite = _spriteLsit[1];
+                    _iconSprite.sprite = _iconSpriteList[1];
                     break;
                 default:
                     break;
