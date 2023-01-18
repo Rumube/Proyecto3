@@ -16,7 +16,7 @@ public class CreatePanel_1 : MonoBehaviour
 
     int _count;
 
-    public GameObject _canvas;
+    public GameObject _geometrySpawn;
     [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _firstList = new List<GameObject>();
@@ -24,6 +24,7 @@ public class CreatePanel_1 : MonoBehaviour
     public List<GameObject> _allList = new List<GameObject>();
     private ButtonCounter _buttomCounter;
     public GameObject _GeometryButtons;
+    public List<GameObject> _modifiedList = new List<GameObject>();
     //Game Configuration
     [SerializeField]
     private int _level;
@@ -36,10 +37,6 @@ public class CreatePanel_1 : MonoBehaviour
     void Start()
     {
         _completeThePanel = GetComponent<CompleteThePanelDifficulty_1>();
-
-
-
-
 
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         _buttomCounter = GetComponent<ButtonCounter>();
@@ -55,57 +52,55 @@ public class CreatePanel_1 : MonoBehaviour
         _diferentTargetList.Clear();
         _allList.Clear();
 
-        for (int x = 0; x < _column; x++)
+        for (int y = 0; y < _column; y++)
         {
-            for (int y = 0; y < _row; y++)
+            for (int x = 0; x < _row; x++)
             {
                 _count++;
-
-                if (y % 2 == 0)
+                print("col: " + y + " / row: " + x);
+                if (x % 2 == 0)
                 {
-                    GameObject newGeometry = Instantiate(_GeometryButtons);
+                    GameObject newGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
                     newGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
+                    newGeometry.transform.localPosition = new Vector3(x, y, 0);
+                    _modifiedList.Add(newGeometry);
                 }
+                else
+                {
+                    GameObject otherGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
+                    otherGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.square;
+                    otherGeometry.transform.localPosition = new Vector3(x, y, 0);
+                    _modifiedList.Add(otherGeometry);
+                }
+                
             }
         }
 
-        //COLOCAR BOTONES EN POSICIÓN
-        randomize(_allList, _allList.Count);
-        for (int x = 0; x < _column; x++)
-        {
-            for (int y = 0; y < _row; y++)
-            {
-                _allList[_count].GetComponent<Transform>().position = new Vector3((x + _offsetX) * _gapX, (y + _offsetY) * _gapY, 0);
-                _allList[_count].transform.SetParent(_canvas.transform, false);
-                _count++;
-            }
-        }
+
+       
         Invoke("SendMessage", 1f); //cambiar mensaje por apuntadp en block de notas
     }
-    static void randomize(List<GameObject> arr, int n)
+    public void ModifyGeomtry()
     {
-        // Creating a object
-        // for Random class
-        var rand = new System.Random(UnityEngine.Random.Range(0, n));
 
-        // Start from the last element and
-        // swap one by one. We don't need to
-        // run for the first element
-        // that's why i > 0
-        for (int i = n - 1; i > 0; i--)
-        {
-            // Pick a random index
-            // from 0 to i
-            int j = rand.Next(0, i + 1);
-
-            // Swap arr[i] with the
-            // element at random index
-            GameObject temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
+     _modifiedList[3].GetComponent<Geometry>()._geometryType = GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.triangle;
     }
 
+    public void CheckGeometry() //Comprobar las listas
+    {
+        //for (int i = 0; i < _GeometryButtons.Count; i++)
+        //{
+        //    if (_modifiedList[i] != _GeometryButtons.GetComponent<Geometry>()._geometryType)
+        //    {
+        //        ServiceLocator.Instance.GetService<IError>().GenerateError();
+        //    }
+        //    else
+        //    {
+        //        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+
+        //    }
+        //}
+    }
     private void SendMessage()
     {
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);

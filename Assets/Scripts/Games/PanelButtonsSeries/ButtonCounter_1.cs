@@ -11,47 +11,47 @@ public class ButtonCounter_1 : MonoBehaviour
     public GameObject _bar;
     public GameObject _radar;
 
-    // Update is called once per frame
-    void Update()
+    [Header("Geometry List")]
+    public List<GameObject> _geometrylist = new List<GameObject>();
+  
+    private void Start()
     {
-        switch (GetComponent<CreatePanel_1>()._GeometryButtons.GetComponent<Geometry>()._geometryType)
-        {
-            case Geometry.Geometry_Type.circle:
+        TurnsButtonsOff();
+        _geometrylist[(int)GetComponent<Geometry>()._geometryType].SetActive(true);
+    }
 
-                break;
-            case Geometry.Geometry_Type.triangle:
-                break;
-            case Geometry.Geometry_Type.square:
-                break;
-            case Geometry.Geometry_Type.diamond:
-                break;
-            case Geometry.Geometry_Type.rectangle:
-                break;
-            case Geometry.Geometry_Type.pentagon:
-                break;
-            case Geometry.Geometry_Type.hexagon:
-                break;
-            case Geometry.Geometry_Type.star:
-                break;
-            default:
-                break;
+    private void Update()
+    {
+        
+    }
+    private void TurnsButtonsOff()
+    {
+        for (int i = 0; i < _geometrylist.Count; i++)
+        {
+            _geometrylist[i].SetActive(false);
         }
 
-       
     }
 
-    
-    public void Compare()
+    public void ChangeGeometry()
     {
-              
+        int geo = (int)GetComponent<Geometry>()._geometryType;
+        geo++;
+
+        if (geo >= 7)
+        {
+            geo = 0;
+        }
+        GetComponent<Geometry>()._geometryType = (Geometry.Geometry_Type)geo;
+        TurnsButtonsOff();
+        _geometrylist[(int)GetComponent<Geometry>()._geometryType].SetActive(true);
     }
+
+   
     /// <summary>Check how much geometry is ok.</summary> 
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="counter">The geometry of the player</param>
-    public void CheckGeometry(int nGeometry, int counter) //Comprobar las listas
-    {
-           
-    }
+   
     #region Button Counters //Se utiliza tal cual
 
     public int Counter(GameObject button, int counter)
