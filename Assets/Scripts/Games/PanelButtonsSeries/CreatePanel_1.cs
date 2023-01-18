@@ -20,9 +20,8 @@ public class CreatePanel_1 : MonoBehaviour
     [Header("Geometry")]
     public GameObject[] _geometryForms;
     public List<GameObject> _geometryList = new List<GameObject>();
-    public List<GameObject> _targetList = new List<GameObject>();
+    public List<GameObject> _diferentTargetList = new List<GameObject>();
     public List<GameObject> _allList = new List<GameObject>();
-    public List<Geometry.Geometry_Type> _typeTargetGeometry = new List<Geometry.Geometry_Type>();
     private ButtonCounter _buttomCounter;
     //Game Configuration
     [SerializeField]
@@ -31,6 +30,11 @@ public class CreatePanel_1 : MonoBehaviour
     [SerializeField]
     CompleteThePanelDifficulty_1 _completeThePanel;
     CompleteThePanelDifficulty_1.dataDiffilcuty _currentDataDifficulty;
+
+    enum GeometryTypes
+    {
+
+    }
 
     void Start()
     {
@@ -47,7 +51,7 @@ public class CreatePanel_1 : MonoBehaviour
     void GeneratePanel()
     {
         _geometryList.Clear();
-        _targetList.Clear();
+        _diferentTargetList.Clear();
         _allList.Clear();
         GenerateTargets();
         GenerateNoTargetGeometry();
@@ -103,15 +107,7 @@ public class CreatePanel_1 : MonoBehaviour
     {
         for (int i = 0; i < (_row * _column) - _currentDataDifficulty.numTargets; i++)
         {
-            int geometryID = UnityEngine.Random.Range(0, _currentDataDifficulty.possibleGeometry.Count);
-            if (geometryID >= 7)
-                geometryID = 6;
-
-            GameObject newGeometry;
-            newGeometry = Instantiate(_currentDataDifficulty.possibleGeometry[geometryID], new Vector3(0, 0, 0), Quaternion.identity);
-
-            _geometryList.Add(newGeometry);
-            _allList.Add(newGeometry);
+          
         }
 
     }
@@ -120,95 +116,14 @@ public class CreatePanel_1 : MonoBehaviour
     /// </summary>
     private void GenerateTargets()
     {
-        GenerateTypeTargetGeometry();
-        do
-        {
-            for (int i = 0; i < _allList.Count; i++)
-            {
-                Destroy(_allList[i]);
-            }
-            _targetList.Clear();
-            _allList.Clear();
-            for (int i = 0; i < _currentDataDifficulty.numTargets; i++)
-            {
-                int idGeometry = UnityEngine.Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
-                bool isCorrect = false;
-                do
-                {
-                    isCorrect = false;
-
-                    if (!_typeTargetGeometry.Contains(_currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType))
-                    {
-                        EDebug.Log("discart");
-                        idGeometry++;
-                        if (idGeometry >= _currentDataDifficulty.targetGeometry.Count)
-                        {
-                            idGeometry = 0;
-                        }
-                    }
-                    else
-                    {
-                        GameObject newGeometry = Instantiate(_currentDataDifficulty.targetGeometry[idGeometry], new Vector3(0, 0, 0), Quaternion.identity);
-                        newGeometry.GetComponent<ObjectPanel>()._placed = false;
-                        _targetList.Add(newGeometry);
-                        _allList.Add(newGeometry);
-                        //newGeometry.transform.SetParent(_canvas.transform, false);
-                        isCorrect = true;
-                    }
-                } while (!isCorrect);
-            }
-        } while (!CheckTargets());
+      
     }
     /// <summary>
     /// Generates the geometry type of the target.
     /// </summary>
     private void GenerateTypeTargetGeometry()
     {
-        _typeTargetGeometry.Clear();
-        for (int i = 0; i < _currentDataDifficulty.numGeometryTargets; i++)
-        {
-            bool isCorrect = false;
-            int idGeometry = UnityEngine.Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
-            do
-            {
-                isCorrect = false;
-                Geometry.Geometry_Type newGeometry = _currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType;
-                if (!_typeTargetGeometry.Contains(newGeometry))
-                {
-                    _typeTargetGeometry.Add(newGeometry);
-                    isCorrect = true;
-                }
-                else
-                {
-                    idGeometry++;
-                    if (idGeometry >= _currentDataDifficulty.targetGeometry.Count)
-                    {
-                        idGeometry = 0;
-                    }
-                }
-            } while (!isCorrect);
-        }
-
-    }
-    /// <summary>
-    /// Checks if the list of targets contains geometry repeated.
-    /// </summary>
-    private bool CheckTargets()
-    {
-        bool result = true;
-        List<Geometry.Geometry_Type> geoTypeTarget = new List<Geometry.Geometry_Type>();
-        foreach (GameObject currentTarget in _targetList)
-        {
-            geoTypeTarget.Add(currentTarget.GetComponent<Geometry>()._geometryType);
-        }
-        foreach (Geometry.Geometry_Type currentGeometryTpe in _typeTargetGeometry)
-        {
-            if (!geoTypeTarget.Contains(currentGeometryTpe))
-            {
-                result = false;
-            }
-        }
-        return result;
+       
     }
     // Update is called once per frame
     void Update()
