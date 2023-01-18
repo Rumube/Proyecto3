@@ -22,6 +22,7 @@ public class SpaceTimeCabin : MonoBehaviour
     [Header("References")]
     public GameObject _asteroidPrefab;
     private GameObject _target;
+    public GameObject _aimAnims;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class SpaceTimeCabin : MonoBehaviour
         _target = GameObject.FindGameObjectWithTag("GunTarget");
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage("No podemos mover el cañón, dispara cuando los asteroides pasen por la mira", true);
         RestartGame();
+        _aimAnims.GetComponent<Animator>().Play("RedFrameSelect_animation");
     }
 
     // Update is called once per frame
