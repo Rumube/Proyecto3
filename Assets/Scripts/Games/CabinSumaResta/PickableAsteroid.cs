@@ -8,6 +8,8 @@ public class PickableAsteroid : MonoBehaviour
     [Header("References")]
     public List<Sprite> _spriteLsit = new List<Sprite>();
     public List<Sprite> _spriteOrderList = new List<Sprite>();
+    [Tooltip("0 = Sumas Restas / 1 = Asociación")]
+    public List<Sprite> _iconSpriteList = new List<Sprite>();
     public GameObject _brokenAsteroid;
     public GameObject _selectIcon;
     public SpriteRenderer _iconSprite;
@@ -44,9 +46,6 @@ public class PickableAsteroid : MonoBehaviour
                 SetSprite();
             }
         }
-
-
-
         _selectIcon.SetActive(_selected);
         if (_selected)
         {
@@ -114,18 +113,36 @@ public class PickableAsteroid : MonoBehaviour
         {
             _selectIcon.SetActive(true);
             _anim.Play("RedFrameSelect_animation");
-            if (_game == GAME.series)
+            switch (_game)
             {
-                _gm.AddAsteroidToPlayerOrder(gameObject);
+                case GAME.add:
+                    _iconSprite.sprite = _spriteLsit[0];
+                    break;
+                case GAME.series:
+                    _gm.AddAsteroidToPlayerOrder(gameObject);
+                    break;
+                case GAME.asociacion:
+                    _iconSprite.sprite = _spriteLsit[1];
+                    break;
+                default:
+                    break;
             }
         }
         else
         {
             _anim.Play("RedFrameDeselect_animation");
             StartCoroutine(DeselectAnimController());
-            if (_game == GAME.series)
+            switch (_game)
             {
-                _gm.RemoveAsteroidToPlayerOrder(gameObject);
+                case GAME.add:
+                    break;
+                case GAME.series:
+                    _gm.RemoveAsteroidToPlayerOrder(gameObject);
+                    break;
+                case GAME.asociacion:
+                    break;
+                default:
+                    break;
             }
         }
     }
