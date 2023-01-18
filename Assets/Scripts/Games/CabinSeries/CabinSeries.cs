@@ -13,7 +13,8 @@ public class CabinSeries : MonoBehaviour
     [Header("Game Values")]
     private int _asteroidsInScene = 0;
     private int _targetAsteroids = 0;
-    private int _initialSelecteds = 0;
+    private bool _firstGame = true;
+    private List<GameObject> _playerOrder = new List<GameObject>();
     public enum SERIES_TYPE
     {
         highToLow = 0,
@@ -43,7 +44,6 @@ public class CabinSeries : MonoBehaviour
     private void RestartGame()
     {
         DestroyAsteroids();
-        _serieType = SERIES_TYPE.moreSpikesToLess;
         GenerateTarget();
         GenerateAsteroids();
         GenerateOrder();
@@ -73,25 +73,23 @@ public class CabinSeries : MonoBehaviour
     /// </summary>
     private void GenerateAsteroids()
     {
-        //SpawnAteroidsHighToLow();
-        //SpawnAteroidsLowToHigh();
-        SpawnAteroidsMoreToLess();
-        //SpawnAteroidsLessToMore();
-        //switch (_serieType)
-        //{
-        //    case SERIES_TYPE.highToLow:
-        //        break;
-        //    case SERIES_TYPE.lowToHigh:
-        //        break;
-        //    case SERIES_TYPE.moreSpikesToLess:
-        //        break;
-        //    case SERIES_TYPE.lessSpikesToMore:
-        //        break;
-        //    default:
-        //        break;
-        //}
-        //SpawnAsteroids();
-        //SetSelectedAsteroids();
+        switch (_serieType)
+        {
+            case SERIES_TYPE.highToLow:
+                SpawnAteroidsHighToLow();
+                break;
+            case SERIES_TYPE.lowToHigh:
+                SpawnAteroidsLowToHigh();
+                break;
+            case SERIES_TYPE.moreSpikesToLess:
+                SpawnAteroidsMoreToLess();
+                break;
+            case SERIES_TYPE.lessSpikesToMore:
+                SpawnAteroidsLessToMore();
+                break;
+            default:
+                break;
+        }
     }
     /// <summary>
     /// Generate asteroids and asing the value
@@ -196,7 +194,31 @@ public class CabinSeries : MonoBehaviour
     /// </summary>
     private void GenerateOrder()
     {
-        string order = "¡Destruye los asteroides para que solo queden " + _targetAsteroids + " !";
+        string order = "";
+        if (_firstGame)
+        {
+            order = "¡Destruye los asteroides de ";
+        }else
+        {
+            order = "¡Ahora de ";
+        }
+        switch (_serieType)
+        {
+            case SERIES_TYPE.highToLow:
+                order += "mayor a menor tamaño!";
+                break;
+            case SERIES_TYPE.lowToHigh:
+                order += "menor a mayor tamaño!";
+                break;
+            case SERIES_TYPE.moreSpikesToLess:
+                order += "más a menos lados!";
+                break;
+            case SERIES_TYPE.lessSpikesToMore:
+                order += "menos a más lados!";
+                break;
+            default:
+                break;
+        }
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(order, true);
     }
     /// <summary>
@@ -230,6 +252,14 @@ public class CabinSeries : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
     }
+
+    private void UpdatePositions()
+    {
+        foreach (GameObject currentAsteroid in _playerOrder)
+        {
+            currentAsteroid.GetComponent<PickableAsteroid>().UpdateOrderText(_playerOrder.IndexOf(currentAsteroid));
+        }
+    }
     public IEnumerator FinishAnimation()
     {
         foreach (GameObject currentAteroid in _generatedAsteroids)
@@ -248,5 +278,13 @@ public class CabinSeries : MonoBehaviour
     public SERIES_TYPE GetSeriesType()
     {
         return _serieType;
+    }
+    public void AddAsteroidToPlayerOrder(GameObject newAteroid)
+    {
+        _playerOrder.Add(newAteroid);
+    }
+    public void RemoveAsteroidToPlayerOrder(GameObject newAsteroid)
+    {
+        _playerOrder.Remove(newAsteroid);
     }
 }
