@@ -7,8 +7,10 @@ public class PickableAsteroid : MonoBehaviour
 {
     [Header("References")]
     public List<Sprite> _spriteLsit = new List<Sprite>();
+    public List<Sprite> _spriteOrderList = new List<Sprite>();
     public GameObject _brokenAsteroid;
     public GameObject _selectIcon;
+    public SpriteRenderer _iconSprite;
     public Animator _anim;
     public Animator _asteroidAnim;
     private CabinSeries _gm;
@@ -76,13 +78,19 @@ public class PickableAsteroid : MonoBehaviour
         {
             _selectIcon.SetActive(true);
             _anim.Play("RedFrameSelect_animation");
-            _gm.AddAsteroidToPlayerOrder(gameObject);
+            if (_gm)
+            {
+                _gm.AddAsteroidToPlayerOrder(gameObject);
+            }
         }
         else
         {
             _anim.Play("RedFrameDeselect_animation");
             StartCoroutine(DeselectAnimController());
-            _gm.RemoveAsteroidToPlayerOrder(gameObject);
+            if (_gm)
+            {
+                _gm.RemoveAsteroidToPlayerOrder(gameObject);
+            }
         }
     }
     /// <summary>
@@ -91,7 +99,7 @@ public class PickableAsteroid : MonoBehaviour
     /// <param name="position">The new position</param>
     public void UpdateOrderText(int position)
     {
-        print("New Position: " + position);
+        _iconSprite.sprite = _spriteOrderList[position];
         _playerOrder = position;
         //_orderText.text = position.ToString();
     }

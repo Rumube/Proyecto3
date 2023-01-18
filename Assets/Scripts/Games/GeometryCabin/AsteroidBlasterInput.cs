@@ -9,6 +9,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     [Header("References")]
     public GameObject _gunTarget;
     private Vector2 _lastShotPostion;
+    public GameObject _panelAppear;
 
     //Configuration
     private float _shotCooldown = 0.1f;
@@ -33,6 +34,11 @@ public class AsteroidBlasterInput : MonoBehaviour
     bool _canVibrate = true;
 
     public List<GunClass> laserList = new List<GunClass>();
+
+    private void Start()
+    {
+        _panelAppear.GetComponent<Animator>().Play("Static");
+    }
 
     // Update is called once per frame
     void Update()
