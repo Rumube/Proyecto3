@@ -236,13 +236,7 @@ public class CabinSeries : MonoBehaviour
                 correct = false;
             }
         }
-
-        foreach (GameObject currentGun in _gunList)
-        {
-            currentGun.GetComponent<Animator>().SetTrigger("Shot");
-        }
         
-
         if(correct)
         {
             _successes++;
@@ -271,6 +265,11 @@ public class CabinSeries : MonoBehaviour
                 currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
                 currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
             }
+            foreach (GameObject currentGun in _gunList)
+            {
+                currentGun.GetComponent<Animator>().SetTrigger("Shot");
+            }
+            yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(1f);
         ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(transform.position);
