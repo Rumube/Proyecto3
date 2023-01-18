@@ -26,7 +26,7 @@ public class CabinSumaResta : MonoBehaviour
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _currentDataDifficulty = GetComponent<CabinSumaRestaDifficulty>().GenerateDataDifficulty(_level);
-
+        GetComponent<AsteroidBlasterInput>().SetGameMode(AsteroidBlasterInput.GAME_MODE.addSubtraction);
         RestartGame();
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
@@ -178,7 +178,7 @@ public class CabinSumaResta : MonoBehaviour
             if (currentAteroid.GetComponent<PickableAsteroid>().GetSelected())
             {
                 currentAteroid.GetComponent<SpriteRenderer>().enabled = false;
-                currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid();
+                StartCoroutine(currentAteroid.GetComponent<PickableAsteroid>().BrokenAsteroid());
             }
         }
         yield return new WaitForSeconds(1f);
