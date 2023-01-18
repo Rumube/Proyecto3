@@ -12,6 +12,7 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
     public GameObject _light;
     public Animator _anim;
     private bool _starConnected = false;
+    //public GameObject _starAnim;
    
 
     // Start is called before the first frame update
@@ -35,6 +36,8 @@ public class TelescopeAddAndSubstractStars : MonoBehaviour
 
     public void SetStarConnected(bool value)
     {
+        //_starAnim.GetComponent<Animator>().Play("Star_Slected");
+
         _starConnected = value;
     }
 

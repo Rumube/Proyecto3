@@ -1,21 +1,12 @@
 fileFormatVersion: 2
-guid: 1cccc47f1cbdb0a4db3f8a5f9b1fdbc8
+guid: 6ca3190a6ffc65c42a52e1dcf49ac131
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -5889850258226000780
-    second: Estrella_Particulas_0
-  - first:
-      213: 7522633138728191465
-    second: Estrella_Particulas_2
-  - first:
-      213: 7207287370876454590
-    second: Estrella_Particulas_4
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -45,8 +36,8 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
+    wrapU: 0
+    wrapV: 0
     wrapW: 0
   nPOTScale: 0
   lightmap: 0
@@ -60,7 +51,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -72,7 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -99,19 +90,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -134,38 +113,77 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Server
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Estrella_Particulas_0
+      name: Estrella_Particulas02_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
+        y: 32
+        width: 10
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1828049899a3b74794209f2bdd023a0
+      internalID: -338834164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Estrella_Particulas02_1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 157
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1040dc9b101214b88aaac3e204eae2
+      internalID: 484809564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Estrella_Particulas02_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 416daa3f4046e7644980acc3bf5b8a9d
+      internalID: 23526271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Estrella_Particulas02_3
+      rect:
+        serializedVersion: 2
+        x: 450
         y: 32
         width: 11
         height: 217
@@ -176,38 +194,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47c423a556c034ea0800000000000000
-      internalID: -5889850258226000780
+      spriteID: bd053cd358b8c7b46a816e22307d1667
+      internalID: 1156552039
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Estrella_Particulas_2
+      name: Estrella_Particulas02_4
       rect:
         serializedVersion: 2
-        x: 120
-        y: 0
-        width: 255
-        height: 255
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e5c979abf2c56860800000000000000
-      internalID: 7522633138728191465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Estrella_Particulas_1
-      rect:
-        serializedVersion: 2
-        x: 24
+        x: 474
         y: 157
         width: 93
         height: 92
@@ -218,8 +215,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a0ec04153f478445acbff99bb75801a
-      internalID: -232971063
+      spriteID: d64c67baee388c64db563a66ac0f81de
+      internalID: -1574718460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Estrella_Particulas02_5
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 1
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fe559b42bd5e3545ac7417dd25a0619
+      internalID: -305242978
       vertices: []
       indices: 
       edges: []
@@ -227,7 +245,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f00f1f31fa25a7a49b27cbc3658657e6
+    spriteID: dd6cfe446a433d84f839a52a7fd74d83
     internalID: 0
     vertices: []
     indices: 
@@ -235,10 +253,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Estrella_Particulas_1: -232971063
-      Estrella_Particulas_3: 382553082
-      Estrella_Particulas_0: -5889850258226000780
-      Estrella_Particulas_2: 7522633138728191465
+      Estrella_Particulas02_2: 23526271
+      Estrella_Particulas02_1: 484809564
+      Estrella_Particulas02_7: -1968514296
+      Estrella_Particulas02_3: 1156552039
+      Estrella_Particulas02_5: -305242978
+      Estrella_Particulas02_4: -1574718460
+      Estrella_Particulas02_0: -338834164
+      Estrella_Particulas02_6: 217479087
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
