@@ -5,17 +5,6 @@ using UnityEngine.UI;
 
 public class ButtonCounter_1 : MonoBehaviour
 {
-    [Header("Number of geometry target")]
-    public int _nSquare;
-    public int _nTriangle;
-    public int _nCircle;
-    public int _nDiamond;
-    public int _nRectangle;
-    public int _nPentagon;
-    public int _nHexagon;
-
-    
-
     public CreatePanel _createPanel;
 
     [Header("Animations")]
@@ -25,7 +14,30 @@ public class ButtonCounter_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                                
+        switch (GetComponent<CreatePanel_1>()._GeometryButtons.GetComponent<Geometry>()._geometryType)
+        {
+            case Geometry.Geometry_Type.circle:
+
+                break;
+            case Geometry.Geometry_Type.triangle:
+                break;
+            case Geometry.Geometry_Type.square:
+                break;
+            case Geometry.Geometry_Type.diamond:
+                break;
+            case Geometry.Geometry_Type.rectangle:
+                break;
+            case Geometry.Geometry_Type.pentagon:
+                break;
+            case Geometry.Geometry_Type.hexagon:
+                break;
+            case Geometry.Geometry_Type.star:
+                break;
+            default:
+                break;
+        }
+
+       
     }
 
     

@@ -19,10 +19,11 @@ public class CreatePanel_1 : MonoBehaviour
     public GameObject _canvas;
     [Header("Geometry")]
     public GameObject[] _geometryForms;
-    public List<GameObject> _geometryList = new List<GameObject>();
+    public List<GameObject> _firstList = new List<GameObject>();
     public List<GameObject> _diferentTargetList = new List<GameObject>();
     public List<GameObject> _allList = new List<GameObject>();
     private ButtonCounter _buttomCounter;
+    public GameObject _GeometryButtons;
     //Game Configuration
     [SerializeField]
     private int _level;
@@ -31,14 +32,15 @@ public class CreatePanel_1 : MonoBehaviour
     CompleteThePanelDifficulty_1 _completeThePanel;
     CompleteThePanelDifficulty_1.dataDiffilcuty _currentDataDifficulty;
 
-    enum GeometryTypes
-    {
-
-    }
 
     void Start()
     {
         _completeThePanel = GetComponent<CompleteThePanelDifficulty_1>();
+
+
+
+
+
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         _buttomCounter = GetComponent<ButtonCounter>();
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
@@ -50,11 +52,22 @@ public class CreatePanel_1 : MonoBehaviour
     /// </summary>
     void GeneratePanel()
     {
-        _geometryList.Clear();
         _diferentTargetList.Clear();
         _allList.Clear();
-        GenerateTargets();
-        GenerateNoTargetGeometry();
+
+        for (int x = 0; x < _column; x++)
+        {
+            for (int y = 0; y < _row; y++)
+            {
+                _count++;
+
+                if (y % 2 == 0)
+                {
+                    GameObject newGeometry = Instantiate(_GeometryButtons);
+                    newGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
+                }
+            }
+        }
 
         //COLOCAR BOTONES EN POSICIÓN
         randomize(_allList, _allList.Count);
@@ -91,9 +104,6 @@ public class CreatePanel_1 : MonoBehaviour
             arr[i] = arr[j];
             arr[j] = temp;
         }
-        // Prints the random array
-        for (int i = 0; i < n; i++)
-            Console.Write(arr[i] + " ");
     }
 
     private void SendMessage()
@@ -107,23 +117,22 @@ public class CreatePanel_1 : MonoBehaviour
     {
         for (int i = 0; i < (_row * _column) - _currentDataDifficulty.numTargets; i++)
         {
-          
-        }
 
+        }
     }
     /// <summary>
     /// Generates the target geometry.
     /// </summary>
     private void GenerateTargets()
     {
-      
+
     }
     /// <summary>
     /// Generates the geometry type of the target.
     /// </summary>
     private void GenerateTypeTargetGeometry()
     {
-       
+
     }
     // Update is called once per frame
     void Update()
