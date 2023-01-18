@@ -10,6 +10,7 @@ public class AsteroidBlasterInput : MonoBehaviour
     public GameObject _gunTarget;
     private Vector2 _lastShotPostion;
     public GameObject _panelAppear;
+    public GameObject _aimGo;
 
     //Configuration
     private float _shotCooldown = 0.1f;
@@ -170,6 +171,7 @@ public class AsteroidBlasterInput : MonoBehaviour
         {
             case GAME_MODE.geometry:
             case GAME_MODE.spaceTime:
+                _aimGo.GetComponent<Animator>().Play("RedFrameShoot_animation");
                 foreach (GunClass currentGun in laserList)
                 {
                     currentGun.gun.transform.GetChild(0).GetComponentInChildren<Animator>().SetTrigger("Shot");

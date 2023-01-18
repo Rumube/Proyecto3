@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CabinSumaResta : MonoBehaviour
+public class CabinAsociacion : MonoBehaviour
 {
     [Header("References")]
     public GameObject _asteroid;
@@ -12,20 +12,21 @@ public class CabinSumaResta : MonoBehaviour
 
     [Header("Game Values")]
     private int _asteroidsInScene = 0;
-    private int _targetAsteroids = 0;
+    private int _numTargetAsteroids = 0;
     private int _initialSelecteds = 0;
+    private Geometry.Geometry_Type _geometryTarget;
 
     private int _successes = 0;
     private int _errors = 0;
 
     [Header("Configuration")]
     private int _level;
-    private CabinSumaRestaDifficulty.dataDiffilcuty _currentDataDifficulty;
+    private CabinAsociacionDifficulty.dataDiffilcuty _currentDataDifficulty;
     // Start is called before the first frame update
     void Start()
     {
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
-        _currentDataDifficulty = GetComponent<CabinSumaRestaDifficulty>().GenerateDataDifficulty(_level);
+        _currentDataDifficulty = GetComponent<CabinAsociacionDifficulty>().GenerateDataDifficulty(_level);
         GetComponent<AsteroidBlasterInput>().SetGameMode(AsteroidBlasterInput.GAME_MODE.addSubtraction);
         RestartGame();
 
@@ -57,16 +58,12 @@ public class CabinSumaResta : MonoBehaviour
     private void GenerateTarget()
     {
         _asteroidsInScene = Random.Range(_currentDataDifficulty.minAteroidesinScene, _currentDataDifficulty.maxAteroidesinScene - 1);
-        _targetAsteroids = Random.Range(_currentDataDifficulty.minTargetAsteroids, _currentDataDifficulty.maxTargetAsteroids - 1);
-        _initialSelecteds = Random.Range(_currentDataDifficulty.minInitialSelecteds, _currentDataDifficulty.maxInitialSelecteds - 1);
+        _numTargetAsteroids = Random.Range(_currentDataDifficulty.minTargetAsteroids, _currentDataDifficulty.maxTargetAsteroids);
+        _geometryTarget = _currentDataDifficulty._targetGeometryType[Random.Range(0, _currentDataDifficulty._targetGeometryType.Count)];
 
-        if (_targetAsteroids > _asteroidsInScene)
+        if (_numTargetAsteroids > _asteroidsInScene)
         {
-            _targetAsteroids = _asteroidsInScene;
-        }
-        if(_initialSelecteds > _asteroidsInScene)
-        {
-            _initialSelecteds = _asteroidsInScene;
+            _numTargetAsteroids = _asteroidsInScene;
         }
     }
     /// <summary>
@@ -76,7 +73,6 @@ public class CabinSumaResta : MonoBehaviour
     private void GenerateAsteroids()
     {
         SpawnAsteroids();
-        SetSelectedAsteroids();
     }
 
     /// <summary>
@@ -102,29 +98,15 @@ public class CabinSumaResta : MonoBehaviour
             GameObject newAsteroid = Instantiate(_asteroid, spawnAux[i].transform);
             newAsteroid.name = "Asteroid";
             _generatedAsteroids.Add(newAsteroid);
-        }
-    }
-    /// <summary>
-    /// Select a random asteroids using
-    /// the <see cref="_initialSelecteds"/> value
-    /// </summary>
-    private void SetSelectedAsteroids()
-    {
-        List<GameObject> asteroidListAux = new List<GameObject>(_generatedAsteroids);
-        System.Random random = new System.Random();
-        int n = asteroidListAux.Count;
-        while (n > 1)
-        {
-            n--;
-            int k = random.Next(n + 1);
-            GameObject value = asteroidListAux[k];
-            asteroidListAux[k] = asteroidListAux[n];
-            asteroidListAux[n] = value;
-        }
-
-        for (int i = 0; i < _initialSelecteds; i++)
-        {
-            asteroidListAux[i].GetComponent<PickableAsteroid>().SelectAsteroid();
+            if(i <= _numTargetAsteroids)
+            {
+                newAsteroid.GetComponent<PickableAsteroid>().SetAsociacionValue(_geometryTarget);
+            }
+            else
+            {
+                Geometry.Geometry_Type newGeometry = _currentDataDifficulty._geometryType[Random.Range(0, _currentDataDifficulty._geometryType.Count)];
+                newAsteroid.GetComponent<PickableAsteroid>().SetAsociacionValue(newGeometry);
+            }
         }
     }
     /// <summary>
@@ -132,7 +114,8 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     private void GenerateOrder()
     {
-        string order = "¡Destruye los asteroides para que solo queden " + _targetAsteroids + " !";
+        Geometry aux = new Geometry();
+        string order = "¡Destruye " + _numTargetAsteroids + " asteroides con forma de " + aux.getGeometryString(_geometryTarget) + "!";
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(order, true);
     }
     /// <summary>
@@ -140,16 +123,25 @@ public class CabinSumaResta : MonoBehaviour
     /// </summary>
     public void CheckIfIsCorrect()
     {
+        bool correct = true;
         int shootedAsteroids = 0;
-        int selectedAsteroids = _generatedAsteroids.Count;
 
         foreach (GameObject currentAsteroid in _generatedAsteroids)
         {
-            if (currentAsteroid.GetComponent<PickableAsteroid>().GetSelected())
+            PickableAsteroid asteroid = currentAsteroid.GetComponent<PickableAsteroid>();
+            if (asteroid.GetSelected())
             {
+                if(asteroid.GetGeometry() != _geometryTarget)
+                {
+                    correct = false;
+                }
                 shootedAsteroids++;
-                selectedAsteroids--;
             }
+        }
+
+        if(shootedAsteroids != _numTargetAsteroids)
+        {
+            correct = false;
         }
 
         if(shootedAsteroids != 0)
@@ -160,7 +152,7 @@ public class CabinSumaResta : MonoBehaviour
             }
         }
 
-        if(selectedAsteroids == _targetAsteroids)
+        if(correct)
         {
             _successes++;
             StartCoroutine(FinishAnimation());
