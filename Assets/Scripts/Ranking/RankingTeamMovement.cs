@@ -1,21 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RankingTeamMovement : MonoBehaviour
 {
-    private RectTransform _rectTransform;
     private Vector2 _newTargetPos;
     private Vector2 _startPos;
     private bool _inMovement = false;
     public float _moveTime;
     private float _time;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _rectTransform = GetComponent<RectTransform>();
-    }
+    public LineRenderer _line;
 
     // Update is called once per frame
     void Update()
@@ -24,10 +19,16 @@ public class RankingTeamMovement : MonoBehaviour
         {
             _time += Time.deltaTime / _moveTime;
             transform.position = Vector2.Lerp(_startPos, _newTargetPos, _time);
-            if (transform.position.y == _newTargetPos.y)
-                _inMovement = false;
-        }
 
+            _line.SetPosition(0, Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, 0, 0)));
+            _line.SetPosition(1, Camera.main.WorldToScreenPoint(transform.position));
+
+
+            if (transform.position.y == _newTargetPos.y)
+            {
+                _inMovement = false;
+            }
+        }
     }
 
     public void InitMove(Vector2 newPos)
@@ -36,5 +37,8 @@ public class RankingTeamMovement : MonoBehaviour
         _startPos = transform.position;
         _newTargetPos = newPos;
         _inMovement = true;
+    }
+    public void SetBasePos(Vector2 basePos)
+    {
     }
 }
