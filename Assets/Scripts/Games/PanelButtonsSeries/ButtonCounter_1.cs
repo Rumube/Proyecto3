@@ -64,7 +64,7 @@ public class ButtonCounter_1 : MonoBehaviour
 
     public string _GetTextGame()
     {
-        return "¡Pulsa los botones hasta completar la serie!";
+        return "¡Pulsa los botones hasta completar las series!";
     }
 
     public void ChangeGeometry()
@@ -74,7 +74,6 @@ public class ButtonCounter_1 : MonoBehaviour
         {
             geo = 0;
         }
-        print("GEO: " + geo);
 
         switch (geo)
         {
