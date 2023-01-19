@@ -23,7 +23,6 @@ public class ScoreEffect : MonoBehaviour
         _audio.pitch = pitch;
         _audio.clip = _clip;
         _audio.Play();
-        GetComponent<TextMeshProUGUI>().SetText(value + "+");
         int degrees = Random.Range(0, 21);
         int negative = Random.Range(0, 2);
 

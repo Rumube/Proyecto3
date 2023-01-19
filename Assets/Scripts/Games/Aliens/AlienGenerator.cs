@@ -18,7 +18,7 @@ public class AlienGenerator : MonoBehaviour
 
     [Header("Configuration")]
     public GameObject _alienBase;
-
+    public GameObject _panelAppear;
     public RectTransform _alienPosition;
 
     [Header("AlienEyes")]
@@ -75,6 +75,7 @@ public class AlienGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<AlienDifficulty>().GenerateDataDifficulty(_level);
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();

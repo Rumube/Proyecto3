@@ -53,7 +53,6 @@ public class Error : MonoBehaviour, IError
     IEnumerator FinishFail()
     {
         yield return new WaitForSeconds(_failDuration);
-        _panelAnim.Play("Static");
         if (ServiceLocator.Instance.GetService<IFrogMessage>().GetMessageAtive())
         {
             _minAnim.Play("Talking");

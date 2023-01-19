@@ -10,7 +10,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public GameObject _starsParent;
     public List<Transform> _constelationPos = new List<Transform>();
     public GameObject _particles;
-    
+    public GameObject _panelAppear;
 
     [Header("Configuration")]
     private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
@@ -26,6 +26,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _panelAppear.GetComponent<Animator>().Play("Static");
         _level = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _dataDifficulty = GetComponent<TelescopeAddAndSubstractDifficulty>().GenerateDataDifficulty(_level);
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
