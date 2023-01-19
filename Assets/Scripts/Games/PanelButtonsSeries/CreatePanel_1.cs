@@ -25,6 +25,7 @@ public class CreatePanel_1 : MonoBehaviour
     private ButtonCounter _buttomCounter;
     public GameObject _GeometryButtons;
     public List<GameObject> _modifiedList = new List<GameObject>();
+    public List<GameObject> _geometryList = new List<GameObject>();
     //Game Configuration
     [SerializeField]
     private int _level;
@@ -62,59 +63,53 @@ public class CreatePanel_1 : MonoBehaviour
                 {
                     GameObject newGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
                     newGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
+                    newGeometry.GetComponent<ButtonCounter_1>().SetTrueGeometry(newGeometry.GetComponent<Geometry>()._geometryType);
                     newGeometry.transform.localPosition = new Vector3(x, y, 0);
-                    _modifiedList.Add(newGeometry);
+                    _geometryList.Add(newGeometry);
                 }
                 else
                 {
                     GameObject otherGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
                     otherGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.square;
+                    otherGeometry.GetComponent<ButtonCounter_1>().SetTrueGeometry(otherGeometry.GetComponent<Geometry>()._geometryType);
                     otherGeometry.transform.localPosition = new Vector3(x, y, 0);
-                    _modifiedList.Add(otherGeometry);
+                    _geometryList.Add(otherGeometry);
                 }
-                
+
             }
         }
-
-
-       
-        Invoke("SendMessage", 1f); //cambiar mensaje por apuntadp en block de notas
+        ModifyGeomtry();
+        Invoke("SendMessage", 1f);
     }
     public void ModifyGeomtry()
     {
-
-     _modifiedList[3].GetComponent<Geometry>()._geometryType = GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.triangle;
+        _geometryList[3].GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.triangle;
     }
 
     public void CheckGeometry() //Comprobar las listas
     {
-        //for (int i = 0; i < _GeometryButtons.Count; i++)
-        //{
-        //    if (_modifiedList[i] != _GeometryButtons.GetComponent<Geometry>()._geometryType)
-        //    {
-        //        ServiceLocator.Instance.GetService<IError>().GenerateError();
-        //    }
-        //    else
-        //    {
-        //        ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
-
-        //    }
-        //}
+        bool correct = true;
+        for (int i = 0; i < _geometryList.Count; i++)
+        {
+            if (_geometryList[i].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _geometryList[i].GetComponent<Geometry>()._geometryType)
+            {
+                correct = false;
+            }
+        }
+        if (correct)
+        {
+            ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+        }
+        else
+        {
+            ServiceLocator.Instance.GetService<IError>().GenerateError();
+        }
     }
     private void SendMessage()
     {
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);
     }
-    /// <summary>
-    /// Generates the normal geometry.
-    /// </summary>
-    private void GenerateNoTargetGeometry() //REVISAR
-    {
-        for (int i = 0; i < (_row * _column) - _currentDataDifficulty.numTargets; i++)
-        {
 
-        }
-    }
     /// <summary>
     /// Generates the target geometry.
     /// </summary>
@@ -132,23 +127,23 @@ public class CreatePanel_1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_allList.Count == _row * _column)
-        {
-            if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
-            {
-                for (int i = 0; i < _allList.Count; i++)
-                {
-                    _allList[i].GetComponent<Button>().interactable = false;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < _allList.Count; i++)
-                {
-                    _allList[i].GetComponent<Button>().interactable = true;
-                }
-            }
-        }
+        //if (_allList.Count == _row * _column)
+        //{
+        //    if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
+        //    {
+        //        for (int i = 0; i < _allList.Count; i++)
+        //        {
+        //            _allList[i].GetComponent<Button>().interactable = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < _allList.Count; i++)
+        //        {
+        //            _allList[i].GetComponent<Button>().interactable = true;
+        //        }
+        //    }
+        //}
 
     }
 

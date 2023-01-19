@@ -13,7 +13,7 @@ public class ButtonCounter_1 : MonoBehaviour
 
     [Header("Geometry List")]
     public List<GameObject> _geometrylist = new List<GameObject>();
-  
+    private Geometry.Geometry_Type _trueGeometry;
     private void Start()
     {
         TurnsButtonsOff();
@@ -71,4 +71,13 @@ public class ButtonCounter_1 : MonoBehaviour
         return counter;
     }
     #endregion  
+
+    public void SetTrueGeometry(Geometry.Geometry_Type newGeometry)
+    {
+        _trueGeometry = newGeometry;
+    }
+    public Geometry.Geometry_Type GetTrueGeometry()
+    {
+        return _trueGeometry;
+    }
 }
