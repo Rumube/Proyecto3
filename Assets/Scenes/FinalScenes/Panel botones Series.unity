@@ -1019,7 +1019,7 @@ PrefabInstance:
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1206181916}
+      objectReference: {fileID: 1479734422}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1030,7 +1030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ButtonCounter_1, Assembly-CSharp
+      value: CreatePanel_1, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7518683567544072829, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1089,6 +1089,26 @@ PrefabInstance:
       propertyPath: _radar
       value: 
       objectReference: {fileID: 2103514902}
+    - target: {fileID: 1206181916, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: _geometrylist.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206181916, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: _geometrylist.Array.data[4]
+      value: 
+      objectReference: {fileID: 1206181911}
+    - target: {fileID: 1206181916, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: _geometrylist.Array.data[5]
+      value: 
+      objectReference: {fileID: 1206181909}
+    - target: {fileID: 1206181916, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: _geometrylist.Array.data[6]
+      value: 
+      objectReference: {fileID: 1206181909}
+    - target: {fileID: 1456010702346252020, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2832172131241795086, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1177,6 +1197,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: GeometryButtons
       objectReference: {fileID: 0}
+    - target: {fileID: 4815415381765624487, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261637218041196595, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892729293406398215, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836362067358872989, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906610144610297133, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
 --- !u!1 &1206181908 stripped
@@ -1219,17 +1259,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2861647955882074396, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
   m_PrefabInstance: {fileID: 1206181906}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1206181916 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1206181916, guid: bdc8c675c18513c4c881b23c06b92775, type: 3}
-  m_PrefabInstance: {fileID: 1206181906}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206181915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b1989f823b07c41b3da2c44be671b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1218914242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,10 +1636,8 @@ MonoBehaviour:
   - {fileID: 1206181910}
   - {fileID: 1206181909}
   - {fileID: 1206181908}
-  _firstList: []
-  _diferentTargetList: []
-  _allList: []
   _GeometryButtons: {fileID: 1206181915}
+  _modifiedList: []
   _level: 4
   _completeThePanel: {fileID: 0}
 --- !u!114 &1479734423
@@ -1662,7 +1689,6 @@ MonoBehaviour:
   _bar: {fileID: 767977239}
   _radar: {fileID: 2103514902}
   _geometrylist: []
-  _modifiedList: []
 --- !u!1 &1563419479
 GameObject:
   m_ObjectHideFlags: 0

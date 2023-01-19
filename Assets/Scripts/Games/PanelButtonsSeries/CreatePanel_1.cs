@@ -14,18 +14,12 @@ public class CreatePanel_1 : MonoBehaviour
     public float _offsetX;
     public float _offsetY;
 
-    int _count;
-
     public GameObject _geometrySpawn;
     [Header("Geometry")]
     public GameObject[] _geometryForms;
-    public List<GameObject> _firstList = new List<GameObject>();
-    public List<GameObject> _diferentTargetList = new List<GameObject>();
-    public List<GameObject> _allList = new List<GameObject>();
-    private ButtonCounter _buttomCounter;
+    private ButtonCounter_1 _buttomCounter;
     public GameObject _GeometryButtons;
     public List<GameObject> _modifiedList = new List<GameObject>();
-    public List<GameObject> _geometryList = new List<GameObject>();
     //Game Configuration
     [SerializeField]
     private int _level;
@@ -40,7 +34,7 @@ public class CreatePanel_1 : MonoBehaviour
         _completeThePanel = GetComponent<CompleteThePanelDifficulty_1>();
 
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
-        _buttomCounter = GetComponent<ButtonCounter>();
+        _buttomCounter = GetComponent<ButtonCounter_1>();
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         GeneratePanel();
     }
@@ -50,32 +44,48 @@ public class CreatePanel_1 : MonoBehaviour
     /// </summary>
     void GeneratePanel()
     {
-        _diferentTargetList.Clear();
-        _allList.Clear();
+        _modifiedList.Clear();
+        
 
-        for (int y = 0; y < _column; y++)
+
+        for (int y = 0; y < _row; y++)
         {
-            for (int x = 0; x < _row; x++)
+            Geometry.Geometry_Type _var1;
+            do
             {
-                _count++;
+                _var1 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+
+            } while (_var1 == Geometry.Geometry_Type.hexagon || _var1 == Geometry.Geometry_Type.rectangle);
+
+            Geometry.Geometry_Type _var2;
+            do
+            {
+                _var2 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+
+            } while (_var2 == Geometry.Geometry_Type.hexagon || _var2 == Geometry.Geometry_Type.rectangle || _var1 == _var2);
+
+            for (int x = 0; x < _column; x++)
+            {
+                GameObject newGeometry;
+
+                newGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
                 print("col: " + y + " / row: " + x);
                 if (x % 2 == 0)
                 {
-                    GameObject newGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
-                    newGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
-                    newGeometry.GetComponent<ButtonCounter_1>().SetTrueGeometry(newGeometry.GetComponent<Geometry>()._geometryType);
-                    newGeometry.transform.localPosition = new Vector3(x, y, 0);
-                    _geometryList.Add(newGeometry);
+                    newGeometry.GetComponent<Geometry>()._geometryType = _var1;
                 }
                 else
                 {
-                    GameObject otherGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
-                    otherGeometry.GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.square;
-                    otherGeometry.GetComponent<ButtonCounter_1>().SetTrueGeometry(otherGeometry.GetComponent<Geometry>()._geometryType);
-                    otherGeometry.transform.localPosition = new Vector3(x, y, 0);
-                    _geometryList.Add(otherGeometry);
-                }
+                    newGeometry.GetComponent<Geometry>()._geometryType = _var2;
 
+                }
+                newGeometry.GetComponent<ButtonCounter_1>().SetTrueGeometry(newGeometry.GetComponent<Geometry>()._geometryType);
+                newGeometry.transform.localPosition = new Vector3(x, y, 0);
+                _modifiedList.Add(newGeometry);
+                if (x == 0 || x == 1 || x == 2)
+                {
+                    newGeometry.GetComponent<ButtonCounter_1>().EnableButtons(false);
+                }
             }
         }
         ModifyGeomtry();
@@ -83,15 +93,30 @@ public class CreatePanel_1 : MonoBehaviour
     }
     public void ModifyGeomtry()
     {
-        _geometryList[3].GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.triangle;
+        Geometry.Geometry_Type _var1;
+        Geometry.Geometry_Type _var2;
+
+        do
+        {
+            _var1 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+
+        } while (_var1 == Geometry.Geometry_Type.hexagon || _var1 == Geometry.Geometry_Type.rectangle);
+        do
+        {
+            _var2 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+
+        } while (_var2 == Geometry.Geometry_Type.hexagon || _var2 == Geometry.Geometry_Type.rectangle);
+
+        _modifiedList[UnityEngine.Random.Range(3, 6)].GetComponent<Geometry>()._geometryType = _var1;
+        _modifiedList[UnityEngine.Random.Range(10, 13)].GetComponent<Geometry>()._geometryType = _var2;
     }
 
-    public void CheckGeometry() //Comprobar las listas
+    public void CheckGeometry() 
     {
         bool correct = true;
-        for (int i = 0; i < _geometryList.Count; i++)
+        for (int i = 0; i < _modifiedList.Count; i++)
         {
-            if (_geometryList[i].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _geometryList[i].GetComponent<Geometry>()._geometryType)
+            if (_modifiedList[i].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _modifiedList[i].GetComponent<Geometry>()._geometryType)
             {
                 correct = false;
             }
@@ -99,64 +124,26 @@ public class CreatePanel_1 : MonoBehaviour
         if (correct)
         {
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(Vector2.zero);
+            Restart();
         }
         else
         {
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
+        
     }
     private void SendMessage()
     {
-        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);
+        ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter._GetTextGame(), true);
     }
 
-    /// <summary>
-    /// Generates the target geometry.
-    /// </summary>
-    private void GenerateTargets()
-    {
-
-    }
-    /// <summary>
-    /// Generates the geometry type of the target.
-    /// </summary>
-    private void GenerateTypeTargetGeometry()
-    {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        //if (_allList.Count == _row * _column)
-        //{
-        //    if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() != IGameManager.GAME_STATE_CLIENT.playing)
-        //    {
-        //        for (int i = 0; i < _allList.Count; i++)
-        //        {
-        //            _allList[i].GetComponent<Button>().interactable = false;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < _allList.Count; i++)
-        //        {
-        //            _allList[i].GetComponent<Button>().interactable = true;
-        //        }
-        //    }
-        //}
-
-    }
-
-    /// <summary>
-    /// Restarts the minigame.
-    /// </summary>
+   
     public void Restart()
     {
-        foreach (GameObject geometry in _allList)
+        foreach (GameObject geometry in _modifiedList)
         {
             Destroy(geometry);
         }
-        _count = 0;
         GeneratePanel();
     }
 }

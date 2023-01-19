@@ -14,15 +14,44 @@ public class ButtonCounter_1 : MonoBehaviour
     [Header("Geometry List")]
     public List<GameObject> _geometrylist = new List<GameObject>();
     private Geometry.Geometry_Type _trueGeometry;
+    private int geo = 0;
     private void Start()
     {
-        TurnsButtonsOff();
-        _geometrylist[(int)GetComponent<Geometry>()._geometryType].SetActive(true);
+        UpdateButtonGO();
     }
 
     private void Update()
     {
-        
+
+    }
+
+    private void UpdateButtonGO()
+    {
+        TurnsButtonsOff();
+        switch (GetComponent<Geometry>()._geometryType)
+        {
+            case Geometry.Geometry_Type.circle:
+                _geometrylist[0].SetActive(true);
+                break;
+            case Geometry.Geometry_Type.triangle:
+                _geometrylist[1].SetActive(true);
+                break;
+            case Geometry.Geometry_Type.square:
+                _geometrylist[2].SetActive(true);
+                break;
+            case Geometry.Geometry_Type.diamond:
+                _geometrylist[3].SetActive(true);
+                break;
+            case Geometry.Geometry_Type.pentagon:
+                _geometrylist[4].SetActive(true);
+                break;
+            case Geometry.Geometry_Type.star:
+                _geometrylist[5].SetActive(true);
+                break;
+            default:
+                break;
+        }
+
     }
     private void TurnsButtonsOff()
     {
@@ -33,25 +62,51 @@ public class ButtonCounter_1 : MonoBehaviour
 
     }
 
+    public string _GetTextGame()
+    {
+        return "¡Pulsa los botones hasta completar la serie!";
+    }
+
     public void ChangeGeometry()
     {
-        int geo = (int)GetComponent<Geometry>()._geometryType;
         geo++;
-
-        if (geo >= 7)
+        if (geo >= 6)
         {
             geo = 0;
         }
-        GetComponent<Geometry>()._geometryType = (Geometry.Geometry_Type)geo;
-        TurnsButtonsOff();
-        _geometrylist[(int)GetComponent<Geometry>()._geometryType].SetActive(true);
+        print("GEO: " + geo);
+
+        switch (geo)
+        {
+            case 0:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
+                break;
+            case 1:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.triangle;
+                break;
+            case 2:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.square;
+                break;
+            case 3:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.diamond;
+                break;
+            case 4:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.pentagon;
+                break;
+            case 5:
+                GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.star;
+                break;
+            default:
+                break;
+        }
+        UpdateButtonGO();
     }
 
-   
+
     /// <summary>Check how much geometry is ok.</summary> 
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="counter">The geometry of the player</param>
-   
+
     #region Button Counters //Se utiliza tal cual
 
     public int Counter(GameObject button, int counter)
@@ -70,7 +125,15 @@ public class ButtonCounter_1 : MonoBehaviour
         }
         return counter;
     }
-    #endregion  
+    #endregion
+
+    public void EnableButtons(bool value)
+    {
+        foreach (GameObject currentButton in _geometrylist)
+        {
+            currentButton.GetComponent<Button>().enabled = value;
+        }
+    }
 
     public void SetTrueGeometry(Geometry.Geometry_Type newGeometry)
     {
