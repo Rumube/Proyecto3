@@ -20,7 +20,7 @@ public class RankingTeamMovement : MonoBehaviour
             _time += Time.deltaTime / _moveTime;
             transform.position = Vector2.Lerp(_startPos, _newTargetPos, _time);
 
-            _line.SetPosition(0, new Vector3(transform.position.x, -3, 0));
+            _line.SetPosition(0, new Vector3(transform.position.x, -2.5f, 0));
             _line.SetPosition(1,transform.position);
 
 
