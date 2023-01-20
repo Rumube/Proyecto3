@@ -20,8 +20,8 @@ public class RankingTeamMovement : MonoBehaviour
             _time += Time.deltaTime / _moveTime;
             transform.position = Vector2.Lerp(_startPos, _newTargetPos, _time);
 
-            _line.SetPosition(0, new Vector3(transform.position.x, -2.5f, 0));
-            _line.SetPosition(1,transform.position);
+            _line.SetPosition(0, new Vector3(transform.position.x, -2.8f, 5));
+            _line.SetPosition(1, new Vector3(transform.position.x, transform.position.y - 0.2f, 5));
 
 
             if (transform.position.y == _newTargetPos.y)
