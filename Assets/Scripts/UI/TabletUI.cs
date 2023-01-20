@@ -58,8 +58,8 @@ public class TabletUI : UI
     public GameObject _blackTransition;
     public Animator _doorsOpen;
 
-    [Header("Final Score Screen")]
-    public RankingServer _fakeRankignServerInClient;
+    [Header("Final Ranking Tablet")]
+    public RankingClientFinal _rankingClientFinal;
 
     // Start is called before the first frame update
     void Start()
@@ -108,10 +108,6 @@ public class TabletUI : UI
         _fadeOutInitialScreen.Play("InitialScreenFadeOut");
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
-        if (ServiceLocator.Instance.GetService<IGameManager>().GetEndSessionTablet())
-        {
-            _fakeRankignServerInClient.CreateGridClient();
-        }
     }
     void InitialAnimEndReached(VideoPlayer vp)
     {

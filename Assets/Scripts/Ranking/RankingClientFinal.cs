@@ -45,11 +45,7 @@ public class RankingClientFinal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _minPoints.text = 0.ToString();
-        _maxPoints.text = 0.ToString();
 
-        _differenceBetweenLowerUpper = _upperLevel.position.y - _lowerLevel.position.y;
-        CreateGrid();
     }
 
     // Update is called once per frame
@@ -138,6 +134,17 @@ public class RankingClientFinal : MonoBehaviour
         }
 
         StartCoroutine(setGrid());
+    }
+    /// <summary>
+    /// Set the init variables and starts the process
+    /// </summary>
+    public void StartRanking()
+    {
+        _minPoints.text = 0.ToString();
+        _maxPoints.text = 0.ToString();
+
+        _differenceBetweenLowerUpper = _upperLevel.position.y - _lowerLevel.position.y;
+        CreateGrid();
     }
 
     /// <summary>

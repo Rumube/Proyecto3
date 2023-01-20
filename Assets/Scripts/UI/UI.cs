@@ -55,6 +55,10 @@ public abstract class UI : MonoBehaviour,IUI
                
                 _windowsTree[_uiIndex].SetActive(true);
                 _windowsTree[_uiIndex - 1].SetActive(false);
+                if(_uiIndex == 4)
+                {
+                    ServiceLocator.Instance.GetService<TabletUI>()._rankingClientFinal.StartRanking();
+                }
                 
             }
                
