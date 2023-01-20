@@ -23,14 +23,14 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private List<GameObject> _gameStarList = new List<GameObject>();
     public GameObject _panelAppear;
 
-    public enum ConstelationType
-    {
-        triángulo = 0,
-        cuadrado = 1,
-        pentágono = 2,
-        hexágono = 3
-    }
-    private ConstelationType _constelationType;
+    //public enum ConstelationType
+    //{
+    //    triángulo = 0,
+    //    cuadrado = 1,
+    //    pentágono = 2,
+    //    hexágono = 3
+    //}
+    private Geometry.Geometry_Type _constelationType;
 
 
 
@@ -98,17 +98,17 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private void NumberConstelationStars()
     {
         _gameStarList.Clear();
-        _constelationType = (ConstelationType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ConstelationType)).Length);
+        _constelationType = _dataDifficulty.possibleGeometry[UnityEngine.Random.Range(0, _dataDifficulty.possibleGeometry.Count)];
         int randomPos = UnityEngine.Random.Range(0, _constelationPos.Count);
         int count = 1;
         switch (_constelationType)
         {
-            case ConstelationType.triángulo:
+            case Geometry.Geometry_Type.triangle:
                 _constelationGo = new GameObject();
                 print("Dibuja una constelación con forma de triángulo");
                 break;
 
-            case ConstelationType.cuadrado:
+            case Geometry.Geometry_Type.square:
                 print("Dibuja una constelación con forma de cuadrado");
                 _constelationGo = Instantiate(Square, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
@@ -123,7 +123,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _gameStarList.Add(_gameStarList[0]);
                 break;
                 
-            case ConstelationType.pentágono:
+            case Geometry.Geometry_Type.pentagon:
                 print("Dibuja una constelación con forma de pentágono");
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
@@ -136,7 +136,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _gameStarList.Add(_gameStarList[0]);
                 break;
 
-            case ConstelationType.hexágono:
+            case Geometry.Geometry_Type.hexagon:
                 print("Dibuja una constelación con forma de hexágono");
                  _constelationGo = Instantiate(Hexagon, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
@@ -183,15 +183,15 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
 
         NumberConstelationStars();
         string _textOrder = "";
-
+        Geometry auxgeo = new Geometry();
         if (_firstRound)
         {
             _firstRound = false;
-            _textOrder += "Forma una constelación con forma de " + (_constelationType);
+            _textOrder += "Forma una constelación con forma de " + (auxgeo.getGeometryString(_constelationType));
         }
         else
         {
-            _textOrder += "Ahora con forma de " + (_constelationType);
+            _textOrder += "Ahora con forma de " + (auxgeo.getGeometryString(_constelationType));
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
@@ -248,15 +248,15 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             }
         }
     }
-    public ConstelationType getConstelationType()
+    public Geometry.Geometry_Type getConstelationType()
     {
         return _constelationType;
     }
 
-    public List<GameObject> GetGameStarsList()
-    {
-        return _gameStarList;
-    }
+public List<GameObject> GetGameStarsList()
+{
+    return _gameStarList;
+}
 }
 
 
