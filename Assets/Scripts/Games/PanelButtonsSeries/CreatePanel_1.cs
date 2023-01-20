@@ -45,7 +45,7 @@ public class CreatePanel_1 : MonoBehaviour
     void GeneratePanel()
     {
         _modifiedList.Clear();
-        
+
 
 
         for (int y = 0; y < _row; y++)
@@ -96,22 +96,37 @@ public class CreatePanel_1 : MonoBehaviour
         Geometry.Geometry_Type _var1;
         Geometry.Geometry_Type _var2;
 
-        do
+        for (int i = 0; i < _currentDataDifficulty.numTargets; i++)
         {
-            _var1 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+            do
+            {
+                _var1 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
 
-        } while (_var1 == Geometry.Geometry_Type.hexagon || _var1 == Geometry.Geometry_Type.rectangle);
-        do
-        {
-            _var2 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
+            } while (_var1 == Geometry.Geometry_Type.hexagon || _var1 == Geometry.Geometry_Type.rectangle);
+            do
+            {
+                _var2 = (Geometry.Geometry_Type)UnityEngine.Random.Range(0, Enum.GetValues(typeof(Geometry.Geometry_Type)).Length);
 
-        } while (_var2 == Geometry.Geometry_Type.hexagon || _var2 == Geometry.Geometry_Type.rectangle);
+            } while (_var2 == Geometry.Geometry_Type.hexagon || _var2 == Geometry.Geometry_Type.rectangle);
 
-        _modifiedList[UnityEngine.Random.Range(3, 6)].GetComponent<Geometry>()._geometryType = _var1;
-        _modifiedList[UnityEngine.Random.Range(10, 13)].GetComponent<Geometry>()._geometryType = _var2;
+            int randomIndex = 0;
+            int randomIndex2 = 0;
+            do
+            {
+                randomIndex = UnityEngine.Random.Range(3, 6);
+            } while (_modifiedList[randomIndex].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _modifiedList[randomIndex].GetComponent<Geometry>()._geometryType);
+            do
+            {
+                randomIndex2 = UnityEngine.Random.Range(10, 13);
+            } while (_modifiedList[randomIndex2].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _modifiedList[randomIndex2].GetComponent<Geometry>()._geometryType);
+
+            _modifiedList[UnityEngine.Random.Range(3, 6)].GetComponent<Geometry>()._geometryType = _var1;
+            _modifiedList[UnityEngine.Random.Range(10, 13)].GetComponent<Geometry>()._geometryType = _var2;
+        }
+
     }
 
-    public void CheckGeometry() 
+    public void CheckGeometry()
     {
         bool correct = true;
         for (int i = 0; i < _modifiedList.Count; i++)
@@ -130,14 +145,14 @@ public class CreatePanel_1 : MonoBehaviour
         {
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
-        
+
     }
     private void SendMessage()
     {
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter._GetTextGame(), true);
     }
 
-   
+
     public void Restart()
     {
         foreach (GameObject geometry in _modifiedList)
