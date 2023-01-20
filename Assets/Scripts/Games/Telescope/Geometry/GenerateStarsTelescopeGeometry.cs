@@ -115,10 +115,13 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
 
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
-                    
+                    if (child.name != "Froma")
+                    {
+                        child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                        count++;
+                        _gameStarList.Add(child.gameObject);
+                    }
+                                      
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
@@ -129,9 +132,13 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
+                    if (child.name != "Froma")
+                    {
+                        child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                        count++;
+                        _gameStarList.Add(child.gameObject);
+                    }
+                        
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
@@ -142,9 +149,13 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
                 {
-                    child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
-                    count++;
-                    _gameStarList.Add(child.gameObject);
+                    if (child.name != "Froma")
+                    {
+                        child.GetComponent<TelescopeGeometryStars>().InitStart(gameObject, count);
+                        count++;
+                        _gameStarList.Add(child.gameObject);
+                    }
+                        
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
@@ -153,7 +164,10 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 print("Dibuja una constelación con forma de triángulo");
 
                 break;
+
         }
+        GetComponent<TelescopeGeometryConstelationGenerator>()._showFigure = _constelationGo;
+
     }
 
     /// <summary>
