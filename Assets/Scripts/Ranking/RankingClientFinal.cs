@@ -56,11 +56,6 @@ public class RankingClientFinal : MonoBehaviour
             _newDataFromClient = false;
             UpdateRankingPoints();
         }
-        if (_generateGrid)
-        {
-            _generateGrid = false;
-            CreateGrid();
-        }
 
 
         //CHANGE VISUAL POINTS

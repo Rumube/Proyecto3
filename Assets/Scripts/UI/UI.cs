@@ -40,6 +40,10 @@ public abstract class UI : MonoBehaviour,IUI
     {
         ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.activeSelf);
     }
+    public void OpenFinalRankingClient()
+    {
+        _windowsTree[4].SetActive(true);
+    }
 
     /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>
     public void OpenNextWindow()
@@ -54,12 +58,7 @@ public abstract class UI : MonoBehaviour,IUI
             {
                
                 _windowsTree[_uiIndex].SetActive(true);
-                _windowsTree[_uiIndex - 1].SetActive(false);
-                if(_uiIndex == 4)
-                {
-                    ServiceLocator.Instance.GetService<TabletUI>()._rankingClientFinal.StartRanking();
-                }
-                
+                _windowsTree[_uiIndex - 1].SetActive(false);   
             }
                
            //if is the final scene, load the animation and the first scene

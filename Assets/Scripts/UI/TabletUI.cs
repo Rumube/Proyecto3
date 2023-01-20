@@ -98,12 +98,14 @@ public class TabletUI : UI
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
             ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
-
         }
         //Active just the first one
         _windowsTree[_uiIndex].SetActive(true);
         _continueNextScreen = true;
-
+        if (_uiIndex == 4)
+        {
+            _rankingClientFinal.StartRanking();
+        }
         //Initial animations
         _fadeOutInitialScreen.Play("InitialScreenFadeOut");
         _video.Play();
