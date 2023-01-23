@@ -117,11 +117,11 @@ public class CreatePanel_1 : MonoBehaviour
             } while (_modifiedList[randomIndex].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _modifiedList[randomIndex].GetComponent<Geometry>()._geometryType);
             do
             {
-                randomIndex2 = UnityEngine.Random.Range(10, 13);
+                randomIndex2 = UnityEngine.Random.Range(9, 12);
             } while (_modifiedList[randomIndex2].GetComponent<ButtonCounter_1>().GetTrueGeometry() != _modifiedList[randomIndex2].GetComponent<Geometry>()._geometryType);
 
             _modifiedList[UnityEngine.Random.Range(3, 6)].GetComponent<Geometry>()._geometryType = _var1;
-            _modifiedList[UnityEngine.Random.Range(10, 13)].GetComponent<Geometry>()._geometryType = _var2;
+            _modifiedList[UnityEngine.Random.Range(9, 12)].GetComponent<Geometry>()._geometryType = _var2;
         }
 
     }

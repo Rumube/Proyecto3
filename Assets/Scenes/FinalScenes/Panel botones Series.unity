@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2518,8 +2518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - numTargets: 1
-  - numTargets: 2
+  - numTargets: 3
+  - numTargets: 3
   - numTargets: 3
 --- !u!114 &1479734424
 MonoBehaviour:
@@ -2533,10 +2533,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b1989f823b07c41b3da2c44be671b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _createPanel: {fileID: 0}
   _bar: {fileID: 767977239}
   _radar: {fileID: 2103514902}
   _geometrylist: []
+--- !u!114 &1479734426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306356496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d03f386e4117244b87aabeee87f7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _geometryType: 0
+  _geometryAudio: []
 --- !u!1 &1512667543
 GameObject:
   m_ObjectHideFlags: 0
