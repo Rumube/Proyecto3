@@ -20,7 +20,7 @@ namespace Crosstales.UI
 
       private void Start()
       {
-         tf = transform;
+         tf = GetComponent<Transform>();
       }
 
       #endregion
