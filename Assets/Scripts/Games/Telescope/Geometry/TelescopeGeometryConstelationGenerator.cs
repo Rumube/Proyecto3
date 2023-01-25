@@ -107,7 +107,7 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
 
         if(_playerStarList[_playerStarList.Count-1] == _playerStarList[0])
         {
-            if (GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType() == GenerateStarsTelescopeGeometry.ConstelationType.triángulo)
+            if (GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType() == Geometry.Geometry_Type.triangle)
             {
                 if (_playerStarList.Count != 4)
                 {
