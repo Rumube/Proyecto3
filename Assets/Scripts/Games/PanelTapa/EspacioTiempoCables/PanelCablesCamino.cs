@@ -21,7 +21,7 @@ public class PanelCablesCamino : MonoBehaviour
     }
     public void GenerateNewPaht(int _dim)
     {
-        _initPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2 (Random.Range(0, _dim), 0));
-        _finishPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(_dim, Random.Range(0, _dim)));
+        _initPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2 (Random.Range(0, _dim - 1), 0));
+        _finishPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim - 1), _dim-1));
     }
 }
