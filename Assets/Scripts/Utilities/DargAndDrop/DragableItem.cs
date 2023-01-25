@@ -24,7 +24,7 @@ public class DragableItem : MonoBehaviour
 
     private void Update()
     {
-        if (_isReturning)
+        if (_isReturning && _target != null)
         {
             if(_initialParent != _target)
             {
@@ -48,14 +48,22 @@ public class DragableItem : MonoBehaviour
     /// <param name="velocity">Movement speed</param>
     public void ReturnToTarget(float velocity)
     {
-        _isReturning = true;
-        _returnVelocity = velocity;
-        FallItem();
+        if (_isCreated)
+        {
+            FallItem();
+        }
+        else
+        {
+            _isReturning = true;
+            _returnVelocity = velocity;
+        }
     }
 
-    public void SetProperties()
+    public void SetProperties(Transform initialParent)
     {
         _isCreated = true;
+        _initialParent = initialParent;
+        _target = initialParent;
     }
     public void SetNewTarget(Transform newTrasnform)
     {
@@ -85,9 +93,9 @@ public class DragableItem : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        print("Exit: " + collision.name);
         if (collision.gameObject.tag == "DragParent")
         {
+            collision.gameObject.GetComponent<DragParentPropieties>().removeItem(gameObject);
             _dndManager.OnItemExit();
             SetInitialTarget();
         }
@@ -106,5 +114,9 @@ public class DragableItem : MonoBehaviour
     public void SetInitialTarget()
     {
         _target = _initialParent;
+    }
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

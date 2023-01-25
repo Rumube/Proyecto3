@@ -6,13 +6,12 @@ public class DragParentPropieties : MonoBehaviour
 {
     [Header("Configuration")]
     public List<Transform> _goodGameObjects;
-    public int _maxItems;
     [Tooltip("If all ganeObjects can put in this place")]
     public bool _canAll;
     public bool _canParentNewItems = false;
     [Header("References")]
     private Transform _currentTransform;
-    private List<GameObject> _itemsList = new List<GameObject>();
+    private GameObject _itemDrag;
 
     /// <summary>
     /// Checks if the give Transform can
@@ -54,9 +53,9 @@ public class DragParentPropieties : MonoBehaviour
     public bool canAddItem(GameObject newItem)
     {
         bool itemAdded = false;
-        if(_itemsList.Count < _maxItems && _canParentNewItems)
+        if(_itemDrag == null && _canParentNewItems)
         {
-            _itemsList.Add(newItem);
+            _itemDrag = newItem;
             itemAdded = true;
         }
         return itemAdded;
@@ -67,9 +66,9 @@ public class DragParentPropieties : MonoBehaviour
     /// <param name="removedItem"></param>
     public void removeItem(GameObject removedItem)
     {
-        if (_itemsList.Contains(removedItem))
+        if (_itemDrag == removedItem)
         {
-            _itemsList.Remove(removedItem);
+            _itemDrag = null;
         }
     }
 }

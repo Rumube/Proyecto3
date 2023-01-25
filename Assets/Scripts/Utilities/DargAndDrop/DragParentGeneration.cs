@@ -20,8 +20,9 @@ public class DragParentGeneration : DragParentPropieties
         {
             GameObject newItem = Instantiate(_dragItem, transform);
             newItem.transform.position = transform.position;
-            newItem.GetComponent<DragableItem>().SetProperties();
+            newItem.GetComponent<DragableItem>().SetProperties(transform);
             newItem.GetComponent<DragableItem>().SetDndManager(_dndManager);
+            newItem.GetComponent<Animator>().Play("GetBigger_Anim");
         }
     }
 }

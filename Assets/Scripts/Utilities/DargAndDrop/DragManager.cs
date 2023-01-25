@@ -71,11 +71,11 @@ public class DragManager : MonoBehaviour
         Collider2D target = Physics2D.OverlapCircle(touchPos, 0.1f, _layer);
 
         if (target != null && target.transform.gameObject.tag == "DragObject")
-            {
-                _itemDraging = target.transform.gameObject;
-                _itemDraging.transform.SetParent(_dragParent);
-                _itemDraging.GetComponent<DragableItem>().SetDndManager(this);
-            }
+        {
+            _itemDraging = target.transform.gameObject;
+            _itemDraging.transform.SetParent(_dragParent);
+            _itemDraging.GetComponent<DragableItem>().SetDndManager(this);
+        }
     }
     /// <summary>
     /// Update the item's position using the <see cref="AndroidInputAdapter.Datos.pos"/>
@@ -112,7 +112,8 @@ public class DragManager : MonoBehaviour
                     _itemDraging = null;
                 }
             }
-            else {
+            else
+            {
                 _itemDraging.GetComponent<DragableItem>().SetInParent();
                 SetReturning();
             }
