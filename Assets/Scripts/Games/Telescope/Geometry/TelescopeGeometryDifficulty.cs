@@ -17,6 +17,8 @@ public class TelescopeGeometryDifficulty : MonoBehaviour
         [Tooltip("Max Stars to connect")]
         [Range(3, 15)]
         public int maxStars;
+        [Tooltip("Only use square, pentagon and hexagon Geometry")]
+        public List<Geometry.Geometry_Type> possibleGeometry;
     }
 
     /// <summary>

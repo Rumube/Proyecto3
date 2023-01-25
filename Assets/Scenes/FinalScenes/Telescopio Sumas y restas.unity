@@ -1566,6 +1566,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072830, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7518683567544072830, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -32
+      objectReference: {fileID: 0}
     - target: {fileID: 7601654017250776151, guid: e8c20869cd6fff84c8cfea537f77abf5, type: 3}
       propertyPath: m_SizeDelta.x
       value: -241.0788
@@ -2820,6 +2828,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataDifficulty:
   - minStars: 3
+    maxStars: 7
+  - minStars: 7
+    maxStars: 10
+  - minStars: 10
     maxStars: 15
 --- !u!114 &1757058980
 MonoBehaviour:
