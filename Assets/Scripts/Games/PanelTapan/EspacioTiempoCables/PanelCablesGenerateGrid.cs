@@ -11,7 +11,7 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     [Header("References")]
     public GameObject _gridParent;
     public GameObject _cell;
-    public List<GameObject> _cellList = new List<GameObject>();
+    private List<GameObject> _cellList = new List<GameObject>();
     [Header("Sizes")]
     private GridLayoutGroup _layoutGroup; //Component
     // Start is called before the first frame update
