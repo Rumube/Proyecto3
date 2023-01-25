@@ -8,6 +8,7 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
     {
         public bool result;
         public Vector2 pos;
+        public TouchPhase phase;
     }
 
     //Drag and drop system
@@ -21,11 +22,13 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
         Datos newDatos;
         newDatos.result = false;
         newDatos.pos = new Vector2();
+        newDatos.phase =  TouchPhase.Canceled;
 
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            if(touch.phase == TouchPhase.Began)
+            newDatos.phase = touch.phase;
+            if (touch.phase == TouchPhase.Began)
             {
                 newDatos.result = true;
                 newDatos.pos = touch.position;
