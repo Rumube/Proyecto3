@@ -11,6 +11,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
     public List<Transform> _constelationPos = new List<Transform>();
     public GameObject _particles;
     public GameObject _panelAppear;
+    public GameObject _starAnim;
 
     [Header("Configuration")]
     private TelescopeAddAndSubstractDifficulty.dataDiffilcuty _dataDifficulty;
@@ -156,6 +157,7 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         {
             star.GetComponent<TelescopeAddAndSubstractStars>().SetStarConnected(true);
             GetComponent<TelescopeAddAndSubstractConstelationGenerator>()._playerStarList.Add(star);
+            _starAnim.GetComponent<Animator>().Play("Star_Slected");
 
         }
         else

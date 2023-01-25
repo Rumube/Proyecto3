@@ -32,8 +32,8 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
     private void DrawConstelation()
     {
         _line.positionCount = _playerStarList.Count;
-        _line.startWidth = 5f;
-        _line.endWidth = 5f;
+        _line.startWidth = 0.1f;
+        _line.endWidth = 0.1f;
         for (int i = 0; i < _playerStarList.Count; i++)
         {
             _line.SetPosition(i, _playerStarList[i].transform.position);

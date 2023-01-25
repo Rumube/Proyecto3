@@ -12,6 +12,7 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     int _errors = 0;
     public Vector2 point;
     public float radius;
+    public GameObject _showFigure;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +107,7 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
 
         if(_playerStarList[_playerStarList.Count-1] == _playerStarList[0])
         {
-            if (GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType() == GenerateStarsTelescopeGeometry.ConstelationType.triángulo)
+            if (GetComponent<GenerateStarsTelescopeGeometry>().getConstelationType() == Geometry.Geometry_Type.triangle)
             {
                 if (_playerStarList.Count != 4)
                 {
@@ -136,9 +137,8 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             correct = false;
         }
 
-
-
         FinishGame(correct);
+
     }
 
     /// <summary>
@@ -155,6 +155,8 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             _success = 0;
             _errors = 0;
             StartCoroutine(GetComponent<GenerateStarsTelescopeGeometry>().GenerateNewOrde());
+            ClearConstelation();
+            _showFigure.GetComponent<Animator>().Play("ShowSquare_TelesopeGeom_anim");
         }
         else
         {
