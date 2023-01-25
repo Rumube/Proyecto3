@@ -165,8 +165,8 @@ public class TabletUI : UI
         //_idText.text = ((TEAMCOLOR)Client._tablet._id).ToString();
         _rocket.sprite = _rocketColors[Client._tablet._id - 1];
         ServiceLocator.Instance.GetService<INetworkManager>().SetTeamColor(Client._tablet._id - 1);
-        _aliensController = GameObject.FindGameObjectWithTag("Min");
-        _aliensController.GetComponent<AliensController>().StartAliens();
+        _aliensController = GameObject.Find("NewAliens");
+        _aliensController.GetComponentInParent<AliensController>().StartAliens();
     }
 
     /// <summary>
