@@ -8,8 +8,6 @@ public class CellCable : MonoBehaviour
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
     private Image _sprite;
-    [Header("Properties")]
-    private Vector2 _cellPos = Vector2.zero;
     public enum CELL_STATE
     {
         EMPY,
@@ -95,12 +93,20 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
-    public Vector2 GetCellPos()
+    #region GETS
+    public CELL_STATE GetCellState()
     {
-        return _cellPos;
+        return _cellState;
     }
-    public void SetCellPos(Vector2 newPos)
+    public ROTATION GetRotation()
     {
-        _cellPos = newPos;
+        return _cellRotation;
     }
+    #endregion
+    #region SETS
+    public void SetCellState(CELL_STATE state)
+    {
+        _cellState = state;
+    }
+    #endregion
 }

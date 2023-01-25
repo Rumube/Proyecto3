@@ -11,7 +11,7 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     [Header("References")]
     public GameObject _gridParent;
     public GameObject _cell;
-    private List<GameObject> _cellList = new List<GameObject>();
+    private GameObject[,] _cellArr;
     [Header("Sizes")]
     private GridLayoutGroup _layoutGroup; //Component
     // Start is called before the first frame update
@@ -19,16 +19,20 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     {
         SetSize();
         GenerateGrid();
+        GetComponent<PanelCablesCamino>().GenerateNewPaht(_dim);
     }
+    /// <summary>
+    /// Init the size values
+    /// </summary>
     private void SetSize()
     {
         _layoutGroup = _gridParent.GetComponent<GridLayoutGroup>();
-    }
-    // Update is called once per frame
-    void Update()
-    {
+        _cellArr = new GameObject[_dim, _dim];
 
     }
+    /// <summary>
+    /// Generate a grid of <see cref="_dim"/> rows and columns
+    /// </summary>
     public void GenerateGrid()
     {
         GridLayoutGroup glg = _gridParent.GetComponent<GridLayoutGroup>();
@@ -40,15 +44,28 @@ public class PanelCablesGenerateGrid : MonoBehaviour
             for (int j = 0; j < _dim; j++)
             {
                 GameObject newCell = Instantiate(_cell, _gridParent.transform);
-                _cellList.Add(newCell);
+                newCell.name = "Cell_" + i + "x" + j;
+                _cellArr[i, j] = newCell;
             }
         }
         ReSizeCells();
     }
+    /// <summary>
+    /// Change the cells size using the space
+    /// </summary>
     private void ReSizeCells()
     {
         Vector2 screenSize = new Vector2(_gridParent.GetComponent<RectTransform>().rect.width, _gridParent.GetComponent<RectTransform>().rect.height); // Current screen size
         float yValue = screenSize.y / _dim;
         _layoutGroup.cellSize = new Vector2(yValue, yValue);
+    }
+    /// <summary>
+    /// Returns the cell in the position given
+    /// </summary>
+    /// <param name="pos">The position</param>
+    /// <returns>The Cell</returns>
+    public GameObject GetCell(Vector2 pos)
+    {
+        return _cellArr[(int)pos.x,(int)pos.y];
     }
 }
