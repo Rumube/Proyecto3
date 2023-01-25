@@ -72,11 +72,14 @@ public class DragableItem : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("Enter: " + collision.name);
         if (collision.gameObject.tag == "DragParent")
         {
-            _dndManager.OnItemEnter(collision);
-            SetNewTarget(collision.transform);
+            if (collision.gameObject.GetComponent<DragParentPropieties>().canAddItem(gameObject))
+            {
+                _dndManager.OnItemEnter(collision);
+                SetNewTarget(collision.transform);
+            }
+
         }
     }
 
