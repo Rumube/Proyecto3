@@ -18,8 +18,7 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     void Start()
     {
         SetSize();
-        GenerateGrid();
-        GetComponent<PanelCablesCamino>().GenerateNewPaht(_dim);
+        Restart();
     }
     /// <summary>
     /// Init the size values
@@ -35,6 +34,7 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     /// </summary>
     public void GenerateGrid()
     {
+        _cellArr = new GameObject[_dim, _dim];
         GridLayoutGroup glg = _gridParent.GetComponent<GridLayoutGroup>();
         glg.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         glg.constraintCount = _dim;
@@ -58,6 +58,22 @@ public class PanelCablesGenerateGrid : MonoBehaviour
         Vector2 screenSize = new Vector2(_gridParent.GetComponent<RectTransform>().rect.width, _gridParent.GetComponent<RectTransform>().rect.height); // Current screen size
         float yValue = screenSize.y / _dim;
         _layoutGroup.cellSize = new Vector2(yValue, yValue);
+    }
+    public void Restart()
+    {
+        DeleteCells();
+        GenerateGrid();
+        GetComponent<PanelCablesCamino>().GenerateNewPaht(_dim);
+    }
+    private void DeleteCells()
+    {
+        for (int i = 0; i < _dim; i++)
+        {
+            for (int j = 0; j < _dim; j++)
+            {
+                Destroy(_cellArr[i, j]);
+            }
+        }
     }
     /// <summary>
     /// Returns the cell in the position given
