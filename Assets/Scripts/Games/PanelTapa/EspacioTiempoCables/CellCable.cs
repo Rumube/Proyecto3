@@ -8,6 +8,7 @@ public class CellCable : MonoBehaviour
 {
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
+    public List<GameObject> _cableList = new List<GameObject>();
     private Image _sprite;
     private Vector2 _cellPos = Vector2.zero;
     private int _pass = 0;
