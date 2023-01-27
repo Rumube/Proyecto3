@@ -158,7 +158,7 @@ public class PanelCablesCamino : MonoBehaviour
     #region SetDirections
     private void SetDirection()
     {
-
+        
     }
     #endregion
     #region ChangeNames
