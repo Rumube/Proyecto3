@@ -166,11 +166,11 @@ public class PanelCablesCamino : MonoBehaviour
         {
             if (_correctPath[i].GetComponent<CellCable>().GetIsInit())
             {
-                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
+                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i + 1].GetComponent<CellCable>().GetCellPos(), true);
             }
             else if (_correctPath[i].GetComponent<CellCable>().GetIsFinish())
             {
-                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos());
+                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos(), false);
             }
             else
             {

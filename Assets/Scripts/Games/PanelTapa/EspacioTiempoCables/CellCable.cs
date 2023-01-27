@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 public class CellCable : MonoBehaviour
 {
+    /// <summary>
+    /// PREFABS SIZES:
+    /// 3 = 90 | 1;
+    /// 4 = 75 | 2;
+    /// 5 = 50 | 4;
+    /// 6 = 45 | 5
+    /// 7 = 40 | 5
+    /// 8 = 35 | 6
+    /// 9 = 30 | 8
+    /// 10 = 25 | 10;
+    /// </summary>
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
     public List<GameObject> _cableList = new List<GameObject>();
@@ -20,7 +31,13 @@ public class CellCable : MonoBehaviour
         TRES,
         CUATRO,
         TRESERR,
-        CUATROERR
+        CUATROERR,
+        INICIORECTO,
+        FINRECTO,
+        INICIOGIROBAJO,
+        INICIOGIROARRI,
+        FINGIROBAJO,
+        FINGIROARRI
     }
     public enum ROTATION
     {
@@ -51,31 +68,53 @@ public class CellCable : MonoBehaviour
     /// </summary>
     private void SetSprite()
     {
+        foreach (GameObject currentCable in _cableList)
+        {
+            currentCable.SetActive(false);
+        }
+
         switch (_cellState)
         {
             case CELL_STATE.EMPTY:
-                _sprite.sprite = _spriteList[0];
+                _cableList[0].SetActive(true);
                 break;
             case CELL_STATE.RECTO:
-                _sprite.sprite = _spriteList[1];
+                _cableList[1].SetActive(true);
                 break;
             case CELL_STATE.GIRO:
-                _sprite.sprite = _spriteList[2];
+                _cableList[2].SetActive(true);
                 break;
             case CELL_STATE.TRES:
-                _sprite.sprite = _spriteList[3];
+                _cableList[3].SetActive(true);
                 break;
             case CELL_STATE.CUATRO:
-                _sprite.sprite = _spriteList[4];
+                _cableList[4].SetActive(true);
                 break;
             case CELL_STATE.TRESERR:
-                _sprite.sprite = _spriteList[5];
+                _cableList[5].SetActive(true);
                 break;
             case CELL_STATE.CUATROERR:
-                _sprite.sprite = _spriteList[6];
+                _cableList[6].SetActive(true);
+                break;
+            case CELL_STATE.INICIORECTO:
+                _cableList[7].SetActive(true);
+                break;
+            case CELL_STATE.FINRECTO:
+                _cableList[8].SetActive(true);
+                break;
+            case CELL_STATE.INICIOGIROBAJO:
+                _cableList[9].SetActive(true);
+                break;
+            case CELL_STATE.INICIOGIROARRI:
+                _cableList[10].SetActive(true);
+                break;
+            case CELL_STATE.FINGIROBAJO:
+                _cableList[11].SetActive(true);
+                break;
+            case CELL_STATE.FINGIROARRI:
+                _cableList[12].SetActive(true);
                 break;
             default:
-                _sprite.sprite = _spriteList[0];
                 break;
         }
     }
@@ -99,7 +138,7 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
-    public void SetNewState(Vector2 pos)
+    public void SetNewState(Vector2 pos, bool isInit)
     {
         _pass++;
         //int isUp = 0;//0 = Misma Altura || 1 = Altura +1 || -1 = Altura -1 
@@ -111,12 +150,24 @@ public class CellCable : MonoBehaviour
         switch (posX)
         {
             case 1:
-                _cellState = CELL_STATE.GIRO;
-                _cellRotation = ROTATION.D90;
+                if (isInit)
+                {
+                    _cellState = CELL_STATE.INICIOGIROARRI;
+                }
+                else
+                {
+                    _cellState = CELL_STATE.FINGIROARRI;
+                }
                 break;
             case -1:
-                _cellState = CELL_STATE.GIRO;
-                _cellRotation = ROTATION.D180;
+                if (!isInit)
+                {
+                    _cellState = CELL_STATE.INICIOGIROBAJO;
+                }
+                else
+                {
+                    _cellState = CELL_STATE.FINGIROBAJO;
+                }
                 break;
             default:
                 break;
@@ -125,8 +176,14 @@ public class CellCable : MonoBehaviour
         {
             case 1:
             case -1:
-                SetCellState(CELL_STATE.RECTO);
-                _cellRotation = ROTATION.D90;
+                if (isInit)
+                {
+                    _cellState = CELL_STATE.INICIORECTO;
+                }
+                else
+                {
+                    _cellState = CELL_STATE.FINRECTO;
+                }
                 break;
         }
     }
@@ -163,7 +220,7 @@ public class CellCable : MonoBehaviour
     {
         int pos = (int)_cellRotation;
         pos++;
-        if (pos > Enum.GetValues(typeof(ROTATION)).Length)
+        if (pos > Enum.GetValues(typeof(ROTATION)).Length - 1)
         {
             pos = 0;
         }
