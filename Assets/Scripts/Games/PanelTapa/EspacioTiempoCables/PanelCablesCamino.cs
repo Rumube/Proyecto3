@@ -11,6 +11,7 @@ public class PanelCablesCamino : MonoBehaviour
     public GameObject _finishPos;
     public List<GameObject> _cellPath = new List<GameObject>();
     public int _middlePoints = 0;
+    public List<GameObject> _correctPath = new List<GameObject>();
     [Header("GeneratePathValues")]
     private CellCable _currentCell = null;
     // Start is called before the first frame update
@@ -90,6 +91,7 @@ public class PanelCablesCamino : MonoBehaviour
     {
         int nextPathValue = 1;
         _currentCell = _initPos.GetComponent<CellCable>();
+        _correctPath.Add(_currentCell.gameObject);
         do
         {
             List<CellCable> adjacentCells = GetAdjacentCells(_currentCell);
@@ -108,6 +110,7 @@ public class PanelCablesCamino : MonoBehaviour
             }
             closeCell.SetCellState(CellCable.CELL_STATE.RECTO);
             _currentCell = closeCell;
+            _correctPath.Add(_currentCell.gameObject);
             if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>())
             {
                 nextPathValue++;
@@ -152,22 +155,28 @@ public class PanelCablesCamino : MonoBehaviour
         return result;
     }
     #endregion
+    #region SetDirections
+    private void SetDirection()
+    {
+
+    }
+    #endregion
     #region ChangeNames
     private void ChangeNames()
     {
-        for (int i = 0; i < _cellPath.Count; i++)
+        for (int i = 0; i < _correctPath.Count; i++)
         {
             if (i == 0)
             {
-                _cellPath[i].name = _cellPath[i].name + "_INIT";
+                _correctPath[i].name = _correctPath[i].name + "_INIT";
             }
-            else if (i == _cellPath.Count - 1)
+            else if (i == _correctPath.Count - 1)
             {
-                _cellPath[i].name = _cellPath[i].name + "_FINISH";
+                _correctPath[i].name = _correctPath[i].name + "_FINISH";
             }
             else
             {
-                _cellPath[i].name = _cellPath[i].name + "_MIDDLE";
+                _correctPath[i].name = _correctPath[i].name + "_MIDDLE_" + i;
             }
         }
     }
