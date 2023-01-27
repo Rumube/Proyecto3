@@ -38,8 +38,8 @@ public class PanelCablesCamino : MonoBehaviour
         GenerateRandomPoints();
         //GENERAR CAMINO
         GeneratePath();
-        //SETEAR DIRECIONES
-        //SETEAR ROTATCION
+        //SETEAR DIRECIONES Y ROTACIONES
+        SetDirection();
         //AÑADIR CAMINOS FALSOS
         //RANDOMIZAR ROTACIONES
         //CAMBIAR NOMBRES
@@ -57,6 +57,8 @@ public class PanelCablesCamino : MonoBehaviour
         _finishPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), _dim - 1));
         _initPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.RECTO);
         _finishPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.CUATRO);
+        _initPos.GetComponent<CellCable>().SetIsInit(true);
+        _finishPos.GetComponent<CellCable>().SetIsFinish(true);
         _cellPath.Add(_initPos);
     }
     #endregion
@@ -101,6 +103,8 @@ public class PanelCablesCamino : MonoBehaviour
 
             foreach (CellCable currentCable in adjacentCells)
             {
+                print("MAX: " + (_cellPath.Count - 1));
+                print("VALUE: " + nextPathValue);
                 float distance = currentCable.GetDistance(_cellPath[nextPathValue].GetComponent<CellCable>().GetCellPos());
                 if (distance < min)
                 {
@@ -111,7 +115,7 @@ public class PanelCablesCamino : MonoBehaviour
             closeCell.SetCellState(CellCable.CELL_STATE.RECTO);
             _currentCell = closeCell;
             _correctPath.Add(_currentCell.gameObject);
-            if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>())
+            if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>() && nextPathValue < _cellPath.Count - 1)
             {
                 nextPathValue++;
             }
@@ -158,7 +162,21 @@ public class PanelCablesCamino : MonoBehaviour
     #region SetDirections
     private void SetDirection()
     {
-        
+        for (int i = 0; i < _correctPath.Count; i++)
+        {
+            if (_correctPath[i].GetComponent<CellCable>().GetIsInit())
+            {
+                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
+            }
+            else if (_correctPath[i].GetComponent<CellCable>().GetIsFinish())
+            {
+                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos());
+            }
+            else
+            {
+                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos(), _correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
+            }
+        }
     }
     #endregion
     #region ChangeNames
