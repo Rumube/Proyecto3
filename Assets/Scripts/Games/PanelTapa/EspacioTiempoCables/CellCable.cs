@@ -106,7 +106,7 @@ public class CellCable : MonoBehaviour
 
         float posX = _cellPos.x - pos.x;
         float posY = _cellPos.y - pos.y;
-
+        GetComponent<Button>().enabled = false;
         switch (posX)
         {
             case 1:
