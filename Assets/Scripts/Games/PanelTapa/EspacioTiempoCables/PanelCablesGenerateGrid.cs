@@ -46,6 +46,7 @@ public class PanelCablesGenerateGrid : MonoBehaviour
                 GameObject newCell = Instantiate(_cell, _gridParent.transform);
                 newCell.name = "Cell_" + i + "x" + j;
                 _cellArr[i, j] = newCell;
+                newCell.GetComponent<CellCable>().SetCellPos(new Vector2(i, j));
             }
         }
         ReSizeCells();

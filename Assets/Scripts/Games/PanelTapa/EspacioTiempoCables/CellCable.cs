@@ -8,9 +8,10 @@ public class CellCable : MonoBehaviour
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
     private Image _sprite;
+    private Vector2 _cellPos = Vector2.zero;
     public enum CELL_STATE
     {
-        EMPY,
+        EMPTY,
         RECTO,
         GIRO,
         TRES,
@@ -25,7 +26,7 @@ public class CellCable : MonoBehaviour
         D180,
         D270
     }
-    public CELL_STATE _cellState = CELL_STATE.EMPY;
+    public CELL_STATE _cellState = CELL_STATE.EMPTY;
     public ROTATION _cellRotation = ROTATION.D0;
 
     // Start is called before the first frame update
@@ -47,7 +48,7 @@ public class CellCable : MonoBehaviour
     {
         switch (_cellState)
         {
-            case CELL_STATE.EMPY:
+            case CELL_STATE.EMPTY:
                 _sprite.sprite = _spriteList[0];
                 break;
             case CELL_STATE.RECTO:
@@ -102,11 +103,23 @@ public class CellCable : MonoBehaviour
     {
         return _cellRotation;
     }
+    public Vector2 GetCellPos()
+    {
+        return _cellPos;
+    }
+    public float GetDistance(Vector2 pos)
+    {
+        return Mathf.Abs(Vector2.Distance(pos, _cellPos));
+    }
     #endregion
     #region SETS
     public void SetCellState(CELL_STATE state)
     {
         _cellState = state;
+    }
+    public void SetCellPos(Vector2 pos)
+    {
+        _cellPos = pos;
     }
     #endregion
 }
