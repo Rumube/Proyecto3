@@ -14,14 +14,27 @@ public class CableCheck : MonoBehaviour
 
     public void CheckConection(PanelCablesCamino path, CellCable preCell = null)
     {
+        //TODO: INTENTAR GUARDAR DONDE HAY MÁS CONEXIONES PARA VOLVER MÁS TARDE SI NO HAY CAMINOS
+        //PROBAR ALGORITMO A*
         bool finish = false;
-        if (!_cableData.GetIsFinish())
+        if (!_checked)
         {
-            if (preCell != null)
+            if (!_cableData.GetIsFinish())
             {
-                foreach (GameObject currentCable in _cableData._conections)
+                if (preCell != null)
                 {
-                    if (currentCable != preCell || preCell.GetComponent<CableCheck>().GetChecked())
+                    foreach (GameObject currentCable in _cableData._conections)
+                    {
+                        if (currentCable != preCell || preCell.GetComponent<CableCheck>().GetChecked())
+                        {
+                            _checked = true;
+                            currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (GameObject currentCable in _cableData._conections)
                     {
                         _checked = true;
                         currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
@@ -30,23 +43,17 @@ public class CableCheck : MonoBehaviour
             }
             else
             {
-                foreach (GameObject currentCable in _cableData._conections)
-                {
-                    currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
-                }
+                finish = true;
             }
         }
-        else
-        {
-            finish = true;
-        }
-        if (finish)
-        {
-            path.FinishCheck(finish);
-        }
+        path.FinishCheck(finish);
     }
     public bool GetChecked()
     {
         return _checked;
+    }
+    public void SetCheked(bool value)
+    {
+        _checked = value;
     }
 }

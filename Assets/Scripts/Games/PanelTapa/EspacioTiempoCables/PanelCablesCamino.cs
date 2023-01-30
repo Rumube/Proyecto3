@@ -227,18 +227,25 @@ public class PanelCablesCamino : MonoBehaviour
     #endregion
     public void CheckPath()
     {
-        _correctPath[0].GetComponent<CableCheck>().CheckConection();
-        //if ()
-        //{
-        //    print("Correcto");
-        //}
-        //else
-        //{
-        //    print("Error!");
-        //}
+        _correctPath[0].GetComponent<CableCheck>().CheckConection(this);
     }
     public void FinishCheck(bool result)
     {
-
+        UnCheckPath();
+        if (result)
+        {
+            print("SI!!!");
+        }
+        else
+        {
+            print("NO!!!");
+        }
+    }
+    private void UnCheckPath()
+    {
+        foreach (GameObject currentCable in _cellPath)
+        {
+            currentCable.GetComponent<CableCheck>().SetCheked(false);
+        }
     }
 }
