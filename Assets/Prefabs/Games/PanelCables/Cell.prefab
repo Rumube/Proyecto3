@@ -14,9 +14,11 @@ GameObject:
   - component: {fileID: 1002846371614804546}
   - component: {fileID: 1129770401862037048}
   - component: {fileID: 8514257065608853064}
+  - component: {fileID: 4254036154296655614}
+  - component: {fileID: 2689964304326367680}
   m_Layer: 0
   m_Name: PanelTapa_CUATRO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,6 +194,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &4254036154296655614
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547381739474352465}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &2689964304326367680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547381739474352465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &948006101859677056
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,9 +240,11 @@ GameObject:
   - component: {fileID: 5504490215355443472}
   - component: {fileID: 5087866020492334453}
   - component: {fileID: 2135991799558502005}
+  - component: {fileID: 4534188081026299655}
+  - component: {fileID: 6309209590467933145}
   m_Layer: 0
   m_Name: PanelTapa_GIRO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,6 +368,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &4534188081026299655
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948006101859677056}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &6309209590467933145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948006101859677056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &1540586475083409965
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,9 +414,11 @@ GameObject:
   - component: {fileID: 3880367462327176817}
   - component: {fileID: 5802908772239736748}
   - component: {fileID: 5520401829049637506}
+  - component: {fileID: 139333196274327200}
+  - component: {fileID: 6156072993162220593}
   m_Layer: 0
   m_Name: PanelTapa_CUATROERR
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -468,6 +542,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &139333196274327200
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540586475083409965}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &6156072993162220593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540586475083409965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &1717686832455665406
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,9 +587,11 @@ GameObject:
   - component: {fileID: 8108504062819308508}
   - component: {fileID: 2360658785569753464}
   - component: {fileID: 926614476836199977}
+  - component: {fileID: 1352274797189662172}
+  - component: {fileID: 7068550185996259836}
   m_Layer: 0
   m_Name: WireEndGIROBAJO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -579,6 +689,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &1352274797189662172
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717686832455665406}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &7068550185996259836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717686832455665406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &2807007573419202421
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,9 +734,11 @@ GameObject:
   - component: {fileID: 6671203951600840888}
   - component: {fileID: 8853216541065281944}
   - component: {fileID: 4782411667666041828}
+  - component: {fileID: 6457250483280707137}
+  - component: {fileID: 2510882590627197739}
   m_Layer: 0
   m_Name: WireBeginRECTO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -690,6 +836,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &6457250483280707137
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2807007573419202421}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &2510882590627197739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2807007573419202421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &2985625305075211788
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,9 +882,11 @@ GameObject:
   - component: {fileID: 8750226471112941826}
   - component: {fileID: 615396480646028711}
   - component: {fileID: 6726075352954243803}
+  - component: {fileID: 7025532740324624480}
+  - component: {fileID: 2750730970307498970}
   m_Layer: 0
   m_Name: PanelTapa_TRESERR
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -828,6 +1010,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &7025532740324624480
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2985625305075211788}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &2750730970307498970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2985625305075211788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &3566467246344683327
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,9 +1055,11 @@ GameObject:
   - component: {fileID: 389870258882554195}
   - component: {fileID: 1553009895618951820}
   - component: {fileID: 4623363469088953352}
+  - component: {fileID: 4047299910411587752}
+  - component: {fileID: 1502089993691909778}
   m_Layer: 0
   m_Name: WireEndRECTO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -939,6 +1157,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &4047299910411587752
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566467246344683327}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &1502089993691909778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566467246344683327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &4147359891140551723
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,9 +1203,11 @@ GameObject:
   - component: {fileID: 5843609315489173058}
   - component: {fileID: 8870321635992366408}
   - component: {fileID: 1640101476548162846}
+  - component: {fileID: 4647891676424767765}
+  - component: {fileID: 3313283883939358538}
   m_Layer: 0
   m_Name: PanelTapa_RECTO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1077,6 +1331,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &4647891676424767765
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147359891140551723}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &3313283883939358538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4147359891140551723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &6275770016007421446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,9 +1378,11 @@ GameObject:
   - component: {fileID: 7965265653716686717}
   - component: {fileID: 7097061815167604453}
   - component: {fileID: 2367707049897853131}
+  - component: {fileID: 2279396326659468193}
+  - component: {fileID: 1255056713900289854}
   m_Layer: 0
   m_Name: PanelTapa_TRES
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1242,6 +1532,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &2279396326659468193
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275770016007421446}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &1255056713900289854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275770016007421446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &6727197535447787377
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,9 +1577,11 @@ GameObject:
   - component: {fileID: 2624410926277323686}
   - component: {fileID: 3334123196983411191}
   - component: {fileID: 4680946659955134966}
+  - component: {fileID: 2758713356917473263}
+  - component: {fileID: 8538331300517258681}
   m_Layer: 0
   m_Name: WireEndGIROARRIBA
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1353,6 +1679,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &2758713356917473263
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6727197535447787377}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &8538331300517258681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6727197535447787377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &8124368557462555250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,9 +1724,11 @@ GameObject:
   - component: {fileID: 7113315049331467573}
   - component: {fileID: 9085356431299380515}
   - component: {fileID: 2754067874257574074}
+  - component: {fileID: 879892770573790817}
+  - component: {fileID: 8000290781304494708}
   m_Layer: 0
   m_Name: WireBeginGIROBAJO
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1464,6 +1826,40 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &879892770573790817
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124368557462555250}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &8000290781304494708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8124368557462555250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &8321657956551650795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,9 +1870,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4400329591322459003}
   - component: {fileID: 1853265760224204426}
+  - component: {fileID: 1387495620725605734}
+  - component: {fileID: 6213246398161506696}
   m_Layer: 0
   m_Name: PanelTapa_EMPTY
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1548,6 +1946,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1387495620725605734
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321657956551650795}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &6213246398161506696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8321657956551650795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}
 --- !u!1 &8692624147136695119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,6 +2105,7 @@ MonoBehaviour:
   - {fileID: 9110771857080794391}
   - {fileID: 1717686832455665406}
   - {fileID: 6727197535447787377}
+  _conexions: []
   _cellState: 0
   _cellRotation: 0
 --- !u!114 &3078329304596271588
@@ -1742,9 +2175,11 @@ GameObject:
   - component: {fileID: 6023980075369465448}
   - component: {fileID: 5743913823202505300}
   - component: {fileID: 5251979970253033768}
+  - component: {fileID: 8149074410502914650}
+  - component: {fileID: 5802020750016935933}
   m_Layer: 0
   m_Name: WireBeginGIROARRIBA
-  m_TagString: Untagged
+  m_TagString: CableCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1842,3 +2277,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &8149074410502914650
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110771857080794391}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &5802020750016935933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110771857080794391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd4e798611862f4fa88d79ee021d03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cable: {fileID: 471722183323514543}

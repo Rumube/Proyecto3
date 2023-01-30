@@ -6,23 +6,12 @@ using UnityEngine.UI;
 
 public class CellCable : MonoBehaviour
 {
-    /// <summary>
-    /// PREFABS SIZES:
-    /// 3 = 90 | 1;
-    /// 4 = 75 | 2;
-    /// 5 = 50 | 4;
-    /// 6 = 45 | 5
-    /// 7 = 40 | 5
-    /// 8 = 35 | 6
-    /// 9 = 30 | 8
-    /// 10 = 25 | 10;
-    /// </summary>
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
     public List<GameObject> _cableList = new List<GameObject>();
-    private Image _sprite;
     private Vector2 _cellPos = Vector2.zero;
     private int _pass = 0;
+    public List<GameObject> _conexions = new List<GameObject>();
     public enum CELL_STATE
     {
         EMPTY,
@@ -50,12 +39,6 @@ public class CellCable : MonoBehaviour
     public ROTATION _cellRotation = ROTATION.D0;
     private bool _isInit = false;
     private bool _isFinish = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _sprite = GetComponent<Image>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -141,9 +124,6 @@ public class CellCable : MonoBehaviour
     public void SetNewState(Vector2 pos, bool isInit)
     {
         _pass++;
-        //int isUp = 0;//0 = Misma Altura || 1 = Altura +1 || -1 = Altura -1 
-        //int isRight = 0;//0 = Misma Columna|| 1 = Columna -1 || -1 = Columna +1 
-
         float posX = _cellPos.x - pos.x;
         float posY = _cellPos.y - pos.y;
         GetComponent<Button>().enabled = false;
@@ -160,7 +140,7 @@ public class CellCable : MonoBehaviour
                 }
                 break;
             case -1:
-                if (!isInit)
+                if (isInit)
                 {
                     _cellState = CELL_STATE.INICIOGIROBAJO;
                 }
@@ -189,14 +169,6 @@ public class CellCable : MonoBehaviour
     }
     public void SetSize(int dim)
     {
-        /// 3 = 90 | 1;
-        /// 4 = 75 | 2;
-        /// 5 = 50 | 4;
-        /// 6 = 45 | 5
-        /// 7 = 40 | 5
-        /// 8 = 35 | 6
-        /// 9 = 30 | 8
-        /// 10 = 25 | 10;
         foreach (GameObject currentCable in _cableList)
         {
             switch (dim)
@@ -234,9 +206,6 @@ public class CellCable : MonoBehaviour
     public void SetNewState(Vector2 prePos, Vector2 nextPos)
     {
         _pass++;
-        //int isUp = 0;//0 = Misma Altura || 1 = Altura +1 || -1 = Altura -1 
-        //int isRight = 0;//0 = Misma Columna|| 1 = Columna -1 || -1 = Columna +1 
-
         float prePosX = _cellPos.x - prePos.x;
         float prePosY = _cellPos.y - prePos.y;
 
@@ -268,6 +237,10 @@ public class CellCable : MonoBehaviour
             pos = 0;
         }
         _cellRotation = (ROTATION)pos;
+        foreach (GameObject currentCable in _cableList)
+        {
+            currentCable.SetActive(false);
+        }
     }
 
     #region GETS
@@ -312,6 +285,22 @@ public class CellCable : MonoBehaviour
     public void SetIsFinish(bool isFinish)
     {
         _isFinish = isFinish;
+    }
+    public void SetCollision(GameObject collision)
+    {
+        print("LlegaColisión");
+        if (!_conexions.Contains(collision))
+        {
+            _conexions.Add(collision);
+        }
+    }
+    public void SetExit(GameObject collision)
+    {
+        print("LlegaSalida");
+        if (_conexions.Contains(collision))
+        {
+            _conexions.Remove(collision);
+        }
     }
     #endregion
 }
