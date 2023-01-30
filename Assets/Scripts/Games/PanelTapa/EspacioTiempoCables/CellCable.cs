@@ -187,7 +187,50 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
+    public void SetSize(int dim)
+    {
+        /// 3 = 90 | 1;
+        /// 4 = 75 | 2;
+        /// 5 = 50 | 4;
+        /// 6 = 45 | 5
+        /// 7 = 40 | 5
+        /// 8 = 35 | 6
+        /// 9 = 30 | 8
+        /// 10 = 25 | 10;
+        foreach (GameObject currentCable in _cableList)
+        {
+            switch (dim)
+            {
+                case 3:
+                    currentCable.transform.localScale = new Vector2(1.5f, 1.5f);
+                    break;
+                case 4:
+                    currentCable.transform.localScale = new Vector2(75, 75);
+                    break;
+                case 5:
+                    currentCable.transform.localScale = new Vector2(50, 50);
+                    break;
+                case 6:
+                    currentCable.transform.localScale = new Vector2(45, 45);
+                    break;
+                case 7:
+                    currentCable.transform.localScale = new Vector2(40, 40);
+                    break;
+                case 8:
+                    currentCable.transform.localScale = new Vector2(35, 35);
+                    break;
+                case 9:
+                    currentCable.transform.localScale = new Vector2(30, 30);
+                    break;
+                case 10:
+                    currentCable.transform.localScale = new Vector2(25, 25);
+                    break;
+                default:
+                    break;
+            }
+        }
 
+    }
     public void SetNewState(Vector2 prePos, Vector2 nextPos)
     {
         _pass++;
