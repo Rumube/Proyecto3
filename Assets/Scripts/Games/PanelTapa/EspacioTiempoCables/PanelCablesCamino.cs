@@ -65,6 +65,7 @@ public class PanelCablesCamino : MonoBehaviour
     #region GenerateRandomPoints
     private void GenerateRandomPoints()
     {
+        SetMiddlePoints();
         for (int i = 0; i < _middlePoints; i++)
         {
             Vector2 newPos = Vector2.zero;
@@ -87,6 +88,38 @@ public class PanelCablesCamino : MonoBehaviour
         }
         return result;
     }
+    private void SetMiddlePoints()
+    {
+        switch (_dim)
+        {
+            case 3:
+                _middlePoints = 1;
+                break;
+            case 4:
+                _middlePoints = 2;
+                break;
+            case 5:
+                _middlePoints = 4;
+                break;
+            case 6:
+                _middlePoints = 5;
+                break;
+            case 7:
+                _middlePoints = 5;
+                break;
+            case 8:
+                _middlePoints = 6;
+                break;
+            case 9:
+                _middlePoints = 8;
+                break;
+            case 10:
+                _middlePoints = 10;
+                break;
+            default:
+                break;
+        }
+    }
     #endregion
     #region GeneratePath
     private void GeneratePath()
@@ -103,8 +136,6 @@ public class PanelCablesCamino : MonoBehaviour
 
             foreach (CellCable currentCable in adjacentCells)
             {
-                print("MAX: " + (_cellPath.Count - 1));
-                print("VALUE: " + nextPathValue);
                 float distance = currentCable.GetDistance(_cellPath[nextPathValue].GetComponent<CellCable>().GetCellPos());
                 if (distance < min)
                 {
