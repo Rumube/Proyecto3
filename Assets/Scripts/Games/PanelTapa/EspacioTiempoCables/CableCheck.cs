@@ -22,7 +22,7 @@ public class CableCheck : MonoBehaviour
                 {
                     if (currentCable != preCell)
                     {
-                        finish = CheckConection(_cableData);
+                        finish = currentCable.GetComponent<CableCheck>().CheckConection(_cableData);
                     }
                 }
             }
@@ -30,7 +30,7 @@ public class CableCheck : MonoBehaviour
             {
                 foreach (GameObject currentCable in _cableData._conections)
                 {
-                    finish = CheckConection(_cableData);
+                    finish = currentCable.GetComponent<CableCheck>().CheckConection(_cableData);
                 }
             }
         }

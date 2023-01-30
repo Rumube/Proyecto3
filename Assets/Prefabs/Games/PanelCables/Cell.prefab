@@ -2584,9 +2584,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8692624147136695116}
   - component: {fileID: 4643150740452869631}
-  - component: {fileID: 4287492354435677111}
   - component: {fileID: 471722183323514543}
   - component: {fileID: 3078329304596271588}
+  - component: {fileID: 2686644704661424103}
   m_Layer: 5
   m_Name: Cell
   m_TagString: Untagged
@@ -2635,36 +2635,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8692624147136695119}
   m_CullTransparentMesh: 1
---- !u!114 &4287492354435677111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8692624147136695119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -1883099306, guid: e1340bd45bef6cf439cdb64e4eebecf5, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &471722183323514543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,7 +2669,7 @@ MonoBehaviour:
   - {fileID: 9110771857080794391}
   - {fileID: 1717686832455665406}
   - {fileID: 6727197535447787377}
-  _conexions: []
+  _conections: []
   _cellState: 0
   _cellRotation: 0
 --- !u!114 &3078329304596271588
@@ -2742,7 +2712,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 4287492354435677111}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2758,6 +2728,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2686644704661424103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692624147136695119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c106ea44c808c1746889f6c66c9abcb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9110771857080794391
 GameObject:
   m_ObjectHideFlags: 0

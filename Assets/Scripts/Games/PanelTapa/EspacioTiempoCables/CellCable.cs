@@ -301,7 +301,6 @@ public class CellCable : MonoBehaviour
     }
     public void SetCollision(GameObject collision)
     {
-        print("LlegaColisión");
         if (!_conections.Contains(collision))
         {
             _conections.Add(collision);
