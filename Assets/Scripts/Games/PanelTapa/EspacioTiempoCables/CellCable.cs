@@ -174,10 +174,10 @@ public class CellCable : MonoBehaviour
             switch (dim)
             {
                 case 3:
-                    currentCable.transform.localScale = new Vector2(1.5f, 1.5f);
+                    currentCable.transform.localScale = new Vector2(60, 60);
                     break;
                 case 4:
-                    currentCable.transform.localScale = new Vector2(75, 75);
+                    currentCable.transform.localScale = new Vector2(65, 65);
                     break;
                 case 5:
                     currentCable.transform.localScale = new Vector2(50, 50);
@@ -230,6 +230,12 @@ public class CellCable : MonoBehaviour
     }
     public void RotateCell()
     {
+        foreach (GameObject currentCable in _conexions)
+        {
+            currentCable.GetComponent<CellCable>().ClearConexions();
+        }
+        ClearConexions();
+
         int pos = (int)_cellRotation;
         pos++;
         if (pos > Enum.GetValues(typeof(ROTATION)).Length - 1)
@@ -242,7 +248,10 @@ public class CellCable : MonoBehaviour
             currentCable.SetActive(false);
         }
     }
-
+    public void ClearConexions()
+    {
+        _conexions.Clear();
+    }
     #region GETS
     public CELL_STATE GetCellState()
     {
