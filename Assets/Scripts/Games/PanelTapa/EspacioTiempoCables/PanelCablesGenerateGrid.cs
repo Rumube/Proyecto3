@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PanelCablesGenerateGrid : MonoBehaviour
 {
     [Header("Properties")]
+    [Range(4,10)]
     [Tooltip("Grid dimensions 4 = 4x4")]
     public int _dim = 0;
     [Header("References")]

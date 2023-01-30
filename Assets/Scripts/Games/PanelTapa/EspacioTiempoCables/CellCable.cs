@@ -11,7 +11,7 @@ public class CellCable : MonoBehaviour
     public List<GameObject> _cableList = new List<GameObject>();
     private Vector2 _cellPos = Vector2.zero;
     private int _pass = 0;
-    public List<GameObject> _conexions = new List<GameObject>();
+    public List<GameObject> _conections = new List<GameObject>();
     public enum CELL_STATE
     {
         EMPTY,
@@ -226,11 +226,15 @@ public class CellCable : MonoBehaviour
         {
             _cellState = CELL_STATE.TRES;
         }
-
+        SetRandomRotation();
+    }
+    private void SetRandomRotation()
+    {
+        _cellRotation = (ROTATION)UnityEngine.Random.Range(0, 3);
     }
     public void RotateCell()
     {
-        foreach (GameObject currentCable in _conexions)
+        foreach (GameObject currentCable in _conections)
         {
             currentCable.GetComponent<CellCable>().ClearConexions();
         }
@@ -250,7 +254,7 @@ public class CellCable : MonoBehaviour
     }
     public void ClearConexions()
     {
-        _conexions.Clear();
+        _conections.Clear();
     }
     #region GETS
     public CELL_STATE GetCellState()
@@ -298,17 +302,17 @@ public class CellCable : MonoBehaviour
     public void SetCollision(GameObject collision)
     {
         print("LlegaColisión");
-        if (!_conexions.Contains(collision))
+        if (!_conections.Contains(collision))
         {
-            _conexions.Add(collision);
+            _conections.Add(collision);
         }
     }
     public void SetExit(GameObject collision)
     {
         print("LlegaSalida");
-        if (_conexions.Contains(collision))
+        if (_conections.Contains(collision))
         {
-            _conexions.Remove(collision);
+            _conections.Remove(collision);
         }
     }
     #endregion

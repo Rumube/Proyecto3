@@ -10,7 +10,7 @@ public class PanelCablesCamino : MonoBehaviour
     public GameObject _initPos;
     public GameObject _finishPos;
     public List<GameObject> _cellPath = new List<GameObject>();
-    public int _middlePoints = 0;
+    private int _middlePoints = 0;
     public List<GameObject> _correctPath = new List<GameObject>();
     [Header("GeneratePathValues")]
     private CellCable _currentCell = null;
@@ -32,17 +32,12 @@ public class PanelCablesCamino : MonoBehaviour
     public void GenerateNewPaht(int dim)
     {
         _dim = dim;
-        //GENERAR INIT AND FINISH
         GenerateStartAndFinishPos();
-        //GENERAR PUNTOS INTERMEDIOS
         GenerateRandomPoints();
-        //GENERAR CAMINO
         GeneratePath();
-        //SETEAR DIRECIONES Y ROTACIONES
         SetDirection();
         //AÑADIR CAMINOS FALSOS
         //RANDOMIZAR ROTACIONES
-        //CAMBIAR NOMBRES
         ChangeNames();
     }
     #region GenerateStartAndFinishPos
@@ -230,4 +225,8 @@ public class PanelCablesCamino : MonoBehaviour
         }
     }
     #endregion
+    public void CheckPath()
+    {
+
+    }
 }
