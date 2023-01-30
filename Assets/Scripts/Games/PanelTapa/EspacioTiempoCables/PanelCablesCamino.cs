@@ -227,13 +227,18 @@ public class PanelCablesCamino : MonoBehaviour
     #endregion
     public void CheckPath()
     {
-        if (_correctPath[0].GetComponent<CableCheck>().CheckConection())
-        {
-            print("Correcto");
-        }
-        else
-        {
-            print("Error!");
-        }
+        _correctPath[0].GetComponent<CableCheck>().CheckConection();
+        //if ()
+        //{
+        //    print("Correcto");
+        //}
+        //else
+        //{
+        //    print("Error!");
+        //}
+    }
+    public void FinishCheck(bool result)
+    {
+
     }
 }

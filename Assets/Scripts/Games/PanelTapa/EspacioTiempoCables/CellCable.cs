@@ -306,13 +306,5 @@ public class CellCable : MonoBehaviour
             _conections.Add(collision);
         }
     }
-    public void SetExit(GameObject collision)
-    {
-        print("LlegaSalida");
-        if (_conections.Contains(collision))
-        {
-            _conections.Remove(collision);
-        }
-    }
     #endregion
 }

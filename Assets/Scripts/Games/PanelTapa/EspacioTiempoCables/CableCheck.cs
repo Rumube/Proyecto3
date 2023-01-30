@@ -5,13 +5,14 @@ using UnityEngine;
 public class CableCheck : MonoBehaviour
 {
     private CellCable _cableData = null;
+    private bool _checked = false;
     // Start is called before the first frame update
     void Start()
     {
         _cableData = GetComponent<CellCable>();
     }
 
-    public bool CheckConection(CellCable preCell = null)
+    public void CheckConection(PanelCablesCamino path, CellCable preCell = null)
     {
         bool finish = false;
         if (!_cableData.GetIsFinish())
@@ -20,9 +21,10 @@ public class CableCheck : MonoBehaviour
             {
                 foreach (GameObject currentCable in _cableData._conections)
                 {
-                    if (currentCable != preCell)
+                    if (currentCable != preCell || preCell.GetComponent<CableCheck>().GetChecked())
                     {
-                        finish = currentCable.GetComponent<CableCheck>().CheckConection(_cableData);
+                        _checked = true;
+                        currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
                     }
                 }
             }
@@ -30,14 +32,21 @@ public class CableCheck : MonoBehaviour
             {
                 foreach (GameObject currentCable in _cableData._conections)
                 {
-                    finish = currentCable.GetComponent<CableCheck>().CheckConection(_cableData);
+                    currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
                 }
             }
         }
         else
         {
-            return true;
+            finish = true;
         }
-        return finish;
+        if (finish)
+        {
+            path.FinishCheck(finish);
+        }
+    }
+    public bool GetChecked()
+    {
+        return _checked;
     }
 }
