@@ -84,6 +84,8 @@ public class DragableItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "DragParent")
         {
+            print("Enter: " + collision.name);
+
             if (collision.gameObject.GetComponent<DragParentPropieties>().canAddItem(gameObject))
             {
                 if(_dndManager == null)
@@ -101,6 +103,8 @@ public class DragableItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "DragParent")
         {
+            print("Exit: " + collision.name);
+
             collision.gameObject.GetComponent<DragParentPropieties>().removeItem(gameObject);
             _dndManager.OnItemExit();
             SetInitialTarget();
