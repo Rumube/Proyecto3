@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CellCable : MonoBehaviour
+public class CellGear : MonoBehaviour
 {
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();

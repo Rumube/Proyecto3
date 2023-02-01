@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CableCollisions : MonoBehaviour
+public class GearCollisions : MonoBehaviour
 {
     public CellCable _cable;
     #region COLLISION

@@ -227,7 +227,7 @@ public class PanelGearPath : MonoBehaviour
     #endregion
     public void CheckPath()
     {
-        _correctPath[0].GetComponent<CableCheck>().CheckConection(this);
+        //_correctPath[0].GetComponent<CableCheck>().CheckConection(this);
     }
     public void FinishCheck(bool result)
     {
