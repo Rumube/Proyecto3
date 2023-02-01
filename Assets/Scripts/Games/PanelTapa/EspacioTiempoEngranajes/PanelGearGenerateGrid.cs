@@ -46,9 +46,9 @@ public class PanelGearGenerateGrid : MonoBehaviour
             {
                 GameObject newCell = Instantiate(_cell, _gridParent.transform);
                 newCell.name = "Cell_" + i + "x" + j;
-                newCell.GetComponent<CellCable>().SetSize(_dim);
+                newCell.GetComponent<CellGear>().SetSize(_dim);
                 _cellArr[i, j] = newCell;
-                newCell.GetComponent<CellCable>().SetCellPos(new Vector2(i, j));
+                newCell.GetComponent<CellGear>().SetCellPos(new Vector2(i, j));
             }
         }
         ReSizeCells();
@@ -66,7 +66,7 @@ public class PanelGearGenerateGrid : MonoBehaviour
     {
         DeleteCells();
         GenerateGrid();
-        GetComponent<PanelCablesCamino>().GenerateNewPaht(_dim);
+        GetComponent<PanelGearPath>().GenerateNewPaht(_dim);
     }
     private void DeleteCells()
     {

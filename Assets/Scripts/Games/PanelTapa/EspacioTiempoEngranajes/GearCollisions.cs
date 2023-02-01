@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GearCollisions : MonoBehaviour
 {
-    public CellCable _cable;
+    public CellGear _cable;
     #region COLLISION
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "CableCollider")
+        if (collision.tag == "GearCollider")
         {
-            _cable.SetCollision(collision.GetComponent<CableCollisions>()._cable.gameObject);
+            _cable.SetCollision(collision.GetComponent<GearCollisions>()._cable.gameObject);
         }
     }
     #endregion

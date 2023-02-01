@@ -13,7 +13,7 @@ public class PanelGearPath : MonoBehaviour
     private int _middlePoints = 0;
     public List<GameObject> _correctPath = new List<GameObject>();
     [Header("GeneratePathValues")]
-    private CellCable _currentCell = null;
+    private CellGear _currentCell = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,15 +45,15 @@ public class PanelGearPath : MonoBehaviour
     {
         if (_initPos != null)
         {
-            _initPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.EMPTY);
-            _finishPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.EMPTY);
+            _initPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.EMPTY);
+            _finishPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.EMPTY);
         }
-        _initPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), 0));
-        _finishPos = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), _dim - 1));
-        _initPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.RECTO);
-        _finishPos.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.CUATRO);
-        _initPos.GetComponent<CellCable>().SetIsInit(true);
-        _finishPos.GetComponent<CellCable>().SetIsFinish(true);
+        _initPos = GetComponent<PanelGearGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), 0));
+        _finishPos = GetComponent<PanelGearGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), _dim - 1));
+        _initPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.RECTO);
+        _finishPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.CUATRO);
+        _initPos.GetComponent<CellGear>().SetIsInit(true);
+        _finishPos.GetComponent<CellGear>().SetIsFinish(true);
         _cellPath.Add(_initPos);
     }
     #endregion
@@ -68,16 +68,16 @@ public class PanelGearPath : MonoBehaviour
             {
                 newPos = new Vector2(Random.Range(0, _dim - 1), Random.Range(0, _dim - 1));
             } while (!CheckIfIsEmpty(newPos));
-            GameObject newCell = GetComponent<PanelCablesGenerateGrid>().GetCell(newPos);
+            GameObject newCell = GetComponent<PanelGearGenerateGrid>().GetCell(newPos);
             _cellPath.Add(newCell);
-            newCell.GetComponent<CellCable>().SetCellState(CellCable.CELL_STATE.RECTO);
+            newCell.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.RECTO);
         }
         _cellPath.Add(_finishPos);
     }
     private bool CheckIfIsEmpty(Vector2 pos)
     {
         bool result = false;
-        if (GetComponent<PanelCablesGenerateGrid>().GetCell(pos).GetComponent<CellCable>().GetCellState() == CellCable.CELL_STATE.EMPTY)
+        if (GetComponent<PanelGearGenerateGrid>().GetCell(pos).GetComponent<CellGear>().GetCellState() == CellGear.CELL_STATE.EMPTY)
         {
             result = true;
         }
@@ -120,56 +120,56 @@ public class PanelGearPath : MonoBehaviour
     private void GeneratePath()
     {
         int nextPathValue = 1;
-        _currentCell = _initPos.GetComponent<CellCable>();
+        _currentCell = _initPos.GetComponent<CellGear>();
         _correctPath.Add(_currentCell.gameObject);
         do
         {
-            List<CellCable> adjacentCells = GetAdjacentCells(_currentCell);
+            List<CellGear> adjacentCells = GetAdjacentCells(_currentCell);
 
             float min = 9000f;
-            CellCable closeCell = null;
+            CellGear closeCell = null;
 
-            foreach (CellCable currentCable in adjacentCells)
+            foreach (CellGear currentGear in adjacentCells)
             {
-                float distance = currentCable.GetDistance(_cellPath[nextPathValue].GetComponent<CellCable>().GetCellPos());
+                float distance = currentGear.GetDistance(_cellPath[nextPathValue].GetComponent<CellGear>().GetCellPos());
                 if (distance < min)
                 {
-                    closeCell = currentCable;
+                    closeCell = currentGear;
                     min = distance;
                 }
             }
-            closeCell.SetCellState(CellCable.CELL_STATE.RECTO);
+            closeCell.SetCellState(CellGear.CELL_STATE.RECTO);
             _currentCell = closeCell;
             _correctPath.Add(_currentCell.gameObject);
-            if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>() && nextPathValue < _cellPath.Count - 1)
+            if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellGear>() && nextPathValue < _cellPath.Count - 1)
             {
                 nextPathValue++;
             }
 
-        } while (_currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>());
+        } while (_currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellGear>());
     }
-    private List<CellCable> GetAdjacentCells(CellCable cell)
+    private List<CellGear> GetAdjacentCells(CellGear cell)
     {
-        List<CellCable> adjacentCells = new List<CellCable>();
+        List<CellGear> adjacentCells = new List<CellGear>();
         Vector2 upCell = new Vector2(cell.GetCellPos().x - 1, cell.GetCellPos().y);
         Vector2 downCell = new Vector2(cell.GetCellPos().x + 1, cell.GetCellPos().y);
         Vector2 leftCell = new Vector2(cell.GetCellPos().x, cell.GetCellPos().y - 1);
         Vector2 rightCell = new Vector2(cell.GetCellPos().x, cell.GetCellPos().y + 1);
         if (ExistsInGrid(upCell))
         {
-            adjacentCells.Add(GetComponent<PanelCablesGenerateGrid>().GetCell(upCell).GetComponent<CellCable>());
+            adjacentCells.Add(GetComponent<PanelGearGenerateGrid>().GetCell(upCell).GetComponent<CellGear>());
         }
         if (ExistsInGrid(downCell))
         {
-            adjacentCells.Add(GetComponent<PanelCablesGenerateGrid>().GetCell(downCell).GetComponent<CellCable>());
+            adjacentCells.Add(GetComponent<PanelGearGenerateGrid>().GetCell(downCell).GetComponent<CellGear>());
         }
         if (ExistsInGrid(leftCell))
         {
-            adjacentCells.Add(GetComponent<PanelCablesGenerateGrid>().GetCell(leftCell).GetComponent<CellCable>());
+            adjacentCells.Add(GetComponent<PanelGearGenerateGrid>().GetCell(leftCell).GetComponent<CellGear>());
         }
         if (ExistsInGrid(rightCell))
         {
-            adjacentCells.Add(GetComponent<PanelCablesGenerateGrid>().GetCell(rightCell).GetComponent<CellCable>());
+            adjacentCells.Add(GetComponent<PanelGearGenerateGrid>().GetCell(rightCell).GetComponent<CellGear>());
         }
         return adjacentCells;
     }
@@ -190,17 +190,17 @@ public class PanelGearPath : MonoBehaviour
     {
         for (int i = 0; i < _correctPath.Count; i++)
         {
-            if (_correctPath[i].GetComponent<CellCable>().GetIsInit())
+            if (_correctPath[i].GetComponent<CellGear>().GetIsInit())
             {
-                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i + 1].GetComponent<CellCable>().GetCellPos(), true);
+                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i + 1].GetComponent<CellGear>().GetCellPos(), true);
             }
-            else if (_correctPath[i].GetComponent<CellCable>().GetIsFinish())
+            else if (_correctPath[i].GetComponent<CellGear>().GetIsFinish())
             {
-                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos(), false);
+                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i - 1].GetComponent<CellGear>().GetCellPos(), false);
             }
             else
             {
-                _correctPath[i].GetComponent<CellCable>().SetNewState(_correctPath[i - 1].GetComponent<CellCable>().GetCellPos(), _correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
+                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i - 1].GetComponent<CellGear>().GetCellPos(), _correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
             }
         }
     }
@@ -227,7 +227,7 @@ public class PanelGearPath : MonoBehaviour
     #endregion
     public void CheckPath()
     {
-        //_correctPath[0].GetComponent<CableCheck>().CheckConection(this);
+        _correctPath[0].GetComponent<GearCheck>().CheckConection(this);
     }
     public void FinishCheck(bool result)
     {
@@ -245,7 +245,7 @@ public class PanelGearPath : MonoBehaviour
     {
         foreach (GameObject currentCable in _cellPath)
         {
-            currentCable.GetComponent<CableCheck>().SetCheked(false);
+            currentCable.GetComponent<GearCheck>().SetCheked(false);
         }
     }
 }

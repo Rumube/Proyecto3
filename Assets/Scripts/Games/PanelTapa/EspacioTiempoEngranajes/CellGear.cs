@@ -8,7 +8,7 @@ public class CellGear : MonoBehaviour
 {
     [Header("Referenes")]
     public List<Sprite> _spriteList = new List<Sprite>();
-    public List<GameObject> _cableList = new List<GameObject>();
+    public List<GameObject> _gearList = new List<GameObject>();
     private Vector2 _cellPos = Vector2.zero;
     private int _pass = 0;
     public List<GameObject> _conections = new List<GameObject>();
@@ -51,7 +51,7 @@ public class CellGear : MonoBehaviour
     /// </summary>
     private void SetSprite()
     {
-        foreach (GameObject currentCable in _cableList)
+        foreach (GameObject currentCable in _gearList)
         {
             currentCable.SetActive(false);
         }
@@ -59,43 +59,43 @@ public class CellGear : MonoBehaviour
         switch (_cellState)
         {
             case CELL_STATE.EMPTY:
-                _cableList[0].SetActive(true);
+                _gearList[0].SetActive(true);
                 break;
             case CELL_STATE.RECTO:
-                _cableList[1].SetActive(true);
+                _gearList[1].SetActive(true);
                 break;
             case CELL_STATE.GIRO:
-                _cableList[2].SetActive(true);
+                _gearList[2].SetActive(true);
                 break;
             case CELL_STATE.TRES:
-                _cableList[3].SetActive(true);
+                _gearList[3].SetActive(true);
                 break;
             case CELL_STATE.CUATRO:
-                _cableList[4].SetActive(true);
+                _gearList[4].SetActive(true);
                 break;
             case CELL_STATE.TRESERR:
-                _cableList[5].SetActive(true);
+                _gearList[5].SetActive(true);
                 break;
             case CELL_STATE.CUATROERR:
-                _cableList[6].SetActive(true);
+                _gearList[6].SetActive(true);
                 break;
             case CELL_STATE.INICIORECTO:
-                _cableList[7].SetActive(true);
+                _gearList[7].SetActive(true);
                 break;
             case CELL_STATE.FINRECTO:
-                _cableList[8].SetActive(true);
+                _gearList[8].SetActive(true);
                 break;
             case CELL_STATE.INICIOGIROBAJO:
-                _cableList[9].SetActive(true);
+                _gearList[9].SetActive(true);
                 break;
             case CELL_STATE.INICIOGIROARRI:
-                _cableList[10].SetActive(true);
+                _gearList[10].SetActive(true);
                 break;
             case CELL_STATE.FINGIROBAJO:
-                _cableList[11].SetActive(true);
+                _gearList[11].SetActive(true);
                 break;
             case CELL_STATE.FINGIROARRI:
-                _cableList[12].SetActive(true);
+                _gearList[12].SetActive(true);
                 break;
             default:
                 break;
@@ -169,33 +169,33 @@ public class CellGear : MonoBehaviour
     }
     public void SetSize(int dim)
     {
-        foreach (GameObject currentCable in _cableList)
+        foreach (GameObject currentGear in _gearList)
         {
             switch (dim)
             {
                 case 3:
-                    currentCable.transform.localScale = new Vector2(60, 60);
+                    currentGear.transform.localScale = new Vector2(60, 60);
                     break;
                 case 4:
-                    currentCable.transform.localScale = new Vector2(65, 65);
+                    currentGear.transform.localScale = new Vector2(65, 65);
                     break;
                 case 5:
-                    currentCable.transform.localScale = new Vector2(50, 50);
+                    currentGear.transform.localScale = new Vector2(50, 50);
                     break;
                 case 6:
-                    currentCable.transform.localScale = new Vector2(45, 45);
+                    currentGear.transform.localScale = new Vector2(45, 45);
                     break;
                 case 7:
-                    currentCable.transform.localScale = new Vector2(40, 40);
+                    currentGear.transform.localScale = new Vector2(40, 40);
                     break;
                 case 8:
-                    currentCable.transform.localScale = new Vector2(35, 35);
+                    currentGear.transform.localScale = new Vector2(35, 35);
                     break;
                 case 9:
-                    currentCable.transform.localScale = new Vector2(30, 30);
+                    currentGear.transform.localScale = new Vector2(30, 30);
                     break;
                 case 10:
-                    currentCable.transform.localScale = new Vector2(25, 25);
+                    currentGear.transform.localScale = new Vector2(25, 25);
                     break;
                 default:
                     break;
@@ -247,9 +247,9 @@ public class CellGear : MonoBehaviour
             pos = 0;
         }
         _cellRotation = (ROTATION)pos;
-        foreach (GameObject currentCable in _cableList)
+        foreach (GameObject currentGear in _gearList)
         {
-            currentCable.SetActive(false);
+            currentGear.SetActive(false);
         }
     }
     public void ClearConexions()
