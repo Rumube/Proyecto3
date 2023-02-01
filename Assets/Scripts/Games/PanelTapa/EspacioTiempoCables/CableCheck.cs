@@ -17,34 +17,33 @@ public class CableCheck : MonoBehaviour
         //TODO: INTENTAR GUARDAR DONDE HAY MÁS CONEXIONES PARA VOLVER MÁS TARDE SI NO HAY CAMINOS
         //PROBAR ALGORITMO A*
         bool finish = false;
-        if (!_checked)
+        
+        if (!_cableData.GetIsFinish())
         {
-            if (!_cableData.GetIsFinish())
+            foreach (GameObject currentCable in _cableData._conections)
             {
-                if (preCell != null)
+                print("P: " + _cableData.name);
+                 //|| preCell.GetComponent<CableCheck>().GetChecked()
+                if (currentCable != preCell)
                 {
-                    foreach (GameObject currentCable in _cableData._conections)
-                    {
-                        if (currentCable != preCell || preCell.GetComponent<CableCheck>().GetChecked())
-                        {
-                            _checked = true;
-                            currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (GameObject currentCable in _cableData._conections)
-                    {
-                        _checked = true;
-                        currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
-                    }
+                    currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
                 }
             }
-            else
-            {
-                finish = true;
-            }
+            //if (preCell != null)
+            //{//OTROS
+
+            //}
+            //else
+            //{//INICIO
+            //    foreach (GameObject currentCable in _cableData._conections)
+            //    {
+            //        currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
+            //    }
+            //}
+        }
+        else
+        {//FINAL
+            finish = true;
         }
         path.FinishCheck(finish);
     }

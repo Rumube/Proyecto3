@@ -40,6 +40,12 @@ public class CellCable : MonoBehaviour
     private bool _isInit = false;
     private bool _isFinish = false;
 
+    [Header("Pathfinding")]
+    public int _gCost = 0;
+    public int _hCost = 0;
+    public int fCost = 0;
+    public CellCable _cameFromCell;
+
     // Update is called once per frame
     void Update()
     {
