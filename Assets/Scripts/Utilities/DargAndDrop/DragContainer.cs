@@ -27,8 +27,8 @@ public class DragContainer : MonoBehaviour
     public IEnumerator GenerateParents(List<GEOMETRY_GEARS> geometry)
     {
         yield return new WaitForSeconds(0.5f);
-        float distPos = 0.5f;
-        float distNeg = -0.5f;
+        float distPos = 1;
+        float distNeg = -1;
         bool isPar = false;
         if(geometry.Count%2 == 0)
         {
@@ -39,7 +39,7 @@ public class DragContainer : MonoBehaviour
             for (int i = 0; i < geometry.Count; i++)
             {
                 GameObject newParent = Instantiate(_parentGenerator, transform);
-                newParent.transform.localScale = new Vector2(0.3f, 0.3f);
+                newParent.transform.localScale = new Vector2(0.5f, 0.5f);
 
                 if (i == 0)
                 {
@@ -50,12 +50,12 @@ public class DragContainer : MonoBehaviour
                 }
                 else if (i % 2 == 0)
                 {
-                    distPos += 1;
+                    distPos += 2;
                     newParent.transform.localPosition = new Vector2(distPos, 2);
                 }
                 else if (i % 2 != 0)
                 {
-                    distNeg -= 1;
+                    distNeg -= 2;
                     newParent.transform.localPosition = new Vector2(distNeg, 2);
                 }
                 newParent.GetComponent<DragParentGeneration>().SetGeometryGenerated(geometry[i]);
@@ -67,17 +67,17 @@ public class DragContainer : MonoBehaviour
             for (int i = 0; i < geometry.Count; i++)
             {
                 GameObject newParent = Instantiate(_parentGenerator, transform);
-                newParent.transform.localScale = new Vector2(0.3f, 0.3f);
+                newParent.transform.localScale = new Vector2(0.5f, 0.5f);
                 if(i == 0)
                 {
                     newParent.transform.localPosition = new Vector2(0, 2);
                 }else if (i % 2 == 0)
                 {
-                    distPos += 1;
+                    distPos += 2;
                     newParent.transform.localPosition = new Vector2(distPos, 2);
                 }else if(i%2 != 0)
                 {
-                    distNeg -= 1;
+                    distNeg -= 2;
                     newParent.transform.localPosition = new Vector2(distNeg, 2);
                 }
                 newParent.GetComponent<DragParentGeneration>().SetGeometryGenerated(geometry[i]);
