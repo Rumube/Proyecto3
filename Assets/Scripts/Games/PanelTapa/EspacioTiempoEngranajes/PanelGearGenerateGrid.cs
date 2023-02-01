@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelCablesGenerateGrid : MonoBehaviour
+public class PanelGearGenerateGrid : MonoBehaviour
 {
     [Header("Properties")]
     [Range(4,10)]
