@@ -86,7 +86,19 @@ public class DragManager : MonoBehaviour
         if (_itemDraging != null)
         {
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.pos);
-            _itemDraging.transform.position = new Vector3(touchPos.x, touchPos.y, 0);
+            Vector3 newPos = Vector3.zero;
+            //SET X
+            if (_itemDraging.GetComponent<DragableItem>()._onlyVertical)
+            {
+                newPos = new Vector3(_itemDraging.transform.position.x, touchPos.y, 0);
+            }
+            else
+            {
+                newPos = new Vector3(touchPos.x, touchPos.y, 0);
+            }
+            //SET Y
+
+            _itemDraging.transform.position = newPos;
         }
     }
     /// <summary>
@@ -108,6 +120,7 @@ public class DragManager : MonoBehaviour
                 }
                 else
                 {
+                    _itemDraging.transform.parent = target;
                     _itemDraging.transform.position = target.position;
                     _itemDraging = null;
                 }
