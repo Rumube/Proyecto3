@@ -9,11 +9,6 @@ public class DragParentGeneration : DragParentPropieties
     public DragManager _dndManager;
     public DragContainer.GEOMETRY_GEARS _generatedGeometry = DragContainer.GEOMETRY_GEARS.circulo;
     public List<Sprite> _sprite = new List<Sprite>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -49,7 +44,6 @@ public class DragParentGeneration : DragParentPropieties
                 default:
                     break;
             }
-
         }
     }
 
