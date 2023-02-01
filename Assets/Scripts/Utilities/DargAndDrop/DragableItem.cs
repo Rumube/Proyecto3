@@ -12,10 +12,12 @@ public class DragableItem : MonoBehaviour
     private bool _isReturning = false;
     private float _returnVelocity = 0f;
     private bool _isCreated = false;
+    [Header("DragConfiguration")]
+    public bool _onlyVertical;
 
     private void Start()
     {
-        _target = _initialParent;
+        SetInitialTarget();
         if(_initialParent == null)
         {
             _initialParent = transform.GetComponentInParent<Transform>();
@@ -63,7 +65,7 @@ public class DragableItem : MonoBehaviour
     {
         _isCreated = true;
         _initialParent = initialParent;
-        _target = initialParent;
+        SetInitialTarget();
     }
     public void SetNewTarget(Transform newTrasnform)
     {
@@ -84,6 +86,10 @@ public class DragableItem : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<DragParentPropieties>().canAddItem(gameObject))
             {
+                if(_dndManager == null)
+                {
+                    _dndManager = GameObject.FindGameObjectWithTag("DNDManager").GetComponent<DragManager>();
+                }
                 _dndManager.OnItemEnter(collision);
                 SetNewTarget(collision.transform);
             }
@@ -106,6 +112,7 @@ public class DragableItem : MonoBehaviour
     }
     public Transform GetTarget()
     {
+        print("GET TARGET:" + _target);
         return _target;
     }
     /// <summary>
@@ -113,7 +120,7 @@ public class DragableItem : MonoBehaviour
     /// </summary>
     public void SetInitialTarget()
     {
-        _target = _initialParent;
+        SetNewTarget(_initialParent);
     }
     private void OnBecameInvisible()
     {

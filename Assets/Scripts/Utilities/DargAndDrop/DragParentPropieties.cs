@@ -25,6 +25,10 @@ public class DragParentPropieties : MonoBehaviour
         {
             _currentTransform = gameObjectToCheck;
         }
+        else if(_goodGameObjects.Contains(gameObjectToCheck))
+        {
+            _currentTransform = gameObjectToCheck;
+        }
         return _canParentNewItems;
     }
     /// <summary>
