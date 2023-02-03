@@ -15,36 +15,20 @@ public class CellGear : MonoBehaviour
     public enum CELL_STATE
     {
         EMPTY,
-        RECTO,
-        GIRO,
-        TRES,
-        CUATRO,
-        TRESERR,
-        CUATROERR,
-        INICIORECTO,
-        FINRECTO,
-        INICIOGIROBAJO,
-        INICIOGIROARRI,
-        FINGIROBAJO,
-        FINGIROARRI
+        CIRCLE,
+        TRIANGLE,
+        SQUARE,
+
     }
-    public enum ROTATION
-    {
-        D0,
-        D90,
-        D180,
-        D270
-    }
+
     public CELL_STATE _cellState = CELL_STATE.EMPTY;
-    public ROTATION _cellRotation = ROTATION.D0;
-    private bool _isInit = false;
-    private bool _isFinish = false;
+
 
     // Update is called once per frame
     void Update()
     {
         SetSprite();
-        SetRotation();
+
     }
     /// <summary>
     /// Chenge the sprite using <see cref="_cellState"/> value
@@ -61,111 +45,26 @@ public class CellGear : MonoBehaviour
             case CELL_STATE.EMPTY:
                 _gearList[0].SetActive(true);
                 break;
-            case CELL_STATE.RECTO:
+            case CELL_STATE.TRIANGLE:
                 _gearList[1].SetActive(true);
                 break;
-            case CELL_STATE.GIRO:
+            case CELL_STATE.CIRCLE:
                 _gearList[2].SetActive(true);
                 break;
-            case CELL_STATE.TRES:
+            case CELL_STATE.SQUARE:
                 _gearList[3].SetActive(true);
                 break;
-            case CELL_STATE.CUATRO:
-                _gearList[4].SetActive(true);
-                break;
-            case CELL_STATE.TRESERR:
-                _gearList[5].SetActive(true);
-                break;
-            case CELL_STATE.CUATROERR:
-                _gearList[6].SetActive(true);
-                break;
-            case CELL_STATE.INICIORECTO:
-                _gearList[7].SetActive(true);
-                break;
-            case CELL_STATE.FINRECTO:
-                _gearList[8].SetActive(true);
-                break;
-            case CELL_STATE.INICIOGIROBAJO:
-                _gearList[9].SetActive(true);
-                break;
-            case CELL_STATE.INICIOGIROARRI:
-                _gearList[10].SetActive(true);
-                break;
-            case CELL_STATE.FINGIROBAJO:
-                _gearList[11].SetActive(true);
-                break;
-            case CELL_STATE.FINGIROARRI:
-                _gearList[12].SetActive(true);
-                break;
             default:
                 break;
         }
     }
-    private void SetRotation()
-    {
-        switch (_cellRotation)
-        {
-            case ROTATION.D0:
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case ROTATION.D90:
-                transform.rotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case ROTATION.D180:
-                transform.rotation = Quaternion.Euler(0, 0, 180);
-                break;
-            case ROTATION.D270:
-                transform.rotation = Quaternion.Euler(0, 0, 270);
-                break;
-            default:
-                break;
-        }
-    }
+
     public void SetNewState(Vector2 pos, bool isInit)
     {
         _pass++;
         float posX = _cellPos.x - pos.x;
         float posY = _cellPos.y - pos.y;
-        GetComponent<Button>().enabled = false;
-        switch (posX)
-        {
-            case 1:
-                if (isInit)
-                {
-                    _cellState = CELL_STATE.INICIOGIROARRI;
-                }
-                else
-                {
-                    _cellState = CELL_STATE.FINGIROARRI;
-                }
-                break;
-            case -1:
-                if (isInit)
-                {
-                    _cellState = CELL_STATE.INICIOGIROBAJO;
-                }
-                else
-                {
-                    _cellState = CELL_STATE.FINGIROBAJO;
-                }
-                break;
-            default:
-                break;
-        }
-        switch (posY)
-        {
-            case 1:
-            case -1:
-                if (isInit)
-                {
-                    _cellState = CELL_STATE.INICIORECTO;
-                }
-                else
-                {
-                    _cellState = CELL_STATE.FINRECTO;
-                }
-                break;
-        }
+     
     }
     public void SetSize(int dim)
     {
@@ -215,43 +114,21 @@ public class CellGear : MonoBehaviour
         {
             if (prePos.x != nextPos.x && prePos.y != nextPos.y)
             {
-                _cellState = CELL_STATE.GIRO;
+                _cellState = CELL_STATE.TRIANGLE;//PREGUNTAR A RUBEN SI CON ESTO PUEDO HACER QUE LOS DE ALREDEDOR COMPLETEN LA FIGURA
             }
             else
             {
-                _cellState = CELL_STATE.RECTO;
+                _cellState = CELL_STATE.SQUARE;
             }
         }
         else
         {
-            _cellState = CELL_STATE.TRES;
+            _cellState = CELL_STATE.CIRCLE;
         }
-        SetRandomRotation();
-    }
-    private void SetRandomRotation()
-    {
-        _cellRotation = (ROTATION)UnityEngine.Random.Range(0, 3);
-    }
-    public void RotateCell()
-    {
-        foreach (GameObject currentCable in _conections)
-        {
-            currentCable.GetComponent<CellCable>().ClearConexions();
-        }
-        ClearConexions();
 
-        int pos = (int)_cellRotation;
-        pos++;
-        if (pos > Enum.GetValues(typeof(ROTATION)).Length - 1)
-        {
-            pos = 0;
-        }
-        _cellRotation = (ROTATION)pos;
-        foreach (GameObject currentGear in _gearList)
-        {
-            currentGear.SetActive(false);
-        }
     }
+
+
     public void ClearConexions()
     {
         _conections.Clear();
@@ -261,10 +138,7 @@ public class CellGear : MonoBehaviour
     {
         return _cellState;
     }
-    public ROTATION GetRotation()
-    {
-        return _cellRotation;
-    }
+
     public Vector2 GetCellPos()
     {
         return _cellPos;
@@ -273,14 +147,7 @@ public class CellGear : MonoBehaviour
     {
         return Mathf.Abs(Vector2.Distance(pos, _cellPos));
     }
-    public bool GetIsInit()
-    {
-        return _isInit;
-    }
-    public bool GetIsFinish()
-    {
-        return _isFinish;
-    }
+   
     #endregion
     #region SETS
     public void SetCellState(CELL_STATE state)
@@ -291,14 +158,7 @@ public class CellGear : MonoBehaviour
     {
         _cellPos = pos;
     }
-    public void SetIsInit(bool isInit)
-    {
-        _isInit = isInit;
-    }
-    public void SetIsFinish(bool isFinish)
-    {
-        _isFinish = isFinish;
-    }
+
     public void SetCollision(GameObject collision)
     {
         if (!_conections.Contains(collision))

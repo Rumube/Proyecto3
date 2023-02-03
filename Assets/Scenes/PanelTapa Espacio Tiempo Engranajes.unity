@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -680,7 +680,7 @@ RectTransform:
   m_GameObject: {fileID: 493450350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.73483, y: 0.73483, z: 0.73483}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 815752097}
@@ -688,7 +688,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -236.95007, y: 0}
+  m_AnchoredPosition: {x: -304.99988, y: -49}
   m_SizeDelta: {x: -826.69995, y: -400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493450352
@@ -709,12 +709,12 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_StartCorner: 0
+  m_StartCorner: 2
   m_StartAxis: 0
   m_CellSize: {x: 190, y: 190}
   m_Spacing: {x: 20, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 4
+  m_ConstraintCount: 7
 --- !u!222 &493450353
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1556,8 +1556,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95ee4fdcce3939448b83836445fe053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initPos: {fileID: 0}
-  _finishPos: {fileID: 0}
   _cellPath: []
   _correctPath: []
 --- !u!114 &1156343773
@@ -1572,9 +1570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f8c4334ee903b46baadb4247407a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dim: 7
+  _dim: 4
   _gridParent: {fileID: 493450350}
-  _cell: {fileID: 1521764677667523366, guid: 391b548f2550bda4bb89bf09f1d4d333, type: 3}
+  _cell: {fileID: 8692624147136695119, guid: 387d7b955f380614c9c968e18af74e99, type: 3}
 --- !u!1 &1194261577
 GameObject:
   m_ObjectHideFlags: 0

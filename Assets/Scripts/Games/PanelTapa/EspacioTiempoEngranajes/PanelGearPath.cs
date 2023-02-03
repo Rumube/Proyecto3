@@ -7,8 +7,7 @@ public class PanelGearPath : MonoBehaviour
     [Header("Grid Values")]
     private int _dim = 0;
     [Header("PathValues")]
-    public GameObject _initPos;
-    public GameObject _finishPos;
+
     public List<GameObject> _cellPath = new List<GameObject>();
     private int _middlePoints = 0;
     public List<GameObject> _correctPath = new List<GameObject>();
@@ -32,31 +31,14 @@ public class PanelGearPath : MonoBehaviour
     public void GenerateNewPaht(int dim)
     {
         _dim = dim;
-        GenerateStartAndFinishPos();
         GenerateRandomPoints();
         GeneratePath();
-        SetDirection();
+        
         //AÑADIR CAMINOS FALSOS
         //RANDOMIZAR ROTACIONES
         ChangeNames();
     }
-    #region GenerateStartAndFinishPos
-    private void GenerateStartAndFinishPos()
-    {
-        if (_initPos != null)
-        {
-            _initPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.EMPTY);
-            _finishPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.EMPTY);
-        }
-        _initPos = GetComponent<PanelGearGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), 0));
-        _finishPos = GetComponent<PanelGearGenerateGrid>().GetCell(new Vector2(Random.Range(0, _dim), _dim - 1));
-        _initPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.RECTO);
-        _finishPos.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.CUATRO);
-        _initPos.GetComponent<CellGear>().SetIsInit(true);
-        _finishPos.GetComponent<CellGear>().SetIsFinish(true);
-        _cellPath.Add(_initPos);
-    }
-    #endregion
+   
     #region GenerateRandomPoints
     private void GenerateRandomPoints()
     {
@@ -70,9 +52,9 @@ public class PanelGearPath : MonoBehaviour
             } while (!CheckIfIsEmpty(newPos));
             GameObject newCell = GetComponent<PanelGearGenerateGrid>().GetCell(newPos);
             _cellPath.Add(newCell);
-            newCell.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.RECTO);
+            newCell.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.CIRCLE);
         }
-        _cellPath.Add(_finishPos);
+      
     }
     private bool CheckIfIsEmpty(Vector2 pos)
     {
@@ -120,7 +102,7 @@ public class PanelGearPath : MonoBehaviour
     private void GeneratePath()
     {
         int nextPathValue = 1;
-        _currentCell = _initPos.GetComponent<CellGear>();
+      
         _correctPath.Add(_currentCell.gameObject);
         do
         {
@@ -138,7 +120,7 @@ public class PanelGearPath : MonoBehaviour
                     min = distance;
                 }
             }
-            closeCell.SetCellState(CellGear.CELL_STATE.RECTO);
+            closeCell.SetCellState(CellGear.CELL_STATE.SQUARE);
             _currentCell = closeCell;
             _correctPath.Add(_currentCell.gameObject);
             if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellGear>() && nextPathValue < _cellPath.Count - 1)
@@ -185,26 +167,7 @@ public class PanelGearPath : MonoBehaviour
         return result;
     }
     #endregion
-    #region SetDirections
-    private void SetDirection()
-    {
-        for (int i = 0; i < _correctPath.Count; i++)
-        {
-            if (_correctPath[i].GetComponent<CellGear>().GetIsInit())
-            {
-                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i + 1].GetComponent<CellGear>().GetCellPos(), true);
-            }
-            else if (_correctPath[i].GetComponent<CellGear>().GetIsFinish())
-            {
-                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i - 1].GetComponent<CellGear>().GetCellPos(), false);
-            }
-            else
-            {
-                _correctPath[i].GetComponent<CellGear>().SetNewState(_correctPath[i - 1].GetComponent<CellGear>().GetCellPos(), _correctPath[i + 1].GetComponent<CellCable>().GetCellPos());
-            }
-        }
-    }
-    #endregion
+    
     #region ChangeNames
     private void ChangeNames()
     {
