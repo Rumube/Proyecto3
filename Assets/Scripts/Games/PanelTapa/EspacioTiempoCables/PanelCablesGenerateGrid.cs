@@ -28,7 +28,6 @@ public class PanelCablesGenerateGrid : MonoBehaviour
     {
         _layoutGroup = _gridParent.GetComponent<GridLayoutGroup>();
         _cellArr = new GameObject[_dim, _dim];
-
     }
     /// <summary>
     /// Generate a grid of <see cref="_dim"/> rows and columns
