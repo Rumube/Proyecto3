@@ -92,13 +92,6 @@ public class CellGear : MonoBehaviour
         }
     }
 
-    public void SetNewState(Vector2 pos, bool isInit)
-    {
-        _pass++;
-        float posX = _cellPos.x - pos.x;
-        float posY = _cellPos.y - pos.y;
-
-    }
     public void SetSize(int dim)
     {
         foreach (GameObject currentGear in _gearList)
