@@ -15,9 +15,18 @@ public class CellGear : MonoBehaviour
     public enum CELL_STATE
     {
         EMPTY,
-        CIRCLE,
-        TRIANGLE,
-        SQUARE,
+        CIRCLE_DOWN_RIGHT,
+        CIRCLE_DOWN_LEFT,
+        CIRCLE_UP_RIGHT,
+        CIRCLE_UP_LEFT,
+        TRIANGLE_DOWN_RIGHT,
+        TRIANGLE_DOWN_LEFT,
+        TRIANGLE_UP_RIGHT,
+        TRIANGLE_UP_LEFT,
+        SQUARE_DOWN_RIGHT,
+        SQUARE_DOWN_LEFT,
+        SQUARE_UP_LEFT,
+        SQUARE_UP_RIGHT
 
     }
 
@@ -45,13 +54,37 @@ public class CellGear : MonoBehaviour
             case CELL_STATE.EMPTY:
                 _gearList[0].SetActive(true);
                 break;
-            case CELL_STATE.TRIANGLE:
+            case CELL_STATE.CIRCLE_DOWN_RIGHT:
                 _gearList[1].SetActive(true);
                 break;
-            case CELL_STATE.CIRCLE:
+            case CELL_STATE.CIRCLE_DOWN_LEFT:
                 _gearList[2].SetActive(true);
                 break;
-            case CELL_STATE.SQUARE:
+            case CELL_STATE.CIRCLE_UP_RIGHT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.TRIANGLE_DOWN_RIGHT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.TRIANGLE_DOWN_LEFT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.TRIANGLE_UP_RIGHT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.TRIANGLE_UP_LEFT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.SQUARE_DOWN_LEFT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.SQUARE_DOWN_RIGHT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.SQUARE_UP_LEFT:
+                _gearList[3].SetActive(true);
+                break;
+            case CELL_STATE.SQUARE_UP_RIGHT:
                 _gearList[3].SetActive(true);
                 break;
             default:
@@ -64,7 +97,7 @@ public class CellGear : MonoBehaviour
         _pass++;
         float posX = _cellPos.x - pos.x;
         float posY = _cellPos.y - pos.y;
-     
+
     }
     public void SetSize(int dim)
     {
@@ -114,16 +147,17 @@ public class CellGear : MonoBehaviour
         {
             if (prePos.x != nextPos.x && prePos.y != nextPos.y)
             {
-                _cellState = CELL_STATE.TRIANGLE;//PREGUNTAR A RUBEN SI CON ESTO PUEDO HACER QUE LOS DE ALREDEDOR COMPLETEN LA FIGURA
+                _cellState = CELL_STATE.TRIANGLE_UP_LEFT;//PREGUNTAR A RUBEN SI CON ESTO PUEDO HACER QUE LOS DE ALREDEDOR COMPLETEN LA FIGURA
             }
             else
             {
-                _cellState = CELL_STATE.SQUARE;
+
+                _cellState = CELL_STATE.CIRCLE_DOWN_RIGHT;
             }
         }
         else
         {
-            _cellState = CELL_STATE.CIRCLE;
+            _cellState = CELL_STATE.SQUARE_DOWN_RIGHT;
         }
 
     }
@@ -147,7 +181,7 @@ public class CellGear : MonoBehaviour
     {
         return Mathf.Abs(Vector2.Distance(pos, _cellPos));
     }
-   
+
     #endregion
     #region SETS
     public void SetCellState(CELL_STATE state)

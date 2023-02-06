@@ -52,7 +52,7 @@ public class PanelGearPath : MonoBehaviour
             } while (!CheckIfIsEmpty(newPos));
             GameObject newCell = GetComponent<PanelGearGenerateGrid>().GetCell(newPos);
             _cellPath.Add(newCell);
-            newCell.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.CIRCLE);
+            newCell.GetComponent<CellGear>().SetCellState(CellGear.CELL_STATE.SQUARE_DOWN_RIGHT);
         }
       
     }
@@ -120,7 +120,7 @@ public class PanelGearPath : MonoBehaviour
                     min = distance;
                 }
             }
-            closeCell.SetCellState(CellGear.CELL_STATE.SQUARE);
+            closeCell.SetCellState(CellGear.CELL_STATE.SQUARE_DOWN_RIGHT);
             _currentCell = closeCell;
             _correctPath.Add(_currentCell.gameObject);
             if (_cellPath.Contains(_currentCell.gameObject) && _currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellGear>() && nextPathValue < _cellPath.Count - 1)
