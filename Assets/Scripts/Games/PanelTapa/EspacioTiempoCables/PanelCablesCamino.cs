@@ -14,6 +14,7 @@ public class PanelCablesCamino : MonoBehaviour
     public List<GameObject> _correctPath = new List<GameObject>();
     [Header("GeneratePathValues")]
     private CellCable _currentCell = null;
+    private bool _correct = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -228,24 +229,41 @@ public class PanelCablesCamino : MonoBehaviour
     public void CheckPath()
     {
         _correctPath[0].GetComponent<CableCheck>().CheckConection(this);
+        StartCoroutine(FinishCheck());
     }
-    public void FinishCheck(bool result)
+    private IEnumerator FinishCheck()
     {
+        yield return new WaitForSeconds(0.2f);
         UnCheckPath();
-        if (result)
+        if (_correct)
         {
-            print("SI!!!");
+            print("Si!");
         }
         else
         {
-            print("NO!!!");
+            print("No!");
         }
+        _correct = false;
     }
     private void UnCheckPath()
     {
-        foreach (GameObject currentCable in _cellPath)
+        for (int i = 0; i < _dim; i++)
         {
-            currentCable.GetComponent<CableCheck>().SetCheked(false);
+            for (int j = 0; j < _dim; j++)
+            {
+                GameObject currentCell = GetComponent<PanelCablesGenerateGrid>().GetCell(new Vector2(i,j));
+                currentCell.GetComponent<CableCheck>().ResetCount();
+                currentCell.GetComponent<CableCheck>().SetCheked(false);
+            }
         }
+        //foreach (GameObject currentCable in _cellPath)
+        //{
+        //    currentCable.GetComponent<CableCheck>().ResetCount();
+        //    currentCable.GetComponent<CableCheck>().SetCheked(false);
+        //}
+    }
+    public void setCorrect(bool value)
+    {
+        _correct = value;
     }
 }

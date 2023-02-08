@@ -85,6 +85,7 @@ public class DragManager : MonoBehaviour
     {
         if (_itemDraging != null)
         {
+            _itemDraging.GetComponent<DragableItem>().InitDragContainer();
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.pos);
             Vector3 newPos = Vector3.zero;
             //SET X
