@@ -126,8 +126,8 @@ public class DragableItem : MonoBehaviour
     {
         SetNewTarget(_initialParent);
     }
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
-    }
+    //private void OnBecameInvisible()
+    //{
+    //    Destroy(gameObject);
+    //}
 }
