@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenerateLayout : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GenerateLayout : MonoBehaviour
     [Header("Game references")]
     private List<Geometry.Geometry_Type> _correctSerie = new List<Geometry.Geometry_Type>();
     private List<Geometry.Geometry_Type> _userSerie = new List<Geometry.Geometry_Type>();
+    [SerializeField] private List<GameObject> _parentSizes = new List<GameObject>();
 
     private void Start()
     {
@@ -25,15 +27,35 @@ public class GenerateLayout : MonoBehaviour
     }
     private void InitLayout()
     {
-        StartCoroutine(GenerateParents());
-        //for (int i = 0; i < _size; i++)
-        //{
-        //    GameObject newGear = Instantiate(_baseGear, _layoutParent.transform);
-        //    _correctSerie.Add(newGear.GetComponent<DragableItem>().GetGeometry());
-        //    newGear.GetComponent<DragableItem>().SetDragable(false);
-        //    newGear.GetComponent<DragableItem>().SetGeometry(GenerateRandomGeometry());
-        //    newGear.GetComponent<DragableItem>().SetCreated(false);
-        //}
+        Vector2 spacing = Vector2.zero;
+        float parentScale = 0f;
+
+        switch (_size)
+        {
+            case 4:
+                break;
+            case 9:
+                spacing = new Vector2(0.5f, 0.5f);
+                parentScale = 0.3f;
+                break;
+            default:
+                break;
+        }
+        1,375
+        //9 - 0.5f - 0.3f
+        GetComponent<GridLayoutGroup>().spacing = spacing;
+
+        for (int i = 0; i < _size; i++)
+        {
+            GameObject newParent = Instantiate(new GameObject("Parent"), _layoutParent.transform);
+            newParent.AddComponent<RectTransform>();
+            newParent.transform.localScale = new Vector3(parentScale, parentScale, parentScale);
+            GameObject newGear = Instantiate(_baseGear, newParent.transform);
+            _correctSerie.Add(newGear.GetComponent<DragableItem>().GetGeometry());
+            newGear.GetComponent<DragableItem>().SetDragable(false);
+            newGear.GetComponent<DragableItem>().SetGeometry(GenerateRandomGeometry());
+            newGear.GetComponent<DragableItem>().SetCreated(false);
+        }
     }
 
     public IEnumerator GenerateParents()

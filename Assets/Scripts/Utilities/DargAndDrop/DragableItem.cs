@@ -21,6 +21,7 @@ public class DragableItem : MonoBehaviour
     public bool _onlyVertical;
     private GameObject _container;
     [SerializeField] private bool _dragable = true;
+    private bool _isFallen = false;
 
     private void Start()
     {
@@ -93,6 +94,7 @@ public class DragableItem : MonoBehaviour
         if (_isCreated)
         {
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            _isFallen = true;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -143,7 +145,7 @@ public class DragableItem : MonoBehaviour
     }
     private void OnBecameInvisible()
     {
-        if (_isCreated)
+        if (_isCreated && _isFallen)
         {
             Destroy(gameObject);
         }
