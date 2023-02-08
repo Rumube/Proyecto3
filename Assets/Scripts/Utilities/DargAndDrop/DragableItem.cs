@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DragableItem : MonoBehaviour
 {
+    [Header("Item parameters")]
+    private Geometry.Geometry_Type _geometry_type;
+    [SerializeField] private List<Sprite> _gearsSprite = new List<Sprite>();
+
     [Header("References")]
     public Transform _initialParent = null;
     private DragManager _dndManager;
@@ -12,17 +16,27 @@ public class DragableItem : MonoBehaviour
     private bool _isReturning = false;
     private float _returnVelocity = 0f;
     private bool _isCreated = false;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [Header("DragConfiguration")]
     public bool _onlyVertical;
+    private GameObject _container;
+    [SerializeField] private bool _dragable = true;
 
     private void Start()
     {
-        SetInitialTarget();
-        if(_initialParent == null)
+        if (_dragable)
         {
-            _initialParent = transform.GetComponentInParent<Transform>();
+            SetInitialTarget();
+            if (_initialParent == null)
+            {
+                _initialParent = transform.GetComponentInParent<Transform>();
+            }
         }
-        GetComponent<Animator>().Play("GetBigger_Anim");
+        else
+        {
+            tag = "Untagged";
+        }
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -127,8 +141,78 @@ public class DragableItem : MonoBehaviour
     {
         SetNewTarget(_initialParent);
     }
-    //private void OnBecameInvisible()
-    //{
-    //    Destroy(gameObject);
-    //}
+    private void OnBecameInvisible()
+    {
+        if (_isCreated)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void InitContainer(GameObject container)
+    {
+        _container = container;
+    }
+
+    public void InitDragContainer()
+    {
+        if(_container != null)
+        {
+            //ANIM CLOSE
+        }
+    }
+
+    public void SetDragable(bool dragable)
+    {
+        _dragable = dragable;
+        if (_dragable)
+        {
+            tag = "DragObject";
+        }
+        else
+        {
+            tag = "Untagged";
+        }
+    }
+    public void SetGeometry(Geometry.Geometry_Type geometry_Type)
+    {
+        _geometry_type = geometry_Type;
+        SetSprite();
+    }
+    private void SetSprite()
+    {
+        if(_spriteRenderer == null)
+        {
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        switch (_geometry_type)
+        {
+            case Geometry.Geometry_Type.circle:
+                _spriteRenderer.sprite = _gearsSprite[0];
+                break;
+            case Geometry.Geometry_Type.triangle:
+                _spriteRenderer.sprite = _gearsSprite[1];
+                break;
+            case Geometry.Geometry_Type.square:
+                _spriteRenderer.sprite = _gearsSprite[2];
+                break;
+            case Geometry.Geometry_Type.diamond:
+                _spriteRenderer.sprite = _gearsSprite[3];
+                break;
+            case Geometry.Geometry_Type.pentagon:
+                _spriteRenderer.sprite = _gearsSprite[4];
+                break;
+            case Geometry.Geometry_Type.hexagon:
+                _spriteRenderer.sprite = _gearsSprite[5];
+                break;
+        }
+    }
+    public Geometry.Geometry_Type GetGeometry()
+    {
+        return _geometry_type;
+    }public void SetCreated(bool value)
+    {
+        _isCreated = value;
+    }
 }
