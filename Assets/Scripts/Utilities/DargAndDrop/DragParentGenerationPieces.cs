@@ -75,25 +75,25 @@ public class DragParentGenerationPieces : DragParentPropieties
                     newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.pentagono_arriba_izq:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[17];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.pentagono_arriba_dr:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[18];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.pentagono_abajo_dr:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[19];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.hexagono_abajo_dr:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[20];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.hexagono_arriba_dr:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[21];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.hexagono_arriba_izq:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[22];
                     break;
                 case DragDeposit.GEOMETRY_GEARS_PIECES.hexagono_abajo_izq:
-                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[16];
+                    newItem.GetComponent<SpriteRenderer>().sprite = _sprite[23];
                     break;
                 default:
                     break;
