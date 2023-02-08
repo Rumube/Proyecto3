@@ -22,6 +22,7 @@ public class DragableItem : MonoBehaviour
         {
             _initialParent = transform.GetComponentInParent<Transform>();
         }
+        GetComponent<Animator>().Play("GetBigger_Anim");
     }
 
     private void Update()
