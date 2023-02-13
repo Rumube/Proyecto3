@@ -60,7 +60,7 @@ public class ClientHandle
     public static void QuitGame()
     {
         ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(true);
-       SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenu");
         //Poner que vaya a la ventana de puntuaciones finales
         EDebug.Log("Quitando el juego");
     }
@@ -86,7 +86,7 @@ public class ClientHandle
     public static void UpdateTeamPoints(ClientPackage package)
     {
         ServiceLocator.Instance.GetService<IGameManager>().SetDictionaryPoints(package._rankingPoints._teamPoints);
-        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
+        if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing && ServiceLocator.Instance.GetService<RankingClient>())
         {
             ServiceLocator.Instance.GetService<RankingClient>().UpdateRankingPoints();
         } 
