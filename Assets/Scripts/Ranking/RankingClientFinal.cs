@@ -31,6 +31,7 @@ public class RankingClientFinal : MonoBehaviour
     public Transform _upperLevel;
     public float _differenceBetweenLowerUpper;
     public GameObject _rankingGridParent;
+    public Sprite _fillRanking;
 
     [Header("Transform References")]
     public List<Transform> _rocketsTransforms;
@@ -104,7 +105,6 @@ public class RankingClientFinal : MonoBehaviour
             GameObject teamParent = new GameObject();
             teamParent.name = "Team_" + team.Key;
             teamParentList.Add(teamParent);
-            teamParent.AddComponent<Image>();
             _rocketsTransforms[team.Key].gameObject.SetActive(true);
             _rocketsTransforms[team.Key].gameObject.transform.position = teamParent.GetComponentInChildren<Transform>().position;
             teamParent.transform.SetParent(_rankingGridParent.transform);
@@ -113,6 +113,13 @@ public class RankingClientFinal : MonoBehaviour
             teamParent.GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
             teamParent.transform.localScale = new Vector3(1, 1, 1);
             _teamParents.Add(teamParent);
+
+            teamParent.AddComponent<Image>();
+
+            teamParent.GetComponent<Image>().sprite = _fillRanking;
+            teamParent.GetComponent<Image>().type = Image.Type.Filled;
+            teamParent.GetComponent<Image>().fillMethod = Image.FillMethod.Vertical;
+            teamParent.GetComponent<Image>().fillAmount = 0.5f;
         }
         _gridPositions = new GameObject[_teamPoints.Count, 11];
         for (int i = 0; i < teamParentList.Count; i++)
