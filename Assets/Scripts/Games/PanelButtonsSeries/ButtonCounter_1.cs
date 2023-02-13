@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class ButtonCounter_1 : MonoBehaviour
 {
-    public CreatePanel _createPanel;
-
     [Header("Animations")]
     public GameObject _bar;
     public GameObject _radar;
@@ -17,7 +15,7 @@ public class ButtonCounter_1 : MonoBehaviour
     private int geo = 0;
     private void Start()
     {
-        UpdateButtonGO();
+     UpdateButtonGO();
     }
 
     private void Update()

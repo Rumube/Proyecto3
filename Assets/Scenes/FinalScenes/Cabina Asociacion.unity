@@ -1938,10 +1938,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataDifficulty:
-  - maxAteroidesinScene: 10
-    minAteroidesinScene: 4
+  - maxAteroidesinScene: 6
+    minAteroidesinScene: 3
     _geometryType: 000000000100000002000000
     _targetGeometryType: 000000000100000002000000
+    maxTargetAsteroids: 3
+    minTargetAsteroids: 1
+  - maxAteroidesinScene: 9
+    minAteroidesinScene: 6
+    _geometryType: 00000000010000000200000004000000
+    _targetGeometryType: 00000000010000000200000005000000
+    maxTargetAsteroids: 4
+    minTargetAsteroids: 1
+  - maxAteroidesinScene: 12
+    minAteroidesinScene: 9
+    _geometryType: 0000000001000000020000000500000006000000
+    _targetGeometryType: 0000000001000000020000000500000006000000
     maxTargetAsteroids: 4
     minTargetAsteroids: 2
 --- !u!1 &1121230071
@@ -2148,7 +2160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameLevel
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameMinutes

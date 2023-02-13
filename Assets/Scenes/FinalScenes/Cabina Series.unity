@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1910,7 +1910,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataDifficulty:
   - maxAteroidesinScene: 6
-    minAteroidesinScene: 5
+    minAteroidesinScene: 3
+    geometryUsed: 000000000100000002000000
+  - maxAteroidesinScene: 9
+    minAteroidesinScene: 6
+    geometryUsed: 00000000010000000200000005000000
+  - maxAteroidesinScene: 12
+    minAteroidesinScene: 9
     geometryUsed: 0000000001000000020000000500000006000000
 --- !u!114 &1071243618
 MonoBehaviour:
@@ -2147,7 +2153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameLevel
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameMinutes
@@ -2155,7 +2161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2092755308462480926, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _minigameSeconds
-      value: 60000
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3917465416531648716, guid: f3c0236698413144ab459213746d3b06, type: 3}
       propertyPath: _notGameLoop
