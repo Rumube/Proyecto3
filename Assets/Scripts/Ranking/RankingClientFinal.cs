@@ -104,6 +104,7 @@ public class RankingClientFinal : MonoBehaviour
             GameObject teamParent = new GameObject();
             teamParent.name = "Team_" + team.Key;
             teamParentList.Add(teamParent);
+            teamParent.AddComponent<Image>();
             _rocketsTransforms[team.Key].gameObject.SetActive(true);
             _rocketsTransforms[team.Key].gameObject.transform.position = teamParent.GetComponentInChildren<Transform>().position;
             teamParent.transform.SetParent(_rankingGridParent.transform);
@@ -124,7 +125,6 @@ public class RankingClientFinal : MonoBehaviour
                 cellInGrid.AddComponent<RectTransform>();
                 _gridPositions[i, j] = cellInGrid;
                 print(_gridPositions[i, j].GetComponent<RectTransform>().position);
-                cellInGrid.AddComponent<Image>();
 
                 if(j == 0)
                 {
