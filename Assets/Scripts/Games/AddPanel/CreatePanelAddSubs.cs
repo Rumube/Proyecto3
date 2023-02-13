@@ -182,57 +182,7 @@ public class CreatePanelAddSubs : MonoBehaviour
             }
         //} while (!CheckTargets());
     }
-    /// <summary>
-    /// Generates the geometry type of the target.
-    /// </summary>
-    //private void GenerateTypeTargetGeometry()
-    //{
-    //    _typeTargetGeometry.Clear();
-    //    for (int i = 0; i < 1; i++)
-    //    {
-    //        bool isCorrect = false;
-    //        int idGeometry = Random.Range(0, _currentDataDifficulty.targetGeometry.Count);
-    //        do
-    //        {
-    //            isCorrect = false;
-    //            Geometry.Geometry_Type newGeometry = _currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType;
-    //            if (!_typeTargetGeometry.Contains(newGeometry))
-    //            {
-    //                _typeTargetGeometry.Add(newGeometry);
-    //                isCorrect = true;
-    //            }
-    //            else
-    //            {
-    //                idGeometry++;
-    //                if (idGeometry >= _currentDataDifficulty.targetGeometry.Count)
-    //                {
-    //                    idGeometry = 0;
-    //                }
-    //            }
-    //        } while (!isCorrect);
-    //    }
-
-    //}
-    ///// <summary>
-    ///// Checks if the list of targets contains geometry repeated.
-    ///// </summary>
-    //private bool CheckTargets()
-    //{
-    //    bool result = true;
-    //    List<Geometry.Geometry_Type> geoTypeTarget = new List<Geometry.Geometry_Type>();
-    //    foreach (GameObject currentTarget in _targetList)
-    //    {
-    //        geoTypeTarget.Add(currentTarget.GetComponent<Geometry>()._geometryType);
-    //    }
-    //    foreach (Geometry.Geometry_Type currentGeometryTpe in _typeTargetGeometry)
-    //    {
-    //        if (!geoTypeTarget.Contains(currentGeometryTpe))
-    //        {
-    //            result = false;
-    //        }
-    //    }
-    //    return result;
-    //}
+   
     
     // Update is called once per frame
     void Update()
