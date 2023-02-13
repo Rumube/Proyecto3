@@ -1092,7 +1092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &41804655
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3625,7 +3625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6be4480afd93a94ebbb0a35c207791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _server: 1
+  _server: 0
   _canvasMobile: {fileID: 1207306178}
   _canvasTablet: {fileID: 758638563}
   _uiManager: {fileID: 282740217}
@@ -21424,7 +21424,7 @@ MonoBehaviour:
   _panelInfo: {fileID: 1127578068}
   _blackTransition: {fileID: 1638454496}
   _doorsOpen: {fileID: 471995011}
-  _fakeRankignServerInClient: {fileID: 0}
+  _rankingClientFinal: {fileID: 0}
 --- !u!4 &758638564
 Transform:
   m_ObjectHideFlags: 0
@@ -32164,7 +32164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1232689285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32238,8 +32238,8 @@ Canvas:
   m_GameObject: {fileID: 1232689284}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1858158397}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -55061,6 +55061,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 965330853}
     m_Modifications:
+    - target: {fileID: 283354422, guid: e7642493776597048bb73530d5599fc2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -67.93445
+      objectReference: {fileID: 0}
     - target: {fileID: 443855954, guid: e7642493776597048bb73530d5599fc2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.00012207031

@@ -51,6 +51,11 @@ public class RankingClientFinal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_generateGrid){
+            _generateGrid = false;
+            CreateGrid();
+        }
+
         if (_newDataFromClient)
         {
             _newDataFromClient = false;
