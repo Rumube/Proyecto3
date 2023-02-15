@@ -10,60 +10,48 @@ public class RankingTeamMovement : MonoBehaviour
     private bool _inMovement = false;
     public float _moveTime;
     private float _time;
-    public LineRenderer _line;
     public int _team = -1;
     public bool _finalScene = false;
+    [SerializeField] private Image _image = null;
+    [SerializeField] private Transform _zeroPos;
+    [SerializeField] private Transform _lastPos;
 
     // Update is called once per frame
     void Update()
+    {
+        RankingMovement();
+    }
+    /// <summary>
+    /// Manage the ship movement using a Lerp betwen two positions
+    /// </summary>
+    private void RankingMovement()
     {
         if (_inMovement)
         {
             _time += Time.deltaTime / _moveTime;
             transform.position = Vector2.Lerp(_startPos, _newTargetPos, _time);
-
-            SetLineRenderer();
             if (transform.position.y == _newTargetPos.y)
             {
                 _inMovement = false;
             }
+            TrailManager();
         }
     }
     /// <summary>
-    /// Set's que line renderer to the variable <see cref="_line"/>
+    /// Manage the ships trail
+    /// Only works when _imagen exits, don't work in game scenes
     /// </summary>
-    private void SetLineRenderer()
+    private void TrailManager()
     {
-        if (!_line && _finalScene)
+        if (_image != null)
         {
-            switch (_team)
-            {
-                case 1:
-                    _line = GameObject.Find("Team1Line").GetComponent<LineRenderer>();
-                    break;
-                case 2:
-                    _line = GameObject.Find("Time2Line").GetComponent<LineRenderer>();
-                    break;
-                case 3:
-                    _line = GameObject.Find("Time3Line").GetComponent<LineRenderer>();
-                    break;
-                case 4:
-                    _line = GameObject.Find("Time4Line").GetComponent<LineRenderer>();
-                    break;
-                case 5:
-                    _line = GameObject.Find("Time5Line").GetComponent<LineRenderer>();
-                    break;
-                case 6:
-                    _line = GameObject.Find("Time6Line").GetComponent<LineRenderer>();
-                    break;
-                default:
-                    break;
-            }
-            _line.SetPosition(0, new Vector3(transform.position.x, -2.8f, 5));
-            _line.SetPosition(1, new Vector3(transform.position.x, transform.position.y - 0.2f, 5));
+            _image.fillAmount = (transform.position.y / _lastPos.position.y);
         }
-
     }
+    /// <summary>
+    /// Starts the ship movement process
+    /// </summary>
+    /// <param name="newPos">New pos to move</param>
     public void InitMove(Vector2 newPos)
     {
         _time = 0;
@@ -71,7 +59,16 @@ public class RankingTeamMovement : MonoBehaviour
         _newTargetPos = newPos;
         _inMovement = true;
     }
-    public void SetBasePos(Vector2 basePos)
+    /// <summary>
+    /// Initializes the ship's values
+    /// </summary>
+    /// <param name="zeroPos">Lower potion</param>
+    /// <param name="lastPos">Highest position</param>
+    /// <param name="image">Image referring to the ship's trail</param>
+    public void InitValues(Transform zeroPos, Transform lastPos, Image image)
     {
+        _zeroPos = zeroPos;
+        _lastPos = lastPos;
+        _image = image;
     }
 }
