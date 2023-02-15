@@ -85,12 +85,12 @@ public class RankingTeamMovement : MonoBehaviour
                         _lastTrailPos = 0.6f;
                         break;
                     case 7:
-                        _image.fillAmount = 0.85f;
-                        _lastTrailPos = 0.85f;
+                        _image.fillAmount = 0.7f;
+                        _lastTrailPos = 0.7f;
                         break;
                     case 8:
-                        _image.fillAmount = 0.9f;
-                        _lastTrailPos = 0.9f;
+                        _image.fillAmount = 0.8f;
+                        _lastTrailPos = 0.8f;
                         break;
                     case 9:
                         _image.fillAmount = 0.95f;
