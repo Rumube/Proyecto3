@@ -124,4 +124,44 @@ public class Geometry: MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Returns the geometry name in spanish
+    /// by the geometry given
+    /// </summary>
+    /// <param name="geometry">Given geometry</param>
+    /// <returns>Gemometry name</returns>
+
+    public int getGeometryID(Geometry_Type geometry)
+    {
+        switch (_geometryType)
+        {
+            case Geometry_Type.circle:
+                return 5;
+                break;
+            case Geometry_Type.triangle:
+                return 6;
+                break;
+            case Geometry_Type.square:
+                return 7;
+                break;
+            case Geometry_Type.diamond:
+                return 8;
+                break;
+            case Geometry_Type.rectangle:
+                return 9;
+                break;
+            case Geometry_Type.pentagon:
+                return 10;
+                break;
+            case Geometry_Type.hexagon:
+                return 11;
+                break;
+            case Geometry_Type.star:
+                return 12;
+                break;
+            default:
+                break;
+        }
+        return 1;
+    }
 }

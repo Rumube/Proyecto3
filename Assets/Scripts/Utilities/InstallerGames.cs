@@ -21,6 +21,7 @@ public class InstallerGames : MonoBehaviour
     public Positive _positive;
     public CalculatePuntuation _calculatePuntiation;
     public RankingClient _rankingClient;
+    public MultilanguajeReader _multilanguajeReader;
 
     // Start is called before the first frame update
     void Awake()
@@ -57,6 +58,10 @@ public class InstallerGames : MonoBehaviour
         {
             ServiceLocator.Instance.UnregisterService<RankingClient>();
         }
+        if (ServiceLocator.Instance.Contains<MultilanguajeReader>())
+        {
+            //ServiceLocator.Instance.UnregisterService<MultilanguajeReader>();
+        }
 
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
         ServiceLocator.Instance.RegisterService<IInput>(_inputAndroid);
@@ -66,6 +71,7 @@ public class InstallerGames : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
         ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePuntiation);
         ServiceLocator.Instance.RegisterService(_rankingClient);
+        //ServiceLocator.Instance.RegisterService(_multilanguajeReader);
 
         if (_notGameLoop)
         {

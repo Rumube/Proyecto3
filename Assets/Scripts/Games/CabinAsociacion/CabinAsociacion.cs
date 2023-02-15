@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class CabinAsociacion : MonoBehaviour
 {
     [Header("References")]
@@ -109,13 +111,22 @@ public class CabinAsociacion : MonoBehaviour
             }
         }
     }
+
+
+
     /// <summary>
     /// Generates the order for the player
     /// </summary>
     private void GenerateOrder()
     {
         Geometry aux = new Geometry();
-        string order = "¡Destruye " + _numTargetAsteroids + " asteroides con forma de " + aux.getGeometryString(_geometryTarget) + "!";
+        string part1 = ServiceLocator.Instance.GetService<MultilanguajeReader>().GetText(14);
+        string part2 = ServiceLocator.Instance.GetService<MultilanguajeReader>().GetText(_numTargetAsteroids);
+        string part3 = ServiceLocator.Instance.GetService<MultilanguajeReader>().GetText(92);
+        string part4 = ServiceLocator.Instance.GetService<MultilanguajeReader>().GetText(aux.getGeometryID(_geometryTarget));
+        string part5 = ServiceLocator.Instance.GetService<MultilanguajeReader>().GetText(91);
+
+        string order = part1 + part2 + part3 + part4 + part5;
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(order, true);
     }
     /// <summary>
