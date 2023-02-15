@@ -133,9 +133,8 @@ public class RankingClientFinal : MonoBehaviour
                 _gridPositions[i, j] = cellInGrid;
                 print(_gridPositions[i, j].GetComponent<RectTransform>().position);
                 teamParentList[i].GetComponent<Image>().sprite = _fillRanking[i];
-
             }
-            _rocketsTransforms[i].GetComponent<RankingTeamMovement>().InitValues(_gridPositions[i,0].transform, _gridPositions[i, 10].transform, _teamParents[i].GetComponent<Image>());
+            _rocketsTransforms[i].GetComponent<RankingTeamMovement>().InitValues(_teamParents[i].GetComponent<Image>(), _gridPositions[i, 10].transform);
         }
 
         StartCoroutine(setGrid());
@@ -206,10 +205,8 @@ public class RankingClientFinal : MonoBehaviour
                 //_teamParents[team.Key].GetComponent<Image>().fillAmount = positionYRelative/10;
                 int positionY = (int)positionYRelative;
                 ManagerFillAmount(_teamParents[teamNumbers], positionYRelative / 10);
-                print(_teamParents[teamNumbers].name + " Pos: " + (positionYRelative / 10));
                 Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _gridPositions[teamNumbers, positionY].transform.position.y);
                 _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
-
             }
             else
             {
