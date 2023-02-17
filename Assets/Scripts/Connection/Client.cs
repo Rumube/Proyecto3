@@ -9,7 +9,7 @@ public class Client
 {
     public static string _id;
     public static Tablet _tablet;
-    
+
     public static WebSocket _ws;
     public static List<ClientPackage> _allPackages;
 
@@ -36,7 +36,7 @@ public class Client
             ClientHandle.CantConnectServer();
             if (_ws != null)
                 _ws.Close();
-        }     
+        }
     }
 
     /// <summary>Initialize a tablet and assing -1 for tablet id</summary>
@@ -68,7 +68,7 @@ public class Client
                 }
                 break;
             case ServerPackets.StartGame:
-                ClientHandle.StartGame(_allPackages[0]); 
+                ClientHandle.StartGame(_allPackages[0]);
                 break;
             case ServerPackets.GameDifficulty: //TO FINISH
                 if (_allPackages[0]._toUser == _id)
@@ -76,7 +76,7 @@ public class Client
                     ClientHandle.SpecificGameDifficulty(_allPackages[0]);
                 }
                 break;
-            case ServerPackets.UpdateTeamPoints: 
+            case ServerPackets.UpdateTeamPoints:
                 ClientHandle.UpdateTeamPoints(_allPackages[0]);
                 break;
             case ServerPackets.PauseGame:
@@ -157,9 +157,10 @@ public class Client
     {
         if (_tablet != null)
         {
-            return _tablet._id;
+            return _tablet._id - 1;
         }
-        else{
+        else
+        {
             return Random.Range(0, 6);
         }
     }
