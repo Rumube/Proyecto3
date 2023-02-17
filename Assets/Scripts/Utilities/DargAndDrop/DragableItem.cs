@@ -14,6 +14,7 @@ public class DragableItem : MonoBehaviour
     private bool _isCreated = false;
     [Header("DragConfiguration")]
     public bool _onlyVertical;
+    private GameObject _container;
 
     private void Start()
     {
@@ -129,5 +130,18 @@ public class DragableItem : MonoBehaviour
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    public void InitContainer(GameObject container)
+    {
+        _container = container;
+    }
+
+    public void InitDragContainer()
+    {
+        if(_container != null)
+        {
+            //ANIM CLOSE
+        }
     }
 }
