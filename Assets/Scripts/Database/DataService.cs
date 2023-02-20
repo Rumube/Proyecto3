@@ -273,7 +273,6 @@ public class DataService
         }
         catch (System.Exception)
         {
-            //ServiceLocator.Instance.GetService<MobileUI>().AddingTwoClassesWithSameName();
             return null;
         }
     }
@@ -308,17 +307,6 @@ public class DataService
     /// <returns><see cref="GameDB"/></returns>
     public GameDB GetGame(string nameGame)
     {
-        //GameDB result = null;
-        //IEnumerable<GameDB> games = _connection.Table<GameDB>();
-
-        //foreach (GameDB game in games)
-        //{
-        //    if (game.name == nameGame)
-        //    {
-        //        result = game;
-        //    }
-        //}
-        //return result;
         GameDB result = null;
         IEnumerable<GameDB> games = _connection.Query<GameDB>("SELECT * FROM GameDB where name = ?", nameGame);
         foreach (GameDB game in games)
