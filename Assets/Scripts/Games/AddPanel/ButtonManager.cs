@@ -36,11 +36,13 @@ public class ButtonManager : MonoBehaviour
 
     void Start()
     {
-        //_completeThePanel = GetComponent<AddPanelDifficulty>();
         _currentDataDifficulty = _completeThePanel.GenerateDataDifficulty(_level);
         checkButton = GameObject.FindGameObjectWithTag("CheckButton");
-
     }
+    /// <summary>
+    /// Generate the text to create the new order
+    /// </summary>
+    /// <returns>The order</returns>
     public string GetTextGame()
     {
         string message = (GeometryNumberText(_createPanel._orderButtons) );
@@ -60,10 +62,8 @@ public class ButtonManager : MonoBehaviour
     }
    
     /// <summary>Show the geometry name in plural or singular.</summary> 
-
     /// <param name="nGeometry">The quantity of a geometry</param> 
     /// <param name="geometryName">The name of the geometry</param>
-
     /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public string GeometryNumberText(int nGeometry)
     {
@@ -127,11 +127,21 @@ public class ButtonManager : MonoBehaviour
 
     }
     #region Button Counters
+    /// <summary>
+    /// Starts the process to press the button
+    /// </summary>
+    /// <param name="button">Button pressed</param>
     public void CounterButton(GameObject button)
     {
         _buttonCounter = Counter(button, _buttonCounter);
     }
-   
+    /// <summary>
+    /// If the button is pressed, the value increases.
+    /// If the button is not pressed it decreases the value.
+    /// </summary>
+    /// <param name="button">Typo of button pressed</param>
+    /// <param name="counter">Number pressed times</param>
+    /// <returns></returns>
     public int Counter(GameObject button, int counter)
     {
         if (button.GetComponent<ObjectPanel>()._pressed == false)
