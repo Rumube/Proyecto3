@@ -31,6 +31,7 @@ public class RankingClientFinal : MonoBehaviour
     public Transform _upperLevel;
     public float _differenceBetweenLowerUpper;
     public GameObject _rankingGridParent;
+    public List<Sprite> _fillRanking = new List<Sprite>();
 
     [Header("Transform References")]
     public List<Transform> _rocketsTransforms;
@@ -112,6 +113,13 @@ public class RankingClientFinal : MonoBehaviour
             teamParent.GetComponent<VerticalLayoutGroup>().reverseArrangement = true;
             teamParent.transform.localScale = new Vector3(1, 1, 1);
             _teamParents.Add(teamParent);
+
+            teamParent.AddComponent<Image>();
+
+            teamParent.GetComponent<Image>().sprite = _fillRanking[0];
+            teamParent.GetComponent<Image>().type = Image.Type.Filled;
+            teamParent.GetComponent<Image>().fillMethod = Image.FillMethod.Vertical;
+            teamParent.GetComponent<Image>().fillAmount = 0f;
         }
         _gridPositions = new GameObject[_teamPoints.Count, 11];
         for (int i = 0; i < teamParentList.Count; i++)
@@ -124,14 +132,9 @@ public class RankingClientFinal : MonoBehaviour
                 cellInGrid.AddComponent<RectTransform>();
                 _gridPositions[i, j] = cellInGrid;
                 print(_gridPositions[i, j].GetComponent<RectTransform>().position);
-                cellInGrid.AddComponent<Image>();
-
-                if(j == 0)
-                {
-                    _rocketsTransforms[i].gameObject.GetComponent<RankingTeamMovement>().SetBasePos(_gridPositions[i, j].transform.position);
-                }
-
+                teamParentList[i].GetComponent<Image>().sprite = _fillRanking[i];
             }
+            _rocketsTransforms[i].GetComponent<RankingTeamMovement>().InitValues(_teamParents[i].GetComponent<Image>(), _gridPositions[i, 10].transform);
         }
 
         StartCoroutine(setGrid());
@@ -201,10 +204,9 @@ public class RankingClientFinal : MonoBehaviour
                 positionYRelative = (Mathf.Round(positionYRelative * 10.0f) * 0.1f) * 10;
                 //_teamParents[team.Key].GetComponent<Image>().fillAmount = positionYRelative/10;
                 int positionY = (int)positionYRelative;
-
+                ManagerFillAmount(_teamParents[teamNumbers], positionYRelative / 10);
                 Vector2 newPos = new Vector2(_rocketsTransforms[team.Key].transform.position.x, _gridPositions[teamNumbers, positionY].transform.position.y);
                 _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
-
             }
             else
             {
@@ -214,7 +216,10 @@ public class RankingClientFinal : MonoBehaviour
             teamNumbers++;
         }
     }
-
+    private void ManagerFillAmount(GameObject rocketTrail, float pos)
+    {
+        rocketTrail.GetComponent<Image>().fillAmount = pos;
+    }
     /// <summary>
     /// Need waits to can create the grid
     /// </summary>

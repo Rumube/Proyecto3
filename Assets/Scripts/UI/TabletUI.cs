@@ -266,25 +266,25 @@ public class TabletUI : UI
 
         switch (ServiceLocator.Instance.GetService<IGameManager>().GetCurrentGameName())
         {
+            case "Cabina Asociacion":
+            case "Cabina Espacio Tiempo":
             case "Cabina Geometría":
             case "Cabina Series":
-            case "Cabina Espacio Tiempo":
-            case "Cabina Asociación":
             case "Cabina Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("CabinGamePreview_Animation");
 
                 break;
+            case "Telescopio Asociación Estrellas":
+            case "Telescopio Asociación":
             case "Telescopio Geometría":
             case "Telescopio Series":
-            case "Telescopio Espacio Tiempo":
-            case "Telescopio Asociación":
             case "Telescopio Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("TelescopioGamePreview_Animation");
                 break;
+            case "Panel botones Asociacion":
+            case "Panel botones Espacio Tiempo":
             case "Panel botones Geometría":
             case "Panel botones Series":
-            case "Panel botones Espacio Tiempo":
-            case "Panel botones Asociación":
             case "Panel botones Sumas y Restas":
                 _blackTransition.GetComponent<Animator>().Play("BotonesGamePreview_Animation");
 
