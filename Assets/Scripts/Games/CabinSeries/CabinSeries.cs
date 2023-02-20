@@ -47,6 +47,9 @@ public class CabinSeries : MonoBehaviour
         GenerateAsteroids();
         GenerateOrder();
     }
+    /// <summary>
+    /// Destroy the asteroids in the scene
+    /// </summary>
     private void DestroyAsteroids()
     {
         List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
@@ -57,6 +60,9 @@ public class CabinSeries : MonoBehaviour
         _generatedAsteroids.Clear();
         _playerOrder.Clear();
     }
+    /// <summary>
+    /// Select from <see cref="SERIES_TYPE"/>
+    /// </summary>
     private void GenerateTarget()
     {
         _serieType = (SERIES_TYPE)(Random.Range(0, 4));
@@ -92,8 +98,7 @@ public class CabinSeries : MonoBehaviour
         }
     }
     /// <summary>
-    /// Generate asteroids and asing the value
-    /// in the correct order. Low to high mode
+    /// Spawn the asteroids in order <see cref="SERIES_TYPE.lowToHigh"/>
     /// </summary>
     private void SpawnAteroidsLowToHigh()
     {
@@ -118,7 +123,9 @@ public class CabinSeries : MonoBehaviour
             scale += 0.1f;
         }
     }
-
+    /// <summary>
+    /// Spawn the asteroids in order <see cref="SERIES_TYPE.lessSpikesToMore"/>
+    /// </summary>
     private void SpawnAteroidsLessToMore()
     {
         List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
@@ -142,8 +149,7 @@ public class CabinSeries : MonoBehaviour
     }
 
     /// <summary>
-    /// Generate asteroids and asing the value
-    /// in the correct order. High to low mode
+    /// Spawn the asteroids in order <see cref="SERIES_TYPE.highToLow"/>
     /// </summary>
     private void SpawnAteroidsHighToLow()
     {
@@ -168,6 +174,9 @@ public class CabinSeries : MonoBehaviour
             scale -= 0.1f;
         }
     }
+    /// <summary>
+    /// Spawn the asteroids in order <see cref="SERIES_TYPE.moreSpikesToLess"/>
+    /// </summary>
     private void SpawnAteroidsMoreToLess()
     {
         List<GameObject> spawnAux = new List<GameObject>(_spawnsList);
@@ -248,7 +257,9 @@ public class CabinSeries : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
     }
-
+    /// <summary>
+    /// Updates the positions of the asteroids selected by the user.
+    /// </summary>
     private void UpdatePositions()
     {
         foreach (GameObject currentAsteroid in _playerOrder)
@@ -256,6 +267,9 @@ public class CabinSeries : MonoBehaviour
             currentAsteroid.GetComponent<PickableAsteroid>().UpdateOrderText(_playerOrder.IndexOf(currentAsteroid));
         }
     }
+    /// <summary>
+    /// Shoot the asteroids in order leaving a waiting time between shots
+    /// </summary>
     public IEnumerator FinishAnimation()
     {
         foreach (GameObject currentAteroid in _generatedAsteroids)
@@ -276,15 +290,27 @@ public class CabinSeries : MonoBehaviour
         ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
         RestartGame();
     }
+    /// <summary>
+    /// Returns the value of <see cref="_serieType"/>
+    /// </summary>
+    /// <returns></returns>
     public SERIES_TYPE GetSeriesType()
     {
         return _serieType;
     }
+    /// <summary>
+    /// Adds the selected asteroid to the asteroid list <see cref="_playerOrder"/>
+    /// </summary>
+    /// <param name="newAteroid">Selected asteroid</param>
     public void AddAsteroidToPlayerOrder(GameObject newAteroid)
     {
         _playerOrder.Add(newAteroid);
         UpdatePositions();
     }
+    /// <summary>
+    /// Remove the selected asteroid to the asteroid list <see cref="_playerOrder"/>
+    /// </summary>
+    /// <param name="newAteroid">Selected asteroid</param>
     public void RemoveAsteroidToPlayerOrder(GameObject newAsteroid)
     {
         _playerOrder.Remove(newAsteroid);
