@@ -18,12 +18,6 @@ public class InstallerSinBucle : MonoBehaviour
     public Positive _positive;
     public CalculatePuntuation _calculatePoints;
 
-    //private ICalculatePoints _ICalculatePoints;
-    //private IInput _inputUsed;
-    //private IError _IError;
-    //private IFrogMessage _IFrogMessage;
-    //private IPositive _IPositive;
-    // Start is called before the first frame update
     void Awake()
     {     
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
