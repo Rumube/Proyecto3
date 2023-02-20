@@ -59,25 +59,6 @@ public class CreatePanel_Prueba : MonoBehaviour
             }
             _checkButton.interactable = true;
         }
-
-
-        //if (_allList.Count == _row * _column)
-        //{
-        //    if (ServiceLocator.Instance.GetService<GameManager>()._gameStateClient != GameManager.GAME_STATE_CLIENT.playing)
-        //    {
-        //        for (int i = 0; i < _allList.Count; i++)
-        //        {
-        //            _allList[i].GetComponent<Button>().interactable = false;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < _allList.Count; i++)
-        //        {
-        //            _allList[i].GetComponent<Button>().interactable = true;
-        //        }
-        //    }
-        //}
     }
     /// <summary>
     /// Creates a panel with geometry.
@@ -103,6 +84,11 @@ public class CreatePanel_Prueba : MonoBehaviour
         }
         Invoke("SendMessage", 1f);
     }
+    /// <summary>
+    /// Randomize a array
+    /// </summary>
+    /// <param name="arr">Array</param>
+    /// <param name="n">Array length</param>
     static void randomize(List<GameObject> arr, int n)
     {
         // Creating a object

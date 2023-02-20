@@ -43,19 +43,5 @@ public class ObjectPanel : MonoBehaviour
             }
 
         }
-        //if (_pressed==true)
-        //{
-        //    GetComponent<GeometryButton>()._light.SetActive(false);
-        //}
-        //else
-        //{
-        //    GetComponent<GeometryButton>()._light.SetActive(true);
-        //}
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
     }
 }
