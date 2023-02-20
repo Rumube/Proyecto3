@@ -61,12 +61,18 @@ public class PanelCablesGenerateGrid : MonoBehaviour
         float yValue = screenSize.y / _dim;
         _layoutGroup.cellSize = new Vector2(yValue, yValue);
     }
+    /// <summary>
+    /// Restart the minigame and prepare the next round
+    /// </summary>
     public void Restart()
     {
         DeleteCells();
         GenerateGrid();
         GetComponent<PanelCablesCamino>().GenerateNewPaht(_dim);
     }
+    /// <summary>
+    /// Detroy the cells in the grid
+    /// </summary>
     private void DeleteCells()
     {
         for (int i = 0; i < _dim; i++)

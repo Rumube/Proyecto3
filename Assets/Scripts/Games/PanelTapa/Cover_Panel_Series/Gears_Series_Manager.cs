@@ -17,10 +17,4 @@ public class Gears_Series_Manager : MonoBehaviour
         guide.SetActive(_currentDataDifficulty.guide);
         int _increase = Random.Range(0, 2);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

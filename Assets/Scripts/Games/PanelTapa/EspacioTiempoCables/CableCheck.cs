@@ -13,11 +13,13 @@ public class CableCheck : MonoBehaviour
     {
         _cableData = GetComponent<CellCable>();
     }
-
+    /// <summary>
+    /// Check if the connections made by the wires reach the end of the cable run
+    /// </summary>
+    /// <param name="path"><see cref="PanelCablesCamino"/></param>
+    /// <param name="preCell">Previous cell</param>
     public void CheckConection(PanelCablesCamino path, CellCable preCell = null)
     {
-        //TODO: INTENTAR GUARDAR DONDE HAY MÁS CONEXIONES PARA VOLVER MÁS TARDE SI NO HAY CAMINOS
-        //PROBAR ALGORITMO A*
         bool finish = false;
         _count++;
         if(_count >= _cableData._conections.Count && _overFlow)
@@ -39,13 +41,6 @@ public class CableCheck : MonoBehaviour
             {
                 CheckConection(path, preCell);
             }
-            //foreach (GameObject currentCable in _cableData._conections)
-            //{
-            //    if (currentCable.GetComponent<CellCable>() != preCell && _count < 2)
-            //    {
-            //        currentCable.GetComponent<CableCheck>().CheckConection(path, _cableData);
-            //    }
-            //}
         }
         else
         {//FINAL
@@ -56,14 +51,25 @@ public class CableCheck : MonoBehaviour
             path.setCorrect(true);
         }
     }
+    /// <summary>
+    /// Returns if the cell has cheked
+    /// </summary>
+    /// <returns></returns>
     public bool GetChecked()
     {
         return _checked;
     }
+    /// <summary>
+    /// Set the value of <see cref="_checked"/>
+    /// </summary>
+    /// <param name="value">The new value</param>
     public void SetCheked(bool value)
     {
         _checked = value;
     }
+    /// <summary>
+    /// Reset the values of <see cref="_count"/> and <see cref="_overFlow"/>
+    /// </summary>
     public void ResetCount()
     {
         _count = 0;
