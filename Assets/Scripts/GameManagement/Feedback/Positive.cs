@@ -92,7 +92,9 @@ public class Positive : MonoBehaviour, IPositive
             degrees += radialPart;
         }
     }
-
+    /// <summary>
+    /// Add points and activate animations and sounds for the minigame
+    /// </summary>
     public void AddPoints()
     {
         _pitchValue += 0.01f;

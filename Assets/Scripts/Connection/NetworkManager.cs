@@ -254,7 +254,10 @@ public class NetworkManager : MonoBehaviour, INetworkManager
     {
         return _studentsToTablets;
     }
-
+    /// <summary>
+    /// Randomize the active students in the class and distribute
+    /// them among the different tablets equally. 
+    /// </summary>
     public void RandomizeStudents()
     {
         //Utilizar shuffle para barajar los alumnos y luego añadirlos :)

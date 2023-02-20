@@ -117,7 +117,9 @@ public class Client
 
         _ws.Send(JsonConvert.SerializeObject(package));
     }
-
+    /// <summary>
+    /// Send a package when a student finish the games and needs to view the final score
+    /// </summary>
     public void ViewFinalScore()
     {
         ClientPackage package = new ClientPackage();
@@ -126,7 +128,9 @@ public class Client
 
         _ws.Send(JsonConvert.SerializeObject(package));
     }
-
+    /// <summary>
+    /// Send a package with the student's data, points and statistics of his last game
+    /// </summary>
     public void StudentScore()
     {
         ClientPackage package = new ClientPackage();
@@ -140,7 +144,6 @@ public class Client
         package._matchData._averageGameTime = ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageTime;
         //NEW POINTS SYSTEM
         package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
-        //package._matchData._averagePoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averagePoints;
         package._matchData._gameLevel = ServiceLocator.Instance.GetService<INetworkManager>().GetMinigameLevel();
         _ws.Send(JsonConvert.SerializeObject(package));
     }
@@ -152,7 +155,11 @@ public class Client
         if (_ws != null)
             _ws.Close();
     }
-
+    /// <summary>
+    /// Returns the id of the current tablet,
+    /// if the tablet dosn't exits returns a random value
+    /// </summary>
+    /// <returns>The id's tablet</returns>
     public int GetTabletID()
     {
         if (_tablet != null)

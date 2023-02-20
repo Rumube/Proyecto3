@@ -27,6 +27,14 @@ public class CameraShake : MonoBehaviour
 
 	void Update()
 	{
+		UpdateShakeController();
+	}
+	/// <summary>
+	/// Checks if the shake time is finish.
+	/// If is finished the shake stop
+	/// </summary>
+	private void UpdateShakeController()
+    {
 		if (Time.realtimeSinceStartup < _finishShake)
 		{
 			_camTransform.localPosition = originalPos + Random.insideUnitSphere * _shakeAmount;
@@ -36,7 +44,11 @@ public class CameraShake : MonoBehaviour
 			_camTransform.localPosition = originalPos;
 		}
 	}
-
+	/// <summary>
+	/// Change the camera's motion and duration settings and it starts shaking
+	/// </summary>
+	/// <param name="shakeDuration">The time </param>
+	/// <param name="shakeIntensity">The intensity of the shake</param>
 	public void StartShake(float shakeDuration, float shakeIntensity)
     {
 		_finishShake = Time.realtimeSinceStartup + shakeDuration;

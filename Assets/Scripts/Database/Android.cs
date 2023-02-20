@@ -254,13 +254,18 @@ public class Android : MonoBehaviour
         CloseDataBase();
     }
     /// <summary>
-    /// 
+    /// Call from the button to execute <see cref="ReaderStudentPresent"/>
     /// </summary>
     public void ReadStudentsPresentDate()
     {
         ReaderStudentPresent(_buttonPrefab, _location, ServiceLocator.Instance.GetService<IGameManager>().GetNotPresentsStudents());
     }
-
+    /// <summary>
+    /// Destroy the existing buttons and replace them with ones updated with the current students.
+    /// </summary>
+    /// <param name="prefab">The prefab to instatiate</param>
+    /// <param name="location">The new position</param>
+    /// <param name="notPresentStudents">The list of students not present to be ignored when creating buttons</param>
     public void ReaderStudentPresent(GameObject prefab, Transform location, List<String> notPresentStudents)
     {
 
