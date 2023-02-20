@@ -61,7 +61,6 @@ public class CreatePanelGeometry : MonoBehaviour
         }
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
-
     /// <summary>
     /// Generates the normal geometry.
     /// </summary>
@@ -109,8 +108,6 @@ public class CreatePanelGeometry : MonoBehaviour
     /// <summary>
     /// Generates the geometry type of the target.
     /// </summary>
-   
-    
     private void GenerateTypeTargetGeometry()
     {
         _typeTargetGeometry.Clear();
@@ -159,8 +156,6 @@ public class CreatePanelGeometry : MonoBehaviour
         }
         return result;
     }
-
-
     // Update is called once per frame
     void Update()
     {
@@ -183,7 +178,6 @@ public class CreatePanelGeometry : MonoBehaviour
         }
 
     }
-
     /// <summary>
     /// Restarts the minigame.
     /// </summary>
