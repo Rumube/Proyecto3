@@ -16,9 +16,6 @@ public class PickableAsteroid : MonoBehaviour
     public Animator _anim;
     public Animator _asteroidAnim;
     private CabinSeries _gm;
-    [Header("Text")]
-    //public TMP_Text _orderText;
-    //public Canvas _canvas;
 
     [Header("State")]
     private bool _selected = false;
@@ -76,6 +73,10 @@ public class PickableAsteroid : MonoBehaviour
         _positionInOrder = position;
         _game = GAME.series;
     }
+    /// <summary>
+    /// Set the <see cref="Geometry.Geometry_Type"/> to the asteroid
+    /// </summary>
+    /// <param name="geometry"></param>
     public void SetAsociacionValue(Geometry.Geometry_Type geometry)
     {
         _geometry = geometry;
@@ -165,28 +166,51 @@ public class PickableAsteroid : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         SelectAsteroid();
     }
+    /// <summary>
+    /// Deselect the gameobject
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DeselectAnimController()
     {
         yield return new WaitForSeconds(0.5f);
         _selectIcon.SetActive(false);
     }
+    /// <summary>
+    /// Returns if the asteroid are selected by the users
+    /// </summary>
+    /// <returns><see cref="_selected"/></returns>
     public bool GetSelected()
     {
         return _selected;
     }
-
+    /// <summary>
+    /// Returns the position of the asteroid in the order
+    /// </summary>
+    /// <returns><see cref="_positionInOrder"/></returns>
     public int GetPositionInOrder()
     {
         return _positionInOrder;
     }
+    /// <summary>
+    /// Returns the positition gived by the user
+    /// </summary>
+    /// <returns><see cref="_playerOrder"/></returns>
     public int GetPlayerPositionOrder()
     {
         return _playerOrder;
     }
+    /// <summary>
+    /// Give a value to <see cref="_gm"/>
+    /// </summary>
+    /// <param name="gm">new <see cref="CabinSeries"/></param>
     public void SetCabinSeries(CabinSeries gm)
     {
         _gm = gm;
     }
+    /// <summary>
+    /// Return the <see cref="Geometry.Geometry_Type"/> of the asteroid
+    /// </summary>
+    /// <returns><see cref="_geometry"/></returns>
     public Geometry.Geometry_Type GetGeometry()
     {
         return _geometry;

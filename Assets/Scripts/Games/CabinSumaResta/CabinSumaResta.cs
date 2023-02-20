@@ -31,13 +31,9 @@ public class CabinSumaResta : MonoBehaviour
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Restars the minigame and parapre to the next round
+    /// </summary>
     private void RestartGame()
     {
         DestroyAsteroids();
@@ -45,6 +41,9 @@ public class CabinSumaResta : MonoBehaviour
         GenerateAsteroids();
         GenerateOrder();
     }
+    /// <summary>
+    /// Destroy all the asteroids in the scene
+    /// </summary>
     private void DestroyAsteroids()
     {
         List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
@@ -54,6 +53,18 @@ public class CabinSumaResta : MonoBehaviour
         }
         _generatedAsteroids.Clear();
     }
+    /// <summary>
+    /// Generate a new objective:
+    /// <list type="bullet">
+    ///     <u>Generate new value to <see cref="_asteroidsInScene"/>: Total in scene</u>
+    /// </list>
+    /// <list type="bullet">
+    ///     <u>Generate new value to <see cref="_targetAsteroids"/>: Needs to be selected</u>
+    /// </list>
+    /// <list type="bullet">
+    ///     <u>Generate new value to <see cref="_initialSelecteds"/>: Init asteroids selecteds</u>
+    /// </list>
+    /// </summary>
     private void GenerateTarget()
     {
         _asteroidsInScene = Random.Range(_currentDataDifficulty.minAteroidesinScene, _currentDataDifficulty.maxAteroidesinScene - 1);
@@ -171,6 +182,10 @@ public class CabinSumaResta : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
     }
+    /// <summary>
+    /// Destroy all the selected asteroids
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator FinishAnimation()
     {
         foreach (GameObject currentAteroid in _generatedAsteroids)
