@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using ServerPack;
 public class ServerHandle {
-
+    /// <summary>
+    /// Activate the rocket that has already placed 
+    /// all your students and is ready
+    /// </summary>
+    /// <param name="id">The rocket id</param>
     public static void UpdateReadyRockets(int id)
     {
         ServiceLocator.Instance.GetService<MobileUI>().UpdateReadyRockets(id);
@@ -33,10 +37,19 @@ public class ServerHandle {
 
         ServiceLocator.Instance.GetService<ServerUtility>().MinigameDifficulty(_package._fromUser,data[0],data[1]);
     }
+    /// <summary>
+    /// Updates the number of tablets that are viewing the final point scene
+    /// </summary>
+    /// <param name="numberTabletsViewFinalScore"></param>
     public static void UpdateTabletsViewingFinalScore(int numberTabletsViewFinalScore)
     {
         ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberTabletsLookingFinalScore();
     }
+    /// <summary>
+    /// It collects the values from the package and uses them to call the database update with the new data.
+    ///It also updates the points of the equipment.
+    /// </summary>
+    /// <param name="_package">The package</param>
     public static void MatchData(ServerPackage _package)
     {
         string studentName = _package._matchData._studentName;

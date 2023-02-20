@@ -72,17 +72,26 @@ public class ClientHandle
         EDebug.Log("Apagando");
         ServiceLocator.Instance.GetService<TabletUI>().QuitGame();
     }
+    /// <summary>
+    /// Activates the error message
+    /// </summary>
     public static void CantConnectServer()
     {
         ServiceLocator.Instance.GetService<TabletUI>()._cantConnectText.SetActive(true);
         ServiceLocator.Instance.GetService<TabletUI>()._continueNextScreen = false;
     }
+    /// <summary>
+    /// Hides the connection error and moves to the next menu screen
+    /// </summary>
     public static void CanConnectServer()
     {
         ServiceLocator.Instance.GetService<TabletUI>()._cantConnectText.SetActive(false);
         ServiceLocator.Instance.GetService<TabletUI>()._continueNextScreen = true;
     }
-
+    /// <summary>
+    /// Receives a packet from the server with the updated equipment points
+    /// </summary>
+    /// <param name="package">The package with the points</param>
     public static void UpdateTeamPoints(ClientPackage package)
     {
         ServiceLocator.Instance.GetService<IGameManager>().SetDictionaryPoints(package._rankingPoints._teamPoints);

@@ -239,7 +239,9 @@ public class ServerUtility : MonoBehaviour
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }
-
+    /// <summary>
+    /// Sends all clients an update on tean points
+    /// </summary>
     public void BroadcastTeamPoints()
     {
         _serverPackage = new ServerPackage();
