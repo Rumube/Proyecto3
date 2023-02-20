@@ -12,17 +12,14 @@ public class ButtonCounter_1 : MonoBehaviour
     [Header("Geometry List")]
     public List<GameObject> _geometrylist = new List<GameObject>();
     private Geometry.Geometry_Type _trueGeometry;
-    private int geo = 0;
+    private int _geo = 0;
     private void Start()
     {
      UpdateButtonGO();
     }
-
-    private void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Changes the activated gameObject depending on the value of the <see cref="Geometry.Geometry_Type"/>
+    /// </summary>
     private void UpdateButtonGO()
     {
         TurnsButtonsOff();
@@ -51,6 +48,9 @@ public class ButtonCounter_1 : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// Turn off all the buttons 
+    /// </summary>
     private void TurnsButtonsOff()
     {
         for (int i = 0; i < _geometrylist.Count; i++)
@@ -59,21 +59,26 @@ public class ButtonCounter_1 : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Generate new order
+    /// </summary>
+    /// <returns></returns>
     public string _GetTextGame()
     {
         return "¡Pulsa los botones hasta completar las series!";
     }
-
+    /// <summary>
+    /// Change the geometry to the next geometry in the list using <see cref="_geo"/>
+    /// </summary>
     public void ChangeGeometry()
     {
-        geo++;
-        if (geo >= 6)
+        _geo++;
+        if (_geo >= 6)
         {
-            geo = 0;
+            _geo = 0;
         }
 
-        switch (geo)
+        switch (_geo)
         {
             case 0:
                 GetComponent<Geometry>()._geometryType = Geometry.Geometry_Type.circle;
@@ -123,7 +128,10 @@ public class ButtonCounter_1 : MonoBehaviour
         return counter;
     }
     #endregion
-
+    /// <summary>
+    /// Turns buttons on or off depending on the value received
+    /// </summary>
+    /// <param name="value">The value</param>
     public void EnableButtons(bool value)
     {
         foreach (GameObject currentButton in _geometrylist)
@@ -131,11 +139,18 @@ public class ButtonCounter_1 : MonoBehaviour
             currentButton.GetComponent<Button>().enabled = value;
         }
     }
-
+    /// <summary>
+    /// Sets the true geometry needs to be correct
+    /// </summary>
+    /// <param name="newGeometry"></param>
     public void SetTrueGeometry(Geometry.Geometry_Type newGeometry)
     {
         _trueGeometry = newGeometry;
     }
+    /// <summary>
+    /// Returns the true geometry
+    /// </summary>
+    /// <returns><see cref="Geometry.Geometry_Type"/></returns>
     public Geometry.Geometry_Type GetTrueGeometry()
     {
         return _trueGeometry;
