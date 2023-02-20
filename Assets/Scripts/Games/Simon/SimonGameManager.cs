@@ -55,17 +55,19 @@ public class SimonGameManager : MonoBehaviour
         else
         {
             _buttons.interactable = false;
-        }
-
-       
-        
-           
-        
+        } 
     }
+    /// <summary>
+    /// Starts the process to repeat the sequence
+    /// </summary>
     public void _RepeatSequence()
     {
         StartCoroutine(RepeatSequence());
     }
+    /// <summary>
+    /// Performs the sequence by activating and deactivating the buttons,
+    /// as well as making the corresponding sounds.
+    /// </summary>
     public IEnumerator RepeatSequence()
     {
         _playerSequenceList.Clear();
@@ -81,7 +83,6 @@ public class SimonGameManager : MonoBehaviour
         _canClick = true;
         yield return new WaitForSeconds(_data.simonVelocity);
     }
-
     #region Buttom
     /// <summary>
     /// Add to the PlayerSequence the button pressed
