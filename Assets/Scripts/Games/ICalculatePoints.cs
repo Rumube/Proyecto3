@@ -8,6 +8,9 @@ public interface ICalculatePoints
     /// <param name="success">Number of success</param>
     /// <param name="fails">Number of fails</param>
     public void Puntuation(int success, int fails);
-
+    /// <summary>
+    /// Returns <see cref="CalculatePuntuation._average"/>
+    /// </summary>
+    /// <returns><see cref="CalculatePuntuation._average"/></returns>
     public CalculatePuntuation.Average GetAverage();
 }

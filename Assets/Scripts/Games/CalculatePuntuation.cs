@@ -17,7 +17,6 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
     float _lastAtemptTime = 0;
 
     [Header("Average")]
-   // public List<Average> _averages;
     public Average _average;
     [Serializable]
     public struct Average
@@ -27,17 +26,11 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
         public float averageSuccess;
         public float averageFails;
     }
-    void Start()
-    {
-
-    }
     /// <summary>Calculates the puntuation</summary>
     /// <param name="success">Number of success</param>
     /// <param name="fails">Number of fails</param>
     public void Puntuation(int success, int fails)
     {
-
-        //ServiceLocator.Instance.GetService<GameManager>()._gameStateClient = GameManager.GAME_STATE_CLIENT.ranking;
         float finishTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetFinishTime();
         float currentTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetCurrentTime();
         if (_attempt>0)
@@ -74,8 +67,6 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
     {
         float finishTime = ServiceLocator.Instance.GetService<IGameTimeConfiguration>().GetFinishTime();
 
-        
-
         float sumTime = 0;
         for (int i = 0; i < _timeList.Count; i++)
         {
@@ -103,7 +94,10 @@ public class CalculatePuntuation : MonoBehaviour, ICalculatePoints
         }
         
     }
-
+    /// <summary>
+    /// Return <see cref="_average"/>
+    /// </summary>
+    /// <returns><see cref="_average"/></returns>
     public Average GetAverage()
     {
         return _average;

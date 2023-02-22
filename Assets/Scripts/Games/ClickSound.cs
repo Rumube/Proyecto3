@@ -12,8 +12,9 @@ public class ClickSound : MonoBehaviour
     {
         font.clip = clip;
     }
-
-    // Update is called once per frame
+    /// <summary>
+    /// run the clip
+    /// </summary>
     public void Play()
     {
         font.Play();
