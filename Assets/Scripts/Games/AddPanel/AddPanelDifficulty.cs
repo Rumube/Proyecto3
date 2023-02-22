@@ -19,7 +19,6 @@ public class AddPanelDifficulty : MonoBehaviour
         public int elementToAddSubs;
         [Tooltip("The number of pressed buttons")]
         public int pressedButtons;
-
     }
 
     /// <summary>

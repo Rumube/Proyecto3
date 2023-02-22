@@ -26,9 +26,6 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
         }
     }
 
-    /// <summary>
-    /// Playing time begins.
-    /// </summary>
     public void StartGameTime()
     {
         _canStartTime = true;
@@ -85,12 +82,10 @@ public class GameTimeConfiguration : MonoBehaviour, IGameTimeConfiguration
     {
         _canStartTime = state;
     }
-
     public float GetCurrentTime()
     {
         return _currentTime;
     }
-
     public float GetFinishTime()
     {
         return _finishTime;
