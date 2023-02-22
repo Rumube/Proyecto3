@@ -327,6 +327,7 @@ public class TabletUI : UI
             case "Cabina Geometría":
             case "Cabina Series":
             case "Cabina Sumas y Restas":
+            //Añadir nuevos case para tener minijuegos con la siguiente animación
                 _blackTransition.GetComponent<Animator>().Play("CabinGamePreview_Animation");
 
                 break;
