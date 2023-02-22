@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GenerateStarsTelescopeSeries : MonoBehaviour
 {
-
-
     [Header("Prefabs references")]
     public List<GameObject> _spikesStars;
     public GameObject _star;
@@ -19,7 +17,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     public List<GameObject> _starList = new List<GameObject>();
     public bool _pressed = false;
     private bool _firstRound = true;
-
 
     private enum SERIES_TYPE
     {
@@ -38,7 +35,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         StartCoroutine(GenerateNewOrde());
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -47,7 +43,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             InputManager();
         }
     }
-
     /// <summary>
     /// Starts the generation process
     /// </summary>
@@ -57,27 +52,33 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         DestroyStars();
 
         _serieType = (SERIES_TYPE)Random.Range(0, System.Enum.GetValues(typeof(SERIES_TYPE)).Length);
-        print("Tipo: " + _serieType);
         switch (_serieType)
         {
             case SERIES_TYPE.highToLow:
                 GenerateSize(true);
+                GenerateStringHighToLow(true);
                 break;
             case SERIES_TYPE.lowToHigh:
                 GenerateSize(false);
+                GenerateStringHighToLow(false);
                 break;
             case SERIES_TYPE.moreSpikesToLess:
                 GenerateSpikes(true);
+                GenerateStringMoreToLess(false);
                 break;
             case SERIES_TYPE.lessSpikesToMore:
                 GenerateSpikes(false);
+                GenerateStringMoreToLess(false);
                 break;
             default:
                 GenerateSize(true);
                 break;
         }
     }
-
+    /// <summary>
+    /// Destroy all the stars in the scene
+    /// Clear the list <see cref="_starList"/>
+    /// </summary>
     private void DestroyStars()
     {
         GetComponent<ConstelationGenerator>().ClearConstelation();
@@ -92,6 +93,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     /// <summary>
     /// Generates the stars in the <see cref="SERIES_TYPE.highToLow"/> game.
     /// </summary>
+    /// <param name="isHighToLow">Order direction</param>
     private void GenerateSize(bool isHighToLow)
     {
         int maxSerie = _dataDifficulty.maxSerie;
@@ -102,7 +104,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         {
             GameObject newStar = Instantiate(_star, _starsParent.transform);
             //Generate star scale
-            Vector2 newScale = new Vector2(transform.localScale.x + (i*0.3f), transform.localScale.x + (i * 0.3f));
+            Vector2 newScale = new Vector2(transform.localScale.x + (i * 0.3f), transform.localScale.x + (i * 0.3f));
             newStar.transform.localScale = newScale;
 
             //Generate star position
@@ -113,7 +115,36 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
             newStar.GetComponent<Star>().InitStart(gameObject);
         }
+    }
+    /// <summary>
+    /// Generates the stars in the <see cref="SERIES_TYPE.moreSpikesToLess"/> game.
+    /// </summary>
+    /// <param name="isMoreToLees">Order Direction</param>
+    private void GenerateSpikes(bool isMoreToLees)
+    {
+        int maxSerie = _dataDifficulty.maxSerie;
+        GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
+        List<GameObject> spawnsList = new List<GameObject>(spawns);
 
+        for (int i = 0; i < maxSerie; i++)
+        {
+            GameObject newStar = Instantiate(_spikesStars[i], _starsParent.transform);
+
+            //Generate star position
+            int randomIndex = Random.Range(0, spawnsList.Count);
+            newStar.transform.position = spawnsList[randomIndex].transform.position;
+            spawnsList.RemoveAt(randomIndex);
+            _starList.Add(newStar);
+
+            newStar.GetComponent<Star>().InitStart(gameObject);
+        }
+    }
+    /// <summary>
+    /// Generate the string order to the game <see cref="SERIES_TYPE.highToLow"/>
+    /// </summary>
+    /// <param name="isHighToLow">Order direction</param>
+    private void GenerateStringHighToLow(bool isHighToLow)
+    {
         string _textOrder = "";
 
         if (_firstRound)
@@ -137,29 +168,13 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         }
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
-
     }
-
-    private void GenerateSpikes(bool isMoreToLees)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="isMoreToLess"></param>
+    private void GenerateStringMoreToLess(bool isMoreToLess)
     {
-        int maxSerie = _dataDifficulty.maxSerie;
-        GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
-        List<GameObject> spawnsList = new List<GameObject>(spawns);
-
-        for (int i = 0; i < maxSerie; i++)
-        {
-            GameObject newStar = Instantiate(_spikesStars[i], _starsParent.transform);
-
-            //Generate star position
-            int randomIndex = Random.Range(0, spawnsList.Count);
-            newStar.transform.position = spawnsList[randomIndex].transform.position;
-            spawnsList.RemoveAt(randomIndex);
-            _starList.Add(newStar);
-
-            newStar.GetComponent<Star>().InitStart(gameObject);
-        }
-
-
         string _textOrder = "";
 
         if (_firstRound)
@@ -172,7 +187,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
             _textOrder += "Ahora de ";
         }
 
-        if (isMoreToLees)
+        if (isMoreToLess)
         {
             _starList.Reverse();
             _textOrder += "más a menos puntas";
@@ -184,7 +199,6 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
 
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
     }
-
     /// <summary>
     /// Controlls the input of the game
     /// </summary>
@@ -192,10 +206,10 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
     {
         AndroidInputAdapter.Datos newInput = ServiceLocator.Instance.GetService<IInput>().InputTouch();
         if (newInput.result)
-        {            
+        {
             if (!_pressed)
             {
-                _pressed = true; 
+                _pressed = true;
                 _particles.SetActive(true);
             }
             else
@@ -221,7 +235,7 @@ public class GenerateStarsTelescopeSeries : MonoBehaviour
         {
             if (_pressed)
             {
-                _pressed = false; 
+                _pressed = false;
                 _particles.SetActive(false);
                 GetComponent<ConstelationGenerator>().ClearConstelation();
             }
