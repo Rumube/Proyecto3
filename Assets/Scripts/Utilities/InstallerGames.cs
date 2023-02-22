@@ -60,7 +60,7 @@ public class InstallerGames : MonoBehaviour
         }
         if (ServiceLocator.Instance.Contains<MultilanguajeReader>())
         {
-            //ServiceLocator.Instance.UnregisterService<MultilanguajeReader>();
+            ServiceLocator.Instance.UnregisterService<MultilanguajeReader>();
         }
 
         ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
@@ -71,7 +71,7 @@ public class InstallerGames : MonoBehaviour
         ServiceLocator.Instance.RegisterService<IPositive>(_positive);
         ServiceLocator.Instance.RegisterService<ICalculatePoints>(_calculatePuntiation);
         ServiceLocator.Instance.RegisterService(_rankingClient);
-        //ServiceLocator.Instance.RegisterService(_multilanguajeReader);
+        ServiceLocator.Instance.RegisterService(_multilanguajeReader);
 
         if (_notGameLoop)
         {
