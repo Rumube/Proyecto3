@@ -64,27 +64,60 @@ public class TabletUI : UI
     // Start is called before the first frame update
     void Start()
     {
-        //Get the last info saved
+        GetLastInfoSaved();
+        AddingRootWindows();
+        AddNonRootWindow();
+        DesactivateAllWindows();
+        NextStudent();
+        OpenFinalScore();
+        OpenCurrentWindow();
+        PlayInitialAnimation();
+    }
+    /// <summary>
+    /// Get the last info saved
+    /// </summary>
+    private void GetLastInfoSaved()
+    {
         if (PlayerPrefs.HasKey("IPServer") && PlayerPrefs.HasKey("PortServer"))
         {
             _ipServer.text = PlayerPrefs.GetString("IPServer");
             _portServer.text = PlayerPrefs.GetString("PortServer");
         }
-        //Adding root windows in order of appearance
+    }
+    /// <summary>
+    /// Adding root windows in order of appearance
+    /// </summary>
+    private void AddingRootWindows()
+    {
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._initialScreenTablet);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._connection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._studentSelection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._gameSelection);
         _windowsTree.Add(ServiceLocator.Instance.GetService<UIManager>()._finalScoreTablet);
-        //Non root windows
+    }
+    /// <summary>
+    ///Non root windows
+    /// </summary>
+    private void AddNonRootWindow()
+    {
         ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(false);
-
-        //Desactive all windows
+    }
+    /// <summary>
+    /// Desactive all windows
+    /// </summary>
+    private void DesactivateAllWindows()
+    {
         for (int i = 0; i < _windowsTree.Count; ++i)
         {
             _windowsTree[i].SetActive(false);
         }
-        //If a minigame is finished but not the session, it calls another student
+    }
+    /// <summary>
+    /// If a minigame is finished but not the session,
+    /// it calls another student
+    /// </summary>
+    private void NextStudent()
+    {
         if (ServiceLocator.Instance.GetService<IGameManager>().GetReturnToCommonScene())
         {
             _uiIndex = 2;
@@ -92,25 +125,45 @@ public class TabletUI : UI
             ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.selectStudent);
             ServiceLocator.Instance.GetService<IGameManager>().SetReturnToCommonScene(false);
         }
-        //If the time session ends or the teacher decided it, the tablet opens the final score
+    }
+    /// <summary>
+    /// If the time session ends or the teacher decided it,
+    /// the tablet opens the final score
+    /// </summary>
+    private void OpenFinalScore()
+    {
         if (ServiceLocator.Instance.GetService<IGameManager>().GetEndSessionTablet())
         {
             _uiIndex = 4;
             ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(false);
             ServiceLocator.Instance.GetService<INetworkManager>().SendViewingFinalScore();
         }
-        //Active just the first one
+    }
+    /// <summary>
+    /// Active only the current Window
+    /// </summary>
+    private void OpenCurrentWindow()
+    {
         _windowsTree[_uiIndex].SetActive(true);
         _continueNextScreen = true;
         if (_uiIndex == 4)
         {
             _rankingClientFinal.StartRanking();
         }
-        //Initial animations
+    }
+    /// <summary>
+    /// Play the initial animaions
+    /// </summary>
+    private void PlayInitialAnimation()
+    {
         _fadeOutInitialScreen.Play("InitialScreenFadeOut");
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
     }
+    /// <summary>
+    /// Play FadeIn animation in all btns
+    /// </summary>
+    /// <param name="vp"></param>
     void InitialAnimEndReached(VideoPlayer vp)
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)
@@ -119,6 +172,9 @@ public class TabletUI : UI
         }
         _conectionBackgroundAnims.Play("FadeInConnection");
     }
+    /// <summary>
+    /// Hide all btns
+    /// </summary>
     public void Alpha100InitialButtons()
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)

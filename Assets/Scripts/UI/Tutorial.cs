@@ -7,31 +7,23 @@ public class Tutorial : MonoBehaviour
 {
     public GameObject _eachScreen;
     int _showingValue;
-
     public GameObject ClickSound;
-
-
 
     void Start()
     {
         _eachScreen.SetActive(false);
         _showingValue = 0;
-       
     }
-
-    void Update()
-    {
-        //if (Input.GetMouseButton(0))
-        //{
-        //    Instantiate(ClickSound);
-        //}
-    }
-
+    /// <summary>
+    /// Play a clip
+    /// </summary>
     public void MakeSound()
     {
         GetComponent<AudioSource>().Play();
     }
-
+    /// <summary>
+    /// Show/Hide windows
+    /// </summary>
     public void ShowScreen()
     {
         if (_showingValue == 0)
@@ -45,7 +37,9 @@ public class Tutorial : MonoBehaviour
             _showingValue = 0;
         }
     }
-
+    /// <summary>
+    /// Returns to previous windows
+    /// </summary>
     public void BackScreen()
     {
         _eachScreen.SetActive(false);

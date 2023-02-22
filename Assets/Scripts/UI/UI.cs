@@ -27,24 +27,26 @@ public abstract class UI : MonoBehaviour,IUI
         Application.Quit();
     }
 
-    /// <summary>Open/close the window credits</summary>
+    /// <summary>Open/close the window credits in mobile</summary>
     public void CreditsMobile()
     {
         ServiceLocator.Instance.GetService<UIManager>()._credits.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._credits.activeSelf);
     }
+    /// <summary>Open/close the window tutorial</summary>
     public void TutorialMobile()
     {
         ServiceLocator.Instance.GetService<UIManager>()._tutorial.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._tutorial.activeSelf);
     }
+    /// <summary>Open/close the window credits in tablet</summary>
     public void CreditsTablet()
     {
         ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.SetActive(!ServiceLocator.Instance.GetService<UIManager>()._creditsTablet.activeSelf);
     }
+    /// <summary>Open/close the window ranking Client</summary>
     public void OpenFinalRankingClient()
     {
         _windowsTree[4].SetActive(true);
     }
-
     /// <summary>Open the next window deppending on the position of the array and close the previous one</summary>
     public void OpenNextWindow()
     {

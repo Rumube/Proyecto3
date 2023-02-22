@@ -22,12 +22,6 @@ public class FinalMinigameRanking : MonoBehaviour
     private bool _newStar = true;
     private bool _isWait = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -43,16 +37,16 @@ public class FinalMinigameRanking : MonoBehaviour
             }
             _points.text = (Mathf.Round(_currentPoints * 10.0f) * 0.1f).ToString();
         }
-
     }
-
+    /// <summary>
+    /// Displays a panel with the number of points scored and a star rating
+    /// </summary>
     public void UpdateFinalPanel()
     {
         _panel.SetActive(true);
         _nameTxt.text = ServiceLocator.Instance.GetService<IGameManager>().GetCurrentStudentName();
-        _totalPoints = int.Parse(_scorePanel.text);
+        _totalPoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
         _starPoints = (int)ServiceLocator.Instance.GetService<ICalculatePoints>().GetAverage().averageSuccess;
-        print("Points: " + _starPoints);
         _addPoints = Time.deltaTime * _totalPoints * 0.5f;
         if (_starPoints < 33)
         {
@@ -72,7 +66,9 @@ public class FinalMinigameRanking : MonoBehaviour
         }
         StartCoroutine(WaitToStart());
     }
-
+    /// <summary>
+    /// Activate the following stars
+    /// </summary>
     private void ActiveStar()
     {
         _starList[_currentStar].SetActive(true);
@@ -85,7 +81,9 @@ public class FinalMinigameRanking : MonoBehaviour
             _currentStar++;
         }
     }
-
+    /// <summary>
+    /// Waiting period
+    /// </summary>
     IEnumerator WaitToStart()
     {
         yield return new WaitForSeconds(1.5f);

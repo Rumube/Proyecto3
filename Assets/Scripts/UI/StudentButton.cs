@@ -26,14 +26,13 @@ public class StudentButton : MonoBehaviour
     bool _selected = false;
     public Image _sprite;
     public List<Sprite> _colorTeams;
-    
+
     void Start()
     {
         _animator = GetComponent<Animator>();
         //Puts the background button invisible in order to not having misundertoods
-         GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
+        GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
     }
-
     void Update()
     {
         if (_deleting)
@@ -55,7 +54,7 @@ public class StudentButton : MonoBehaviour
                 _animating = false;
                 _animator.SetBool("StartAnim", false);
             }
-             GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
+            GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 0);
 
         }
         switch (ServiceLocator.Instance.GetService<IGameManager>().GetServerState())
@@ -67,10 +66,11 @@ public class StudentButton : MonoBehaviour
                 {
                     GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, 100);
                 }
-                if(ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == _selectedTablet && !_highlighted.gameObject.activeInHierarchy)
+                if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == _selectedTablet && !_highlighted.gameObject.activeInHierarchy)
                 {
                     _highlighted.gameObject.SetActive(true);
-                }else if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() != _selectedTablet && _highlighted.gameObject.activeInHierarchy)
+                }
+                else if (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() != _selectedTablet && _highlighted.gameObject.activeInHierarchy)
                 {
                     _highlighted.gameObject.SetActive(false);
                 }
@@ -85,10 +85,12 @@ public class StudentButton : MonoBehaviour
                 break;
         }
 
-        if(_selectedTablet != -1){
-            _sprite.sprite = _colorTeams[_selectedTablet-1];
+        if (_selectedTablet != -1)
+        {
+            _sprite.sprite = _colorTeams[_selectedTablet - 1];
         }
-        else{
+        else
+        {
             _sprite.sprite = _colorTeams[6];
         }
 
@@ -109,7 +111,7 @@ public class StudentButton : MonoBehaviour
     {
         //Check if she is on the correct screen in order to have different behaviours
         if (_addingToTablet && (ServiceLocator.Instance.GetService<INetworkManager>().GetSelectedTablet() == _selectedTablet || _selectedTablet == -1))
-        {          
+        {
             if (_add)
             {
                 //Don't do anything if the tablet already has 12 students
@@ -132,8 +134,6 @@ public class StudentButton : MonoBehaviour
             }
             ServiceLocator.Instance.GetService<MobileUI>().ContinueButtonAddStudent(ServiceLocator.Instance.GetService<INetworkManager>().CheckIfTabletsHasStudents());
             ServiceLocator.Instance.GetService<MobileUI>().UpdateNumberMininautas();
-            
-        }  
+        }
     }
-
 }

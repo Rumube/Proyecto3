@@ -8,6 +8,9 @@ public interface IUI
     public void QuitGame();
     /// <summary>Open/close the window credits</summary>
     public void CreditsMobile();
+    /// <summary>
+    /// Open/Close the window Tutorial
+    /// </summary>
     public void TutorialMobile();
     /// <summary>Open/close the window credits</summary>
     public void CreditsTablet();
