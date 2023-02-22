@@ -43,11 +43,6 @@ public class RankingClientFinal : MonoBehaviour
     public GameObject[,] _gridPositions;
 
     private bool _rankingStarted = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -216,6 +211,12 @@ public class RankingClientFinal : MonoBehaviour
             teamNumbers++;
         }
     }
+    /// <summary>
+    /// Set the fillAmount of each spaceship according 
+    /// to the position in the ranking table.
+    /// </summary>
+    /// <param name="rocketTrail">Current trail</param>
+    /// <param name="pos">Position to set</param>
     private void ManagerFillAmount(GameObject rocketTrail, float pos)
     {
         rocketTrail.GetComponent<Image>().fillAmount = pos;
