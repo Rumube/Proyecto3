@@ -23,16 +23,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     private List<GameObject> _gameStarList = new List<GameObject>();
     public GameObject _panelAppear;
 
-    //public enum ConstelationType
-    //{
-    //    triángulo = 0,
-    //    cuadrado = 1,
-    //    pentágono = 2,
-    //    hexágono = 3
-    //}
     private Geometry.Geometry_Type _constelationType;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +47,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("----------------"+_gameStarList.Count+ "----------------");
+        print("----------------" + _gameStarList.Count + "----------------");
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputManager();
@@ -94,7 +85,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     /// <summary>
     /// Generate the number of stars in the constelation.
     /// </summary>
-
     private void NumberConstelationStars()
     {
         _gameStarList.Clear();
@@ -121,11 +111,11 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                         count++;
                         _gameStarList.Add(child.gameObject);
                     }
-                                      
+
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
-                
+
             case Geometry.Geometry_Type.pentagon:
                 print("Dibuja una constelación con forma de pentágono");
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
@@ -138,14 +128,14 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                         count++;
                         _gameStarList.Add(child.gameObject);
                     }
-                        
+
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
 
             case Geometry.Geometry_Type.hexagon:
                 print("Dibuja una constelación con forma de hexágono");
-                 _constelationGo = Instantiate(Hexagon, _starsParent.transform);
+                _constelationGo = Instantiate(Hexagon, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
                 {
@@ -155,7 +145,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                         count++;
                         _gameStarList.Add(child.gameObject);
                     }
-                        
+
                 }
                 _gameStarList.Add(_gameStarList[0]);
                 break;
@@ -167,9 +157,7 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
 
         }
         GetComponent<TelescopeGeometryConstelationGenerator>()._showFigure = _constelationGo;
-
     }
-
     /// <summary>
     /// Generate the stars in the scene.
     /// </summary>
@@ -211,9 +199,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
 
     }
-
-
-
     /// <summary>
     /// Controlls the input of the game
     /// </summary>
@@ -262,15 +247,22 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Returns <see cref="_constelationType"/> value
+    /// </summary>
+    /// <returns><see cref="_constelationType"/></returns>
     public Geometry.Geometry_Type getConstelationType()
     {
         return _constelationType;
     }
-
-public List<GameObject> GetGameStarsList()
-{
-    return _gameStarList;
-}
+    /// <summary>
+    /// Returns <see cref="_gameStarList"/>
+    /// </summary>
+    /// <returns><see cref="_gameStarList"/></returns>
+    public List<GameObject> GetGameStarsList()
+    {
+        return _gameStarList;
+    }
 }
 
 

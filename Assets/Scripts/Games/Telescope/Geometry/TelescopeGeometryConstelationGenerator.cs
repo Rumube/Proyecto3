@@ -85,8 +85,6 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             starsInScene[i].GetComponent<TelescopeGeometryStars>().SetIsConnected(false);
         }
     }
-
-
     /// <summary>
     /// Add the last star pressed
     /// </summary>
@@ -136,11 +134,8 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
         {
             correct = false;
         }
-
         FinishGame(correct);
-
     }
-
     /// <summary>
     /// 
     /// </summary>
@@ -165,7 +160,6 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
             ClearConstelation();
         }
     }
-
     /// <summary>
     /// Returns the number of star selecteds for the player
     /// </summary>
@@ -174,6 +168,10 @@ public class TelescopeGeometryConstelationGenerator : MonoBehaviour
     {
         return _playerStarList.Count;
     }
+    /// <summary>
+    /// Returns <see cref="_playerStarList"/>
+    /// </summary>
+    /// <returns><see cref="_playerStarList"/></returns>
     public List<GameObject> GetplayerStarList()
     {
         return _playerStarList;
