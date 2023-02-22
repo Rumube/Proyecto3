@@ -41,39 +41,15 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         if (_messagePile.Count >= 1 && !_messageAtive)
         {
             //TODO: Delete duplicate messages
-
-            //List<int> toDelete = new List<int>();
-            //for (int i = 1; i < _messagePile.Count; i++)
-            //{
-            //    if(_messagePile[0] == _messagePile[i])
-            //    {
-            //        toDelete.Add(i);
-            //    }
-            //}
-
-            //for (int i = 0; i < toDelete.Count; i++)
-            //{
-            //    _messagePile.RemoveAt(toDelete[i]);
-            //}
-            //if(_messagePile.Count > 1)
-            //{
-            //    int count = 0;
-            //    List<string> deleteList = new List<string>(_messagePile);
-            //    while (_messagePile[0] == _messagePile[count])
-            //    {
-            //        deleteList.Remove(_messagePile[count]);
-            //        count++;
-            //    }
-            //    _messagePile = new List<string>(deleteList);
-            //}
-
             _messageAtive = true;
             SendMessage(_messagePile[0]);
             _messagePile.Remove(_messagePile[0]);
         }
     }
-
-
+    /// <summary>
+    /// Start the process to give the message
+    /// </summary>
+    /// <param name="message">The message to give</param>
     private new void SendMessage(string message)
     {
         _textMessage = GameObject.FindGameObjectWithTag("OrderText").GetComponent<TextMeshProUGUI>();
@@ -81,6 +57,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _minAnim = GameObject.FindGameObjectWithTag("Min").GetComponent<Animator>();
         StartCoroutine(FrogCoroutine(message));
     }
+    /// <summary>
+    /// Return the animation to Idle when the message is complet
+    /// </summary>
     private void MessageComplete(Wrapper wrapper)
     {
         if (_minAnim != null)
@@ -89,6 +68,9 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             StartCoroutine(CloseMessage());
         }
     }
+    /// <summary>
+    /// Return the animation to Idle when the message is complet
+    /// </summary>
     private void MessageComplete()
     {
         if (_minAnim != null)
@@ -97,19 +79,10 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             StartCoroutine(CloseMessage());
         }
     }
-    /// <summary>
-    /// Start the messages process
-    /// </summary>
-    /// <param name="message">The message text</param>
     public void NewFrogMessage(string message)
     {
         _messagePile.Add(message);
     }
-    /// <summary>
-    /// Start the messages process and save the message in <see cref="_lastOrder"/>
-    /// </summary>
-    /// <param name="message">The message text</param>
-    /// <param name="isOrder">The message is an order</param>
     public void NewFrogMessage(string message, bool isOrder)
     {
         if (isOrder)
@@ -139,17 +112,7 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
             _textMessage.SetText(currentMessage);
             yield return new WaitForSeconds(waitTime);
         }
-        //if (!_isInGame)
-        //{
-        //    yield return new WaitForSeconds(3.0f);
-        //    MessageComplete();
-        //    StopFrogSpeaker();
-        //}
-
     }
-    /// <summary>
-    /// Repeat the last order gived by Min
-    /// </summary>
     public void RepeatLastOrder()
     {
         if(_lastOrder == "")
@@ -158,7 +121,6 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         }
         NewFrogMessage(_lastOrder);
     }
-
     /// <summary>
     /// Close the message panel
     /// </summary>
@@ -169,12 +131,10 @@ public class FrogMessage : MonoBehaviour, IFrogMessage
         _imageMassage.GetComponent<Animator>().Play("Disappear");
         _messageAtive = false;
     }
-
     public void StopFrogSpeaker()
     {
         Speaker.Instance.Silence();
     }
-
     public bool GetMessageAtive()
     {
         return _messageAtive;

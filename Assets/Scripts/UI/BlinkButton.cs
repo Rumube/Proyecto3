@@ -29,7 +29,10 @@ public class BlinkButton : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
+    /// <summary>
+    /// Change the btn value
+    /// Sets the selected student as present or not present in the game.
+    /// </summary>
     public void btnPressed()
     {
         //Invertimos valor
@@ -48,16 +51,4 @@ public class BlinkButton : MonoBehaviour
             ServiceLocator.Instance.GetService<IGameManager>().DeleteNotPresentsStudent(_textButton.text);
         }
     }
-
-    //public void hideStudent()
-    //{
-    //    _pressed = true;
-    //}
-
-    //public void showStudent()
-    //{
-    //    _pressed = false;
-    //}
-
-
 }

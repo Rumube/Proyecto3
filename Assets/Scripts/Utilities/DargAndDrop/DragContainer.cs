@@ -23,7 +23,10 @@ public class DragContainer : MonoBehaviour
     {
         StartCoroutine(GenerateParents(_geometryList));
     }
-
+    /// <summary>
+    /// Generate the gameObjects that will spawning the items.
+    /// </summary>
+    /// <param name="geometry">List of possible items to spawn</param>
     public IEnumerator GenerateParents(List<GEOMETRY_GEARS> geometry)
     {
         yield return new WaitForSeconds(0.5f);

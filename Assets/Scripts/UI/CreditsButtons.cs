@@ -21,16 +21,16 @@ public class CreditsButtons : MonoBehaviour
         _showingValue = 0;
        _panelText.text = _eachText;
     }
-
-    void Update()
-    {
-     
-    }
+    /// <summary>
+    /// Play a sound when the btn is called
+    /// </summary>
     public void MakeSound()
     {
         GetComponent<AudioSource>().Play();
     }
-
+    /// <summary>
+    /// Show or hide a message
+    /// </summary>
     public void ShowMessage()
     {
         if (_showingValue == 0)

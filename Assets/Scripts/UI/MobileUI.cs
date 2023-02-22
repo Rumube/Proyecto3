@@ -137,6 +137,10 @@ public class MobileUI : UI
         _video.Play();
         _video.loopPointReached += InitialAnimEndReached;
     }
+    /// <summary>
+    /// Play the animation to FadeIn in the buttons
+    /// </summary>
+    /// <param name="vp">The VideoPlayer</param>
     public void InitialAnimEndReached(VideoPlayer vp)
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)
@@ -144,6 +148,9 @@ public class MobileUI : UI
             _initialButtonAnims[i].Play("FadeIn");
         }       
     }
+    /// <summary>
+    /// Hide all the buttons
+    /// </summary>
     public void Alpha100InitialButtons()
     {
         for (int i = 0; i < _initialButtonAnims.Length; ++i)
@@ -593,6 +600,9 @@ public class MobileUI : UI
         PlayerPrefs.SetString("MinigamesSeconds", _minigameSeconds.text);
     }
     #region Buttons
+    /// <summary>
+    /// Increases the number of minutes of the session
+    /// </summary>
     public void SessionMinutesPlus()
     {
         int minutes;
@@ -603,8 +613,10 @@ public class MobileUI : UI
                 _sessionMinutes.text = (minutes + 1).ToString();
             }
         }
-       
     }
+    /// <summary>
+    /// Decrease the number of minutes of the session
+    /// </summary>
     public void SessionMinutesMinus()
     {
         int minutes;
@@ -616,6 +628,9 @@ public class MobileUI : UI
             }           
         }
     }
+    /// <summary>
+    /// Increases the number of minutes of the minigames
+    /// </summary>
     public void MinigameMinutesPlus()
     {
         int minutes;
@@ -628,6 +643,9 @@ public class MobileUI : UI
             
         }
     }
+    /// <summary>
+    /// Decrease the number of minutes of the minigames
+    /// </summary>
     public void MinigameMinutesMinus()
     {
         int minutes;
@@ -639,6 +657,9 @@ public class MobileUI : UI
             }          
         }
     }
+    /// <summary>
+    /// Increases the number of seconds of the minigames
+    /// </summary>
     public void MinigameSecondsPlus()
     {
         int seconds;
@@ -661,6 +682,9 @@ public class MobileUI : UI
             
         }
     }
+    /// <summary>
+    /// Decrease the number of seconds of the minigames
+    /// </summary>
     public void MinigameSecondsMinus()
     {
         int seconds;
@@ -674,7 +698,10 @@ public class MobileUI : UI
         }
     }
     #endregion
-
+    /// <summary>
+    /// Creates spaceships that warn if teams 
+    /// have finished introducing their players
+    /// </summary>
     public void CreateReadyRockets()
     {
         for (int i = 0; i < ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets; ++i)
@@ -684,10 +711,13 @@ public class MobileUI : UI
             newRocket.GetComponent<Image>().color = new Color(newRocket.GetComponent<Image>().color.r, newRocket.GetComponent<Image>().color.g, newRocket.GetComponent<Image>().color.b,0.5f);
         }
     }
+    /// <summary>
+    /// Update the rockets are ready
+    /// </summary>
+    /// <param name="id"></param>
     public void UpdateReadyRockets(int id)
     {
         id -= 1;
-        //_rocketsReady.transform.GetChild(id).GetComponent<Image>().color = new Color(_rocketsReady.transform.GetChild(id).GetComponent<Image>().color.r, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.g, _rocketsReady.transform.GetChild(id).GetComponent<Image>().color.b, 1);
     }
     #endregion
 

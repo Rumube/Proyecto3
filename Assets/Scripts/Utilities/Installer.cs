@@ -40,16 +40,10 @@ public class Installer : MonoBehaviour
     void Awake()
     {
         //Register services to use globally
-        //ServiceLocator.Instance.RegisterService(this);
-        //ServiceLocator.Instance.RegisterService<IGameTimeConfiguration>(_gameTimeConfiguration);
          if (!ServiceLocator.Instance.Contains<IGameManager>())
         {
             ServiceLocator.Instance.RegisterService<IGameManager>(_gameManager);
         }
-        //else if(ServiceLocator.Instance.GetService<GameManager>() == null)
-        //{
-        //    _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        //}
 
         if (!ServiceLocator.Instance.Contains<INetworkManager>())
         {
@@ -91,23 +85,17 @@ public class Installer : MonoBehaviour
         }
 
         SetDatabase();
-        //SetInput();
         SetUI();
         SetTextToSpeechConf();
         //Screen never turn off
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
-
+    /// <summary>
+    /// Set text speech to lenguage
+    /// </summary>
     void SetTextToSpeechConf()
     {
         //Speaker.Instance.VoiceForCulture("es-es-x-eea-local");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //_inputUsed.Drag();
-
     }
     /// <summary>Set the input method deppending on the platform</summary>
     private void SetInput()

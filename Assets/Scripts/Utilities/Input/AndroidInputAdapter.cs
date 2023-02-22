@@ -16,7 +16,10 @@ public class AndroidInputAdapter : MonoBehaviour, IInput
     {
         //Debug.Log("Mobile drag input");
     }
-
+    /// <summary>
+    /// Manage the screen inputs
+    /// </summary>
+    /// <returns>The input data</returns>
     public Datos InputTouch()
     {
         Datos newDatos;
