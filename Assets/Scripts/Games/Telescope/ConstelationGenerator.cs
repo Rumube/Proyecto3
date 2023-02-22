@@ -69,7 +69,6 @@ public class ConstelationGenerator : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// Clean the constelation arry and redraw
     /// </summary>
@@ -83,7 +82,6 @@ public class ConstelationGenerator : MonoBehaviour
             starsInScene[i].GetComponent<Star>().SetIsConnected(false);
         }
     }
-
     /// <summary>
     /// Check's if the player list of stars is correct, and add the last star pressed
     /// </summary>
@@ -104,7 +102,6 @@ public class ConstelationGenerator : MonoBehaviour
                     isCorrect = false;
                 }
             }
-
             if (isCorrect)
             {
                 _success++;
@@ -123,7 +120,6 @@ public class ConstelationGenerator : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// Returns the number of star selecteds for the player
     /// </summary>
