@@ -8,22 +8,10 @@ public class AliensController : MonoBehaviour
     public List<GameObject> _teamAliensGO = new List<GameObject>();
     private int _conectedTablet = 0;
 
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         StartAliens();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Hide all Aliens in the scene
     /// </summary>
@@ -34,7 +22,9 @@ public class AliensController : MonoBehaviour
             alien.SetActive(false);
         }
     }
-
+    /// <summary>
+    /// And shows the alien associated with the current equipment
+    /// </summary>
     public void StartAliens()
     {
         _conectedTablet = ServiceLocator.Instance.GetService<INetworkManager>().GetTeamColor();

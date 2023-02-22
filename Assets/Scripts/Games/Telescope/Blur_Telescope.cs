@@ -11,12 +11,6 @@ public class Blur_Telescope : MonoBehaviour
     private DepthOfField _depth;
     [SerializeField]
     private float _focusDistance;
-    // Start is called before the first frame update
-    void Start()
-    {
-    
-    }
-
     // Update is called once per frame
     void Update()
     {

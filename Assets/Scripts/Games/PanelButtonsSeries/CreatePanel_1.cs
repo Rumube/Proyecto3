@@ -91,6 +91,9 @@ public class CreatePanel_1 : MonoBehaviour
         ModifyGeomtry();
         Invoke("SendMessage", 1f);
     }
+    /// <summary>
+    /// Create a serie of unordered geometry and save in <see cref="_modifiedList"/>
+    /// </summary>
     public void ModifyGeomtry()
     {
         Geometry.Geometry_Type _var1;
@@ -125,7 +128,9 @@ public class CreatePanel_1 : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Checks if the user serie is correct
+    /// </summary>
     public void CheckGeometry()
     {
         bool correct = true;
@@ -147,12 +152,16 @@ public class CreatePanel_1 : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// Creates new order
+    /// </summary>
     private void SendMessage()
     {
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter._GetTextGame(), true);
     }
-
-
+    /// <summary>
+    /// Restart the scene and prepare to the next round
+    /// </summary>
     public void Restart()
     {
         foreach (GameObject geometry in _modifiedList)

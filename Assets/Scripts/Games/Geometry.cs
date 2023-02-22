@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Geometry: MonoBehaviour 
+public class Geometry : MonoBehaviour
 {
     public enum Geometry_Type
     {
@@ -55,7 +55,6 @@ public class Geometry: MonoBehaviour
                 return "error";
         }
     }
-
     /// <summary>
     /// Returns the geometry name in spanish
     /// by the geometry given
@@ -93,13 +92,13 @@ public class Geometry: MonoBehaviour
             default:
                 return "error";
         }
-    } /// <summary>
-      /// Returns the geometry name in spanish
-      /// by the geometry given
-      /// </summary>
-      /// <param name="geometry">Given geometry</param>
-      /// <returns>Gemometry name</returns>
-   
+    }
+    /// <summary>
+    /// Returns the geometry name in spanish
+    /// by the geometry given
+    /// </summary>
+    /// <param name="geometry">Given geometry</param>
+    /// <returns>Gemometry name</returns>
     public void GenerateSound()
     {
         switch (_geometryType)

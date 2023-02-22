@@ -15,17 +15,7 @@ public class PanelCablesCamino : MonoBehaviour
     [Header("GeneratePathValues")]
     private CellCable _currentCell = null;
     private bool _correct = false;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     /// <summary>
     /// Generate the grid
     /// </summary>
@@ -37,11 +27,12 @@ public class PanelCablesCamino : MonoBehaviour
         GenerateRandomPoints();
         GeneratePath();
         SetDirection();
-        //AÑADIR CAMINOS FALSOS
-        //RANDOMIZAR ROTACIONES
         ChangeNames();
     }
     #region GenerateStartAndFinishPos
+    /// <summary>
+    /// Select a random position to start and finish the conections
+    /// </summary>
     private void GenerateStartAndFinishPos()
     {
         if (_initPos != null)
@@ -59,6 +50,9 @@ public class PanelCablesCamino : MonoBehaviour
     }
     #endregion
     #region GenerateRandomPoints
+    /// <summary>
+    /// Generate random points in the grid to generate a path
+    /// </summary>
     private void GenerateRandomPoints()
     {
         SetMiddlePoints();
@@ -75,6 +69,11 @@ public class PanelCablesCamino : MonoBehaviour
         }
         _cellPath.Add(_finishPos);
     }
+    /// <summary>
+    /// Checks if the cell is empty and return true or false
+    /// </summary>
+    /// <param name="pos">Cell to check</param>
+    /// <returns>True: if is empty / False: if is not empty</returns>
     private bool CheckIfIsEmpty(Vector2 pos)
     {
         bool result = false;
@@ -84,6 +83,9 @@ public class PanelCablesCamino : MonoBehaviour
         }
         return result;
     }
+    /// <summary>
+    /// Set the number of <see cref="_middlePoints"/> in the grid using <see cref="_dim"/>
+    /// </summary>
     private void SetMiddlePoints()
     {
         switch (_dim)
@@ -118,6 +120,9 @@ public class PanelCablesCamino : MonoBehaviour
     }
     #endregion
     #region GeneratePath
+    /// <summary>
+    /// Generate a path and connect the init, finish and middle points
+    /// </summary>
     private void GeneratePath()
     {
         int nextPathValue = 1;
@@ -149,6 +154,11 @@ public class PanelCablesCamino : MonoBehaviour
 
         } while (_currentCell != _cellPath[_cellPath.Count - 1].GetComponent<CellCable>());
     }
+    /// <summary>
+    /// Get the existents adjacent cells of a gived cell
+    /// </summary>
+    /// <param name="cell">Central cell</param>
+    /// <returns>List of adjacent cells</returns>
     private List<CellCable> GetAdjacentCells(CellCable cell)
     {
         List<CellCable> adjacentCells = new List<CellCable>();
@@ -174,6 +184,11 @@ public class PanelCablesCamino : MonoBehaviour
         }
         return adjacentCells;
     }
+    /// <summary>
+    /// Checks if the cell exists in the grid
+    /// </summary>
+    /// <param name="pos">position to check in the grid</param>
+    /// <returns>True: Exists in the grid / Flase don't exists in the grid</returns>
     private bool ExistsInGrid(Vector2 pos)
     {
         bool result = false;
@@ -187,6 +202,9 @@ public class PanelCablesCamino : MonoBehaviour
     }
     #endregion
     #region SetDirections
+    /// <summary>
+    /// Set the direcctions of the path
+    /// </summary>
     private void SetDirection()
     {
         for (int i = 0; i < _correctPath.Count; i++)
@@ -207,6 +225,9 @@ public class PanelCablesCamino : MonoBehaviour
     }
     #endregion
     #region ChangeNames
+    /// <summary>
+    /// Change the name of gameObject to help to debug
+    /// </summary>
     private void ChangeNames()
     {
         for (int i = 0; i < _correctPath.Count; i++)
@@ -226,11 +247,19 @@ public class PanelCablesCamino : MonoBehaviour
         }
     }
     #endregion
+    /// <summary>
+    /// Button call
+    /// Start the process of check if the path is cheked
+    /// </summary>
     public void CheckPath()
     {
         _correctPath[0].GetComponent<CableCheck>().CheckConection(this);
         StartCoroutine(FinishCheck());
     }
+    /// <summary>
+    /// Finish the process of check if the path is cheked
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator FinishCheck()
     {
         yield return new WaitForSeconds(0.2f);
@@ -245,6 +274,9 @@ public class PanelCablesCamino : MonoBehaviour
         }
         _correct = false;
     }
+    /// <summary>
+    /// Reset the check process
+    /// </summary>
     private void UnCheckPath()
     {
         for (int i = 0; i < _dim; i++)
@@ -256,12 +288,11 @@ public class PanelCablesCamino : MonoBehaviour
                 currentCell.GetComponent<CableCheck>().SetCheked(false);
             }
         }
-        //foreach (GameObject currentCable in _cellPath)
-        //{
-        //    currentCable.GetComponent<CableCheck>().ResetCount();
-        //    currentCable.GetComponent<CableCheck>().SetCheked(false);
-        //}
     }
+    /// <summary>
+    /// Set if the path is correct
+    /// </summary>
+    /// <param name="value">The value</param>
     public void setCorrect(bool value)
     {
         _correct = value;

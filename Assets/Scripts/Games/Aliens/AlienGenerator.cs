@@ -81,13 +81,9 @@ public class AlienGenerator : MonoBehaviour
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
         Restart();
     }
-
-    private void Update()
-    {
-        
-    }
-
-
+    /// <summary>
+    /// Restart the minigame to the next round
+    /// </summary>
     private void Restart()
     {
         GenerateNewValues();
@@ -154,7 +150,9 @@ public class AlienGenerator : MonoBehaviour
             partsStringAux.RemoveAt(randomPart);
         }
     }
-
+    /// <summary>
+    /// Randomly selects the new alien's parts
+    /// </summary>
     private void PartsSelection()
     {
         int _alienEyeSelect = Random.Range(0, _eyesList.Count);
@@ -173,11 +171,18 @@ public class AlienGenerator : MonoBehaviour
         _alienMouth = _mouthList[_alienMouthSelect];
 
     }
-
+    /// <summary>
+    /// Install the alien's body and look for its body parts, decide the number of elements each part will have and add rotations. 
+    /// </summary>
+    /// <param name="arm"></param>
+    /// <param name="leg"></param>
+    /// <param name="mouth"></param>
+    /// <param name="eye"></param>
     private void GenerateAlien(int arm, int leg, int mouth , int eye)
     {
+        //GENERAMOS NUEVO CUERPO DE ALIEN
         GameObject newBody = Instantiate(_alienBody, _alienPosition);
-
+        //BUSCAMOS REFERENCIA DEL CUERPO DEL NUEVO ALIEN
         GameObject[] armPositionsArr = GameObject.FindGameObjectsWithTag("ArmSpawner");
         List<GameObject> armPositions = new List<GameObject>(armPositionsArr);
 

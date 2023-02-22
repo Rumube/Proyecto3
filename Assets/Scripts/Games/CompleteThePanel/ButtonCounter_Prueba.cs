@@ -36,21 +36,14 @@ public class ButtonCounter_Prueba : MonoBehaviour
     private bool _newGame = true;
     List<Geometry.Geometry_Type> geometryButtonsSelected = new List<Geometry.Geometry_Type>();
     List<Geometry.Geometry_Type> geometryButtons = new List<Geometry.Geometry_Type>();
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        //_gameText= GeometryNumberText(_nCircle, "círculo")+  GeometryNumberText(_nTriangle, "triángulo")+ GeometryNumberText(_nSquare, "cuadrado") + 
-        //GeometryNumberText(_nDiamond, "diamante") + GeometryNumberText(_nRectangle, "rectángulo") + GeometryNumberText(_nPentagon, "pentágono") + GeometryNumberText(_nHexagon, "hexágono");
-    }
-
     private void Start()
     {
         _createPanel = GetComponent<CreatePanel_Prueba>();
-        
     }
-   
+    /// <summary>
+    /// Generate a string whith the new order
+    /// </summary>
+    /// <returns></returns>
     public string GetTextGame()
     {
         string message = "";
@@ -184,34 +177,67 @@ public class ButtonCounter_Prueba : MonoBehaviour
        
     }
     #region Button Counters
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.square"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterSquare(GameObject button)
     {
         _squareCounter = Counter(button, _squareCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.triangle"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterTriangle(GameObject button)
     {
         _triangleCounter = Counter(button, _triangleCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.circle"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterCircle(GameObject button)
     {
         _circleCounter = Counter(button, _circleCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.diamond"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterDiamond(GameObject button)
     {
         _diamondCounter = Counter(button, _diamondCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.rectangle"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterRectangle(GameObject button)
     {
         _rectangleCounter = Counter(button, _rectangleCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.pentagon"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterPentagon(GameObject button)
     {
         _pentagonCounter = Counter(button, _pentagonCounter);
     }
+    /// <summary>
+    /// Update the <see cref="Geometry.Geometry_Type.hexagon"/> counter
+    /// </summary>
+    /// <param name="button">Button clicked</param>
     public void CounterHexagon(GameObject button)
     {
         _hexagonCounter = Counter(button, _hexagonCounter);
     }
+    /// <summary>
+    /// Check if need to add or substract a value
+    /// </summary>
+    /// <param name="button">Button clicked</param>
+    /// <param name="counter">The numeric value</param>
     public int Counter(GameObject button, int counter)
     {
         if (button.GetComponent<ObjectPanel_Prueba>()._pressed == false)

@@ -81,18 +81,26 @@ public class TelescopeAssociationStars : MonoBehaviour
         _touched = false;
     }
 
-
+    /// <summary>
+    /// Set the value of <see cref="_touched"/> to true
+    /// </summary>
     public void CollisionDetected()
     {
         _touched = true;
     }
-
+    /// <summary>
+    /// Init the values
+    /// </summary>
+    /// <param name="gm">GameManager Controller</param>
     public void InitStart(GameObject gm)
     {
         _gm = gm;
         _timeToBePressed = 0.5f;
     }
-
+    /// <summary>
+    /// Assigns or deletes a connection status
+    /// </summary>
+    /// <param name="value">New value</param>
     public void SetIsConnected(bool value)
     {
         _isConnected = value;
@@ -100,7 +108,10 @@ public class TelescopeAssociationStars : MonoBehaviour
         _anim.Play("Static");
         _anim.gameObject.SetActive(value);
     }
-
+    /// <summary>
+    /// Returns <see cref="_isConnected"/> value
+    /// </summary>
+    /// <returns><see cref="_isConnected"/></returns>
     public bool GetIsConnected()
     {
         return _isConnected;

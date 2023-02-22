@@ -19,7 +19,6 @@ public class RankingClient : MonoBehaviour
     {
         StartCoroutine(CreateGrid());
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,29 +28,39 @@ public class RankingClient : MonoBehaviour
             UpdateRankingPoints();
         }
     }
-
+    /// <summary>
+    /// Start the proces to Update the ranking
+    /// </summary>
     public void UpdateRankingPoints()
     {
         if (_gridCreated)
         {
-            foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
-            {
-                float value = team.Value;
-
-                if (value < minPoints)
-                {
-                    minPoints = value;
-                }
-                if (value > maxPoints)
-                {
-                    maxPoints = value;
-                }
-            }
+            SetMinMax();
             CalculateRocketsPosition();
         }
     }
+    /// <summary>
+    /// Sets the new maximum and minimum values
+    /// </summary>
+    private void SetMinMax()
+    {
+        foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
+        {
+            float value = team.Value;
 
-
+            if (value < minPoints)
+            {
+                minPoints = value;
+            }
+            if (value > maxPoints)
+            {
+                maxPoints = value;
+            }
+        }
+    }
+    /// <summary>
+    /// Calculates the new relative positions of the spaceships in the rankings
+    /// </summary>
     void CalculateRocketsPosition()
     {
         int teamNumbers = 0;
@@ -76,7 +85,9 @@ public class RankingClient : MonoBehaviour
             teamNumbers++;
         }
     }
-
+    /// <summary>
+    /// Generates a grid from the number of clients in the game
+    /// </summary>
     public IEnumerator CreateGrid()
     {
         yield return new WaitForSeconds(1f);

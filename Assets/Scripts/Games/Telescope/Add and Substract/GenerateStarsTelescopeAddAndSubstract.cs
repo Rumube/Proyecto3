@@ -43,13 +43,6 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         GenerateStars();
         GenerateSelectedStars();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// Starts the generation process
     /// </summary>
@@ -129,6 +122,9 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_textOrder, true);
 
     }
+    /// <summary>
+    /// Generate the init selected stars in the minigame
+    /// </summary>
     private void GenerateSelectedStars()
     {
         _randomNumStars = UnityEngine.Random.Range(_dataDifficulty.minStars, _randomNum);
@@ -151,6 +147,11 @@ public class GenerateStarsTelescopeAddAndSubstract : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// Connect or disconnect the start
+    /// ME QUEDÉ POR AQUÍ!!!!!!!!
+    /// </summary>
+    /// <param name="star"></param>
     public void AddStars(GameObject star)
     {
         if (!star.GetComponent<TelescopeAddAndSubstractStars>().GetStarConnected())

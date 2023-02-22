@@ -32,13 +32,9 @@ public class CabinAsociacion : MonoBehaviour
 
         ServiceLocator.Instance.GetService<IGameTimeConfiguration>().StartGameTime();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Restart the minigame and prepare the next round
+    /// </summary>
     private void RestartGame()
     {
         DestroyAsteroids();
@@ -46,6 +42,9 @@ public class CabinAsociacion : MonoBehaviour
         GenerateAsteroids();
         GenerateOrder();
     }
+    /// <summary>
+    /// Detroy the asteroids in the scene and clean <see cref="_generatedAsteroids"/>
+    /// </summary>
     private void DestroyAsteroids()
     {
         List<GameObject> auxList = new List<GameObject>(_generatedAsteroids);
@@ -55,6 +54,11 @@ public class CabinAsociacion : MonoBehaviour
         }
         _generatedAsteroids.Clear();
     }
+    /// <summary>
+    /// Select a number of asteroids in the scene and save the number in <see cref="_asteroidsInScene"/>
+    /// Select a number of asteroids are target and save the number in <see cref="_numTargetAsteroids"/>
+    /// Select a <see cref="Geometry.Geometry_Type"/> to be the target
+    /// </summary>
     private void GenerateTarget()
     {
         _asteroidsInScene = Random.Range(_currentDataDifficulty.minAteroidesinScene, _currentDataDifficulty.maxAteroidesinScene - 1);
@@ -163,6 +167,10 @@ public class CabinAsociacion : MonoBehaviour
             ServiceLocator.Instance.GetService<IError>().GenerateError();
         }
     }
+    /// <summary>
+    /// Starts the animation of brokenAteroid and finish them in 0.3 seconds 
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator FinishAnimation()
     {
         foreach (GameObject currentAteroid in _generatedAsteroids)
@@ -178,5 +186,4 @@ public class CabinAsociacion : MonoBehaviour
         ServiceLocator.Instance.GetService<ICalculatePoints>().Puntuation(_successes, _errors);
         RestartGame();
     }
-
 }

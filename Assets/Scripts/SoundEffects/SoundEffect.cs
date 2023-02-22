@@ -7,19 +7,12 @@ public class SoundEffect : MonoBehaviour
 
     public GameObject starSound;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButton(0)) 
         {
             Instantiate(starSound);
-            
         }
     }
 }

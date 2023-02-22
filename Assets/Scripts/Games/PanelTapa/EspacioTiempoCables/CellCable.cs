@@ -107,6 +107,9 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Chenge the gameObject rotation using <see cref="_cellRotation"/>
+    /// </summary>
     private void SetRotation()
     {
         switch (_cellRotation)
@@ -127,6 +130,11 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Changes cable status according to possible connections
+    /// </summary>
+    /// <param name="pos">Current possition</param>
+    /// <param name="isInit">Is true if it is an initial position</param>
     public void SetNewState(Vector2 pos, bool isInit)
     {
         _pass++;
@@ -173,6 +181,10 @@ public class CellCable : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Changes the size of the gameObject according to the grid size
+    /// </summary>
+    /// <param name="dim">Grid size</param>
     public void SetSize(int dim)
     {
         foreach (GameObject currentCable in _cableList)
@@ -207,8 +219,12 @@ public class CellCable : MonoBehaviour
                     break;
             }
         }
-
     }
+    /// <summary>
+    /// Changes cable status according to possible connections
+    /// </summary>
+    /// <param name="prePos">Previous position</param>
+    /// <param name="nextPos">Next position</param>
     public void SetNewState(Vector2 prePos, Vector2 nextPos)
     {
         _pass++;
@@ -234,10 +250,16 @@ public class CellCable : MonoBehaviour
         }
         SetRandomRotation();
     }
+    /// <summary>
+    /// Set a random position to init the game
+    /// </summary>
     private void SetRandomRotation()
     {
         _cellRotation = (ROTATION)UnityEngine.Random.Range(0, 3);
     }
+    /// <summary>
+    /// Rotate the cell (No longer in use)
+    /// </summary>
     public void RotateCell()
     {
         foreach (GameObject currentCable in _conections)
@@ -258,53 +280,101 @@ public class CellCable : MonoBehaviour
             currentCable.SetActive(false);
         }
     }
+    /// <summary>
+    /// Clear all the conexion
+    /// </summary>
     public void ClearConexions()
     {
         _conections.Clear();
     }
     #region GETS
+    /// <summary>
+    /// Returns the state
+    /// </summary>
+    /// <returns><see cref="_cellState"/></returns>
     public CELL_STATE GetCellState()
     {
         return _cellState;
     }
+    /// <summary>
+    /// Returns the rotation
+    /// </summary>
+    /// <returns><see cref="_cellRotation"/></returns>
     public ROTATION GetRotation()
     {
         return _cellRotation;
     }
+    /// <summary>
+    /// Returns the position
+    /// </summary>
+    /// <returns><see cref="_cellPos"/></returns>
     public Vector2 GetCellPos()
     {
         return _cellPos;
     }
+    /// <summary>
+    /// Returns the distance between the pos given and the <see cref="_cellPos"/>
+    /// </summary>
+    /// <param name="pos">Position to get distance</param>
+    /// <returns>Distance</returns>
     public float GetDistance(Vector2 pos)
     {
         return Mathf.Abs(Vector2.Distance(pos, _cellPos));
     }
+    /// <summary>
+    /// Returns if is a init position
+    /// </summary>
+    /// <returns><see cref="_isInit"/></returns>
     public bool GetIsInit()
     {
         return _isInit;
     }
+    /// <summary>
+    /// Returns if is a finish position
+    /// </summary>
+    /// <returns><see cref="_isFinish"/></returns>
     public bool GetIsFinish()
     {
         return _isFinish;
     }
     #endregion
     #region SETS
+    /// <summary>
+    /// Set a new <see cref="CELL_STATE"/>
+    /// </summary>
+    /// <param name="state">new state</param>
     public void SetCellState(CELL_STATE state)
     {
         _cellState = state;
     }
+    /// <summary>
+    /// Set a new pos
+    /// </summary>
+    /// <param name="pos">new pos</param>
     public void SetCellPos(Vector2 pos)
     {
         _cellPos = pos;
     }
+    /// <summary>
+    /// Set if is init position to <see cref="_isInit"/>
+    /// </summary>
+    /// <param name="isInit">True if is init postion</param>
     public void SetIsInit(bool isInit)
     {
         _isInit = isInit;
     }
+    /// <summary>
+    /// Set if is finish position to <see cref="_isFinish"/>
+    /// </summary>
+    /// <param name="isFinish">True if is finish postion</param>
     public void SetIsFinish(bool isFinish)
     {
         _isFinish = isFinish;
     }
+    /// <summary>
+    /// Set a new collision and add the collision to <see cref="_conections"/>
+    /// </summary>
+    /// <param name="collision">new collision</param>
     public void SetCollision(GameObject collision)
     {
         if (!_conections.Contains(collision))

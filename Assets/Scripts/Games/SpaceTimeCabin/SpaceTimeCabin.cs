@@ -36,12 +36,6 @@ public class SpaceTimeCabin : MonoBehaviour
         _aimAnims.GetComponent<Animator>().Play("RedFrameSelect_animation");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Restart the game
     /// </summary>
@@ -97,11 +91,6 @@ public class SpaceTimeCabin : MonoBehaviour
             ServiceLocator.Instance.GetService<IPositive>().GenerateFeedback(newCollider.transform.position);
             _successes++;
         }
-        //else
-        //{
-        //    ServiceLocator.Instance.GetService<IError>().GenerateError();
-        //    _errors++;
-        //}
         CheckIfFinish();
     }
 
@@ -114,7 +103,9 @@ public class SpaceTimeCabin : MonoBehaviour
         _errors++;
         CheckIfFinish();
     }
-
+    /// <summary>
+    /// Checks if the asteroid is hit in the correct time
+    /// </summary>
     private void CheckIfFinish()
     {
         GameObject[] asteroidsInGame = GameObject.FindGameObjectsWithTag("Asteroid");

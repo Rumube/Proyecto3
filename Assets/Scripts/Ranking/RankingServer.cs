@@ -62,7 +62,6 @@ public class RankingServer : MonoBehaviour
             CreateGrid();
         }
 
-
         //CHANGE VISUAL POINTS
         if (_currentMaxPoints < maxPoints && _rankingStarted)
         {

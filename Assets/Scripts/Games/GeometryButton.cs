@@ -15,13 +15,6 @@ public class GeometryButton : Geometry
         {
             _light.SetActive(!_isSimon);
         }
-      
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     #region Button
     public void OnClickButton()

@@ -75,18 +75,26 @@ public class Star : Geometry
         _touched = false;
     }
 
-
+    /// <summary>
+    /// Detects if exists collision
+    /// </summary>
     public void CollisionDetected()
     {
         _touched = true;
     }
-
+    /// <summary>
+    /// Init values of the star
+    /// </summary>
+    /// <param name="gm">GameManager</param>
     public void InitStart(GameObject gm)
     {
         _gm = gm;
         _timeToBePressed = 0.5f;
     }
-
+    /// <summary>
+    /// Set the connection
+    /// </summary>
+    /// <param name="value">new value</param>
     public void SetIsConnected(bool value)
     {
         _isConnected = value;
@@ -94,7 +102,10 @@ public class Star : Geometry
         _anim.Play("Static");
         _anim.gameObject.SetActive(value);
     }
-
+    /// <summary>
+    /// Returns if is connected
+    /// </summary>
+    /// <returns><see cref="_isConnected"/></returns>
     public bool GetIsConnected()
     {
         return _isConnected;

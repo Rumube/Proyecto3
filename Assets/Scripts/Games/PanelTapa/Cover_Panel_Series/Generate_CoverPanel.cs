@@ -26,15 +26,11 @@ public class Generate_CoverPanel : MonoBehaviour
         _currentDataDifficulty = _coverPanelDifficulty.GenerateDataDifficulty(_level);
         GenerateGears();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    /// <summary>
+    /// Generate gears
+    /// </summary>
     void GenerateGears()
     {
-
         int random = Random.Range(0, 2);
         int decrease = _column;
         for (int i = 0; i < _column; i++)
@@ -46,10 +42,6 @@ public class Generate_CoverPanel : MonoBehaviour
             if (random == 1)//increase
             {
 
-            }
-            else//decrease
-            {
-                //float scale = decrease * 0.25f;
             }
 
             _referentList.Add(newGear);

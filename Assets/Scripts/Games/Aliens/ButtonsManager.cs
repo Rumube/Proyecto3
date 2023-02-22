@@ -17,21 +17,20 @@ public class ButtonsManager : MonoBehaviour
         _finalNumber = 0;
         _text.text = "" + _finalNumber;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     #region Buttons   
-
+    /// <summary>
+    /// Adds 1 to the parameter value depending on currentTextAdd
+    /// </summary>
+    /// <param name="currentTextAdd">The text</param>
     public void AddNumber(Text currentTextAdd)
     {
         _finalNumber = (int.Parse(currentTextAdd.text)+1);
         currentTextAdd.text = "" + _finalNumber;
     }
-
+    /// <summary>
+    /// Reduce 1 to the parameter value depending on currentTextAdd
+    /// </summary>
+    /// <param name="currentTextAdd">The text</param>
     public void SubNumber(Text currentTextSub)
     {
         _finalNumber = (int.Parse(currentTextSub.text)-1);
@@ -41,8 +40,6 @@ public class ButtonsManager : MonoBehaviour
         }
         currentTextSub.text = "" + _finalNumber;
     }
-
-
     #endregion Buttons
 
 

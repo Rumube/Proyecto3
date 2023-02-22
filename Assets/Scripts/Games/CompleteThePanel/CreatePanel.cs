@@ -68,6 +68,11 @@ public class CreatePanel : MonoBehaviour
         }
         Invoke("SendMessage", 1f);
     }
+    /// <summary>
+    /// Randomize a array
+    /// </summary>
+    /// <param name="arr">Array</param>
+    /// <param name="n">Array length</param>
     static void randomize(List<GameObject> arr, int n)
     {
         // Creating a object
@@ -95,7 +100,9 @@ public class CreatePanel : MonoBehaviour
         for (int i = 0; i < n; i++)
             Console.Write(arr[i] + " ");
     }
-
+    /// <summary>
+    /// Generate a new message
+    /// </summary>
     private void SendMessage()
     {
         ServiceLocator.Instance.GetService<IFrogMessage>().NewFrogMessage(_buttomCounter.GetTextGame(), true);

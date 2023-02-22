@@ -17,7 +17,6 @@ public class AlienDifficulty : MonoBehaviour
         [Range(1,5)]
         [Tooltip("Quantity of each part that can be asked for")]
         public int _numberParts;
-        
     }
 
     /// <summary>

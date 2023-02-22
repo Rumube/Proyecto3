@@ -20,10 +20,4 @@ public class SpawnGear : MonoBehaviour
        newGear= Instantiate(_currentDataDifficulty.possibleGeometry[1], new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
         newGear.transform.localScale = new Vector3(newGear.transform.localScale.x * _scaleIncrease, newGear.transform.localScale.y *_scaleIncrease, newGear.transform.localScale.y *_scaleIncrease);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

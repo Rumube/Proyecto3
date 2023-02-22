@@ -68,9 +68,6 @@ public class TelescopeGeometryStars : MonoBehaviour
                             _correctConection = false;
                         }
                     }
-
-
-                    print("Siempre");
                     _gm.GetComponent<TelescopeGeometryConstelationGenerator>().AddStars(gameObject);
                     _audio.clip = _clipStarSelected;
                     _audio.Play();
@@ -85,13 +82,10 @@ public class TelescopeGeometryStars : MonoBehaviour
         }
         else
         {
-            //TODO: NO NEED HOLD
             if (_touched)
             {
 
                 _light.SetActive(true);
-                //_isConnected = true;
-                //PRUEBA
                 _gm.GetComponent<TelescopeGeometryConstelationGenerator>().AddStars(gameObject);
                 _audio.clip = _clipStarSelected;
                 _audio.Play();
@@ -106,20 +100,28 @@ public class TelescopeGeometryStars : MonoBehaviour
         }
         _touched = false;
     }
-
-
+    /// <summary>
+    /// Set <see cref="_touched"/> to true
+    /// </summary>
     public void CollisionDetected()
     {
         _touched = true;
     }
-
+    /// <summary>
+    /// Init the values
+    /// </summary>
+    /// <param name="gm">GameManager</param>
+    /// <param name="order">Position in serie</param>
     public void InitStart(GameObject gm, int order)
     {
         _gm = gm;
         _timeToBePressed = 0.5f;
         _order = order;
     }
-
+    /// <summary>
+    /// Set or destroy the connection
+    /// </summary>
+    /// <param name="value">True connected / False disconnected</param>
     public void SetIsConnected(bool value)
     {
         _isConnected = value;
@@ -127,22 +129,34 @@ public class TelescopeGeometryStars : MonoBehaviour
         _anim.Play("Static");
         _anim.gameObject.SetActive(value);
     }
-
+    /// <summary>
+    /// Return <see cref="_isConnected"/>
+    /// </summary>
+    /// <returns><see cref="_isConnected"/></returns>
     public bool GetIsConnected()
     {
         return _isConnected;
     }
-
+    /// <summary>
+    /// Return <see cref="_order"/>
+    /// </summary>
+    /// <returns><see cref="_order"/></returns>
     public int GetOrder()
     {
         return _order;
     }
-
+    /// <summary>
+    /// Return if is <see cref="_correctConection"/>
+    /// </summary>
+    /// <returns><see cref="_correctConection"/></returns>
     public bool GetCorrectConnection()
     {
         return _correctConection;
     }
-
+    /// <summary>
+    /// Set <see cref="_correctConection"/> to false
+    /// </summary>
+    /// <param name="value">New value (Not used)</param>
     public void SetCorrectConnection(bool value)
     {
         _correctConection = false;

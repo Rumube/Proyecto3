@@ -62,7 +62,9 @@ public class AsteroidBlasterInput : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Manage the inputs when <see cref="IGameManager.GAME_STATE_CLIENT.playing"/>
+    /// </summary>
     private void UpdateSelectInput()
     {
         IGameManager.GAME_STATE_CLIENT gameState = ServiceLocator.Instance.GetService<IGameManager>().GetClientState();
@@ -117,7 +119,10 @@ public class AsteroidBlasterInput : MonoBehaviour
             StartCoroutine(StopLaser());
         }
     }
-
+    /// <summary>
+    /// Stop the line laser line renderer
+    /// </summary>
+    /// <returns></returns>
     IEnumerator StopLaser()
     {
         yield return new WaitForSeconds(0.1f);
