@@ -9,7 +9,10 @@ public class DesktopInputAdapter : MonoBehaviour, IInput
     {
        //Debug.Log("Desktop input");
     }
-
+    /// <summary>
+    /// Manage the screen inputs
+    /// </summary>
+    /// <returns>The input data</returns>
     public AndroidInputAdapter.Datos InputTouch()
     {
         EDebug.Log("Tocado");

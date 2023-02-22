@@ -4,7 +4,10 @@ using UnityEngine;
 
 public interface IInput
 {
-    //We need the same methods for both inputs
     public void Drag();
+    /// <summary>
+    /// Manage the screen inputs
+    /// </summary>
+    /// <returns>The input data</returns>
     public AndroidInputAdapter.Datos InputTouch();
 }
