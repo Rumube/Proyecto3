@@ -141,12 +141,17 @@ public class DragManager : MonoBehaviour
         _itemDraging.GetComponent<DragableItem>().ReturnToTarget(_returnVelocity);
         _itemDraging = null;
     }
-
+    /// <summary>
+    /// Set <see cref="_inDragParent"/> to true
+    /// </summary>
+    /// <param name="collision">collision</param>
     public void OnItemEnter(Collider2D collision)
     {
         _inDragParent = true;
     }
-
+    /// <summary>
+    /// Set <see cref="_inDragParent"/> to false
+    /// </summary>
     public void OnItemExit()
     {
         _inDragParent = false;

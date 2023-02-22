@@ -100,7 +100,10 @@ public class DragParentGenerationPieces : DragParentPropieties
             }
         }
     }
-
+    /// <summary>
+    /// Change the value of <see cref="_generatedGeometry"/>
+    /// </summary>
+    /// <param name="geometry">The new <see cref="DragContainer.GEOMETRY_GEARS"/></param>
     public void SetGeometryGenerated(DragDeposit.GEOMETRY_GEARS_PIECES geometry)
     {
         _generatedGeometry = geometry;

@@ -41,6 +41,10 @@ public class DragableItem : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Set the manager
+    /// </summary>
+    /// <param name="manager">Manager</param>
     public void SetDndManager(DragManager manager)
     {
         _dndManager = manager;
@@ -61,19 +65,27 @@ public class DragableItem : MonoBehaviour
             _returnVelocity = velocity;
         }
     }
-
+    /// <summary>
+    /// Set the dragable items properties
+    /// </summary>
+    /// <param name="initialParent">Inital Parent</param>
     public void SetProperties(Transform initialParent)
     {
         _isCreated = true;
         _initialParent = initialParent;
         SetInitialTarget();
     }
+    /// <summary>
+    /// Set a new target to move
+    /// </summary>
+    /// <param name="newTrasnform">New target</param>
     public void SetNewTarget(Transform newTrasnform)
     {
         _target = newTrasnform;
     }
-
-
+    /// <summary>
+    /// Deactivate the rigidbody so that the item falls into the void.
+    /// </summary>
     public void FallItem()
     {
         if (_isCreated)
@@ -85,8 +97,6 @@ public class DragableItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "DragParent")
         {
-            print("Enter: " + collision.name);
-
             if (collision.gameObject.GetComponent<DragParentPropieties>().canAddItem(gameObject))
             {
                 if(_dndManager == null)
@@ -96,7 +106,6 @@ public class DragableItem : MonoBehaviour
                 _dndManager.OnItemEnter(collision);
                 SetNewTarget(collision.transform);
             }
-
         }
     }
 
@@ -104,20 +113,24 @@ public class DragableItem : MonoBehaviour
     {
         if (collision.gameObject.tag == "DragParent")
         {
-            print("Exit: " + collision.name);
-
             collision.gameObject.GetComponent<DragParentPropieties>().removeItem(gameObject);
             _dndManager.OnItemExit();
             SetInitialTarget();
         }
     }
+    /// <summary>
+    /// Puts the current target as a parent
+    /// </summary>
     public void SetInParent()
     {
         transform.SetParent(_target);
     }
+    /// <summary>
+    /// Returns the current target
+    /// </summary>
+    /// <returns><see cref="_target"/></returns>
     public Transform GetTarget()
     {
-        print("GET TARGET:" + _target);
         return _target;
     }
     /// <summary>
@@ -131,7 +144,10 @@ public class DragableItem : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
+    /// <summary>
+    /// Initializes the variable <see cref="_container"/> with the given container
+    /// </summary>
+    /// <param name="container">The new container</param>
     public void InitContainer(GameObject container)
     {
         _container = container;
