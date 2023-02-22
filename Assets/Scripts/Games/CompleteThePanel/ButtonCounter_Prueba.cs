@@ -172,7 +172,6 @@ public class ButtonCounter_Prueba : MonoBehaviour
             else
             {
                 _badGeometry++;
-                Debug.Log("bad"+ _badGeometry);
             }
        
     }

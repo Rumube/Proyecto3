@@ -52,7 +52,6 @@ public class ClientHandle
         {
             ServiceLocator.Instance.GetService<IGameManager>().SetClientState(IGameManager.GAME_STATE_CLIENT.playing);
         }
-        EDebug.Log("Pausando? " + package._pauseGame._pause);
     }
 
     /// <summary>Quit minigames and show the final score</summary>
@@ -62,14 +61,12 @@ public class ClientHandle
         ServiceLocator.Instance.GetService<IGameManager>().SetEndSessionTablet(true);
         SceneManager.LoadScene("MainMenu");
         //Poner que vaya a la ventana de puntuaciones finales
-        EDebug.Log("Quitando el juego");
     }
 
     /// <summary>Turn off the tablet</summary>
     /// <param name="package">The package that is received</param>
     public static void TurnOff()
     {
-        EDebug.Log("Apagando");
         ServiceLocator.Instance.GetService<TabletUI>().QuitGame();
     }
     /// <summary>

@@ -266,11 +266,9 @@ public class PanelCablesCamino : MonoBehaviour
         UnCheckPath();
         if (_correct)
         {
-            print("Si!");
         }
         else
         {
-            print("No!");
         }
         _correct = false;
     }

@@ -69,7 +69,6 @@ public class CreatePanel_1 : MonoBehaviour
                 GameObject newGeometry;
 
                 newGeometry = Instantiate(_GeometryButtons, _geometrySpawn.transform);
-                print("col: " + y + " / row: " + x);
                 if (x % 2 == 0)
                 {
                     newGeometry.GetComponent<Geometry>()._geometryType = _var1;

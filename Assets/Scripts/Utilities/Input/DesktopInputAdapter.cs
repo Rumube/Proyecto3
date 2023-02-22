@@ -7,7 +7,6 @@ public class DesktopInputAdapter : MonoBehaviour, IInput
 
     public void Drag()
     {
-       //Debug.Log("Desktop input");
     }
     /// <summary>
     /// Manage the screen inputs
@@ -15,7 +14,6 @@ public class DesktopInputAdapter : MonoBehaviour, IInput
     /// <returns>The input data</returns>
     public AndroidInputAdapter.Datos InputTouch()
     {
-        EDebug.Log("Tocado");
         AndroidInputAdapter.Datos newDatos;
         newDatos.result = false;
         newDatos.pos = new Vector2();

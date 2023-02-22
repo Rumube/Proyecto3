@@ -197,11 +197,9 @@ public class PanelGearPath : MonoBehaviour
         UnCheckPath();
         if (result)
         {
-            print("SI!!!");
         }
         else
         {
-            print("NO!!!");
         }
     }
     private void UnCheckPath()

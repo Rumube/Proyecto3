@@ -24,7 +24,7 @@ public class Client
 
         if (_ws.Ping())
         {
-            EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
+            //EDebug.Log("me he conectado al servidor... listo para enviar y recibir");
             ClientHandle.CanConnectServer();
 
             _allPackages = new List<ClientPackage>();

@@ -49,7 +49,6 @@ public class ButtonCounter : MonoBehaviour
     /// <returns>Empty or the name of the geometry in singular or plural</returns> 
     public string GeometryNumberText(int nGeometry,string geometryName)
     {
-        Debug.Log("He entrado en GeometryNumber");
         if (nGeometry==0)
         {
             return "";

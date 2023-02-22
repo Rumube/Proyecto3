@@ -79,7 +79,6 @@ public class RankingClient : MonoBehaviour
             else
             {
                 Vector2 newPos = new Vector2(150, _rankingPositions[team.Key].transform.position.y);
-                print(newPos);
                 _rocketsTransforms[team.Key].gameObject.GetComponent<RankingTeamMovement>().InitMove(newPos);
             }
             teamNumbers++;

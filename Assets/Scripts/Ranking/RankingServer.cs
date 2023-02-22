@@ -129,7 +129,6 @@ public class RankingServer : MonoBehaviour
                 cellInGrid.transform.SetParent(teamParentList[i].transform);
                 cellInGrid.AddComponent<RectTransform>();
                 _gridPositions[i, j] = cellInGrid;
-                print(_gridPositions[i, j].GetComponent<RectTransform>().position);
             }
         }
 
@@ -213,7 +212,6 @@ public class RankingServer : MonoBehaviour
 
         foreach (KeyValuePair<int, int> team in ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints())
         {
-            print(_gridPositions[team.Key, 0]);
             _rocketsTransforms[team.Key].transform.position = _gridPositions[team.Key, 0].transform.position;
         }
         UpdateRankingPoints(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());

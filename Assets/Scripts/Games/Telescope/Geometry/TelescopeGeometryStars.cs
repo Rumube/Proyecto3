@@ -55,7 +55,6 @@ public class TelescopeGeometryStars : MonoBehaviour
                     
                     if (playerStarList.Count != 0)
                     {
-                        print("Entra otros");
                         int lastPos = playerStarList.Count - 1;
                         GameObject lastStar = playerStarList[lastPos];
                         _starConnected = lastStar;

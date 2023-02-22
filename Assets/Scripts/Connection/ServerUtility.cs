@@ -48,8 +48,6 @@ public class ServerUtility : MonoBehaviour
         _ws.OnMessage += Ws_OnMessage;   
         _ws.Connect();
 
-        EDebug.Log("Servidor iniciado.");
-
         //Get ip and port
         connectionData[0] = GetLocalIPAddress();
         connectionData[1] = _server.Port.ToString();
@@ -178,7 +176,6 @@ public class ServerUtility : MonoBehaviour
 
         _serverPackage._typePackageServer = ServerPackets.GameDifficulty;
         _serverPackage._toUser = toUser;
-        print("Antes level" + level);
         if (level > 0)
         {
             if (averagePoints < 33)
@@ -201,7 +198,6 @@ public class ServerUtility : MonoBehaviour
             level = 1;
         }
 
-        print("Despues level" + level);
         _serverPackage._gameDifficulty._level = level;
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
@@ -248,7 +244,6 @@ public class ServerUtility : MonoBehaviour
 
         _serverPackage._typePackageServer = ServerPackets.UpdateTeamPoints;
         _serverPackage._rankingPoints._teamPoints = new Dictionary<int, int>(ServiceLocator.Instance.GetService<IGameManager>().GetTeamPoints());
-        EDebug.Log(_serverPackage._rankingPoints._teamPoints[0]);
 
         _ws.Send(JsonConvert.SerializeObject(_serverPackage));
     }

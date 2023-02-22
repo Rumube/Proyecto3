@@ -47,8 +47,6 @@ public class RankingTeamMovement : MonoBehaviour
         if (_image != null)
         {
             int fill = (int)((transform.position.y / _lastPos.position.y) * 10);
-            print("Nave: " + name + " / Pos: " + fill);
-
             _image.fillAmount = Mathf.Lerp(_lastTrailPos, transform.position.y / _lastPos.position.y, _time);
             _lastTrailPos = (transform.position.y / _lastPos.position.y) - 0.1f;
 

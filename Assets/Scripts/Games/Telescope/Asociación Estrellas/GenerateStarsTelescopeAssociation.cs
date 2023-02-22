@@ -94,7 +94,6 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
     private void GenerateStars()
     {
         _randomNum = UnityEngine.Random.Range(_dataDifficulty.minStars, _dataDifficulty.maxStars);
-        Debug.Log("Estrellas random" + _randomNum);
         GameObject[] spawns = GameObject.FindGameObjectsWithTag("StarSpawn");
         List<GameObject> spawnsList = new List<GameObject>(spawns);
         List<int> posRepeated = new List<int>();
@@ -110,7 +109,6 @@ public class GenerateStarsTelescopeAssociation : MonoBehaviour
                 newStar.transform.position = spawnsList[posRandom].transform.position;
                 _starList.Add(newStar);
                 newStar.GetComponent<TelescopeAssociationStars>().InitStart(gameObject);
-                print("Position " + posRandom);
             }               
 
         } while (_starList.Count < _randomNum);

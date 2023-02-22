@@ -65,7 +65,6 @@ public class ConstelationGenerator : MonoBehaviour
             for (int i = 0; i < _constelationPositions.Count; i++)
             {
                 _line.SetPosition(i, _constelationPositions[i]);
-               // Debug.Log();
             }
         }
     }

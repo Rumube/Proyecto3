@@ -124,7 +124,6 @@ public class SimonGameManager : MonoBehaviour
         if (_playerSequenceList.Count == _playerTaskList.Count && _currentRounds < _rounds)
         {
             _currentRounds++;
-            print(_currentRounds);
             if (_currentRounds < _rounds)
             {
                 int randomText = Random.Range(0, _secuenceTexts.Count);

@@ -54,9 +54,7 @@ public class Generate_CoverPanel : MonoBehaviour
             {
                 _referentList[counter].transform.position = new Vector3((i + _offsetX) *_gapX, 0, 0);
                 counter--;
-                Debug.Log("for");
             }
-            Debug.Log("decrease");
         }
        
     }

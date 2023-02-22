@@ -24,7 +24,7 @@ public class Server : WebSocketBehavior
         }
         if (!ServiceLocator.Instance.GetService<ServerUtility>().fistTime)
         {
-            EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
+            //EDebug.Log("++ Alguien se ha conectado. " + (Sessions.Count - 1));
             ServiceLocator.Instance.GetService<ServerUtility>()._connectedTablets = (Sessions.Count - 1);
             ServiceLocator.Instance.GetService<ServerUtility>()._updateConnectedTablets = true;
             
@@ -58,7 +58,7 @@ public class Server : WebSocketBehavior
     protected override void OnClose(CloseEventArgs e)
     {
         base.OnClose(e);
-        EDebug.Log("-- Se ha desconectado alguien. " + (Sessions.Count-1));
+        //EDebug.Log("-- Se ha desconectado alguien. " + (Sessions.Count-1));
         for (int i = 0; i < MAX_TABLETS - 1; ++i)
         {
             if (ServiceLocator.Instance.GetService<ServerUtility>()._tablets[i]._id == (Sessions.Count-1))

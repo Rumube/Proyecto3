@@ -30,7 +30,6 @@ public class GeometryButton : Geometry
             }
             else if (!_isPresed && !_light.activeSelf)
             {
-                EDebug.Log("Luz");
                 _light.SetActive(true);
                 GenerateSound();
                 GetComponent<AudioSource>().Play();

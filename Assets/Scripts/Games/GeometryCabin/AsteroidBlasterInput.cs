@@ -170,8 +170,6 @@ public class AsteroidBlasterInput : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(_lastShotPostion, -Vector2.up, Mathf.Infinity);
 
-        print(hit.transform.gameObject.name);
-
         switch (_gameMode)
         {
             case GAME_MODE.geometry:

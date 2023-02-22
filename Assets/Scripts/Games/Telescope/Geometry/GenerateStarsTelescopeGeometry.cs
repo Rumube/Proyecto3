@@ -47,7 +47,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("----------------" + _gameStarList.Count + "----------------");
         if (ServiceLocator.Instance.GetService<IGameManager>().GetClientState() == IGameManager.GAME_STATE_CLIENT.playing)
         {
             InputManager();
@@ -95,11 +94,9 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
         {
             case Geometry.Geometry_Type.triangle:
                 _constelationGo = new GameObject();
-                print("Dibuja una constelación con forma de triángulo");
                 break;
 
             case Geometry.Geometry_Type.square:
-                print("Dibuja una constelación con forma de cuadrado");
                 _constelationGo = Instantiate(Square, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
 
@@ -117,7 +114,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 break;
 
             case Geometry.Geometry_Type.pentagon:
-                print("Dibuja una constelación con forma de pentágono");
                 _constelationGo = Instantiate(Pentagon, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
@@ -134,7 +130,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 break;
 
             case Geometry.Geometry_Type.hexagon:
-                print("Dibuja una constelación con forma de hexágono");
                 _constelationGo = Instantiate(Hexagon, _starsParent.transform);
                 _constelationGo.transform.position = _constelationPos[randomPos].position;
                 foreach (Transform child in _constelationGo.transform)
@@ -151,8 +146,6 @@ public class GenerateStarsTelescopeGeometry : MonoBehaviour
                 break;
 
             default:
-                print("Dibuja una constelación con forma de triángulo");
-
                 break;
 
         }

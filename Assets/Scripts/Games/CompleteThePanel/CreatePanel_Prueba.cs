@@ -164,7 +164,6 @@ public class CreatePanel_Prueba : MonoBehaviour
 
                     if (!_typeTargetGeometry.Contains(_currentDataDifficulty.targetGeometry[idGeometry].GetComponent<Geometry>()._geometryType))
                     {
-                        EDebug.Log("discart");
                         idGeometry++;
                         if (idGeometry >= _currentDataDifficulty.targetGeometry.Count)
                         {

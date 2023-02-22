@@ -163,7 +163,6 @@ public class Android : MonoBehaviour
     }
     public void UpdateStudentButton()
     {
-        print("Is neccesary?");
         //UpdateStudent(_tId.text, _tName.text);
     }
     /// <summary>
@@ -249,7 +248,6 @@ public class Android : MonoBehaviour
     private void SearchStudent(string idClassroom)
     {
         ConnectToDataBase();
-        print("Use?!?!");
         IEnumerable<StudentDB> students = _dataService.GetStudent(int.Parse(idClassroom));
         CloseDataBase();
     }
@@ -384,11 +382,11 @@ public class Android : MonoBehaviour
 
         if (newMatch != null)
         {
-            EDebug.Log("Insert Done: InsertMatch");
+            //EDebug.Log("Insert Done: InsertMatch");
         }
         else
         {
-            EDebug.Log("Ocurrión un error");
+            //EDebug.Log("Ocurrión un error");
         }
         CloseDataBase();
     }

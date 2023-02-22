@@ -126,7 +126,6 @@ public class RankingClientFinal : MonoBehaviour
                 cellInGrid.transform.SetParent(teamParentList[i].transform);
                 cellInGrid.AddComponent<RectTransform>();
                 _gridPositions[i, j] = cellInGrid;
-                print(_gridPositions[i, j].GetComponent<RectTransform>().position);
                 teamParentList[i].GetComponent<Image>().sprite = _fillRanking[i];
             }
             _rocketsTransforms[i].GetComponent<RankingTeamMovement>().InitValues(_teamParents[i].GetComponent<Image>(), _gridPositions[i, 10].transform);
