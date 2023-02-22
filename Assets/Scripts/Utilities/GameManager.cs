@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour, IGameManager
     public bool _endSessionTablet = false;
     private List<string> _notPresentStudents = new List<string>();
 
-
-
     public Dictionary<int, int> _teamPoints = new Dictionary<int, int>();
 
     public IGameManager.GAME_STATE_SERVER _gameStateServer;
@@ -43,7 +41,6 @@ public class GameManager : MonoBehaviour, IGameManager
     {
       _gameStateServer = IGameManager.GAME_STATE_SERVER.init;
     }
-
     public void PreviousConfigurationState()
     {
         _gameStateServer = IGameManager.GAME_STATE_SERVER.previousConfiguration;
@@ -52,12 +49,10 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         _gameStateServer = IGameManager.GAME_STATE_SERVER.connection;
     }
-
     public void RandomizeStudentsList()
     {
         Shuffle(Client._tablet._students);
     }
-
     public void Shuffle<T>(IList<T> list)
     {
         System.Random random = new System.Random();
@@ -81,7 +76,6 @@ public class GameManager : MonoBehaviour, IGameManager
         _currentgameName = _minigamesNames[Random.Range(0, _minigamesNames.Count)];
         _studentCounter++;
     }
-
     public IGameManager.GAME_STATE_CLIENT GetClientState()
     {
         return _gameStateClient;
@@ -98,17 +92,14 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         _returnToCommonScene = value;
     }
-
     IGameManager.GAME_STATE_SERVER IGameManager.GetServerState()
     {
         return _gameStateServer;
     }
-
     public void SetMinigames(string _names)
     {
         _minigamesNames.Add(_names);
     }
-
     public List<string> GetMinigames()
     {
         return _minigamesNames;
@@ -157,12 +148,10 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         return _minigamesMaximumLevel;
     }
-
     public bool GetReturnToCommonScene()
     {
         return _returnToCommonScene;
     }
-
     public void SetTeamPoints(int index, int points)
     {
         _teamPoints[index-1] += points;
@@ -180,17 +169,14 @@ public class GameManager : MonoBehaviour, IGameManager
     {
         _teamPoints.Add(index, 0);
     }
-
     public List<string> GetNotPresentsStudents()
     {
         return _notPresentStudents;
     }
-
     public void SetNotPresentsStudents(string name)
     {
         _notPresentStudents.Add(name);
     }
-
     public void DeleteNotPresentsStudent(string name)
     {
         _notPresentStudents.Remove(name);
