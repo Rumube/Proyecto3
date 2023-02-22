@@ -6,7 +6,6 @@ public class TelescopeAddAndSubstractConstelationGenerator : MonoBehaviour
 {
     public LineRenderer _line;
 
-
     public List<GameObject> _playerStarList = new List<GameObject>();
     int _success = 0;
     int _errors = 0;
