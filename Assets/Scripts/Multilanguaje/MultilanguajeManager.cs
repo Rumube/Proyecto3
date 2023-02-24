@@ -7,6 +7,6 @@ using UnityEngine;
 [Serializable]
 public class MultilanguajeManager
 {
-    public String[] en;
-    public String[] es;
+    public String[] hello;
+    public String[] goodbye;
 }
