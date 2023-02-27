@@ -22,11 +22,11 @@ public class MultilanguajeReader : MonoBehaviour
     {
         switch (language)
         {
-            case LANGUAJE.es:
-                return _manager.hello[2];
-                break;
             case LANGUAJE.en:
                 return _manager.en[id];
+                break;
+            case LANGUAJE.es:
+                return _manager.es[id];
                 break;
             default:
                 return _manager.en[id];
